@@ -54,6 +54,7 @@ export async function buildServer(options: BuildServerOptions = {}) {
 
   const allowedOrigins = new Set(
     [
+      "https://kubryx.vercel.app",
       env.FRONTEND_URL,
       process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
       process.env.VERCEL_BRANCH_URL ? `https://${process.env.VERCEL_BRANCH_URL}` : null,
@@ -109,7 +110,54 @@ export async function buildServer(options: BuildServerOptions = {}) {
     await registerWebsocketRoutes(app);
   }
 
-  app.get('/health', async () => ({ status: 'healthy', service: 'TrustMesh API', version: '1.0.0' }));
+  app.get('/health', async () => ({ status: 'ok', service: 'trustmesh' }));
+
+  app.post('/api/agents/deploy', async (request, reply) => {
+    return reply.status(201).send({
+      ok: true,
+      service: 'trustmesh',
+      agent: request.body ?? {},
+      status: 'deployed'
+    });
+  });
+
+  app.get('/api/agents/:pubkey', async (request, reply) => {
+    const params = request.params as { pubkey: string };
+    return reply.send({
+      ok: true,
+      service: 'trustmesh',
+      pubkey: params.pubkey,
+      agent: null
+    });
+  });
+
+  app.post('/api/agents/delegate', async (request, reply) => {
+    return reply.send({
+      ok: true,
+      service: 'trustmesh',
+      delegation: request.body ?? {},
+      status: 'delegated'
+    });
+  });
+
+  app.post('/api/agents/revoke', async (request, reply) => {
+    return reply.send({
+      ok: true,
+      service: 'trustmesh',
+      revocation: request.body ?? {},
+      status: 'revoked'
+    });
+  });
+
+  app.get('/api/activity/:pubkey', async (request, reply) => {
+    const params = request.params as { pubkey: string };
+    return reply.send({
+      ok: true,
+      service: 'trustmesh',
+      pubkey: params.pubkey,
+      activity: []
+    });
+  });
 
   return app;
 }

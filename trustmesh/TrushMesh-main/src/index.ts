@@ -1,8 +1,8 @@
 import { buildServer } from "./server.js";
-import { env } from "./lib/env.js";
 import { redis, redisPublisher, redisSubscriber } from "./lib/redis.js";
 
 const app = await buildServer();
+const port = parseInt(process.env.PORT || "3002", 10);
 
 const shutdown = async (signal: string) => {
   app.log.info({ signal }, "shutting down");
@@ -17,4 +17,4 @@ const shutdown = async (signal: string) => {
 process.on("SIGINT", () => void shutdown("SIGINT"));
 process.on("SIGTERM", () => void shutdown("SIGTERM"));
 
-await app.listen({ port: env.PORT, host: "0.0.0.0" });
+await app.listen({ port, host: "0.0.0.0" });

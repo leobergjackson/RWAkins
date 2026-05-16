@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
+import { corsHeaders } from '../_utils/cors';
 
 export async function GET() {
   return NextResponse.json({
-    status: 'healthy',
-    service: 'PalmFlow AI',
-    version: '1.0.0',
-    timestamp: new Date().toISOString(),
-  });
+    status: 'ok',
+    service: 'palmflow',
+  }, { headers: corsHeaders });
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, { status: 204, headers: corsHeaders });
 }

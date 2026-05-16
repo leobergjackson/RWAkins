@@ -18,7 +18,7 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter());
   app.use(helmet());
   app.use(compression());
-  app.enableCors();
+  app.enableCors({ origin: 'https://kubryx.vercel.app' });
 
   const trpcRouter = app.get(TrpcRouter);
   
@@ -30,7 +30,7 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(process.env.PORT ?? 3001);
+  await app.listen(process.env.PORT || 3003, '0.0.0.0');
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

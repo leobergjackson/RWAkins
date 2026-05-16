@@ -5,13 +5,15 @@ services:
     region: oregon
     plan: free
     rootDir: ciphervault/CipherVault-main
-    buildCommand: npm install && npm run build:sdk && npm run build:app
-    startCommand: cd app && npx next start -p $PORT
+    buildCommand: npm install && npm run build
+    startCommand: npm start
     healthCheckPath: /api/health
     envVars:
       - key: NODE_VERSION
         value: "20"
       - key: NODE_ENV
         value: production
-      - key: NEXT_PUBLIC_SOLANA_RPC_URL
+      - key: PORT
+        value: "3004"
+      - key: SOLANA_RPC_URL
         value: https://api.devnet.solana.com

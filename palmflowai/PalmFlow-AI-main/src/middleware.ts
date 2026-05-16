@@ -1,8 +1,28 @@
-import { type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "https://kubryx.vercel.app",
+  "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  const isApiRoute = request.nextUrl.pathname.startsWith("/api");
+
+  if (isApiRoute && request.method === "OPTIONS") {
+    return new NextResponse(null, { status: 204, headers: corsHeaders });
+  }
+
+  const response = await updateSession(request);
+
+  if (isApiRoute) {
+    Object.entries(corsHeaders).forEach(([key, value]) => {
+      response.headers.set(key, value);
+    });
+  }
+
+  return response;
 }
 
 export const config = {

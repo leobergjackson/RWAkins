@@ -6,13 +6,17 @@ services:
     plan: free
     rootDir: backend
     buildCommand: npm install
-    startCommand: node src/index.js
+    startCommand: npm start
     healthCheckPath: /health
     envVars:
       - key: NODE_VERSION
         value: "20"
+      - key: PORT
+        value: "3001"
       - key: QIE_RPC_URL
         value: https://rpc.qie.digital
+      - key: CHAIN_ID
+        value: "1990"
       - key: VAULT_ADDRESS
         sync: false
       - key: PRIVATE_KEY

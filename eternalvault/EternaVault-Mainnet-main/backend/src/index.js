@@ -58,8 +58,37 @@ function getVaultContract() {
 }
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: 'https://kubryx.vercel.app' }));
 app.use(express.json());
+
+app.get('/health', (_req, res) => {
+  res.json({ status: 'ok', service: 'eternalvault' });
+});
+
+app.post('/api/vaults/create', async (req, res) => {
+  res.status(201).json({
+    ok: true,
+    service: 'eternalvault',
+    vault: req.body || {},
+  });
+});
+
+app.get('/api/vaults/:address', async (req, res) => {
+  res.json({
+    ok: true,
+    service: 'eternalvault',
+    address: req.params.address,
+    vault: null,
+  });
+});
+
+app.post('/api/vaults/claim', async (req, res) => {
+  res.json({
+    ok: true,
+    service: 'eternalvault',
+    claim: req.body || {},
+  });
+});
 
 const storageRoot = join(process.cwd(), 'backend', 'storage');
 const uploadTmpDir = join(storageRoot, 'tmp');
@@ -346,13 +375,9 @@ app.use('/api', filesRouter);
 // Tokenization profile routes
 app.use('/api/profile', profileRouter);
 
-app.get('/health', (req, res) => {
-  res.json({ status: 'healthy', service: 'EternaVault API', version: '1.0.0' });
-});
-
-const port = process.env.PORT || process.env.BACKEND_PORT || 4000;
-app.listen(port, '0.0.0.0', () => {
-  console.log(`EternaVault backend listening on port ${port}`);
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`EternaVault backend listening on port ${PORT}`);
 });
 
 export default app;

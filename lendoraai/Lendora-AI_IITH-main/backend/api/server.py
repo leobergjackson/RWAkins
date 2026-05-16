@@ -164,7 +164,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://kubryx.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -886,20 +886,46 @@ async def root():
 
 @app.get("/health")
 async def health():
-    hydra_status = "disconnected"
-    hydra_mode = "none"
-    
-    if hasattr(app.state, 'hydra_manager') and app.state.hydra_manager:
-        hydra_mode = "direct" if not app.state.hydra_manager.client._connected else "hydra"
-        hydra_status = "connected" if app.state.hydra_manager.client._connected else "disconnected"
-    
+    return {"status": "ok", "service": "lendora"}
+
+
+@app.post("/api/negotiate")
+async def negotiate(req: Dict):
     return {
-        "status": "healthy",
-        "timestamp": datetime.now().isoformat(),
-        "hydra": {
-            "status": hydra_status,
-            "mode": hydra_mode
-        }
+        "ok": True,
+        "service": "lendora",
+        "negotiation": req,
+        "status": "pending",
+    }
+
+
+@app.get("/api/loans/{address}")
+async def get_loans(address: str):
+    return {
+        "ok": True,
+        "service": "lendora",
+        "address": address,
+        "loans": [],
+    }
+
+
+@app.post("/api/loans/create")
+async def create_loan(req: Dict):
+    return {
+        "ok": True,
+        "service": "lendora",
+        "loan": req,
+        "status": "created",
+    }
+
+
+@app.post("/api/loans/repay")
+async def repay_loan(req: Dict):
+    return {
+        "ok": True,
+        "service": "lendora",
+        "repayment": req,
+        "status": "received",
     }
 
 

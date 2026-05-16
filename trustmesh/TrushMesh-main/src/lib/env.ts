@@ -17,7 +17,7 @@ const envSchema = z.object({
   ANCHOR_PROGRAM_ID: z.string().min(32),
   SNS_PROGRAM_ID: z.string().min(32),
   FRONTEND_URL: z.string().url().default(inferredFrontendUrl),
-  PORT: z.coerce.number().int().positive().default(3001),
+  PORT: z.coerce.number().int().positive().default(3002),
   NODE_ENV: z.enum(["development", "production", "test"]).default("development")
 });
 
