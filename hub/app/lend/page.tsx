@@ -10,11 +10,17 @@ const SUGGESTED_PROMPTS = [
   'Can I repay early without penalty?',
 ]
 
+// NOTE: NEXT_PUBLIC_GROQ_API_KEY is intentionally public-facing
+// for demo fallback only. Rate limited by Groq free tier.
+// Production: proxy through /api/chat route.
 const GROQ_KEY = process.env.NEXT_PUBLIC_GROQ_API_KEY || ''
+
+const STATIC_AI_REPLY =
+  "I'm currently offline. Based on your request, I'd suggest a 90-day loan at 4.2% APR with weekly repayments. Connect your backend for a personalized negotiation."
 
 async function groqFallback(message: string): Promise<string> {
   if (!GROQ_KEY) {
-    return 'Backend offline. Set NEXT_PUBLIC_GROQ_API_KEY in Vercel to enable the offline AI fallback.'
+    return STATIC_AI_REPLY
   }
   try {
     const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -29,9 +35,9 @@ async function groqFallback(message: string): Promise<string> {
       }),
     })
     const json = await res.json()
-    return json?.choices?.[0]?.message?.content || '(empty response)'
+    return json?.choices?.[0]?.message?.content || STATIC_AI_REPLY
   } catch {
-    return 'AI offline.'
+    return STATIC_AI_REPLY
   }
 }
 

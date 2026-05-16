@@ -62,6 +62,25 @@ function ChainBadge({ chain }: { chain: string }) {
   )
 }
 
+function StatCard({ label, value, live }: { label: string; value: string | number; live?: boolean }) {
+  return (
+    <div className="card">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+        <p style={{ margin: 0, fontSize: 12, letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.6 }}>{label}</p>
+        <span
+          title={live ? 'Live data' : 'Fallback / offline'}
+          style={{
+            width: 8, height: 8, borderRadius: '50%',
+            background: live ? '#22C55E' : 'rgba(255,255,255,0.25)',
+            boxShadow: live ? '0 0 8px rgba(34,197,94,0.6)' : 'none',
+          }}
+        />
+      </div>
+      <strong className="gold-text" style={{ fontSize: 28 }}>{value}</strong>
+    </div>
+  )
+}
+
 async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
   const response = await fetch(url, init)
   if (!response.ok) throw new Error(`Request failed: ${response.status}`)
@@ -78,6 +97,7 @@ export default function DashboardPage() {
   const [activeAgents, setActiveAgents] = useState(0)
   const [treasuryBalance, setTreasuryBalance] = useState('0 SOL')
   const [activity, setActivity] = useState<ActivityItem[]>([])
+  const [liveSources, setLiveSources] = useState<Record<string, boolean>>({})
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -162,31 +182,45 @@ export default function DashboardPage() {
       setLoading(true)
       setError('')
       const feed: ActivityItem[] = []
+      const live: Record<string, boolean> = { credit: false, vaults: false, agents: false, treasury: false }
 
-      if (process.env.NEXT_PUBLIC_CREDITBLOCKS_API && ethWallet) {
-        const score = await fetchJson<{ score?: string | number }>(`${process.env.NEXT_PUBLIC_CREDITBLOCKS_API}/api/score/${ethWallet}`).catch(() => null)
-        if (score?.score !== undefined) setCreditScore(String(score.score))
+      const C = process.env.NEXT_PUBLIC_CREDITBLOCKS_API
+      const V = process.env.NEXT_PUBLIC_ETERNALVAULT_API
+      const A = process.env.NEXT_PUBLIC_TRUSTMESH_API
+      const P = process.env.NEXT_PUBLIC_PALMFLOW_API
+
+      const [creditR, vaultR, agentR, treasuryR] = await Promise.allSettled([
+        C && ethWallet ? fetch(`${C}/api/score/${ethWallet}`)   : Promise.reject(new Error('no env/wallet')),
+        V && ethWallet ? fetch(`${V}/api/vaults/${ethWallet}`)  : Promise.reject(new Error('no env/wallet')),
+        A && solWallet ? fetch(`${A}/api/agents/${solWallet}`)  : Promise.reject(new Error('no env/wallet')),
+        P && solWallet ? fetch(`${P}/api/treasury/${solWallet}`): Promise.reject(new Error('no env/wallet')),
+      ])
+
+      if (creditR.status === 'fulfilled' && creditR.value.ok) {
+        const json = await creditR.value.json().catch(() => null) as { score?: string | number } | null
+        if (json?.score !== undefined) { setCreditScore(String(json.score)); live.credit = true }
       }
-
-      if (process.env.NEXT_PUBLIC_ETERNALVAULT_API && ethWallet) {
-        const vaultData = await fetchJson<unknown>(`${process.env.NEXT_PUBLIC_ETERNALVAULT_API}/api/vaults/${ethWallet}`).catch(() => null)
-        const vaults = Array.isArray(vaultData) ? vaultData : (vaultData as { vaults?: unknown[] } | null)?.vaults || []
-        setActiveVaults(vaults.length)
+      if (vaultR.status === 'fulfilled' && vaultR.value.ok) {
+        const json = await vaultR.value.json().catch(() => null) as unknown
+        const vaults = Array.isArray(json) ? json : (json as { vaults?: unknown[] } | null)?.vaults || []
+        setActiveVaults(vaults.length); live.vaults = true
         vaults.slice(0, 3).forEach((item, index) => feed.push({ tool: 'Legacy Vault', action: `Vault ${(item as { status?: string }).status || 'active'}`, wallet: ethWallet, id: `vault-${index}` }))
       }
+      if (agentR.status === 'fulfilled' && agentR.value.ok) {
+        const json = await agentR.value.json().catch(() => null) as unknown
+        const agents = Array.isArray(json) ? json : (json as { agents?: unknown[] } | null)?.agents || []
+        setActiveAgents(agents.length); live.agents = true
+      }
+      if (treasuryR.status === 'fulfilled' && treasuryR.value.ok) {
+        const json = await treasuryR.value.json().catch(() => null) as { totalBalance?: string; balance?: string } | null
+        setTreasuryBalance(json?.totalBalance || json?.balance || '0 SOL'); live.treasury = true
+      }
+      setLiveSources(live)
 
       if (process.env.NEXT_PUBLIC_TRUSTMESH_API && solWallet) {
-        const agentData = await fetchJson<unknown>(`${process.env.NEXT_PUBLIC_TRUSTMESH_API}/api/agents/${solWallet}`).catch(() => null)
-        const agents = Array.isArray(agentData) ? agentData : (agentData as { agents?: unknown[] } | null)?.agents || []
-        setActiveAgents(agents.length)
         const agentFeed = await fetchJson<unknown>(`${process.env.NEXT_PUBLIC_TRUSTMESH_API}/api/activity/${solWallet}`).catch(() => null)
         const items = Array.isArray(agentFeed) ? agentFeed : (agentFeed as { activity?: unknown[] } | null)?.activity || []
         items.slice(0, 4).forEach((item, index) => feed.push({ tool: 'Agent Mesh', action: (item as { action?: string }).action || 'Agent action', wallet: solWallet, timestamp: (item as { timestamp?: string }).timestamp, id: `agent-${index}` }))
-      }
-
-      if (process.env.NEXT_PUBLIC_PALMFLOW_API && solWallet) {
-        const treasury = await fetchJson<{ totalBalance?: string; balance?: string }>(`${process.env.NEXT_PUBLIC_PALMFLOW_API}/api/treasury/${solWallet}`).catch(() => null)
-        setTreasuryBalance(treasury?.totalBalance || treasury?.balance || '0 SOL')
       }
 
       const activitySources = [
@@ -255,15 +289,15 @@ export default function DashboardPage() {
         {!primaryWallet && <div className="card">Connect at least one wallet to populate personalized stats and activity.</div>}
 
         <ErrorBoundary label="stats">
-          <section className="stats-grid">
-            <div className="card"><p>Credit Score</p><strong className="gold-text">{creditScore}</strong></div>
-            <div className="card"><p>Active Vaults</p><strong className="gold-text">{activeVaults}</strong></div>
-            <div className="card"><p>Active Agents</p><strong className="gold-text">{activeAgents}</strong></div>
-            <div className="card"><p>Treasury Balance</p><strong className="gold-text">{treasuryBalance}</strong></div>
+          <section className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
+            <StatCard label="Credit Score"    value={creditScore}     live={liveSources.credit} />
+            <StatCard label="Active Vaults"   value={activeVaults}    live={liveSources.vaults} />
+            <StatCard label="Active Agents"   value={activeAgents}    live={liveSources.agents} />
+            <StatCard label="Treasury Balance" value={treasuryBalance} live={liveSources.treasury} />
           </section>
         </ErrorBoundary>
 
-        <section className="tool-grid">
+        <section className="tool-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12 }}>
           {tools.map((tool) => (
             <ErrorBoundary key={tool.name} label={tool.name}>
             <article className="card">

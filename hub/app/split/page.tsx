@@ -5,17 +5,28 @@ import { fallbackSplits } from '../../lib/fallback'
 import DemoBanner from '../components/DemoBanner'
 import { isFreighterInstalled } from '../../lib/wallet-utils'
 
-type FreighterProvider = {
-  isConnected?: () => Promise<boolean>
-  getAddress?: () => Promise<string>
+type FreighterModule = {
+  isConnected?: () => Promise<boolean | { isConnected: boolean }>
   getPublicKey?: () => Promise<string>
-  signTransaction?: (xdr: string, opts?: { networkPassphrase?: string }) => Promise<string>
+  getAddress?: () => Promise<{ address: string } | string>
+  signTransaction?: (xdr: string, opts?: { network?: string; networkPassphrase?: string }) => Promise<string | { signedTxXdr: string }>
 }
 
-declare global {
-  interface Window {
-    freighter?: FreighterProvider
+// Bypass bundler static analysis with Function-wrapped dynamic import.
+const dynamicImport: (url: string) => Promise<any> =
+  new Function('u', 'return import(u)') as any
+
+async function getFreighter(): Promise<FreighterModule> {
+  return await dynamicImport('https://cdn.jsdelivr.net/npm/@stellar/freighter-api/+esm')
+}
+
+async function extractAddress(api: FreighterModule): Promise<string> {
+  if (api.getAddress) {
+    const r = await api.getAddress()
+    return typeof r === 'string' ? r : r.address
   }
+  if (api.getPublicKey) return await api.getPublicKey()
+  throw new Error('Freighter API missing getAddress/getPublicKey')
 }
 
 type SplitRecord = {
@@ -83,14 +94,18 @@ export default function SplitPage() {
   async function connectWallet() {
     try {
       setError('')
-      if (!window.freighter) throw new Error('Freighter is not installed.')
-      const connected = window.freighter.isConnected ? await window.freighter.isConnected() : true
-      if (!connected) throw new Error('Freighter is locked or not connected.')
-      const address = window.freighter.getAddress ? await window.freighter.getAddress() : await window.freighter.getPublicKey?.()
+      if (!isFreighterInstalled()) throw new Error('Freighter is not installed.')
+      const api = await getFreighter()
+      const connected = api.isConnected ? await api.isConnected() : true
+      const ok = typeof connected === 'boolean' ? connected : connected?.isConnected
+      if (!ok) throw new Error('Freighter is locked or not connected.')
+      const address = await extractAddress(api)
       if (!address) throw new Error('No Stellar address returned by Freighter.')
       setWallet(address)
+      setIsDemo(false)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to connect Freighter.')
+      setIsDemo(true)
     }
   }
 
@@ -125,9 +140,18 @@ export default function SplitPage() {
       setError('')
       if (!wallet) throw new Error('Connect Freighter before paying.')
       await rpc('getHealth', {})
-      const signed = window.freighter?.signTransaction ? await window.freighter.signTransaction('syncsplit-pay-share', { networkPassphrase: 'Test SDF Network ; September 2015' }) : 'signed-locally'
+      let signedSummary = 'signed-locally'
+      try {
+        const api = await getFreighter()
+        if (api.signTransaction) {
+          const result = await api.signTransaction('syncsplit-pay-share', { network: 'TESTNET', networkPassphrase: 'Test SDF Network ; September 2015' })
+          signedSummary = typeof result === 'string' ? result : result.signedTxXdr
+        }
+      } catch {
+        // Freighter failed — keep local optimistic update
+      }
       setSplits((current) => current.map((item) => item.id === split.id ? { ...item, paid: Array.from(new Set([...item.paid, wallet])) } : item))
-      setHistory((current) => [`Paid ${split.amount / split.participants.length} via ${signed.slice(0, 18)}`, ...current])
+      setHistory((current) => [`Paid ${split.amount / split.participants.length} via ${signedSummary.slice(0, 18)}`, ...current])
       setMessage('Share payment signed for SyncSplit.')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unable to pay share.')

@@ -1,0 +1,19 @@
+import type { Metadata } from 'next'
+
+const title = 'Agent Mesh — Kubryx'
+const description = 'AI agent coordination on Solana Devnet'
+const url = 'https://kubryx.vercel.app/agents'
+
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: {
+    title, description, url, siteName: 'Kubryx', type: 'website',
+    images: [{ url: '/og-default.svg', width: 1200, height: 630 }],
+  },
+  twitter: { card: 'summary_large_image', title, description, images: ['/og-default.svg'] },
+}
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>
+}

@@ -46,6 +46,28 @@ export function isMetaMaskInstalled(): boolean {
   return typeof window !== 'undefined' && typeof (window as any)?.ethereum !== 'undefined'
 }
 
+export type WalletKind = 'evm' | 'solana' | 'stellar'
+const SS_KEYS: Record<WalletKind, string> = {
+  evm: 'kubryx_wallet_evm',
+  solana: 'kubryx_wallet_solana',
+  stellar: 'kubryx_wallet_stellar',
+}
+
+export function persistWallet(kind: WalletKind, address: string) {
+  if (typeof window === 'undefined') return
+  try { sessionStorage.setItem(SS_KEYS[kind], address) } catch {}
+}
+
+export function loadWallet(kind: WalletKind): string {
+  if (typeof window === 'undefined') return ''
+  try { return sessionStorage.getItem(SS_KEYS[kind]) || '' } catch { return '' }
+}
+
+export function clearWallet(kind: WalletKind) {
+  if (typeof window === 'undefined') return
+  try { sessionStorage.removeItem(SS_KEYS[kind]) } catch {}
+}
+
 export function timeAgo(input: string | Date | undefined): string {
   if (!input) return 'recent'
   const t = typeof input === 'string' ? new Date(input).getTime() : input.getTime()
