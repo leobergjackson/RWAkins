@@ -350,9 +350,9 @@ app.get('/health', (req, res) => {
   res.json({ status: 'healthy', service: 'EternaVault API', version: '1.0.0' });
 });
 
-const port = process.env.BACKEND_PORT || 4000;
-app.listen(port, () => {
-  console.log(`EternaVault backend listening on http://localhost:${port}`);
+const port = process.env.PORT || process.env.BACKEND_PORT || 4000;
+app.listen(port, '0.0.0.0', () => {
+  console.log(`EternaVault backend listening on port ${port}`);
 });
 
 export default app;

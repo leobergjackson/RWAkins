@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: kubryx-cipher
+    env: node
+    region: oregon
+    plan: free
+    rootDir: ciphervault/CipherVault-main
+    buildCommand: npm install && npm run build:sdk && npm run build:app
+    startCommand: cd app && npx next start -p $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_SOLANA_RPC_URL
+        value: https://api.devnet.solana.com

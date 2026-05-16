@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: kubryx-trustmesh
+    env: node
+    region: oregon
+    plan: free
+    rootDir: trustmesh/TrushMesh-main
+    buildCommand: npm install && npm run build:server
+    startCommand: node dist/index.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SOLANA_RPC_URL
+        value: https://api.devnet.solana.com
+      - key: ANCHOR_PROGRAM_ID
+        value: 66DXeSqBccWxWWw9S21vxe2Mvvqqkmw5KsK5jqA42quz
+      - key: SNS_PROGRAM_ID
+        value: namesLPneVptA9Z5rqUDD9tMTWEJwofgaYwp8cawRkX
+      - key: FRONTEND_URL
+        value: https://kubryx.vercel.app

@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: kubryx-eternalvault
+    env: node
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node src/index.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: QIE_RPC_URL
+        value: https://rpc.qie.digital
+      - key: VAULT_ADDRESS
+        sync: false
+      - key: PRIVATE_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_BUCKET
+        value: encrypted-files
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_MODEL
+        value: deepseek/deepseek-r1:free
