@@ -1,6 +1,7 @@
 import { ChainType } from './api/client'
 import { publishEvent } from './global-operations-engine'
 import { recordOSEvent } from './cross-tool-intelligence'
+import { trackExecutionFailure } from './observability'
 
 export type TxType =
   | 'governance_proposal'
@@ -94,6 +95,7 @@ export async function executeSovereignTransaction(
   // Real execution boundaries
   if (!preview.gatingPassed) {
     logExecutionTelemetry(txPayload, txHash, false, logs)
+    trackExecutionFailure(txPayload.targetChain, txPayload.action, `Policy violations: ${preview.policyViolations.join(', ')}`)
     return {
       transactionHash: txHash,
       success: false,
@@ -125,6 +127,7 @@ export async function executeSovereignTransaction(
     } catch (err: any) {
       logs.push(`Signing rejected by user or wallet error: ${err.message || err}`)
       logExecutionTelemetry(txPayload, txHash, false, logs)
+      trackExecutionFailure(txPayload.targetChain, txPayload.action, err.message || 'Signature rejected by user')
       return {
         transactionHash: txHash,
         success: false,

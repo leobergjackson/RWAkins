@@ -3,6 +3,7 @@ import { getRPCBlockState, RPCBlockState } from './blockchain-connector'
 import { ChainType } from './api/client'
 import { publishEvent } from './global-operations-engine'
 import { logTelemetryError } from './telemetry'
+import { trackRPCFailure, trackStaleSync } from './observability'
 
 export interface HeartbeatStatus {
   chain: ChainType
@@ -33,6 +34,9 @@ export function startCoordinatedPolling() {
     for (const chain of ['QIE', 'SOLANA', 'STELLAR', 'ARBITRUM'] as ChainType[]) {
       try {
         const state = await getRPCBlockState(chain)
+        if (state.avgLatency > 2000) {
+          trackStaleSync(state.avgLatency)
+        }
         nextStates.push({
           chain,
           blockNumber: state.blockNumber,
@@ -41,6 +45,7 @@ export function startCoordinatedPolling() {
         })
       } catch (err: any) {
         logTelemetryError('RPC_ERROR', `Sync Heartbeat Failed [${chain}]`, `Heartbeat node request dropped: ${err.message || err}`)
+        trackRPCFailure(chain, 'POLLING_DESK', err.message || 'Heartbeat node request dropped')
         nextStates.push({
           chain,
           blockNumber: 0,

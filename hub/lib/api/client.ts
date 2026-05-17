@@ -1,5 +1,6 @@
 import { logTelemetryError } from '../telemetry'
 import { validateEnvironment } from '../security-isolation'
+import { trackRPCFailure } from '../observability'
 
 export type ChainType = 'QIE' | 'SOLANA' | 'STELLAR' | 'ARBITRUM'
 
@@ -208,6 +209,7 @@ export const rpcClient = {
           `RPC Query Failed [${chain}]`,
           `Node ${node.url} failed: ${err.message || err}. Attempting failover node...`
         )
+        trackRPCFailure(chain, node.url, err.message || 'Connection anomaly')
       }
     }
 
@@ -217,6 +219,7 @@ export const rpcClient = {
       `RPC Total Failure [${chain}]`,
       `All RPC nodes failed or timed out. Serving deterministic fallback parameters.`
     )
+    trackRPCFailure(chain, 'ALL_NODES', 'Total outage, serving fallback parameters')
     return fallbackData
   }
 }
