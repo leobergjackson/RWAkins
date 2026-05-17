@@ -2,6 +2,7 @@
   "name": "ciphervault",
   "version": "0.1.0",
   "private": true,
+  "main": "index.js",
   "description": "CipherVault — Confidential institutional prime brokerage on Solana using Ika dWallets and Encrypt FHE",
   "workspaces": [
     "sdk",

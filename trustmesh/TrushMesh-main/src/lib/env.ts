@@ -9,13 +9,35 @@ const inferredFrontendUrl =
     : undefined) ??
   "http://localhost:5173";
 
+const optionalUrl = (fallback: string) =>
+  z
+    .string()
+    .optional()
+    .transform((v) => (v && v.length > 0 ? v : fallback))
+    .pipe(z.string().url());
+
+const optionalString = (fallback: string, minLen = 0) =>
+  z
+    .string()
+    .optional()
+    .transform((v) => (v && v.length >= minLen ? v : fallback));
+
 const envSchema = z.object({
-  DATABASE_URL: z.string().url(),
-  REDIS_URL: z.string().url(),
-  JWT_SECRET: z.string().min(32, "JWT_SECRET must be at least 32 characters"),
-  SOLANA_RPC_URL: z.string().url(),
-  ANCHOR_PROGRAM_ID: z.string().min(32),
-  SNS_PROGRAM_ID: z.string().min(32),
+  DATABASE_URL: optionalUrl("postgresql://localhost:5432/trustmesh"),
+  REDIS_URL: optionalUrl("redis://localhost:6379"),
+  JWT_SECRET: optionalString(
+    "dev-secret-not-for-production-please-rotate-32c",
+    32
+  ),
+  SOLANA_RPC_URL: optionalUrl("https://api.devnet.solana.com"),
+  ANCHOR_PROGRAM_ID: optionalString(
+    "66DXeSqBccWxWWw9S21vxe2Mvvqqkmw5KsK5jqA42quz",
+    32
+  ),
+  SNS_PROGRAM_ID: optionalString(
+    "namesLPneVptA9Z5rqUDD9tMTWEJwofgaYwp8cawRkX",
+    32
+  ),
   FRONTEND_URL: z.string().url().default(inferredFrontendUrl),
   PORT: z.coerce.number().int().positive().default(3002),
   NODE_ENV: z.enum(["development", "production", "test"]).default("development")

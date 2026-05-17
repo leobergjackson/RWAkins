@@ -2,9 +2,11 @@
   "name": "shadowledger-nexus",
   "private": true,
   "scripts": {
-    "build": "turbo build",
+    "build": "prisma generate --schema=packages/database/prisma/schema.prisma && npm run build --workspace=apps/backend",
+    "build:all": "turbo build",
     "vercel-build": "prisma generate --schema=packages/database/prisma/schema.prisma && turbo build",
     "dev": "turbo dev",
+    "start": "npm run start:prod --workspace=apps/backend",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db:setup": "cd packages/database && npx prisma migrate dev && npx prisma db seed"

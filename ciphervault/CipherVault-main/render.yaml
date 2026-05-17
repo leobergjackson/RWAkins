@@ -6,7 +6,7 @@ services:
     plan: free
     rootDir: ciphervault/CipherVault-main
     buildCommand: npm install && npm run build
-    startCommand: npm start
+    startCommand: node index.js
     healthCheckPath: /api/health
     envVars:
       - key: NODE_VERSION

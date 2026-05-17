@@ -4,9 +4,9 @@ services:
     env: node
     region: oregon
     plan: free
-    rootDir: syncsplit/Stellar-Syncsplit-main/backend
-    buildCommand: npm install
-    startCommand: node index.js
+    rootDir: syncsplit/Stellar-Syncsplit-main
+    buildCommand: npm install --prefix backend
+    startCommand: node backend/index.js
     healthCheckPath: /health
     envVars:
       - key: NODE_VERSION
