@@ -7,17 +7,26 @@ import { useEconomicOps } from '../../lib/economic-ops'
 import { useGlobalMemory } from '../../lib/global-memory'
 import { usePlatformState } from '../../lib/platform-engine'
 import { useAutonomousOps } from '../../lib/autonomous-ops'
+import { useCognition } from '../../lib/cognition-engine'
 import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
 import CommandPalette from '../components/CommandPalette'
 
 export default function ExecutivePage() {
   const { proposals, sovereigntyIndex, consensusStability, quorumIntegrity, threats, toggleThreat } = useSovereignOps()
-  const { pools, incentives, treasuryEquilibriumIndex, coordinationEfficiency, treasuryPressureLevel, rebalanceIncentives } = useEconomicOps()
+  const { treasuryEquilibriumIndex, treasuryPressureLevel, rebalanceIncentives } = useEconomicOps()
   const { snapshots, restoreSnapshot } = useGlobalMemory()
   const { activeScenario, currentMode } = usePlatformState()
-  const { operationalRiskScore, infrastructureConfidenceScore, resilienceStatus } = useAutonomousOps()
+  const { operationalRiskScore, infrastructureConfidenceScore } = useAutonomousOps()
+
+  // Cognition Engine integrations
+  const { livingTelemetry, clusters, chronicle, ecosystemScore, orchestrationPressure, healingSimulationActive, archiveMaturityEpoch, triggerSelfHealing } = useCognition()
 
   const [selectedSnapshotId, setSelectedSnapshotId] = useState<string | null>(null)
+  
+  // Custom Epoch Form
+  const [epochNameInput, setEpochNameInput] = useState('')
+  const [epochSummaryInput, setEpochSummaryInput] = useState('')
+  const [showEpochModal, setShowEpochModal] = useState(false)
 
   function handleRestore(id: string) {
     restoreSnapshot(id)
@@ -27,7 +36,15 @@ export default function ExecutivePage() {
     }, 2000)
   }
 
-  // Active policy queue count
+  function handleArchiveEpoch(e: React.FormEvent) {
+    e.preventDefault()
+    if (!epochNameInput.trim() || !epochSummaryInput.trim()) return
+    archiveMaturityEpoch(epochNameInput, epochSummaryInput)
+    setEpochNameInput('')
+    setEpochSummaryInput('')
+    setShowEpochModal(false)
+  }
+
   const activePolicyQueueCount = proposals.filter(p => p.status === 'voting').length
   const activeThreatsCount = threats.filter(t => t.compromiseSimulationActive).length
 
@@ -40,14 +57,29 @@ export default function ExecutivePage() {
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>◀ Dashboard</Link>
             <span style={{ color: '#666', fontSize: 12 }}>/</span>
-            <span style={{ fontSize: 13, color: '#aaa' }}>Executive Command</span>
+            <span style={{ fontSize: 13, color: '#aaa' }}>Executive Control Board</span>
           </div>
           <h1 style={{ margin: '6px 0 0', fontSize: 28, fontWeight: 800, letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span>👑</span> Sovereign Executive Command
+            <span>👑</span> Sovereign Executive Command Board
           </h1>
         </div>
 
         <div style={{ display: 'flex', gap: 10 }}>
+          <button
+            onClick={triggerSelfHealing}
+            className="btn-outline"
+            style={{ padding: '8px 16px', fontSize: 12, borderColor: 'rgba(16,185,129,0.3)', color: '#10B981' }}
+            disabled={healingSimulationActive}
+          >
+            {healingSimulationActive ? '🧬 Healing System...' : '🛡️ Trigger Self-Healing'}
+          </button>
+          <button
+            onClick={() => setShowEpochModal(true)}
+            className="btn-outline"
+            style={{ padding: '8px 16px', fontSize: 12 }}
+          >
+            ✍️ Archive Maturity Epoch
+          </button>
           <button
             onClick={rebalanceIncentives}
             className="btn-gold"
@@ -58,140 +90,168 @@ export default function ExecutivePage() {
         </div>
       </header>
 
-      {/* Main SLA Indicators Row */}
+      {/* Living Infrastructure Telemetry Dashboard Indicators */}
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12, marginBottom: 24 }}>
         
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
-            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Sovereign Health</span>
+            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Sovereignty & Ecosystem</span>
             <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#F5C518' }}>
-              {sovereigntyIndex}%
+              {sovereigntyIndex}% / {ecosystemScore}%
             </strong>
           </div>
-          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Uptime Autonomy Index</span>
+          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Sovereign Index & Interdependency Health</span>
         </article>
 
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
-            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Sync Confidence</span>
+            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mempool Pressure</span>
             <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#fff' }}>
-              {consensusStability}%
+              {livingTelemetry.mempoolPressure} TPS
             </strong>
           </div>
-          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Consensus Heartbeat Sync</span>
+          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Entropy Index: <strong style={{ color: '#ccc' }}>{livingTelemetry.entropyIndex}%</strong></span>
         </article>
 
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
-            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Equilibrium Index</span>
+            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Orchestration Pressure</span>
             <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#10B981' }}>
-              {treasuryEquilibriumIndex}%
+              {orchestrationPressure}%
             </strong>
           </div>
-          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Treasury Resource Pressure: <strong style={{ color: '#F5C518', textTransform: 'uppercase' }}>{treasuryPressureLevel}</strong></span>
+          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Stabilization Forecast: <strong style={{ color: '#F5C518' }}>{livingTelemetry.stabilizationForecast}%</strong></span>
         </article>
 
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
-            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Active Threat Level</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: activeThreatsCount > 0 ? '#EF4444' : '#10B981' }}>
-              {activeThreatsCount > 0 ? 'ELEVATED' : 'SAFE'}
+            <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Self-Healing Factor</span>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: livingTelemetry.healingScore > 90 ? '#10B981' : '#F5C518' }}>
+              {livingTelemetry.healingScore}%
             </strong>
           </div>
-          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>{activeThreatsCount} Simulated Threat Vectors</span>
+          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Active Threats: <strong style={{ color: activeThreatsCount > 0 ? '#EF4444' : '#10B981' }}>{activeThreatsCount} Simulated</strong></span>
         </article>
 
       </section>
 
-      {/* Main Executive Cockpit Layout */}
+      {/* Main Panel Grid */}
       <section style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: 20, marginBottom: 24 }}>
         
-        {/* Left Side: Dynamic Rebalance & Validator Mesh Controls */}
+        {/* Left Side: Living behaviors, cognition, and graphs */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           
-          {/* Sovereign Coordination Map / Topology */}
+          {/* Distributed Cognition & situational awareness */}
           <article className="card" style={{ padding: 18 }}>
-            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🌐 Sovereign Coordination Map & Topology</h3>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🧠 Distributed Operational Cognition Layer</h3>
             <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-              Dynamic trust score pathways visualizer mapping out active decentralized quorums.
+              Specialized heuristic reasoning clusters scanning active network events and prioritizations.
             </p>
 
-            <div style={{ height: 220, background: '#030303', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 8, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-              
-              <div style={{ display: 'flex', gap: 30, zIndex: 10 }}>
-                {[
-                  { name: 'US Node (EVM)', trust: sovereigntyIndex, delay: '12ms' },
-                  { name: 'EU Relay (Solana)', trust: consensusStability, delay: '42ms' },
-                  { name: 'APAC Node (Stellar)', trust: quorumIntegrity, delay: '88ms' }
-                ].map((item) => (
-                  <div key={item.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-                    <div style={{ width: 60, height: 60, borderRadius: '50%', background: 'rgba(245,197,24,0.02)', border: '1px solid rgba(245,197,24,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-                      <strong style={{ fontSize: 12, color: '#F5C518' }}>{item.trust}%</strong>
-                      <span style={{ position: 'absolute', inset: -2, border: '1px solid rgba(255,255,255,0.05)', borderRadius: '50%', animation: 'spin 10s linear infinite' }} />
-                    </div>
-                    <span style={{ fontSize: 11, color: '#fff', fontWeight: 'bold' }}>{item.name}</span>
-                    <span style={{ fontSize: 9, color: '#888' }}>Ping: {item.delay}</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {clusters.map((cluster) => (
+                <div 
+                  key={cluster.id}
+                  style={{
+                    padding: 14,
+                    background: 'rgba(255,255,255,0.01)',
+                    border: '1px solid rgba(255,255,255,0.03)',
+                    borderRadius: 6
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                    <strong style={{ fontSize: 13, color: '#fff' }}>{cluster.nodeName}</strong>
+                    <span style={{ fontSize: 10, background: 'rgba(245,197,24,0.06)', color: '#F5C518', padding: '2px 6px', borderRadius: 4 }}>
+                      Cognition Confidence: {cluster.cognitionScore}%
+                    </span>
                   </div>
-                ))}
-              </div>
 
-              <div style={{ position: 'absolute', bottom: 10, left: 10, right: 10, display: 'flex', justifyContent: 'space-between', fontSize: 9, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>
-                <span>Active Scenario: {activeScenario}</span>
-                <span>Active Mode: {currentMode}</span>
-              </div>
+                  <div style={{ fontSize: 11, color: '#aaa', marginTop: 4 }}>
+                    <span>Prioritized Threat/Anomaly: </span>
+                    <strong style={{ color: '#F5C518' }}>{cluster.prioritizedAnomaly}</strong>
+                  </div>
+
+                  <div style={{ fontSize: 10, color: '#777', fontFamily: 'monospace', marginTop: 6, padding: '4px 8px', background: '#040404', borderRadius: 4 }}>
+                    Heuristic Rule: {cluster.heuristicRule}
+                  </div>
+                </div>
+              ))}
             </div>
           </article>
 
-          {/* Historical Snapshots Restoration Engine */}
+          {/* Living Volatility & Drift Graphs */}
           <article className="card" style={{ padding: 18 }}>
-            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>💾 Global Strategic Memory Archive</h3>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>📈 Live Volatility & Drift Indicators</h3>
             <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-              Compare historical infrastructure states and restore configurations statefully.
+              Continuous telemetry fluctuations reflecting mempool capacity waves and RPC congestion indexes.
             </p>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {snapshots.map((snap) => {
-                const isRestoring = selectedSnapshotId === snap.id
-                return (
-                  <div 
-                    key={snap.id}
-                    style={{
-                      padding: 12,
-                      background: 'rgba(255,255,255,0.01)',
-                      border: '1px solid rgba(255,255,255,0.03)',
-                      borderRadius: 6,
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
-                    }}
-                  >
-                    <div>
-                      <strong style={{ fontSize: 12, color: '#fff' }}>{snap.description}</strong>
-                      <span style={{ display: 'block', fontSize: 9, color: '#888', marginTop: 2 }}>
-                        Captured: {new Date(snap.timestamp).toLocaleString()} • Risk Index: {snap.riskScore}%
-                      </span>
-                    </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              
+              <div style={{ background: '#030303', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6, padding: 12 }}>
+                <span style={{ fontSize: 10, color: '#888' }}>Validator Reliability Drift</span>
+                <strong style={{ display: 'block', fontSize: 20, color: '#fff', margin: '4px 0' }}>
+                  {livingTelemetry.validatorParticipation}%
+                </strong>
+                <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, overflow: 'hidden' }}>
+                  <div style={{ width: `${livingTelemetry.validatorParticipation}%`, background: '#F5C518', height: '100%' }} />
+                </div>
+              </div>
 
-                    <button
-                      onClick={() => handleRestore(snap.id)}
-                      className="btn-gold"
-                      style={{ padding: '4px 10px', fontSize: 11, height: 'auto' }}
-                      disabled={isRestoring}
-                    >
-                      {isRestoring ? '⌛ Restoring...' : '🔄 Restore State'}
-                    </button>
+              <div style={{ background: '#030303', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6, padding: 12 }}>
+                <span style={{ fontSize: 10, color: '#888' }}>RPC Fluctuation Rate</span>
+                <strong style={{ display: 'block', fontSize: 20, color: '#fff', margin: '4px 0' }}>
+                  +{livingTelemetry.rpcFluctuationRate}ms drift
+                </strong>
+                <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, overflow: 'hidden' }}>
+                  <div style={{ width: `${Math.min(100, livingTelemetry.rpcFluctuationRate * 1.5)}%`, background: '#EF4444', height: '100%' }} />
+                </div>
+              </div>
+
+            </div>
+          </article>
+
+          {/* Chronicle timeline explorer */}
+          <article className="card" style={{ padding: 18 }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>📖 Global Operational Chronicle Explorer</h3>
+            <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
+              Immortal system maturity log detailing major organizational epochs and governance sweeps.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {chronicle.map((epoch) => (
+                <div 
+                  key={epoch.id}
+                  style={{
+                    padding: 14,
+                    background: 'rgba(255,255,255,0.01)',
+                    border: '1px solid rgba(255,255,255,0.03)',
+                    borderRadius: 6
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                    <strong style={{ fontSize: 13, color: '#fff' }}>{epoch.epochName}</strong>
+                    <span style={{ fontSize: 9, color: '#888' }}>{new Date(epoch.timestamp).toLocaleString()}</span>
                   </div>
-                )
-              })}
+
+                  <p style={{ margin: '4px 0 8px', fontSize: 12, color: '#ccc', lineHeight: 1.4 }}>{epoch.eventSummary}</p>
+
+                  <div style={{ display: 'flex', gap: 16, fontSize: 10, color: '#777' }}>
+                    <span>Sovereignty: <strong style={{ color: '#aaa' }}>{epoch.sovereigntyLevel}%</strong></span>
+                    <span>Clarity: <strong style={{ color: '#aaa' }}>{epoch.cognitiveClarity}%</strong></span>
+                    <span>Active Threats: <strong style={{ color: '#aaa' }}>{epoch.activeThreatCount}</strong></span>
+                  </div>
+                </div>
+              ))}
             </div>
           </article>
 
         </div>
 
-        {/* Right Side: Threat forecasting and Policy queue */}
+        {/* Right Side: Threat forecasting, snapshot restore */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           
-          {/* Advanced Threat Forecast Matrix */}
+          {/* Active threat matrix */}
           <article className="card" style={{ padding: 18 }}>
             <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>🛡️ Advanced Threat Forecast Matrix</h3>
             <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
@@ -239,32 +299,99 @@ export default function ExecutivePage() {
             </div>
           </article>
 
-          {/* Active Policy Queue */}
+          {/* Historical state snapshots */}
           <article className="card" style={{ padding: 18 }}>
-            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>⚙️ Active Policy Queue</h3>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>💾 Global Strategic Memory Archive</h3>
             <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-              Pending operational policies awaiting consensus validation.
+              Compare historical infrastructure states and restore configurations statefully.
             </p>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 11 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                <span style={{ color: '#aaa' }}>Proposals in voting:</span>
-                <strong style={{ color: '#fff' }}>{activePolicyQueueCount} active KIPs</strong>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                <span style={{ color: '#aaa' }}>Consensus validation quorum:</span>
-                <strong style={{ color: '#fff' }}>1,000,000 required</strong>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: '#aaa' }}>Veto consensus threshold:</span>
-                <strong style={{ color: '#fff' }}>20% block voting</strong>
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {snapshots.map((snap) => {
+                const isRestoring = selectedSnapshotId === snap.id
+                return (
+                  <div 
+                    key={snap.id}
+                    style={{
+                      padding: 12,
+                      background: 'rgba(255,255,255,0.01)',
+                      border: '1px solid rgba(255,255,255,0.03)',
+                      borderRadius: 6,
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <div>
+                      <strong style={{ fontSize: 12, color: '#fff' }}>{snap.description}</strong>
+                      <span style={{ display: 'block', fontSize: 9, color: '#888', marginTop: 2 }}>
+                        Captured: {new Date(snap.timestamp).toLocaleString()} • Risk Index: {snap.riskScore}%
+                      </span>
+                    </div>
+
+                    <button
+                      onClick={() => handleRestore(snap.id)}
+                      className="btn-gold"
+                      style={{ padding: '4px 10px', fontSize: 11, height: 'auto' }}
+                      disabled={isRestoring}
+                    >
+                      {isRestoring ? '⌛ Restoring...' : '🔄 Restore State'}
+                    </button>
+                  </div>
+                )
+              })}
             </div>
           </article>
 
         </div>
 
       </section>
+
+      {/* Epoch Archive Modal */}
+      {showEpochModal && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(5px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+          <div className="card" style={{ width: '90%', maxWidth: 450, padding: 24, border: '1px solid rgba(245,197,24,0.4)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+              <h3 style={{ margin: 0, fontSize: 18, color: '#fff' }}>Archive Maturity Epoch</h3>
+              <button onClick={() => setShowEpochModal(false)} style={{ background: 'none', border: 'none', color: '#888', fontSize: 16, cursor: 'pointer' }}>✕</button>
+            </div>
+
+            <form onSubmit={handleArchiveEpoch} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div>
+                <label style={{ display: 'block', fontSize: 11, color: '#888', marginBottom: 4 }}>Epoch Name</label>
+                <input 
+                  type="text"
+                  value={epochNameInput}
+                  onChange={(e) => setEpochNameInput(e.target.value)}
+                  placeholder="e.g. Core Staking Quorum Upgrade"
+                  required
+                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: 11, color: '#888', marginBottom: 4 }}>Maturity Chronicle Summary</label>
+                <textarea 
+                  value={epochSummaryInput}
+                  onChange={(e) => setEpochSummaryInput(e.target.value)}
+                  placeholder="Summarize the core structural upgrades, compliance additions, or performance adjustments..."
+                  required
+                  rows={4}
+                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none', resize: 'none' }}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="btn-gold"
+                style={{ padding: '10px', fontSize: 12, fontWeight: 'bold', marginTop: 8 }}
+              >
+                Archive Epoch statefully
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       <ExecutiveWalkthrough />
       <CommandPalette />

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
 import CommandPalette from '../components/CommandPalette'
@@ -15,6 +15,8 @@ interface NarrativeSlide {
 
 export default function StoryPage() {
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0)
+
+
 
   const slides: NarrativeSlide[] = [
     {
@@ -131,6 +133,18 @@ export default function StoryPage() {
     }
   ]
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        setActiveSlideIndex((prev) => Math.min(slides.length - 1, prev + 1))
+      } else if (e.key === 'ArrowLeft') {
+        setActiveSlideIndex((prev) => Math.max(0, prev - 1))
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [slides.length])
+
   const slide = slides[activeSlideIndex]
 
   return (
@@ -168,7 +182,7 @@ export default function StoryPage() {
       >
         <div>
           <p className="eyebrow" style={{ color: '#F5C518', fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', margin: '0 0 8px' }}>
-            Slide {activeSlideIndex + 1} of 5
+            Slide {activeSlideIndex + 1} of {slides.length}
           </p>
           <h2 style={{ fontSize: 32, margin: '0 0 4px', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>
             {slide.title}
