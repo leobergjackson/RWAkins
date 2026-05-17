@@ -41,7 +41,7 @@ const QIE_MAINNET = {
   blockExplorerUrls: ['https://mainnet.qie.digital'],
 }
 
-const apiBase = process.env.NEXT_PUBLIC_ETERNALVAULT_API || ''
+const apiBase = process.env.NEXT_PUBLIC_ETERNALVAULT_URL || process.env.NEXT_PUBLIC_ETERNALVAULT_API || ''
 
 function shortAddress(address: string) {
   return `${address.slice(0, 6)}...${address.slice(-4)}`
