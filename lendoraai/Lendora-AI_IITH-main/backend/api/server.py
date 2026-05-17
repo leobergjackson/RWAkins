@@ -26,16 +26,39 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../.."))
 # Hydra removed - using Ethereum L2 instead
 HYDRA_AVAILABLE = False
 
-# Import AI Agents
-try:
-    from agents.borrower_agent import create_borrower_agent
-    from agents.lender_agent import create_lender_agent, handle_negotiation_request
-    from agents.multi_agent_negotiation import get_negotiation_manager
-    from crewai import Crew, Task
-    AGENTS_AVAILABLE = True
-except ImportError as e:
-    AGENTS_AVAILABLE = False
-    print(f"[WARNING] Agent modules not available: {e}")
+# AI Agent imports are deferred to first-use to keep boot fast and within Render's
+# 512Mi free-tier memory budget. Eagerly importing crewai pulls in chromadb,
+# langchain, lancedb, onnxruntime, pyarrow and friends — ~400-500MB at import time
+# which OOM-kills the process before uvicorn can bind to $PORT.
+AGENTS_AVAILABLE: bool = False
+_AGENT_LOADERS_INITIALIZED = False
+create_borrower_agent = None  # type: ignore
+create_lender_agent = None  # type: ignore
+handle_negotiation_request = None  # type: ignore
+get_negotiation_manager = None  # type: ignore
+
+
+def _load_agent_modules() -> bool:
+    """Lazy-load crewai-dependent modules. Returns True if all imports succeeded."""
+    global AGENTS_AVAILABLE, _AGENT_LOADERS_INITIALIZED
+    global create_borrower_agent, create_lender_agent, handle_negotiation_request, get_negotiation_manager
+    if _AGENT_LOADERS_INITIALIZED:
+        return AGENTS_AVAILABLE
+    _AGENT_LOADERS_INITIALIZED = True
+    try:
+        from agents.borrower_agent import create_borrower_agent as _cba
+        from agents.lender_agent import create_lender_agent as _cla, handle_negotiation_request as _hnr
+        from agents.multi_agent_negotiation import get_negotiation_manager as _gnm
+        create_borrower_agent = _cba
+        create_lender_agent = _cla
+        handle_negotiation_request = _hnr
+        get_negotiation_manager = _gnm
+        AGENTS_AVAILABLE = True
+        print("[Agents] crewai-backed agent modules loaded lazily")
+    except Exception as e:
+        AGENTS_AVAILABLE = False
+        print(f"[WARNING] Agent modules not available: {e}")
+    return AGENTS_AVAILABLE
 
 # PyCardano removed - using Ethereum transaction builder instead
 CARDANO_TX_AVAILABLE = False
@@ -56,86 +79,79 @@ except ImportError as e:
 # Application Setup
 # ============================================================================
 
+async def _initialize_agents_background(app: FastAPI):
+    """Load crewai and instantiate agents off the boot path so the port can bind first."""
+    try:
+        await asyncio.sleep(0.5)  # let uvicorn finish binding the socket first
+        loaded = _load_agent_modules()
+        if not loaded:
+            print("[Agents] crewai modules not available, running in simulation mode")
+            return
+
+        try:
+            app.state.lenny_agent = create_borrower_agent()  # type: ignore[misc]
+            print("[Agents] Lenny (Borrower Agent) initialized")
+        except Exception as e:
+            print(f"[Agents] Lenny initialization failed: {e}")
+            app.state.lenny_agent = None
+
+        try:
+            app.state.luna_agent = create_lender_agent()  # type: ignore[misc]
+            print("[Agents] Luna (Lender Agent) initialized")
+        except Exception as e:
+            print(f"[Agents] Luna initialization failed: {e}")
+            app.state.luna_agent = None
+
+        if app.state.lenny_agent or app.state.luna_agent:
+            app.state.agents_initialized = True
+            app.state.agent_heartbeat_task = asyncio.create_task(agent_heartbeat())
+            print("[Agents] AI agents online; heartbeat started")
+            try:
+                await manager.broadcast({
+                    "type": "agent_status",
+                    "data": {"status": "idle", "task": "Ready for loan negotiations"}
+                })
+            except Exception:
+                pass
+    except Exception as e:
+        print(f"[Agents] Background init crashed: {e}")
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup
-    # Note: uvicorn may override PORT env var with command line --port
-    # We'll read it from the app state if available, otherwise default
     port = int(os.getenv("PORT", "8000"))
     host = os.getenv("HOST", "0.0.0.0")
     display_host = "localhost" if host == "0.0.0.0" else host
 
     print("=" * 70)
     print("Lendora AI Backend API Started")
-    print("=" * 70)
     print(f"REST API:    http://{display_host}:{port}")
     print(f"WebSocket:   ws://{display_host}:{port}/ws")
     print(f"Docs:        http://{display_host}:{port}/docs")
     print("=" * 70)
-    print("Note: Actual port shown in uvicorn startup message above")
-    print("=" * 70)
 
-    # Hydra removed - using Ethereum L2 instead
     app.state.hydra_manager = None
-
-    # Initialize AI Agents (always running)
-    print("[Agents] Initializing AI agents...")
     app.state.agents_initialized = False
     app.state.agent_heartbeat_task = None
+    app.state.lenny_agent = None
+    app.state.luna_agent = None
 
-    # Set dummy environment variables to prevent LLM initialization errors
+    # Defaults so litellm/crewai don't crash if these env vars are unset
     os.environ.setdefault('OPENAI_API_KEY', 'dummy-key-for-development')
     os.environ.setdefault('ANTHROPIC_API_KEY', 'dummy-key-for-development')
 
-    try:
-        # Masumi removed - Cardano-specific agent no longer needed
-
-        if AGENTS_AVAILABLE:
-            # Initialize CrewAI agents (may fail due to LLM issues)
-            try:
-                lenny = create_borrower_agent()
-                app.state.lenny_agent = lenny
-                print("[Agents] Lenny (Borrower Agent) initialized and ready")
-            except Exception as e:
-                print(f"[Agents] Lenny initialization failed (LLM issue): {e}")
-                app.state.lenny_agent = None
-
-            try:
-                luna = create_lender_agent()
-                app.state.luna_agent = luna
-                print("[Agents] Luna (Lender Agent) initialized and ready")
-            except Exception as e:
-                print(f"[Agents] Luna initialization failed (LLM issue): {e}")
-                app.state.luna_agent = None
-
-            # Check if at least one component is available
-            if app.state.lenny_agent or app.state.luna_agent:
-                app.state.agents_initialized = True
-                print("[Agents] AI agents system initialized (with available components)")
-
-                # Start agent heartbeat task
-                app.state.agent_heartbeat_task = asyncio.create_task(agent_heartbeat())
-                print("[Agents] Agent heartbeat monitoring started")
-
-                # Broadcast initial agent status
-                await manager.broadcast({
-                    "type": "agent_status",
-                    "data": {"status": "idle", "task": "Ready for loan negotiations"}
-                })
-            else:
-                print("[Agents] No AI components available, using full simulation mode")
-                app.state.agents_initialized = False
-        else:
-            print("[Agents] CrewAI not available, using simulation mode")
-            app.state.agents_initialized = False
-
-    except Exception as e:
-        print(f"[Agents] Critical error during initialization: {e}")
-        app.state.agents_initialized = False
-        app.state.lenny_agent = None
-        app.state.luna_agent = None
+    # Fire-and-forget background init — keeps boot fast so Render can detect the port
+    app.state.agent_init_task = asyncio.create_task(_initialize_agents_background(app))
 
     yield
+
+    # Cancel background init if still running
+    if hasattr(app.state, 'agent_init_task') and app.state.agent_init_task:
+        app.state.agent_init_task.cancel()
+        try:
+            await app.state.agent_init_task
+        except (asyncio.CancelledError, Exception):
+            pass
 
     # Shutdown
     print("[Shutdown] Cleaning up resources...")
