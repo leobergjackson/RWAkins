@@ -1,10 +1,22 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { CREDITBLOCKS_API } from '../../lib/api'
-import { fallbackCreditScore } from '../../lib/fallback'
-import { resilientRequest } from '../../lib/api-resilience'
-import { logTelemetryError } from '../../lib/telemetry'
+import Link from 'next/link'
+import {
+  generateScore,
+  fetchScoreBreakdown,
+  predictScore,
+  fetchOraclePrice,
+  type NcBreakdown,
+  type NcPrediction,
+} from '../../lib/neurocredit-api'
+import {
+  getRating,
+  fallbackBreakdown,
+  SCENARIO_LABELS,
+  SCENARIO_DESCRIPTIONS,
+  type StakingTier,
+} from '../../lib/neurocredit-fallbacks'
 import {
   isMetaMaskInstalled,
   truncateAddress,
@@ -16,109 +28,241 @@ import {
   QIE_MAINNET,
 } from '../../lib/wallet-utils'
 import { toast } from '../../lib/toast'
-import { getExplorerUrl } from '../../lib/explorer'
-import DemoBanner from '../components/DemoBanner'
-import { SkeletonCard } from '../components/Skeleton'
-import CopyButton from '../components/CopyButton'
-import ExecutiveWalkthrough from '../components/ExecutiveWalkthrough'
-import CommandPalette from '../components/CommandPalette'
 
-const NCRD_STAKING_CONTRACT = '0x08DA91C81cebD27d181cA732615379f185FbFb51'
-const NCRD_APY = 12
+// ─── Gauge math ──────────────────────────────────────────────
+const GAUGE_R = 90
+const GAUGE_CX = 110
+const GAUGE_CY = 110
+const GAUGE_CIRC = 2 * Math.PI * GAUGE_R  // 565.49
+const GAUGE_ARC = GAUGE_CIRC * 0.75       // 424.12
 
-type ScoreData = {
-  score: number
-  grade?: string
-  wallet?: string
-  history?: number[]
-  factors?: {
-    transactionHistory?: number
-    walletAge?: number
-    defiActivity?: number
-    repaymentRate?: number
-  }
-  nftMinted?: boolean
+function gaugeLen(score: number) {
+  return Math.max(0, Math.min((score / 1000) * GAUGE_ARC, GAUGE_ARC))
 }
 
-type ChatMsg = { role: 'user' | 'ai'; content: string; timestamp: Date }
+// ─── Sub-components ───────────────────────────────────────────
+function CreditGauge({ score, loading }: { score: number; loading: boolean }) {
+  const [animLen, setAnimLen] = useState(0)
 
-type StakeData = {
-  ncrdBalance: number
-  stakedAmount: number
-  pendingRewards: number
-}
+  useEffect(() => {
+    if (loading) { setAnimLen(0); return }
+    const t = setTimeout(() => setAnimLen(gaugeLen(score)), 120)
+    return () => clearTimeout(t)
+  }, [score, loading])
 
-const EXPLORER = 'https://mainnet.qie.digital'
+  const { label, color } = getRating(score)
 
-function Sparkline({ data }: { data: number[] }) {
-  if (!data?.length) return null
-  const w = 280, h = 70, pad = 6
-  const min = Math.min(...data), max = Math.max(...data)
-  const range = Math.max(1, max - min)
-  const pts = data
-    .map((v, i) => {
-      const x = pad + (i * (w - pad * 2)) / (data.length - 1)
-      const y = h - pad - ((v - min) / range) * (h - pad * 2)
-      return `${x},${y}`
-    })
-    .join(' ')
   return (
-    <div style={{ position: 'relative' }}>
-      <svg viewBox={`0 0 ${w} ${h}`} style={{ width: '100%', height: h, display: 'block' }}>
-        <polyline points={pts} fill="none" stroke="#F5C518" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-        {data.map((v, i) => {
-          const x = pad + (i * (w - pad * 2)) / (data.length - 1)
-          const y = h - pad - ((v - min) / range) * (h - pad * 2)
-          return <circle key={i} cx={x} cy={y} r="2.5" fill="#F5C518" />
-        })}
-      </svg>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, opacity: 0.6, marginTop: 4 }}>
-        <span>min {min}</span>
-        <span>max {max}</span>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+      <div style={{ position: 'relative', width: 220, height: 220 }}>
+        <svg viewBox="0 0 220 220" width={220} height={220}>
+          <defs>
+            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#8B5CF6" />
+              <stop offset="100%" stopColor="#3B5BFA" />
+            </linearGradient>
+            <filter id="gaugeGlow">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          {/* Track */}
+          <circle
+            cx={GAUGE_CX} cy={GAUGE_CY} r={GAUGE_R}
+            fill="none"
+            stroke="rgba(255,255,255,0.06)"
+            strokeWidth={16}
+            strokeDasharray={`${GAUGE_ARC} 999`}
+            strokeLinecap="round"
+            transform={`rotate(135 ${GAUGE_CX} ${GAUGE_CY})`}
+          />
+          {/* Active arc */}
+          <circle
+            cx={GAUGE_CX} cy={GAUGE_CY} r={GAUGE_R}
+            fill="none"
+            stroke="url(#gaugeGrad)"
+            strokeWidth={16}
+            strokeDasharray={`${animLen} 999`}
+            strokeLinecap="round"
+            transform={`rotate(135 ${GAUGE_CX} ${GAUGE_CY})`}
+            filter="url(#gaugeGlow)"
+            style={{ transition: 'stroke-dasharray 1.3s cubic-bezier(0.4,0,0.2,1)' }}
+          />
+        </svg>
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            textAlign: 'center',
+            pointerEvents: 'none',
+          }}
+        >
+          {loading ? (
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                border: '3px solid rgba(255,255,255,0.1)',
+                borderTop: '3px solid #8B5CF6',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite',
+              }}
+            />
+          ) : (
+            <>
+              <p style={{ fontSize: 52, fontWeight: 800, lineHeight: 1, margin: 0, color: '#fff', letterSpacing: '-2px' }}>
+                {score}
+              </p>
+              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', margin: '2px 0 0' }}>/ 1000</p>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Rating badge */}
+      <div
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 7,
+          padding: '5px 16px',
+          borderRadius: 20,
+          background: `${color}18`,
+          border: `1px solid ${color}45`,
+        }}
+      >
+        <span
+          style={{
+            width: 7,
+            height: 7,
+            borderRadius: '50%',
+            background: color,
+            boxShadow: `0 0 8px ${color}`,
+            flexShrink: 0,
+          }}
+        />
+        <span style={{ fontSize: 13, fontWeight: 600, color }}>{label}</span>
+      </div>
+
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  )
+}
+
+function ProgressBar({
+  value,
+  max,
+  color,
+  label,
+  displayValue,
+}: {
+  value: number
+  max: number
+  color: string
+  label: string
+  displayValue: string
+}) {
+  const pct = Math.max(0, Math.min((value / max) * 100, 100))
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 6 }}>
+        <span style={{ color: 'rgba(255,255,255,0.7)' }}>{label}</span>
+        <span style={{ fontWeight: 600, color }}>{displayValue}</span>
+      </div>
+      <div style={{ height: 8, background: 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden' }}>
+        <div
+          style={{
+            height: '100%',
+            width: `${pct}%`,
+            background: color,
+            borderRadius: 99,
+            transition: 'width 1s cubic-bezier(0.4,0,0.2,1)',
+          }}
+        />
       </div>
     </div>
   )
 }
 
-function FactorBar({ label, value }: { label: string; value: number }) {
-  const v = Math.max(0, Math.min(100, value))
-  return (
-    <div style={{ marginBottom: 12 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 4 }}>
-        <span>{label}</span>
-        <span className="gold-text">{v}%</span>
-      </div>
-      <div style={{ height: 8, background: 'rgba(255,255,255,0.06)', borderRadius: 999, overflow: 'hidden' }}>
-        <div style={{ width: `${v}%`, height: '100%', background: 'linear-gradient(90deg,#F5C518,#FFD95C)', borderRadius: 999 }} />
-      </div>
-    </div>
-  )
+// ─── Style helpers ───────────────────────────────────────────
+const card: React.CSSProperties = {
+  background: 'rgba(255,255,255,0.04)',
+  border: '1px solid rgba(255,255,255,0.08)',
+  borderRadius: 14,
+  padding: '20px 22px',
 }
 
-export default function CreditPage() {
+const btnPrimary: React.CSSProperties = {
+  background: 'linear-gradient(135deg, #8B5CF6, #3B5BFA)',
+  color: '#fff',
+  border: 'none',
+  borderRadius: 8,
+  padding: '10px 20px',
+  fontSize: 14,
+  fontWeight: 600,
+  cursor: 'pointer',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 6,
+}
+
+const btnOutline: React.CSSProperties = {
+  background: 'transparent',
+  color: 'rgba(255,255,255,0.6)',
+  border: '1px solid rgba(255,255,255,0.15)',
+  borderRadius: 8,
+  padding: '10px 20px',
+  fontSize: 14,
+  fontWeight: 500,
+  cursor: 'pointer',
+}
+
+// ─── Page ─────────────────────────────────────────────────────
+export default function CreditDashboard() {
   const [wallet, setWallet] = useState('')
-  const [data, setData] = useState<ScoreData | null>(null)
-  const [isDemo, setIsDemo] = useState(false)
+  const [score, setScore] = useState(650)
+  const [explanation, setExplanation] = useState('Based on on-chain analysis')
+  const [refreshTxHash, setRefreshTxHash] = useState('')
+  const [breakdown, setBreakdown] = useState<NcBreakdown>(fallbackBreakdown)
+  const [oraclePrice, setOraclePrice] = useState(2.45)
   const [loading, setLoading] = useState(false)
-  const [minting, setMinting] = useState(false)
+  const [isDemo, setIsDemo] = useState(false)
   const [error, setError] = useState('')
-  const [chat, setChat] = useState<ChatMsg[]>([])
-  const [input, setInput] = useState('')
-  const [chatLoading, setChatLoading] = useState(false)
-  const [stakeData, setStakeData] = useState<StakeData | null>(null)
-  const [stakeAmount, setStakeAmount] = useState('')
-  const [unstakeAmount, setUnstakeAmount] = useState('')
-  const [stakeLoading, setStakeLoading] = useState(false)
 
-  const [mintTxHash, setMintTxHash] = useState('')
-  const [stakeTxHash, setStakeTxHash] = useState('')
+  const [scenario, setScenario] = useState('')
+  const [prediction, setPrediction] = useState<NcPrediction | null>(null)
+  const [predicting, setPredicting] = useState(false)
 
   const installed = useMemo(() => (typeof window === 'undefined' ? true : isMetaMaskInstalled()), [])
 
   useEffect(() => {
     const saved = loadWallet('evm')
     if (saved) setWallet(saved)
+    fetchOraclePrice().then(setOraclePrice)
   }, [])
+
+  useEffect(() => {
+    if (!wallet) return
+    loadDashboard(wallet)
+  }, [wallet])
+
+  async function loadDashboard(addr: string) {
+    setLoading(true)
+    setError('')
+    const [bd] = await Promise.all([
+      fetchScoreBreakdown(addr),
+      fetchOraclePrice().then(setOraclePrice),
+    ])
+    setBreakdown(bd)
+    setScore(bd.score)
+    setIsDemo(bd.score === fallbackBreakdown.score && bd.baseScore === fallbackBreakdown.baseScore)
+    setLoading(false)
+  }
 
   async function connect() {
     setError('')
@@ -139,377 +283,517 @@ export default function CreditPage() {
 
   function disconnect() {
     setWallet('')
-    setData(null)
     clearWallet('evm')
+    setScore(650)
+    setBreakdown(fallbackBreakdown)
+    setRefreshTxHash('')
+    setPrediction(null)
+    setIsDemo(false)
     toast.success('Wallet disconnected')
   }
 
-  async function loadScore(addr: string) {
-    if (!addr) return
-    setLoading(true)
-    setError('')
-    try {
-      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/score/${addr}`, {}, `credit_score_${addr}`)
-      setData({ ...json, wallet: addr })
-      setIsDemo(false)
-    } catch (err: any) {
-      setData({ ...fallbackCreditScore, wallet: addr })
-      setIsDemo(true)
-      logTelemetryError('FETCH_ERROR', 'CreditPassport LoadScore', err?.message || 'Offline', err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function generateScore() {
+  async function refreshScore() {
     if (!wallet) return
     setLoading(true)
+    setRefreshTxHash('')
     setError('')
-    try {
-      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/score`, {
-        method: 'POST',
-        body: JSON.stringify({ walletAddress: wallet, chainId: 1990 }),
-      }, `credit_score_${wallet}`)
-      setData({ ...json, wallet })
-      setIsDemo(false)
-      toast.success('Credit score regenerated')
-    } catch (err: any) {
-      setData({ ...fallbackCreditScore, wallet })
-      setIsDemo(true)
-      toast.error('Backend offline — showing demo score')
-      logTelemetryError('FETCH_ERROR', 'CreditPassport GenerateScore', err?.message || 'Offline', err)
-    } finally {
-      setLoading(false)
-    }
+    const res = await generateScore(wallet)
+    setScore(res.score)
+    setExplanation(res.explanation || 'Based on on-chain analysis')
+    if (res.transactionHash) setRefreshTxHash(res.transactionHash)
+    setIsDemo(!res.transactionHash)
+    // Also refresh breakdown
+    const bd = await fetchScoreBreakdown(wallet)
+    setBreakdown(bd)
+    setLoading(false)
+    toast.success(res.transactionHash ? 'Score refreshed on-chain' : 'Score refreshed (demo mode)')
   }
 
-  async function mintNFT() {
-    if (!wallet) return
-    setMinting(true)
-    setError('')
-    try {
-      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/score/mint`, {
-        method: 'POST',
-        body: JSON.stringify({ walletAddress: wallet }),
-      })
-      setData((prev) => (prev ? { ...prev, nftMinted: true, ...json } : prev))
-      if (json.transactionHash) {
-        setMintTxHash(json.transactionHash)
-      }
-      toast.success('Credit Passport NFT minted on QIE')
-    } catch (err: any) {
-      const msg = err?.message || 'Mint failed — backend offline.'
-      setError(msg)
-      toast.error(msg)
-      logTelemetryError('FETCH_ERROR', 'CreditPassport MintNFT', msg, err)
-    } finally {
-      setMinting(false)
-    }
+  async function runPredictor() {
+    if (!scenario || !wallet) return
+    setPredicting(true)
+    setPrediction(null)
+    const res = await predictScore(wallet, scenario as any)
+    setPrediction(res)
+    setPredicting(false)
   }
 
-  async function sendChat() {
-    const text = input.trim()
-    if (!text) return
-    const userMsg: ChatMsg = { role: 'user', content: text, timestamp: new Date() }
-    setChat((prev) => [...prev, userMsg])
-    setInput('')
-    setChatLoading(true)
-    try {
-      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/chat`, {
-        method: 'POST',
-        body: JSON.stringify({ message: text, wallet }),
-      })
-      setChat((prev) => [...prev, { role: 'ai', content: json.reply || json.message || '(no reply)', timestamp: new Date() }])
-    } catch (err: any) {
-      setChat((prev) => [
-        ...prev,
-        { role: 'ai', content: 'Backend is offline. Connect a wallet on QIE Mainnet (chain ID 1990) and ensure CREDITBLOCKS_API is reachable.', timestamp: new Date() },
-      ])
-      logTelemetryError('AI_ERROR', 'CreditPassport Chat', err?.message || 'Offline', err)
-    } finally {
-      setChatLoading(false)
-    }
+  const stakingTierLabel = (tier: StakingTier) => {
+    if (tier === 'None') return 'None'
+    return tier
   }
-
-  async function loadStakeData(addr: string) {
-    setStakeLoading(true)
-    try {
-      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/staking/${addr}`, {}, `credit_staking_${addr}`)
-      setStakeData(json)
-    } catch (err: any) {
-      setStakeData({ ncrdBalance: 1000, stakedAmount: 500, pendingRewards: 5 })
-      logTelemetryError('FETCH_ERROR', 'CreditPassport LoadStakeData', err?.message || 'Offline', err)
-    } finally {
-      setStakeLoading(false)
-    }
-  }
-
-  async function stake() {
-    if (!wallet || !stakeAmount) return
-    setStakeLoading(true)
-    try {
-      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/staking/stake`, {
-        method: 'POST',
-        body: JSON.stringify({ walletAddress: wallet, amount: Number(stakeAmount) }),
-      })
-      if (json.transactionHash) {
-        setStakeTxHash(json.transactionHash)
-      }
-      toast.success(`Staked ${stakeAmount} NCRD`)
-      setStakeAmount('')
-      await loadStakeData(wallet)
-    } catch (err: any) {
-      toast.error(err?.message || 'Stake failed — backend offline')
-      setStakeData((prev) => prev ? { ...prev, ncrdBalance: prev.ncrdBalance - Number(stakeAmount), stakedAmount: prev.stakedAmount + Number(stakeAmount) } : prev)
-      logTelemetryError('FETCH_ERROR', 'CreditPassport Stake', err?.message || 'Offline', err)
-    } finally {
-      setStakeLoading(false)
-    }
-  }
-
-  async function unstake() {
-    if (!wallet || !unstakeAmount) return
-    setStakeLoading(true)
-    try {
-      const json = await resilientRequest<any>(`${CREDITBLOCKS_API}/api/staking/unstake`, {
-        method: 'POST',
-        body: JSON.stringify({ walletAddress: wallet, amount: Number(unstakeAmount) }),
-      })
-      if (json.transactionHash) {
-        setStakeTxHash(json.transactionHash)
-      }
-      toast.success(`Unstaked ${unstakeAmount} NCRD`)
-      setUnstakeAmount('')
-      await loadStakeData(wallet)
-    } catch (err: any) {
-      toast.error(err?.message || 'Unstake failed — backend offline')
-      setStakeData((prev) => prev ? { ...prev, ncrdBalance: prev.ncrdBalance + Number(unstakeAmount), stakedAmount: prev.stakedAmount - Number(unstakeAmount) } : prev)
-      logTelemetryError('FETCH_ERROR', 'CreditPassport Unstake', err?.message || 'Offline', err)
-    } finally {
-      setStakeLoading(false)
-    }
-  }
-
-  useEffect(() => { if (wallet) { loadScore(wallet); loadStakeData(wallet) } }, [wallet])
 
   return (
-    <main className="container" style={{ padding: '40px 24px' }}>
-      <header style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
+    <main style={{ padding: '32px 24px', maxWidth: 1100, margin: '0 auto' }}>
+      {/* ── Header ── */}
+      <header style={{ marginBottom: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <p className="eyebrow">Credit Passport</p>
-          <h1>On-chain credit score</h1>
-          <p className="silver-text">AI-powered. Soulbound NFT on QIE Mainnet (Chain ID 1990).</p>
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: '#8B5CF6', marginBottom: 4 }}>
+            CREDIT PASSPORT
+          </p>
+          <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, lineHeight: 1.2 }}>Your Credit Score</h1>
+          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 4 }}>
+            Based on on-chain analysis
+          </p>
         </div>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <span style={{ fontSize: 10, background: isDemo ? 'rgba(255, 255, 255, 0.03)' : 'rgba(34, 197, 94, 0.05)', border: isDemo ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(34, 197, 94, 0.3)', color: isDemo ? '#bbb' : '#22C55E', padding: '4px 10px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: isDemo ? '#bbb' : '#22C55E' }} />
-            {isDemo ? 'Demo Mode' : 'Live Connection'}
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+          <span
+            style={{
+              fontSize: 11,
+              padding: '4px 10px',
+              borderRadius: 20,
+              background: isDemo ? 'rgba(255,255,255,0.04)' : 'rgba(34,197,94,0.06)',
+              border: `1px solid ${isDemo ? 'rgba(255,255,255,0.1)' : 'rgba(34,197,94,0.3)'}`,
+              color: isDemo ? '#888' : '#22C55E',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 5,
+            }}
+          >
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: isDemo ? '#888' : '#22C55E', flexShrink: 0 }} />
+            {isDemo ? 'Demo Mode' : 'Live'}
           </span>
-          <span style={{ fontSize: 10, background: 'rgba(245, 197, 24, 0.05)', border: '1px solid rgba(245, 197, 24, 0.25)', color: '#F5C518', padding: '4px 10px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#F5C518' }} />
-            Connected to QIE Mainnet
+          <span
+            style={{
+              fontSize: 11,
+              padding: '4px 10px',
+              borderRadius: 20,
+              background: 'rgba(245,197,24,0.06)',
+              border: '1px solid rgba(245,197,24,0.25)',
+              color: '#F5C518',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 5,
+            }}
+          >
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#F5C518', flexShrink: 0 }} />
+            QIE Mainnet
           </span>
         </div>
       </header>
 
-      {isDemo && <DemoBanner />}
-
+      {/* ── No MetaMask ── */}
       {!installed && (
-        <div className="card">
-          <p>MetaMask is required for this tool.</p>
-          <a className="btn-gold" href={WALLET_INSTALL_LINKS.metamask} target="_blank" rel="noopener noreferrer">Install MetaMask</a>
+        <div style={{ ...card, marginBottom: 20, textAlign: 'center' }}>
+          <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: 12 }}>MetaMask is required to use NeuroCredit.</p>
+          <a href={WALLET_INSTALL_LINKS.metamask} target="_blank" rel="noopener noreferrer" style={btnPrimary}>
+            Install MetaMask
+          </a>
         </div>
       )}
 
+      {/* ── Connect wallet ── */}
       {installed && !wallet && (
-        <div className="card">
-          <p>Connect MetaMask on QIE Mainnet to generate or view your credit score.</p>
-          <button className="btn-gold" onClick={connect}>Connect Wallet</button>
-          {error && <p style={{ color: '#F87171', marginTop: 8 }}>{error}</p>}
+        <div style={{ ...card, marginBottom: 20, textAlign: 'center', padding: '40px 24px' }}>
+          <div
+            style={{
+              width: 60,
+              height: 60,
+              borderRadius: '50%',
+              background: 'rgba(139,92,246,0.12)',
+              border: '1px solid rgba(139,92,246,0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 16px',
+              fontSize: 28,
+            }}
+          >
+            🧠
+          </div>
+          <p style={{ fontSize: 16, fontWeight: 600, marginBottom: 6 }}>Connect your wallet</p>
+          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 20 }}>
+            Connect MetaMask on QIE Mainnet (Chain ID {QIE_MAINNET.chainId}) to generate your credit score.
+          </p>
+          <button style={btnPrimary} onClick={connect}>
+            Connect MetaMask
+          </button>
+          {error && <p style={{ color: '#F87171', marginTop: 10, fontSize: 13 }}>{error}</p>}
         </div>
       )}
 
+      {/* ── Connected Dashboard ── */}
       {wallet && (
         <>
-          <section className="card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
-              <div>
-                <p className="silver-text" style={{ fontSize: 12 }}>WALLET</p>
-                <p style={{ fontFamily: 'monospace', display: 'flex', alignItems: 'center', gap: 4 }}>
-                  {truncateAddress(wallet)}
-                  <CopyButton text={wallet} />
-                  <a href={getExplorerUrl('qie', 'address', wallet)} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ fontSize: 11 }}>↗</a>
-                </p>
+          {/* Wallet bar */}
+          <div
+            style={{
+              ...card,
+              marginBottom: 20,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: 10,
+              padding: '12px 18px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div
+                style={{
+                  width: 32,
+                  height: 32,
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #8B5CF6, #3B5BFA)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 14,
+                  flexShrink: 0,
+                }}
+              >
+                👤
               </div>
-              <span className="chain-badge"><span className="chain-dot" /> {QIE_MAINNET.chainName}</span>
-              <button className="btn-outline" onClick={disconnect}>Disconnect</button>
-            </div>
-          </section>
-
-          <section className="card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
-              <div>
-                <p className="silver-text" style={{ fontSize: 12 }}>YOUR SCORE</p>
-                <h2 className="gold-text" style={{ fontSize: 64, lineHeight: 1, margin: '4px 0' }}>{data?.score ?? '—'}</h2>
-                <p>Grade: <strong className="gold-text">{data?.grade ?? '—'}</strong></p>
-                {data?.nftMinted ? (
-                  <div style={{ marginTop: 8 }}>
-                    <p style={{ margin: 0 }}>Score on-chain ✅</p>
-                    {mintTxHash && (
-                      <p style={{ fontSize: 12, marginTop: 4, fontFamily: 'monospace', margin: '4px 0 0' }}>
-                        Tx: <a href={`${EXPLORER}/tx/${mintTxHash}`} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ textDecoration: 'underline' }}>{mintTxHash.slice(0, 10)}…{mintTxHash.slice(-8)} ↗</a>
-                      </p>
-                    )}
-                    <a href={`${EXPLORER}/address/${wallet}`} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ fontSize: 12, display: 'inline-block', marginTop: 4 }}>View on Explorer</a>
-                  </div>
-                ) : data && (
-                  <button className="btn-gold" style={{ marginTop: 12 }} onClick={mintNFT} disabled={minting}>
-                    {minting ? <span className="spinner" /> : 'Mint as NFT'}
-                  </button>
-                )}
-              </div>
-              <div style={{ flex: 1, minWidth: 240 }}>
-                <p className="silver-text" style={{ fontSize: 12, marginBottom: 4 }}>HISTORY</p>
-                <Sparkline data={data?.history && data.history.length ? data.history : fallbackCreditScore.history} />
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
-              <button className="btn-gold" onClick={generateScore} disabled={loading}>
-                {loading ? <span className="spinner" /> : 'Regenerate Score'}
-              </button>
-              <button className="btn-outline" onClick={() => loadScore(wallet)} disabled={loading}>Refresh</button>
-            </div>
-            {error && <p style={{ color: '#F87171', marginTop: 8 }}>{error}</p>}
-          </section>
-
-          <section className="card">
-            <h3>Score breakdown</h3>
-            {(() => {
-              const f = data?.factors || fallbackCreditScore.factors
-              return (
-                <>
-                  <FactorBar label="Transaction History" value={f.transactionHistory ?? 0} />
-                  <FactorBar label="Wallet Age"          value={f.walletAge ?? 0} />
-                  <FactorBar label="DeFi Activity"       value={f.defiActivity ?? 0} />
-                  <FactorBar label="Repayment Rate"      value={f.repaymentRate ?? 0} />
-                </>
-              )
-            })()}
-          </section>
-
-          <section className="card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
-              <div>
-                <h3 style={{ margin: 0 }}>NCRD Staking</h3>
-                <p className="silver-text" style={{ fontSize: 12, marginTop: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
-                  Contract: {NCRD_STAKING_CONTRACT.slice(0, 10)}…
-                  <CopyButton text={NCRD_STAKING_CONTRACT} />
-                  <a href={getExplorerUrl('qie', 'address', NCRD_STAKING_CONTRACT)} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ fontSize: 11 }}>↗</a>
-                </p>
-              </div>
-              <span className="chain-badge" style={{ background: 'rgba(245,197,24,0.1)', border: '1px solid rgba(245,197,24,0.3)' }}>
-                {NCRD_APY}% APY
+              <span style={{ fontFamily: 'monospace', fontSize: 13, color: 'rgba(255,255,255,0.8)' }}>
+                {truncateAddress(wallet)}
+              </span>
+              <span
+                style={{
+                  fontSize: 10,
+                  padding: '3px 8px',
+                  borderRadius: 12,
+                  background: 'rgba(139,92,246,0.1)',
+                  border: '1px solid rgba(139,92,246,0.25)',
+                  color: '#A78BFA',
+                }}
+              >
+                {QIE_MAINNET.chainName}
               </span>
             </div>
+            <button onClick={disconnect} style={btnOutline}>
+              Disconnect
+            </button>
+          </div>
 
-            {stakeLoading ? (
-              <SkeletonCard />
-            ) : stakeData && (
-              <>
-                <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 16 }}>
-                  <div className="card" style={{ textAlign: 'center', padding: '12px' }}>
-                    <p className="silver-text" style={{ fontSize: 11 }}>BALANCE</p>
-                    <strong className="gold-text">{stakeData.ncrdBalance} NCRD</strong>
-                  </div>
-                  <div className="card" style={{ textAlign: 'center', padding: '12px' }}>
-                    <p className="silver-text" style={{ fontSize: 11 }}>STAKED</p>
-                    <strong className="gold-text">{stakeData.stakedAmount} NCRD</strong>
-                  </div>
-                  <div className="card" style={{ textAlign: 'center', padding: '12px' }}>
-                    <p className="silver-text" style={{ fontSize: 11 }}>REWARDS</p>
-                    <strong className="gold-text">{stakeData.pendingRewards} NCRD</strong>
-                  </div>
-                </div>
+          {/* ── Main 2-col layout ── */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: 20,
+              marginBottom: 20,
+            }}
+          >
+            {/* Score Gauge panel */}
+            <div style={{ ...card, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
+              <CreditGauge score={score} loading={loading} />
+              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', textAlign: 'center', lineHeight: 1.5, maxWidth: 280 }}>
+                {explanation}. Stake NCRD to boost your score further.
+              </p>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-                  <div>
-                    <label style={{ fontSize: 13, marginBottom: 4, display: 'block' }}>Stake amount</label>
-                    <div style={{ display: 'flex', gap: 6 }}>
-                      <input
-                        value={stakeAmount}
-                        onChange={(e) => setStakeAmount(e.target.value)}
-                        placeholder="100"
-                        style={{ flex: 1, padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: '#0C0C0C', color: '#fff' }}
-                      />
-                      <button className="btn-gold" onClick={stake} disabled={stakeLoading || !stakeAmount}>
-                        {stakeLoading ? <span className="spinner" /> : 'Stake'}
-                      </button>
-                    </div>
-                  </div>
-                  <div>
-                    <label style={{ fontSize: 13, marginBottom: 4, display: 'block' }}>Unstake amount</label>
-                    <div style={{ display: 'flex', gap: 6 }}>
-                      <input
-                        value={unstakeAmount}
-                        onChange={(e) => setUnstakeAmount(e.target.value)}
-                        placeholder="100"
-                        style={{ flex: 1, padding: '8px 12px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)', background: '#0C0C0C', color: '#fff' }}
-                      />
-                      <button className="btn-outline" onClick={unstake} disabled={stakeLoading || !unstakeAmount}>
-                        {stakeLoading ? <span className="spinner" /> : 'Unstake'}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {stakeTxHash && (
-                  <div className="card" style={{ marginTop: 12, padding: '10px 14px', background: 'rgba(245,197,24,0.04)', border: '1px solid rgba(245,197,24,0.2)' }}>
-                    <p style={{ fontSize: 13, margin: 0, color: '#F5C518' }}>Transaction Confirmed</p>
-                    <p style={{ fontSize: 11, margin: '4px 0 0', fontFamily: 'monospace', opacity: 0.8 }}>
-                      Hash: <a href={`${EXPLORER}/tx/${stakeTxHash}`} target="_blank" rel="noopener noreferrer" className="gold-text" style={{ textDecoration: 'underline' }}>{stakeTxHash} ↗</a>
-                    </p>
-                  </div>
+              {/* Refresh button */}
+              <button
+                style={{
+                  ...btnPrimary,
+                  width: '100%',
+                  justifyContent: 'center',
+                  opacity: loading ? 0.7 : 1,
+                }}
+                onClick={refreshScore}
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <span
+                      style={{
+                        width: 14,
+                        height: 14,
+                        border: '2px solid rgba(255,255,255,0.3)',
+                        borderTop: '2px solid #fff',
+                        borderRadius: '50%',
+                        animation: 'spin 0.8s linear infinite',
+                        display: 'inline-block',
+                      }}
+                    />
+                    Refreshing…
+                  </>
+                ) : (
+                  '↻ Refresh Score'
                 )}
-              </>
-            )}
-          </section>
+              </button>
 
-          <section className="card">
-            <h3>Q-Loan AI advisor</h3>
-            <p className="silver-text" style={{ fontSize: 13 }}>Ask anything about loans, rates, or your credit profile.</p>
-            <div style={{ maxHeight: 320, overflowY: 'auto', margin: '12px 0', display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {chat.length === 0 && <p style={{ opacity: 0.5, fontSize: 13 }}>No messages yet.</p>}
-              {chat.map((m, i) => (
-                <div key={i} style={{ alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', maxWidth: '80%' }}>
-                  <div style={{
+              {refreshTxHash && (
+                <div
+                  style={{
+                    width: '100%',
+                    background: 'rgba(139,92,246,0.06)',
+                    border: '1px solid rgba(139,92,246,0.2)',
+                    borderRadius: 8,
                     padding: '10px 14px',
-                    borderRadius: 14,
-                    border: `1px solid ${m.role === 'user' ? '#F5C518' : 'rgba(255,255,255,0.2)'}`,
-                    background: m.role === 'user' ? 'rgba(245,197,24,0.08)' : 'rgba(255,255,255,0.04)',
-                    fontSize: 14,
-                  }}>{m.content}</div>
-                  <p style={{ fontSize: 11, opacity: 0.5, marginTop: 2, textAlign: m.role === 'user' ? 'right' : 'left' }}>
-                    {m.timestamp.toLocaleTimeString()}
+                    fontSize: 12,
+                  }}
+                >
+                  <p style={{ color: '#A78BFA', fontWeight: 600, margin: '0 0 4px' }}>On-chain ✓</p>
+                  <p style={{ fontFamily: 'monospace', color: 'rgba(255,255,255,0.5)', margin: 0, wordBreak: 'break-all' }}>
+                    Tx: {refreshTxHash.slice(0, 18)}…{refreshTxHash.slice(-8)}
                   </p>
                 </div>
-              ))}
-              {chatLoading && <p style={{ fontSize: 13, opacity: 0.6 }}>AI is thinking…</p>}
+              )}
             </div>
-            <form onSubmit={(e) => { e.preventDefault(); sendChat() }} style={{ display: 'flex', gap: 8 }}>
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about your score, loan rates, or strategy…"
-                style={{ flex: 1, padding: '10px 14px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.1)', background: '#0C0C0C', color: '#fff' }}
+
+            {/* Quick Actions */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {[
+                {
+                  icon: '🧠',
+                  title: 'NeuroLend',
+                  desc: 'Get personalized loan offers',
+                  href: '/credit/lend',
+                  accent: '#8B5CF6',
+                },
+                {
+                  icon: '🛡',
+                  title: 'Stake NCRD',
+                  desc: 'Boost your credit score',
+                  href: '/credit/stake',
+                  accent: '#22C55E',
+                },
+                {
+                  icon: '⚡',
+                  title: 'DeFi Demo',
+                  desc: 'See your borrowing power',
+                  href: '/credit/lending-demo',
+                  accent: '#F5C518',
+                },
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  style={{
+                    ...card,
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 14,
+                    padding: '16px 18px',
+                    transition: 'border-color 0.2s, background 0.2s',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 42,
+                      height: 42,
+                      borderRadius: 10,
+                      background: `${item.accent}15`,
+                      border: `1px solid ${item.accent}30`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 20,
+                      flexShrink: 0,
+                    }}
+                  >
+                    {item.icon}
+                  </div>
+                  <div>
+                    <p style={{ fontWeight: 600, margin: 0, fontSize: 14, color: item.accent }}>{item.title}</p>
+                    <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', margin: '2px 0 0' }}>{item.desc}</p>
+                  </div>
+                  <span style={{ marginLeft: 'auto', color: 'rgba(255,255,255,0.2)', fontSize: 18 }}>›</span>
+                </Link>
+              ))}
+
+              {/* Bottom stats */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div style={{ ...card, padding: '14px 16px' }}>
+                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: '0.08em', margin: '0 0 4px' }}>
+                    ORACLE PRICE
+                  </p>
+                  <p style={{ fontSize: 18, fontWeight: 700, color: '#60A5FA', margin: 0 }}>
+                    ${oraclePrice.toFixed(2)}
+                  </p>
+                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', margin: '2px 0 0' }}>QIE / USD</p>
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4,
+                      fontSize: 9,
+                      color: '#22C55E',
+                      marginTop: 4,
+                    }}
+                  >
+                    <span className="live-dot" style={{ width: 5, height: 5, borderRadius: '50%', background: '#22C55E', display: 'inline-block' }} />
+                    Live
+                  </span>
+                </div>
+                <div style={{ ...card, padding: '14px 16px' }}>
+                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: '0.08em', margin: '0 0 4px' }}>
+                    STAKING TIER
+                  </p>
+                  <p
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 700,
+                      color:
+                        breakdown.stakingTier === 'Gold'
+                          ? '#F5C518'
+                          : breakdown.stakingTier === 'Silver'
+                          ? '#9CA3AF'
+                          : breakdown.stakingTier === 'Bronze'
+                          ? '#F97316'
+                          : 'rgba(255,255,255,0.35)',
+                      margin: 0,
+                    }}
+                  >
+                    {stakingTierLabel(breakdown.stakingTier)}
+                  </p>
+                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', margin: '2px 0 0' }}>
+                    Boost: +{breakdown.stakingBoost}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Score Breakdown + Predictor row ── */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: 20,
+            }}
+          >
+            {/* Score Breakdown */}
+            <div style={card}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.35)', margin: '0 0 16px' }}>
+                SCORE BREAKDOWN
+              </p>
+              <ProgressBar
+                label="Base Score"
+                value={breakdown.baseScore}
+                max={1000}
+                color="rgba(255,255,255,0.4)"
+                displayValue={String(breakdown.baseScore)}
               />
-              <button className="btn-gold" type="submit" disabled={chatLoading || !input.trim()}>Send</button>
-            </form>
-          </section>
+              <ProgressBar
+                label="Staking Boost"
+                value={breakdown.stakingBoost}
+                max={300}
+                color="#22C55E"
+                displayValue={`+${breakdown.stakingBoost}`}
+              />
+              <ProgressBar
+                label="Oracle Penalty"
+                value={breakdown.oraclePenalty}
+                max={200}
+                color="#EF4444"
+                displayValue={breakdown.oraclePenalty === 0 ? '0' : `-${breakdown.oraclePenalty}`}
+              />
+              <div
+                style={{
+                  marginTop: 16,
+                  paddingTop: 14,
+                  borderTop: '1px solid rgba(255,255,255,0.06)',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>
+                  {breakdown.baseScore} + {breakdown.stakingBoost} − {breakdown.oraclePenalty} =
+                </span>
+                <span style={{ fontSize: 20, fontWeight: 800, color: '#A78BFA' }}>{score}</span>
+              </div>
+              {breakdown.lastUpdated && (
+                <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)', marginTop: 10 }}>
+                  Updated: {new Date(breakdown.lastUpdated).toLocaleString()}
+                </p>
+              )}
+            </div>
+
+            {/* Score Predictor */}
+            <div style={card}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.35)', margin: '0 0 16px' }}>
+                SCORE PREDICTOR
+              </p>
+              <div style={{ marginBottom: 12 }}>
+                <select
+                  value={scenario}
+                  onChange={(e) => { setScenario(e.target.value); setPrediction(null) }}
+                  style={{
+                    width: '100%',
+                    padding: '10px 14px',
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    borderRadius: 8,
+                    color: scenario ? '#fff' : 'rgba(255,255,255,0.35)',
+                    fontSize: 13,
+                    cursor: 'pointer',
+                    appearance: 'none',
+                  }}
+                >
+                  <option value="" disabled style={{ background: '#1a1a1a' }}>Select a scenario</option>
+                  {Object.entries(SCENARIO_LABELS).map(([key, label]) => (
+                    <option key={key} value={key} style={{ background: '#1a1a1a' }}>
+                      {label} — {SCENARIO_DESCRIPTIONS[key]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <button
+                style={{
+                  ...btnPrimary,
+                  width: '100%',
+                  justifyContent: 'center',
+                  opacity: !scenario || predicting ? 0.6 : 1,
+                }}
+                onClick={runPredictor}
+                disabled={!scenario || predicting}
+              >
+                {predicting ? 'Predicting…' : 'Predict Score Change'}
+              </button>
+
+              {prediction && (
+                <div
+                  style={{
+                    marginTop: 16,
+                    background: 'rgba(139,92,246,0.06)',
+                    border: '1px solid rgba(139,92,246,0.2)',
+                    borderRadius: 10,
+                    padding: '14px 16px',
+                  }}
+                >
+                  <p style={{ fontSize: 12, color: '#A78BFA', fontWeight: 600, margin: '0 0 8px' }}>
+                    If you: {SCENARIO_LABELS[scenario]}
+                  </p>
+                  <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 8 }}>
+                    <div>
+                      <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', margin: 0 }}>Current</p>
+                      <p style={{ fontSize: 22, fontWeight: 700, color: '#fff', margin: 0 }}>{prediction.currentScore}</p>
+                    </div>
+                    <span style={{ fontSize: 20, color: 'rgba(255,255,255,0.2)' }}>→</span>
+                    <div>
+                      <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', margin: 0 }}>Predicted</p>
+                      <p style={{ fontSize: 22, fontWeight: 700, color: '#22C55E', margin: 0 }}>
+                        {prediction.predictedScore}{' '}
+                        <span style={{ fontSize: 14 }}>
+                          (+{prediction.change})
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', margin: 0, lineHeight: 1.5 }}>
+                    {prediction.explanation}
+                  </p>
+                  <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', margin: '8px 0 0' }}>
+                    Confidence: {Math.round(prediction.confidence * 100)}%
+                  </p>
+                </div>
+              )}
+
+              {!prediction && !predicting && (
+                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.25)', marginTop: 14, textAlign: 'center' }}>
+                  Select a scenario to see how actions affect your score
+                </p>
+              )}
+            </div>
+          </div>
         </>
       )}
-      <ExecutiveWalkthrough />
-      <CommandPalette />
     </main>
   )
 }

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
+import CreditNav from './_components/CreditNav'
 
-const title = 'Credit Passport — Kubryx'
-const description = 'On-chain AI credit scoring on QIE Mainnet'
+const title = 'NeuroCredit — Kubryx'
+const description = 'AI-powered on-chain credit passport on QIE blockchain'
 const url = 'https://kubryx.vercel.app/credit'
 
 export const metadata: Metadata = {
@@ -9,12 +10,28 @@ export const metadata: Metadata = {
   title,
   description,
   openGraph: {
-    title, description, url, siteName: 'Kubryx', type: 'website',
+    title,
+    description,
+    url,
+    siteName: 'Kubryx',
+    type: 'website',
     images: [{ url: '/og-default.svg', width: 1200, height: 630 }],
   },
   twitter: { card: 'summary_large_image', title, description, images: ['/og-default.svg'] },
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+export default function CreditLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      style={{
+        background: '#080808',
+        minHeight: '100vh',
+        color: '#fff',
+        fontFamily: 'var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif',
+      }}
+    >
+      <CreditNav />
+      {children}
+    </div>
+  )
 }

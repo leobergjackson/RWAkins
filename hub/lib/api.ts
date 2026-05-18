@@ -1,3 +1,8 @@
+export const NEUROCREDIT_API =
+  process.env.NEXT_PUBLIC_NEUROCREDIT_API ||
+  process.env.NEXT_PUBLIC_CREDITBLOCKS_API ||
+  'https://kubryx-creditblocks-api.onrender.com'
+
 export const ETERNALVAULT_API = process.env.NEXT_PUBLIC_ETERNALVAULT_API || ''
 export const LENDORA_API = process.env.NEXT_PUBLIC_LENDORA_API || ''
 export const TRUSTMESH_API = process.env.NEXT_PUBLIC_TRUSTMESH_API || ''
