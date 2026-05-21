@@ -648,7 +648,7 @@ export default function CreditDashboard() {
         {/* ── No MetaMask ── */}
         {!installed && (
           <div className="bento-card" style={{ textAlign: 'center', maxWidth: 600, margin: '0 auto' }}>
-            <p style={{ color: 'rgba(45,26,38,0.7)', marginBottom: 16 }}>MetaMask is required to use Credit Passportit.</p>
+            <p style={{ color: 'rgba(45,26,38,0.7)', marginBottom: 16 }}>MetaMask is required to use Credit Passport.</p>
             <a href={WALLET_INSTALL_LINKS.metamask} target="_blank" rel="noopener noreferrer" style={btnPrimary}
               onMouseEnter={(e) => { (e.target as HTMLElement).style.backgroundColor = '#EAB308' }}
               onMouseLeave={(e) => { (e.target as HTMLElement).style.backgroundColor = '#F5A623' }}>
@@ -734,7 +734,7 @@ export default function CreditDashboard() {
               {/* Quick Actions */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {[
-                  { icon: '🧠', title: 'NeuroLend', desc: 'Get personalized loan offers', href: '/credit/lend', accent: '#8B5CF6' },
+                  { icon: '🧠', title: 'Credit Passport', desc: 'Get personalized loan offers', href: '/credit/lend', accent: '#8B5CF6' },
                   { icon: '🛡', title: 'Stake NCRD', desc: 'Boost your credit score', href: '/credit/stake', accent: '#22C55E' },
                   { icon: '⚡', title: 'DeFi Demo', desc: 'See your borrowing power', href: '/credit/lending-demo', accent: '#F5A623' },
                 ].map((item) => (

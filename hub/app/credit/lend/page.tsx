@@ -219,7 +219,7 @@ export default function LendPage() {
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', color: '#8B5CF6', marginBottom: 4 }}>
           AI LENDING
         </p>
-        <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, lineHeight: 1.2 }}>NeuroLend: AI-Negotiated Lending</h1>
+        <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, lineHeight: 1.2 }}>Credit Passport: AI-Negotiated Lending</h1>
         <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 4 }}>
           Chat with AI to get personalized loan terms based on your Credit Passport score
         </p>
@@ -340,7 +340,7 @@ export default function LendPage() {
               🧠
             </div>
             <div>
-              <p style={{ fontWeight: 700, fontSize: 14, margin: 0 }}>NeuroLend AI Assistant</p>
+              <p style={{ fontWeight: 700, fontSize: 14, margin: 0 }}>Credit Passport AI Assistant</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 2 }}>
                 <span
                   style={{

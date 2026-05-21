@@ -83,7 +83,7 @@ export const MOCK_AI_RESPONSES = [
 ]
 
 export const CHAT_GREETING =
-  "Hello! I'm your NeuroLend AI assistant. I can help you get a personalized loan based on your NeuroCred score. How can I help you today?"
+  "Hello! I'm your Credit Passport AI Assistant. I can help you get a personalized loan based on your Credit Passport score. How can I help you today?"
 
 export const SCENARIO_LABELS: Record<string, string> = {
   repayment: 'Loan Repayment',

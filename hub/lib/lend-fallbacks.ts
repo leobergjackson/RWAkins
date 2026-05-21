@@ -72,6 +72,6 @@ export function getStaticAIResponse(q: string): string {
   if (s.includes('rate') && s.includes('why')) return 'Your ZK credit score of 847 places you in Tier 2 pricing (−1.5% off market rate). Combined with your healthy 248% collateral ratio, I locked in 4.2% APR vs market 6.8%.'
   if (s.includes('lower') || s.includes('better')) return "I've already applied the maximum discount for your tier. To access Tier 1 rates (3.1% APR), you'd need a credit score above 900. Staking LEND or maintaining perfect repayments will move you up."
   if (s.includes('collateral')) return 'Adding 1 more ETH ($2,284) would lower your LTV from 48% to 36%, potentially unlocking an additional 0.5% rate reduction. Want me to recalculate with that collateral?'
-  if (s.includes('zk') || s.includes('credit')) return 'Your ZK credit proof is a zero-knowledge attestation of your on-chain credit score. It proves you scored 847 without revealing your wallet history. Verified by NeuroCredit, valid for 30 days.'
+  if (s.includes('zk') || s.includes('credit')) return 'Your ZK credit proof is a zero-knowledge attestation of your on-chain credit score. It proves you scored 847 without revealing your wallet history. Verified by Credit Passport, valid for 30 days.'
   return "Based on your current position, my recommendation is to keep collateral ratio above 200% to lock in Tier 2 pricing. What aspect of your loan should I optimize?"
 }

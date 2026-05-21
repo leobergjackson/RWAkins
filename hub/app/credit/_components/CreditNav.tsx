@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation'
 const NAV_ITEMS = [
   { href: '/credit', label: '⚡ Dashboard', exact: true },
   { href: '/credit/stake', label: '🛡 Stake NCRD', exact: false },
-  { href: '/credit/lend', label: '🧠 NeuroLend', exact: false },
+  { href: '/credit/lend', label: '🧠 Credit Passport', exact: false },
   { href: '/credit/lending-demo', label: '📊 DeFi Demo', exact: false },
 ] as const
 
@@ -40,7 +40,7 @@ export default function CreditNav() {
           marginRight: 8,
         }}
       >
-        Credit PassportIT
+        Credit Passport
       </span>
       {NAV_ITEMS.map((item) => {
         const isActive = item.exact ? pathname === item.href : pathname.startsWith(item.href)
