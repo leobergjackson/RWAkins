@@ -76,7 +76,7 @@ export default function SettingsPage() {
         <div style={{ marginBottom:28 }}>
           <div style={{ fontSize:11, color:TEAL, fontFamily:MONO, letterSpacing:'0.1em', marginBottom:4 }}>PALMFLOW AI / SETTINGS</div>
           <h1 style={{ margin:0, fontSize:24, fontWeight:700 }}>Settings</h1>
-          <p style={{ margin:'6px 0 0', fontSize:13, color:'rgba(255,255,255,0.4)' }}>Configure your treasury preferences and security</p>
+          <p style={{ margin:'6px 0 0', fontSize:13, color:'rgba(255,255,255,0.4)' }}>Configure your Yield Operations Hub preferences and security</p>
         </div>
 
         {/* Tab bar */}

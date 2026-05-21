@@ -21,7 +21,7 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: 'Kubryx — The Financial OS for Web3 & Beyond',
-  description: 'One platform. Eight powerful tools. Credit scoring, inheritance vaults, private trading, DeFi lending, treasury automation, and AI agents — all on-chain across QIE, Solana, Stellar, and Ethereum.',
+  description: 'One platform. Eight powerful tools. Credit scoring, inheritance vaults, private trading, DeFi lending, Yield Operations Hub automation, and AI agents — all on-chain across QIE, Solana, Stellar, and Ethereum.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

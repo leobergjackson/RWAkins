@@ -33,7 +33,7 @@ export default function CipherVaultHero({
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: MUTED2, fontFamily: MONO, marginBottom: 14 }}>
         <span>Kubryx</span>
         <span>›</span>
-        <span style={{ color: ACCENT }}>CipherVault</span>
+        <span style={{ color: ACCENT }}>Private vault</span>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap' }}>
@@ -47,7 +47,7 @@ export default function CipherVaultHero({
             }}>◈</div>
             <div>
               <div style={{ fontSize: 24, fontWeight: 700, color: '#fff', fontFamily: 'Georgia, "Playfair Display", serif', letterSpacing: '-0.01em', lineHeight: 1 }}>
-                CipherVault
+                Private vault
               </div>
               <div style={{ fontSize: 12, color: MUTED2, marginTop: 4 }}>
                 Cross-Chain Privacy Vault · MPC + FHE

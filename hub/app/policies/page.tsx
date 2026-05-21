@@ -11,7 +11,7 @@ import CommandPalette from '../components/CommandPalette'
 interface PolicyItem {
   id: string
   name: string
-  category: 'Telemetry Escalation' | 'AI Constraint' | 'Resilience Enforcement' | 'Treasury Governance' | 'Simulation Safety'
+  category: 'Telemetry Escalation' | 'AI Constraint' | 'Resilience Enforcement' | 'Yield Operations Hub Governance' | 'Simulation Safety'
   description: string
   status: 'active' | 'monitoring' | 'suspended'
   lastViolated: string
@@ -22,7 +22,7 @@ const DEFAULT_POLICIES: PolicyItem[] = [
   { id: 'pol-01', name: 'SLA-Escalation-900', category: 'Telemetry Escalation', description: 'If RPC response exceeds 900ms, immediately isolate node and redirect standard queries to regional relays.', status: 'active', lastViolated: 'Never', conflictDetected: false },
   { id: 'pol-02', name: 'Agent-Guardrail-USDC', category: 'AI Constraint', description: 'Prevents AI agents from moving more than 50,000 USDC per single block without manual operator co-signatures.', status: 'active', lastViolated: '24 hours ago', conflictDetected: false },
   { id: 'pol-03', name: 'Zero-Metadata-Routing', category: 'Resilience Enforcement', description: 'Force zero-metadata routing key locks on bridge signatures matching suspicious addresses.', status: 'active', lastViolated: 'Never', conflictDetected: false },
-  { id: 'pol-04', name: 'Max-Drift-Payroll-15', category: 'Treasury Governance', description: 'Automated alarm triggered if drift between Solana and QIE multi-sig balances exceeds 15%.', status: 'active', lastViolated: '3 hours ago', conflictDetected: true },
+  { id: 'pol-04', name: 'Max-Drift-Payroll-15', category: 'Yield Operations Hub Governance', description: 'Automated alarm triggered if drift between Solana and QIE multi-sig balances exceeds 15%.', status: 'active', lastViolated: '3 hours ago', conflictDetected: true },
   { id: 'pol-05', name: 'Twin-Isolation-Sandbox', category: 'Simulation Safety', description: 'Enforce complete simulation state isolation to prevent synthetic anomalies from writing to live production databases.', status: 'active', lastViolated: 'Never', conflictDetected: false }
 ]
 
@@ -126,7 +126,7 @@ export default function PoliciesPage() {
 
       {/* Category filters */}
       <section style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
-        {['All', 'Telemetry Escalation', 'AI Constraint', 'Resilience Enforcement', 'Treasury Governance', 'Simulation Safety'].map((cat) => (
+        {['All', 'Telemetry Escalation', 'AI Constraint', 'Resilience Enforcement', 'Yield Operations Hub Governance', 'Simulation Safety'].map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
@@ -277,7 +277,7 @@ export default function PoliciesPage() {
                   <option value="Telemetry Escalation">Telemetry Escalation</option>
                   <option value="AI Constraint">AI Constraint</option>
                   <option value="Resilience Enforcement">Resilience Enforcement</option>
-                  <option value="Treasury Governance">Treasury Governance</option>
+                  <option value="Yield Operations Hub Governance">Yield Operations Hub Governance</option>
                   <option value="Simulation Safety">Simulation Safety</option>
                 </select>
               </div>

@@ -11,7 +11,7 @@ const CARD = 'rgba(255,255,255,0.03)'
 const BDR = 'rgba(255,255,255,0.07)'
 const MONO = '"JetBrains Mono","Fira Code",monospace'
 
-const AGENT_TYPES = ['DeFi Specialist', 'Risk Manager', 'Treasury Analyst', 'Marketing AI', 'Product AI', 'Security AI']
+const AGENT_TYPES = ['DeFi Specialist', 'Risk Manager', 'Yield Operations Hub Analyst', 'Marketing AI', 'Product AI', 'Security AI']
 
 export default function AgentsPage() {
   const [agents, setAgents] = useState<PFAgent[]>([])

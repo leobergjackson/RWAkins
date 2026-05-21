@@ -11,14 +11,14 @@ const BORDER = 'rgba(255,255,255,0.08)'
 const MONO = '"Fira Code","JetBrains Mono",monospace'
 
 const TOOLS = [
-  { icon: '◈', name: 'NeuroCredit',  href: '/credit',   color: '#06b6d4', desc: 'Credit Scoring' },
-  { icon: '⬟', name: 'EternaVault',  href: '/legacy',   color: '#f43f5e', desc: 'Inheritance' },
-  { icon: '⬡', name: 'TrustMesh',    href: '/agents',   color: '#6366f1', desc: 'AI Agents' },
-  { icon: '🔐', name: 'CipherVault',  href: '/vault',    color: '#14b8a6', desc: 'Privacy' },
-  { icon: '◆', name: 'SyncSplit',    href: '/split',    color: '#3b82f6', desc: 'Bill Splitting' },
-  { icon: '◎', name: 'Lendora',      href: '/lend',     color: '#f59e0b', desc: 'DeFi Lending' },
-  { icon: '◇', name: 'PalmFlow AI',  href: '/treasury', color: '#10b981', desc: 'Treasury' },
-  { icon: '▲', name: 'ShadowLedger', href: '/shadow',   color: '#8b5cf6', desc: 'Operations' },
+  { icon: '◈', name: 'Credit Passport',  href: '/credit',   color: '#06b6d4', desc: 'Credit Scoring' },
+  { icon: '⬟', name: 'Family vault',  href: '/legacy',   color: '#f43f5e', desc: 'Inheritance' },
+  { icon: '⬡', name: 'Agent co-ordinator',    href: '/agents',   color: '#6366f1', desc: 'AI Agents' },
+  { icon: '🔐', name: 'Private vault',  href: '/vault',    color: '#14b8a6', desc: 'Privacy' },
+  { icon: '◆', name: 'Bill split',    href: '/split',    color: '#3b82f6', desc: 'Bill Splitting' },
+  { icon: '◎', name: 'Protocol Borrow Engine',      href: '/lend',     color: '#f59e0b', desc: 'DeFi Lending' },
+  { icon: '◇', name: 'Yield Operations Hub',  href: '/treasury', color: '#10b981', desc: 'Yield Operations Hub' },
+  { icon: '▲', name: 'Stealth Execution Suite', href: '/shadow',   color: '#8b5cf6', desc: 'Operations' },
 ]
 
 interface Props {

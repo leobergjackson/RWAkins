@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import TreasuryNav from './_components/TreasuryNav'
 
 const title = 'PalmFlow AI — Kubryx'
-const description = 'Autonomous treasury & neural workforce management on Solana'
+const description = 'Autonomous Yield Operations Hub & neural workforce management on Solana'
 const url = 'https://kubryx.vercel.app/treasury'
 
 export const metadata: Metadata = {

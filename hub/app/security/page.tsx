@@ -72,7 +72,7 @@ export default function SecurityPage() {
       list.unshift({
         id: 'warn-1',
         timestamp: new Date().toISOString(),
-        source: 'CipherVault Privacy',
+        source: 'Private vault Privacy',
         action: 'Threat Alert: Suspicious routing detected from high-risk contract',
         status: 'alert'
       })

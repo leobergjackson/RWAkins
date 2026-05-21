@@ -393,7 +393,7 @@ function AgentsPageInner() {
       {/* Hero Section */}
       <div className="hero-section">
         <div className="eyebrow-cursive">
-          ✦ TrustMesh Protocol
+          ✦ Agent co-ordinator Protocol
         </div>
         <h1 className="hero-title">
           Agent <span>Coordination</span>

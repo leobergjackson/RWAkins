@@ -25,7 +25,7 @@ export default function StoryPage() {
       paragraphs: [
         'Corporate finance is severely bottlenecked by multi-chain friction. Individual networks are isolated silos with disparate wallet abstractions, RPC latency profiles, and non-standard contract parameters.',
         'Kubryx resolves this by treating blockchain environments as integrated operational channels of a single unified OS. We absorb active wallet contexts reactively, allowing distinct tools to share synchronized parameters in client memory.',
-        'This allows treasury desks, autonomous staking models, and secure vaults to collaborate seamlessly without manual bridging, complex network switches, or custom orchestration code.'
+        'This allows Yield Operations Hub desks, autonomous staking models, and secure vaults to collaborate seamlessly without manual bridging, complex network switches, or custom orchestration code.'
       ],
       metrics: [
         { label: 'Built-in Tools', value: '8 Tools, 1 OS' },
@@ -79,7 +79,7 @@ export default function StoryPage() {
       title: 'Future of Organizational Finance',
       subtitle: 'Next-generation digital twins and continuous yield streaming.',
       paragraphs: [
-        'Modern treasury assets demand continuous operational execution. Kubryx envisions a future where multi-party payroll streams, debt optimization pools, and AI nodes operate autonomously.',
+        'Modern Yield Operations Hub assets demand continuous operational execution. Kubryx envisions a future where multi-party payroll streams, debt optimization pools, and AI nodes operate autonomously.',
         'To stress-test these scenarios safely, Kubryx integrates an isolated Digital Twin framework. Executives can simulate heavy congestions, key compromise compromises, and RPC cascades to verify automated AI safeties in sandboxed sandboxes.',
         'By combining physical execution with synthetic twin simulations, Kubryx empowers enterprises and DAOs with unprecedented control over digital assets and liquid flows.'
       ],
@@ -210,7 +210,7 @@ export default function StoryPage() {
         'This establishes a secure sandbox where machine intelligence performs sweeps while preserving absolute operator override control.'
       ],
       metrics: [
-        { label: 'Agent Mesh', value: 'Heuristic Gating' },
+        { label: 'Agent co-ordinator', value: 'Heuristic Gating' },
         { label: 'Override Control', value: '100% Secure' }
       ]
     },
@@ -273,7 +273,7 @@ export default function StoryPage() {
     {
       id: 'ai-native-decision',
       title: 'AI-Native Decision Systems',
-      subtitle: 'Enforcing zero-knowledge policies across parallelized agent mesh networks.',
+      subtitle: 'Enforcing zero-knowledge policies across parallelized Agent co-ordinator networks.',
       paragraphs: [
         'Machine intelligence must be gated inside secure boundaries to prevent collateral state corruption.',
         'Our AI Recommendation Feed checks active policies dynamically, producing deterministic, replay-safe reasoning trails for all proposed balance sweeps.',
@@ -290,7 +290,7 @@ export default function StoryPage() {
       subtitle: 'Forecasting consensus trajectories across standard 1h, 24h, and 7d horizons.',
       paragraphs: [
         'Ecosystems succeed when they can predict failures before they cascade into multi-chain bridges.',
-        'We execute high-fidelity scenario projections, evaluating consensus trends, treasury pressures, and governance volatilities statefully.',
+        'We execute high-fidelity scenario projections, evaluating consensus trends, Yield Operations Hub pressures, and governance volatilities statefully.',
         'This empowers operators to proactively deploy mitigation keys, preventing consensus collapse and maintaining premium reliability.'
       ],
       metrics: [
@@ -332,7 +332,7 @@ export default function StoryPage() {
       subtitle: 'Decentralizing operational logic across specialized, self-governing agents.',
       paragraphs: [
         'Monolithic operational controls are single points of failure. In Kubryx, coordination is delegated to six autonomous institutional agents.',
-        'The Treasury Sovereign governs asset flows, the Governance Chancellor propagates policies, the Infrastructure Sentinel protects regions, and the Ecosystem Diplomat harmonizes protocols.',
+        'The Yield Operations Hub Sovereign governs asset flows, the Governance Chancellor propagates policies, the Infrastructure Sentinel protects regions, and the Ecosystem Diplomat harmonizes protocols.',
         'Together with the Cognition Oracle and Recovery Director, they coordinate actions in real-time, matching high-throughput execution with complete logical integrity.'
       ],
       metrics: [

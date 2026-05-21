@@ -55,7 +55,7 @@ export default function PolicyPage() {
         <div>
           <div style={{ fontSize: 11, color: TEAL, fontFamily: MONO, letterSpacing: '0.1em', marginBottom: 4 }}>PALMFLOW AI / NEURAL GUARDRAILS</div>
           <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700 }}>Neural Guardrails</h1>
-          <p style={{ margin: '6px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>Cryptographic policy enforcement for treasury operations</p>
+          <p style={{ margin: '6px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>Cryptographic policy enforcement for Yield Operations Hub operations</p>
         </div>
         <button
           onClick={() => setShowCreate(true)}

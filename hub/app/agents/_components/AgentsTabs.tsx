@@ -16,7 +16,7 @@ export default function AgentsTabs() {
   const pathname = usePathname() || '/agents'
   return (
     <nav
-      aria-label="TrustMesh sections"
+      aria-label="Agent co-ordinator sections"
       style={{
         display: 'flex',
         gap: 4,

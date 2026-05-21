@@ -301,7 +301,7 @@ export default function LegacyLandingPage() {
       {/* Navigation */}
       <header className="nav-bar">
         <div className="nav-logo font-serif">
-          EternaVault <span style={{ color: '#D97706', fontSize: 18 }}>✦</span>
+          Family vault <span style={{ color: '#D97706', fontSize: 18 }}>✦</span>
         </div>
         <Link href="/dashboard" style={{
           fontSize: 14, fontWeight: 500, color: '#1A1A1A', textDecoration: 'none',

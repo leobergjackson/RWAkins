@@ -25,7 +25,7 @@ export default function LiveBadge({ isLive }: { isLive: boolean }) {
           background: isLive ? '#22C55E' : '#bbb',
         }}
       />
-      {isLive ? 'Live · TrustMesh API' : 'Demo data'}
+      {isLive ? 'Live · Agent co-ordinator API' : 'Demo data'}
     </span>
   )
 }

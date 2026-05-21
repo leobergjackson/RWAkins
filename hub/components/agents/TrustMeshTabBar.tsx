@@ -25,7 +25,7 @@ export default function TrustMeshTabBar({
 }) {
   return (
     <nav
-      aria-label="TrustMesh sections"
+      aria-label="Agent co-ordinator sections"
       style={{
         display: 'flex',
         gap: 0,

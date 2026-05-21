@@ -648,7 +648,7 @@ export default function CreditDashboard() {
         {/* ── No MetaMask ── */}
         {!installed && (
           <div className="bento-card" style={{ textAlign: 'center', maxWidth: 600, margin: '0 auto' }}>
-            <p style={{ color: 'rgba(45,26,38,0.7)', marginBottom: 16 }}>MetaMask is required to use NeuroCredit.</p>
+            <p style={{ color: 'rgba(45,26,38,0.7)', marginBottom: 16 }}>MetaMask is required to use Credit Passportit.</p>
             <a href={WALLET_INSTALL_LINKS.metamask} target="_blank" rel="noopener noreferrer" style={btnPrimary}
               onMouseEnter={(e) => { (e.target as HTMLElement).style.backgroundColor = '#EAB308' }}
               onMouseLeave={(e) => { (e.target as HTMLElement).style.backgroundColor = '#F5A623' }}>

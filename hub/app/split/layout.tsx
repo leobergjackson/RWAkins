@@ -1,7 +1,7 @@
 // Built by vsrupeshkumar
 import type { Metadata } from 'next'
 
-const title = 'SyncSplit — Kubryx'
+const title = 'Bill split — Kubryx'
 const description = 'On-chain bill splitting on Stellar Testnet'
 const url = 'https://kubryx.vercel.app/split'
 

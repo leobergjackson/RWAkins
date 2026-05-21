@@ -26,7 +26,7 @@ export default function CoordinationPage() {
   
   // Custom Task Input State
   const [newTaskTitle, setNewTaskTitle] = useState('')
-  const [newTaskRole, setNewTaskRole] = useState<any>('Treasury Agent')
+  const [newTaskRole, setNewTaskRole] = useState<any>('Yield Operations Hub Agent')
   const [newTaskChain, setNewTaskChain] = useState('QIE Mainnet')
 
   const activeOrg = organizations.find(o => o.id === currentOrgId) || organizations[0]
@@ -371,7 +371,7 @@ export default function CoordinationPage() {
                     outline: 'none'
                   }}
                 >
-                  <option value="Treasury Agent">Treasury Agent</option>
+                  <option value="Yield Operations Hub Agent">Yield Operations Hub Agent</option>
                   <option value="Risk Agent">Risk Agent</option>
                   <option value="Security Agent">Security Agent</option>
                   <option value="Compliance Agent">Compliance Agent</option>

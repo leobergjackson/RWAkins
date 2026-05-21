@@ -1,7 +1,7 @@
 // Built by vsrupeshkumar
 import type { Metadata } from 'next'
 
-const title = 'Shadow OS — Kubryx'
+const title = 'Stealth Execution Suite — Kubryx'
 const description = 'Invisible financial operations on Solana'
 const url = 'https://kubryx.vercel.app/shadow'
 

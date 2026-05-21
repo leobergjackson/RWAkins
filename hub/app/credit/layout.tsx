@@ -2,7 +2,7 @@
 import type { Metadata } from 'next'
 import CreditNav from './_components/CreditNav'
 
-const title = 'NeuroCredit — Kubryx'
+const title = 'Credit Passportit — Kubryx'
 const description = 'AI-powered on-chain credit passport on QIE blockchain'
 const url = 'https://kubryx.vercel.app/credit'
 

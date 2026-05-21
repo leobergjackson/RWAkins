@@ -23,7 +23,7 @@ async function groqFallback(message: string): Promise<string> {
       body: JSON.stringify({
         model: 'llama-3.3-70b-versatile',
         messages: [
-          { role: 'system', content: 'You are a DeFi loan negotiation AI for Kubryx Lendora on Arbitrum. Be concise and specific about rates, ZK credit, and collateral.' },
+          { role: 'system', content: 'You are a DeFi loan negotiation AI for Kubryx Protocol Borrow Engine on Arbitrum. Be concise and specific about rates, ZK credit, and collateral.' },
           { role: 'user', content: message },
         ],
       }),
@@ -45,7 +45,7 @@ export default function BorrowForm({ walletAddress }: { walletAddress?: string }
   const [duration, setDuration] = useState(60)
   const [aiEnabled, setAiEnabled] = useState(true)
   const [chat, setChat] = useState<Msg[]>([
-    { role: 'ai', text: "I'm Lendora AI, your loan negotiation agent. Fill in the form and click **Get AI Quote** — I'll scan available pools and negotiate the best rate for your credit tier." },
+    { role: 'ai', text: "I'm Protocol Borrow Engine AI, your loan negotiation agent. Fill in the form and click **Get AI Quote** — I'll scan available pools and negotiate the best rate for your credit tier." },
   ])
   const [input, setInput] = useState('')
   const [thinking, setThinking] = useState(false)
@@ -176,7 +176,7 @@ export default function BorrowForm({ walletAddress }: { walletAddress?: string }
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingBottom: 12, borderBottom: `1px solid ${BORDER}` }}>
           <div style={{ width: 32, height: 32, borderRadius: 10, background: `${A}25`, color: A, display: 'grid', placeItems: 'center', fontSize: 16 }}>🤖</div>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>Lendora AI</div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>Protocol Borrow Engine AI</div>
             <div style={{ fontSize: 11, color: MUTED2 }}>Your negotiation agent</div>
           </div>
           <span style={{ marginLeft: 'auto', fontSize: 10, color: '#10b981' }}>● Online</span>

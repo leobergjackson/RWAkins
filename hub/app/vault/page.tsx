@@ -240,7 +240,7 @@ function VaultInner() {
 
       <header className="nav-bar">
         <div className="nav-logo">
-          Kubryx <span className="sparkle-icon">◈</span> CipherVault
+          Kubryx <span className="sparkle-icon">◈</span> Private vault
         </div>
         <div className="nav-links">
           <span className={`badge ${isLive ? 'badge-live' : 'badge-demo'}`}>

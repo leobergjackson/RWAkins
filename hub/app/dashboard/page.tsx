@@ -30,13 +30,13 @@ const MUTED2  = 'rgba(255,255,255,0.35)'
 const NAV = [
   { icon: '◉', label: 'Overview',        href: '/dashboard' },
   { icon: '◈', label: 'Credit Passport', href: '/credit'    },
-  { icon: '⬟', label: 'Legacy Vault',    href: '/legacy'    },
-  { icon: '⬡', label: 'Agent Mesh',      href: '/agents'    },
+  { icon: '⬟', label: 'Family vault',    href: '/legacy'    },
+  { icon: '⬡', label: 'Agent co-ordinator',      href: '/agents'    },
   { icon: '🔐', label: 'Private Vault',   href: '/vault'     },
-  { icon: '◆', label: 'SyncSplit',       href: '/split'     },
+  { icon: '◆', label: 'Bill split',       href: '/split'     },
   { icon: '◎', label: 'AI Lending',      href: '/lend'      },
-  { icon: '◇', label: 'Treasury AI',     href: '/treasury'  },
-  { icon: '▲', label: 'Shadow OS',       href: '/shadow'    },
+  { icon: '◇', label: 'Yield Operations Hub',     href: '/treasury'  },
+  { icon: '▲', label: 'Stealth Execution Suite',       href: '/shadow'    },
 ]
 
 type TimeRange = '1D' | '7D' | '30D' | 'All'

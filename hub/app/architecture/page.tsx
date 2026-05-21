@@ -36,7 +36,7 @@ export default function ArchitecturePage() {
       icon: '🧠',
       description: 'Unified AI orchestrator powered by dynamic multi-prompt templates and stale cache models. Context is shared globally across credit calculation, stream optimizer, and loan negotiator.',
       technologies: ['Groq LLaMA-3 Pipeline', 'Dynamic Prompt Builders', 'Contextual Rebalancing Engine'],
-      components: ['Lendora Negotiator', 'PalmFlow Payroll Advisor', 'Shadow Corporate Agents'],
+      components: ['Protocol Borrow Engine Negotiator', 'PalmFlow Payroll Advisor', 'Shadow Corporate Agents'],
     },
     {
       id: 'blockchain',
@@ -80,11 +80,11 @@ export default function ArchitecturePage() {
     // Tools
     { id: 'credit', label: 'CreditBlocks', layer: 'blockchain', x: 80, y: 150 },
     { id: 'lend', label: 'AI Lending', layer: 'ai', x: 80, y: 230 },
-    { id: 'split', label: 'SyncSplit', layer: 'blockchain', x: 80, y: 310 },
+    { id: 'split', label: 'Bill split', layer: 'blockchain', x: 80, y: 310 },
     
-    { id: 'agents', label: 'Agent Mesh', layer: 'security', x: 420, y: 150 },
-    { id: 'shadow', label: 'Shadow OS', layer: 'ai', x: 420, y: 230 },
-    { id: 'treasury', label: 'Treasury AI', layer: 'blockchain', x: 420, y: 310 },
+    { id: 'agents', label: 'Agent co-ordinator', layer: 'security', x: 420, y: 150 },
+    { id: 'shadow', label: 'Stealth Execution Suite', layer: 'ai', x: 420, y: 230 },
+    { id: 'Yield Operations Hub', label: 'Yield Operations Hub', layer: 'blockchain', x: 420, y: 310 },
     
     // Global Console & Dash
     { id: 'console', label: 'Telemetry Console', layer: 'telemetry', x: 140, y: 410 },
@@ -98,7 +98,7 @@ export default function ArchitecturePage() {
     { from: 'ai-os', to: 'credit', type: 'intelligence' },
     { from: 'ai-os', to: 'lend', type: 'intelligence' },
     { from: 'ai-os', to: 'shadow', type: 'intelligence' },
-    { from: 'ai-os', to: 'treasury', type: 'intelligence' },
+    { from: 'ai-os', to: 'Yield Operations Hub', type: 'intelligence' },
     
     { from: 'resilience', to: 'split', type: 'health' },
     { from: 'resilience', to: 'agents', type: 'health' },
@@ -208,7 +208,7 @@ export default function ArchitecturePage() {
                   stroke = '#EC4899' // Diagnostic magenta pulse
                 } else if (activeScenario === 'suspicious_activity' && n.layer === 'security') {
                   stroke = '#EF4444' // Threat red pulse
-                } else if (activeScenario === 'treasury_imbalance' && n.id === 'treasury') {
+                } else if (activeScenario === 'treasury_imbalance' && n.id === 'Yield Operations Hub') {
                   stroke = '#F5C518' // Asset gold alert pulse
                 } else if (activeScenario === 'chain_congestion' && n.id === 'split') {
                   stroke = '#3B82F6' // Congestion blue pulse

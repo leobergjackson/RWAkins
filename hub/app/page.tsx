@@ -48,13 +48,13 @@ function useCountUp(target: number, active: boolean): number {
 // ─── Data ────────────────────────────────────────────────────
 const TOOLS = [
   { icon: '◈', name: 'Credit Passport', href: '/credit', tagline: 'AI Credit Scoring', desc: 'Generate your on-chain credit score as a soulbound NFT. Every DeFi protocol reads your score with a single contract call.', chain: 'QIE', chainColor: '#F5A623', badge: 'Identity' },
-  { icon: '⬟', name: 'Legacy Vault', href: '/legacy', tagline: 'Encrypted Inheritance', desc: 'Store your most important files with AES-GCM encryption. Heirs unlock access on-chain after validator attestation.', chain: 'QIE', chainColor: '#F5A623', badge: 'Security' },
-  { icon: '⬡', name: 'Agent Mesh', href: '/agents', tagline: 'AI Agent Coordination', desc: 'Deploy AI agents with verified on-chain identities. Every delegation is Ed25519 signed and permanently logged.', chain: 'Solana', chainColor: '#9945FF', badge: 'AI' },
+  { icon: '⬟', name: 'Family vault', href: '/legacy', tagline: 'Encrypted Inheritance', desc: 'Store your most important files with AES-GCM encryption. Heirs unlock access on-chain after validator attestation.', chain: 'QIE', chainColor: '#F5A623', badge: 'Security' },
+  { icon: '⬡', name: 'Agent co-ordinator', href: '/agents', tagline: 'AI Agent Coordination', desc: 'Deploy AI agents with verified on-chain identities. Every delegation is Ed25519 signed and permanently logged.', chain: 'Solana', chainColor: '#9945FF', badge: 'AI' },
   { icon: '🔐', name: 'Private Vault', href: '/vault', tagline: 'Cross-Chain Privacy', desc: 'Trade assets across chains with complete privacy. Zero transaction metadata exposed to any observer.', chain: 'Multi', chainColor: '#06B6D4', badge: 'Privacy' },
-  { icon: '◆', name: 'SyncSplit', href: '/split', tagline: 'On-Chain Bill Splitting', desc: 'Split bills using smart contracts on Stellar. Multi-wallet support with automatic settlement on full payment.', chain: 'Stellar', chainColor: '#3B82F6', badge: 'Payments' },
+  { icon: '◆', name: 'Bill split', href: '/split', tagline: 'On-Chain Bill Splitting', desc: 'Split bills using smart contracts on Stellar. Multi-wallet support with automatic settlement on full payment.', chain: 'Stellar', chainColor: '#3B82F6', badge: 'Payments' },
   { icon: '◎', name: 'AI Lending', href: '/lend', tagline: 'DeFi Loan Negotiation', desc: 'AI agents negotiate your loan terms in natural language. Zero-knowledge credit verification. L2 settlement.', chain: 'ETH L2', chainColor: '#6366F1', badge: 'DeFi' },
-  { icon: '◇', name: 'Treasury AI', href: '/treasury', tagline: 'Autonomous Treasury', desc: 'AI agents manage your treasury, stream payroll per-second, enforce governance, and optimize yield automatically.', chain: 'Solana', chainColor: '#10B981', badge: 'Treasury' },
-  { icon: '▲', name: 'Shadow OS', href: '/shadow', tagline: 'Invisible Operations', desc: 'Run your entire financial organization invisibly on-chain. Seven specialized AI agents. Fully autonomous.', chain: 'Solana', chainColor: '#64748B', badge: 'Enterprise' },
+  { icon: '◇', name: 'Yield Operations Hub', href: '/treasury', tagline: 'Autonomous Yield Operations Hub', desc: 'AI agents manage your Yield Operations Hub, stream payroll per-second, enforce governance, and optimize yield automatically.', chain: 'Solana', chainColor: '#10B981', badge: 'Yield Operations Hub' },
+  { icon: '▲', name: 'Stealth Execution Suite', href: '/shadow', tagline: 'Invisible Operations', desc: 'Run your entire financial organization invisibly on-chain. Seven specialized AI agents. Fully autonomous.', chain: 'Solana', chainColor: '#64748B', badge: 'Enterprise' },
 ]
 
 const STATS = [
@@ -66,14 +66,14 @@ const STATS = [
 const FEATURES = [
   { num: '01', title: 'One Wallet. Every Tool.', desc: 'Connect MetaMask, Phantom, or Freighter once per chain. Access every tool instantly without reconnecting.' },
   { num: '02', title: 'Real On-Chain Data Only', desc: 'Every number, every score, every transaction comes from live deployed smart contracts. Zero mock data.' },
-  { num: '03', title: 'AI Runs Every Tool', desc: 'Credit scoring, loan negotiation, agent coordination, treasury management — AI powers every feature.' },
+  { num: '03', title: 'AI Runs Every Tool', desc: 'Credit scoring, loan negotiation, agent coordination, Yield Operations Hub management — AI powers every feature.' },
   { num: '04', title: 'Four Chains, One Dashboard', desc: 'QIE, Solana, Stellar, and Ethereum L2 — all accessible from one unified interface without switching apps.' },
 ]
 
 const CHAINS = [
-  { name: 'QIE Mainnet', id: 'Chain ID: 1990', color: '#F5A623', glyph: '⬡', tools: 'Credit Passport · Legacy Vault' },
-  { name: 'Solana', id: 'Mainnet Beta', color: '#9945FF', glyph: '◎', tools: 'Agent Mesh · Treasury AI · Shadow OS' },
-  { name: 'Stellar', id: 'Soroban', color: '#3B82F6', glyph: '✦', tools: 'SyncSplit' },
+  { name: 'QIE Mainnet', id: 'Chain ID: 1990', color: '#F5A623', glyph: '⬡', tools: 'Credit Passport · Family vault' },
+  { name: 'Solana', id: 'Mainnet Beta', color: '#9945FF', glyph: '◎', tools: 'Agent co-ordinator · Yield Operations Hub · Stealth Execution Suite' },
+  { name: 'Stellar', id: 'Soroban', color: '#3B82F6', glyph: '✦', tools: 'Bill split' },
   { name: 'Ethereum L2', id: 'Arbitrum', color: '#6366F1', glyph: '◆', tools: 'AI Lending · Private Vault' },
 ]
 
@@ -229,7 +229,7 @@ function Hero() {
             <span style={{ display: 'block', fontWeight: 700, color: 'rgba(10,15,46,0.8)' }}>&amp; Beyond</span>
           </motion.h1>
           <motion.p variants={fadeUp} style={{ fontSize: 18, lineHeight: 1.65, color: '#475569', maxWidth: 520, margin: 0 }}>
-            Eight powerful tools. Credit scoring, inheritance vaults, private trading, DeFi lending, treasury automation, and AI agents — all on-chain in one unified platform.
+            Eight powerful tools. Credit scoring, inheritance vaults, private trading, DeFi lending, Yield Operations Hub automation, and AI agents — all on-chain in one unified platform.
           </motion.p>
           <motion.div variants={fadeUp} style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {[
@@ -573,7 +573,7 @@ function ActivityChart() {
 }
 
 function DashFrame() {
-  const sideItems = [['◉', 'Overview', true], ['◈', 'Credit Passport'], ['⬟', 'Legacy Vault'], ['⬡', 'Agent Mesh'], ['🔐', 'Private Vault'], ['◆', 'SyncSplit'], ['◎', 'AI Lending'], ['◇', 'Treasury AI'], ['▲', 'Shadow OS']]
+  const sideItems = [['◉', 'Overview', true], ['◈', 'Credit Passport'], ['⬟', 'Family vault'], ['⬡', 'Agent co-ordinator'], ['🔐', 'Private Vault'], ['◆', 'Bill split'], ['◎', 'AI Lending'], ['◇', 'Yield Operations Hub'], ['▲', 'Stealth Execution Suite']]
   return (
     <div className="dash-tilt" style={{ maxWidth: 960, margin: '0 auto', borderRadius: 22, overflow: 'hidden', boxShadow: '0 50px 120px -30px rgba(15,23,42,0.45)', background: '#0A0F2E', border: '1px solid rgba(255,255,255,0.08)' }}>
       {/* Chrome */}
@@ -772,7 +772,7 @@ function Pricing() {
               <div style={{ fontSize: 13.5, color: '#94A3B8', marginTop: 8 }}>Forever, for everyone</div>
             </div>
             <div style={{ flex: 1 }}>
-              {['Credit Passport tool', 'Legacy Vault tool', 'QIE Mainnet access', 'Read-only dashboard'].map(f => <Bullet key={f} text={f} />)}
+              {['Credit Passport tool', 'Family vault tool', 'QIE Mainnet access', 'Read-only dashboard'].map(f => <Bullet key={f} text={f} />)}
             </div>
             <GhostBtn href="#launch">Start exploring</GhostBtn>
           </motion.div>
@@ -859,7 +859,7 @@ function FinalCTA() {
 
 // ─── FOOTER ──────────────────────────────────────────────────
 const FOOTER_COLS = {
-  PLATFORM: ['Credit Passport', 'Legacy Vault', 'Agent Mesh', 'Private Vault', 'SyncSplit', 'AI Lending', 'Treasury AI', 'Shadow OS'],
+  PLATFORM: ['Credit Passport', 'Family vault', 'Agent co-ordinator', 'Private Vault', 'Bill split', 'AI Lending', 'Yield Operations Hub', 'Stealth Execution Suite'],
   CHAINS: ['QIE Mainnet', 'Solana', 'Stellar', 'Ethereum L2'],
   RESOURCES: ['Smart Contracts', 'API Docs', 'Demo Video'],
   COMPANY: ['About', 'Blog', 'Newsletter'],

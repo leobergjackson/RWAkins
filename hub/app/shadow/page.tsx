@@ -28,7 +28,7 @@ const BG = '#F8FAFC', MONO = '"JetBrains Mono","Fira Code","Courier New",monospa
 const CARD = 'rgba(255,255,255,0.85)', BORDER = 'rgba(255,255,255,0.6)'
 
 const DEPTS = [
-  { type:'cfo',         name:'CFO Agent',         icon:'💰', role:'Treasury oversight, rebalancing & capital allocation', color:'#EAB308', bg:'#FEF9C3', bd:'#FEF08A', metric:'12,480.50', unit:'SOL',    label:'Treasury Balance',   action:'Rebalance treasury' },
+  { type:'cfo',         name:'CFO Agent',         icon:'💰', role:'Yield Operations Hub oversight, rebalancing & capital allocation', color:'#EAB308', bg:'#FEF9C3', bd:'#FEF08A', metric:'12,480.50', unit:'SOL',    label:'Yield Operations Hub Balance',   action:'Rebalance Yield Operations Hub' },
   { type:'payroll',     name:'Payroll Agent',      icon:'💸', role:'Real-time SOL salary streaming to team wallets',       color:'#10B981', bg:'#D1FAE5', bd:'#A7F3D0', metric:'0.00034',   unit:'SOL/s',  label:'Stream Rate',        action:'Process payroll batch' },
   { type:'compliance',  name:'Compliance Agent',   icon:'⚖️', role:'Regulatory rule enforcement & AML screening',         color:'#3B82F6', bg:'#DBEAFE', bd:'#BFDBFE', metric:'347',       unit:'rules',  label:'Rules Checked',      action:'Run compliance sweep' },
   { type:'audit',       name:'Audit Agent',        icon:'🔍', role:'Immutable transaction logging & on-chain audit trail', color:'#8B5CF6', bg:'#EDE9FE', bd:'#DDD6FE', metric:'1,847',     unit:'txns',   label:'Txns Logged',        action:'Run full audit' },
@@ -38,7 +38,7 @@ const DEPTS = [
 ] as const
 
 const POOL: Omit<FeedItem,'id'|'timestamp'>[] = [
-  { agentType:'CFO Agent',         action:'Treasury rebalanced — moved 120 SOL to reserve pool' },
+  { agentType:'CFO Agent',         action:'Yield Operations Hub rebalanced — moved 120 SOL to reserve pool' },
   { agentType:'Payroll Agent',     action:'Streamed 0.42 SOL to 6 active recipients' },
   { agentType:'Compliance Agent',  action:'47 AML rules checked — 0 violations detected' },
   { agentType:'Audit Agent',       action:'Transaction audit complete: 23 txns verified' },
@@ -263,7 +263,7 @@ export default function ShadowPage() {
       const pk = res.publicKey.toString()
       setWallet(pk); setAdmin(pk)
       persistWallet('solana', pk)
-      toast.success('Phantom connected to Shadow OS')
+      toast.success('Phantom connected to Stealth Execution Suite')
     } catch (e) {
       const m = e instanceof Error ? e.message : 'Could not connect.'
       setError(m); toast.error(m)
@@ -328,7 +328,7 @@ export default function ShadowPage() {
         <div style={{ display:'flex', alignItems:'center', gap:12 }}>
           <div style={{ width: 36, height: 36, background: '#0F172A', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🌑</div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontSize:14, fontWeight:800, color:'#0F172A', letterSpacing:'0.1em' }}>SHADOW OS</span>
+            <span style={{ fontSize:14, fontWeight:800, color:'#0F172A', letterSpacing:'0.1em' }}>Stealth Execution Suite</span>
             <span style={{ fontSize:10, color:'#64748B', letterSpacing:'0.06em', fontWeight: 600 }}>NEXUS v2.0</span>
           </div>
         </div>
@@ -371,7 +371,7 @@ export default function ShadowPage() {
               <span style={{ color: '#64748B' }}>on Solana.</span>
             </h1>
             <p style={{ fontSize: 18, color: '#475569', maxWidth: 640, margin: '0 auto 40px', lineHeight: 1.6 }}>
-              Orchestrate 7 invisible AI departments across treasury, payroll, compliance, audit, procurement, tax and risk.
+              Orchestrate 7 invisible AI departments across Yield Operations Hub, payroll, compliance, audit, procurement, tax and risk.
             </p>
             
             <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -395,7 +395,7 @@ export default function ShadowPage() {
         {/* Stats Strip */}
         <div className="bento-grid" style={{ marginBottom: 40 }}>
           {[
-            { label:'Treasury Balance',   value: stealth?'●●●●●':'12,480.50 SOL', icon:'💰', color:'#EAB308', bg:'#FEF9C3' },
+            { label:'Yield Operations Hub Balance',   value: stealth?'●●●●●':'12,480.50 SOL', icon:'💰', color:'#EAB308', bg:'#FEF9C3' },
             { label:'Active Agents',       value:`${agents.filter(a=>(a.status||'active')==='active').length||6} / 7`,         icon:'🤖', color:'#10B981', bg:'#D1FAE5' },
             { label:'SOL Streamed Today',  value: stealth?'●●●●●':`${streamed.toFixed(4)} SOL`, icon:'💸', color:'#3B82F6', bg:'#DBEAFE' },
             { label:'Threat Level',        value:'2 / 10 — LOW',                                icon:'🛡', color:'#10B981', bg:'#D1FAE5' },
@@ -439,12 +439,12 @@ export default function ShadowPage() {
           </motion.div>
         )}
 
-        {/* Treasury + Activity */}
+        {/* Yield Operations Hub + Activity */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 24, marginBottom: 40 }}>
-          {/* Treasury */}
+          {/* Yield Operations Hub */}
           <div className="glass-card" style={{ padding: '32px' }}>
             <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: 24 }}>
-              <p style={{ fontSize:18, fontWeight:800, color:'#0F172A', margin:0 }}>💰 Treasury Overview</p>
+              <p style={{ fontSize:18, fontWeight:800, color:'#0F172A', margin:0 }}>💰 Yield Operations Hub Overview</p>
               <span style={{ fontSize:11, color:'#64748B', fontFamily:MONO, background: '#F1F5F9', padding: '4px 12px', borderRadius: 999 }}>CFO AGENT MANAGED</span>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, marginBottom: 24 }}>
@@ -542,10 +542,10 @@ export default function ShadowPage() {
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(400px,1fr))', gap:24, marginBottom: 40 }}>
           {/* Simulation */}
           <div className="glass-card" style={{ padding:'32px' }}>
-            <p style={{ fontSize:18, fontWeight:800, color:'#0F172A', margin:'0 0 24px' }}>📊 Treasury Simulation</p>
+            <p style={{ fontSize:18, fontWeight:800, color:'#0F172A', margin:'0 0 24px' }}>📊 Yield Operations Hub Simulation</p>
             <div style={{ display:'flex', flexDirection:'column', gap:20, marginBottom:32 }}>
               {[
-                { label:'Treasury Size (SOL)', min:1000, max:100000, step:500, val:simT, set:setSimT },
+                { label:'Yield Operations Hub Size (SOL)', min:1000, max:100000, step:500, val:simT, set:setSimT },
                 { label:'Monthly Burn (SOL)',   min:10,   max:5000,  step:10,  val:simB, set:setSimB },
                 { label:'Payroll Recipients',   min:1,    max:50,    step:1,   val:simR, set:setSimR },
               ].map(s=>(
@@ -586,7 +586,7 @@ export default function ShadowPage() {
             </div>
             <p style={{ fontSize:14, color:'#475569', margin:0, lineHeight:1.6, fontWeight: 500 }}>When active, financial amounts, wallet addresses and agent activity are masked — ideal for screen sharing or public demos.</p>
             <div style={{ display:'flex', flexDirection:'column', gap:12, flex: 1 }}>
-              {['Mask wallet addresses','Redact treasury balances','Redact activity logs','Blur agent metrics'].map(item=>(
+              {['Mask wallet addresses','Redact Yield Operations Hub balances','Redact activity logs','Blur agent metrics'].map(item=>(
                 <div key={item} style={{ display:'flex', alignItems:'center', gap:12, fontSize:13, fontWeight: 600, color:stealth?'#0F172A':'#64748B' }}>
                   <span style={{ width:8, height:8, borderRadius:'50%', background:stealth?'#EF4444':'#CBD5E1', flexShrink:0 }} />{item}
                 </div>

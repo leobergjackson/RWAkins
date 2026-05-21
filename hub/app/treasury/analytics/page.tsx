@@ -56,7 +56,7 @@ export default function AnalyticsPage() {
       <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:24, flexWrap:'wrap', gap:12 }}>
         <div>
           <div style={{ fontSize:11, color:TEAL, fontFamily:MONO, letterSpacing:'0.1em', marginBottom:4 }}>PALMFLOW AI / ANALYTICS</div>
-          <h1 style={{ margin:0, fontSize:24, fontWeight:700 }}>Treasury Analytics</h1>
+          <h1 style={{ margin:0, fontSize:24, fontWeight:700 }}>Yield Operations Hub Analytics</h1>
           <p style={{ margin:'6px 0 0', fontSize:13, color:'rgba(255,255,255,0.4)' }}>Financial performance and AI-powered insights</p>
         </div>
         <div style={{ display:'flex', gap:8, alignItems:'center' }}>
@@ -123,7 +123,7 @@ export default function AnalyticsPage() {
 
         {/* Asset Composition Pie */}
         <div style={{ background:CARD, border:`1px solid ${BDR}`, borderRadius:12, padding:'20px 24px' }}>
-          <div style={{ fontSize:14, fontWeight:600, marginBottom:4 }}>Treasury Composition</div>
+          <div style={{ fontSize:14, fontWeight:600, marginBottom:4 }}>Yield Operations Hub Composition</div>
           <div style={{ fontSize:11, color:'rgba(255,255,255,0.35)', marginBottom:16 }}>Portfolio breakdown by asset</div>
           {mounted && d ? (
             <ResponsiveContainer width="100%" height={200}>

@@ -108,7 +108,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     status: 'active',
     latency: 'Local',
     logo: '👻',
-    description: 'Ed25519 nacl key signing buffers for Solana treasury streamers and agents.',
+    description: 'Ed25519 nacl key signing buffers for Solana Yield Operations Hub streamers and agents.',
     metadata: {
       endpoint: 'window.solana',
       version: 'v24.2.1',
@@ -130,8 +130,8 @@ const INTEGRATIONS: IntegrationItem[] = [
     }
   },
   {
-    id: 'ai-lendora',
-    name: 'Lendora AI Advisor',
+    id: 'ai-Protocol Borrow Engine',
+    name: 'Protocol Borrow Engine AI Advisor',
     category: 'AI Systems',
     status: 'active',
     latency: '45ms',
@@ -150,7 +150,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     status: 'active',
     latency: '82ms',
     logo: '🌱',
-    description: 'Automated treasury streams scheduler and yield rebalancing planner.',
+    description: 'Automated Yield Operations Hub streams scheduler and yield rebalancing planner.',
     metadata: {
       endpoint: '/api/treasury/planner',
       version: 'gpt-4o-mini',
@@ -159,7 +159,7 @@ const INTEGRATIONS: IntegrationItem[] = [
   },
   {
     id: 'ai-shadow',
-    name: 'Shadow OS Departments',
+    name: 'Stealth Execution Suite Departments',
     category: 'AI Systems',
     status: 'active',
     latency: '110ms',
@@ -168,7 +168,7 @@ const INTEGRATIONS: IntegrationItem[] = [
     metadata: {
       endpoint: '/api/shadow/mesh',
       version: 'mixtral-8x7b-instruct',
-      payloadExample: '{\n  "command": "Perform treasury compliance check",\n  "departments": ["CFO", "Compliance"]\n}'
+      payloadExample: '{\n  "command": "Perform Yield Operations Hub compliance check",\n  "departments": ["CFO", "Compliance"]\n}'
     }
   },
   {

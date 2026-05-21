@@ -445,14 +445,14 @@ export default function SyncSplitPage() {
   }, [])
 
   return (
-    <div className="syncsplit-container">
+    <div className="Bill split-container">
       {/* Google Fonts Link */}
       <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500&family=Dancing+Script:wght@600&family=Fira+Code:wght@400&display=swap" rel="stylesheet" />
 
       {/* Embedded Vanilla CSS Stylesheet */}
       <style dangerouslySetInnerHTML={{ __html: `
         /* Custom Font Imports fallback */
-        .syncsplit-container {
+        .Bill split-container {
           background-color: #FFF0F7;
           color: #2D1A26;
           font-family: 'DM Sans', sans-serif;
@@ -501,7 +501,7 @@ export default function SyncSplitPage() {
           .custom-cursor-dot, .custom-cursor-ring {
             display: none !important;
           }
-          .syncsplit-container {
+          .Bill split-container {
             cursor: auto !important;
           }
         }
@@ -1872,7 +1872,7 @@ export default function SyncSplitPage() {
       {/* NAVBAR */}
       <header className="nav-bar">
         <div className="nav-logo">
-          <span className="sparkle-icon">✦</span> SyncSplit
+          <span className="sparkle-icon">✦</span> Bill split
         </div>
         <nav className="nav-links">
           <a href="#how-it-works" className="nav-link" onClick={(e) => { e.preventDefault(); scrollTo('how-it-works') }}>How it Works</a>
@@ -1899,7 +1899,7 @@ export default function SyncSplitPage() {
           <span className="title-cursive-dark">on-chain.</span>
         </h1>
         <p className="hero-subtext">
-          No more awkward reminders. No more trust issues. SyncSplit uses Stellar Soroban smart contracts to lock everyone's share in escrow — and releases the full amount only when every participant has paid.
+          No more awkward reminders. No more trust issues. Bill split uses Stellar Soroban smart contracts to lock everyone's share in escrow — and releases the full amount only when every participant has paid.
         </p>
         <div className="pull-quote">
           "Your share. Your wallet. Your chain."
@@ -2397,7 +2397,7 @@ export default function SyncSplitPage() {
         <div className="footer-top">
           <div className="footer-brand">
             <div className="footer-logo">
-              ✦ SyncSplit
+              ✦ Bill split
             </div>
             <div className="footer-tagline">
               "Split bills. Build trust. On Stellar. ✦"

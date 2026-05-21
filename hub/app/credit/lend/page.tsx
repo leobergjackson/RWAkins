@@ -221,7 +221,7 @@ export default function LendPage() {
         </p>
         <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, lineHeight: 1.2 }}>NeuroLend: AI-Negotiated Lending</h1>
         <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginTop: 4 }}>
-          Chat with AI to get personalized loan terms based on your NeuroCred score
+          Chat with AI to get personalized loan terms based on your Credit Passport score
         </p>
       </header>
 

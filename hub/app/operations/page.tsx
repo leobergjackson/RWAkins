@@ -63,7 +63,7 @@ export default function OperationsPage() {
           reply += `Telemetry checks confirm nominal state. All 25 regional gateway endpoints report 100% uptime SLA.`
         }
       } else {
-        reply += `Memory log confirms active session "${aiMemory.continuitySessionId}". All tools (SyncSplit, Lendora AI, Solana Agent Mesh) are connected and synchronized under role context.`
+        reply += `Memory log confirms active session "${aiMemory.continuitySessionId}". All tools (Bill split, Protocol Borrow Engine AI, Solana Agent co-ordinator) are connected and synchronized under role context.`
       }
 
       addInteractionThread('assistant', reply)

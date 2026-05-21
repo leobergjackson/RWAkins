@@ -534,7 +534,7 @@ export default function GovernancePage() {
                   onChange={(e) => setPropType(e.target.value as ProposalType)}
                   style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
                 >
-                  <option value="treasury_rebalancing">Treasury Rebalancing</option>
+                  <option value="treasury_rebalancing">Yield Operations Hub Rebalancing</option>
                   <option value="protocol_migration">Protocol Migration</option>
                   <option value="rpc_upgrades">RPC Infrastructure Upgrade</option>
                   <option value="telemetry_escalation">Telemetry Escalation Policy</option>

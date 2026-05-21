@@ -56,7 +56,7 @@ export default function LendMarkets({ onSupply, onBorrow }: { onSupply?: (a: str
       <div style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 12, padding: 20 }}>
         <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase', marginBottom: 10 }}>Interest Rate Model</div>
         <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.6, marginBottom: 12 }}>
-          Lendora uses a kinked interest rate model. Rates are low at low utilization and rise sharply above 80% to incentivize repayment and attract new supply.
+          Protocol Borrow Engine uses a kinked interest rate model. Rates are low at low utilization and rise sharply above 80% to incentivize repayment and attract new supply.
         </p>
         {[
           { tier: 'Tier 1 (Score 900+)', desc: '−2.5% off market rate', color: '#10b981' },

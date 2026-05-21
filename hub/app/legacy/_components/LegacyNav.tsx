@@ -45,7 +45,7 @@ export default function LegacyNav() {
         }}
       >
         <span style={{ fontSize: 14 }}>🛡</span>
-        ETERNAVAULT
+        Family vault
       </span>
       {NAV_ITEMS.map((item) => {
         const isActive = item.exact ? pathname === item.href : pathname.startsWith(item.href)

@@ -82,7 +82,7 @@ export default function DashboardPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ fontSize: 11, color: TEAL, fontFamily: MONO, letterSpacing: '0.1em', marginBottom: 4 }}>PALMFLOW AI / DASHBOARD</div>
-          <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700 }}>Treasury Dashboard</h1>
+          <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700 }}>Yield Operations Hub Dashboard</h1>
           <p style={{ margin: '6px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>Your organization's real-time financial overview</p>
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -106,7 +106,7 @@ export default function DashboardPage() {
         style={{ background: 'linear-gradient(135deg, rgba(0,229,204,0.06), rgba(168,85,247,0.04))', border: `1px solid rgba(0,229,204,0.2)`, borderRadius: 16, padding: '28px 32px', marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}
       >
         <div>
-          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', marginBottom: 8 }}>Total Treasury Value</div>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', marginBottom: 8 }}>Total Yield Operations Hub Value</div>
           <div style={{ fontSize: 42, fontWeight: 900, color: TEAL, fontFamily: MONO, letterSpacing: '-0.02em' }}>
             ${ticker.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
@@ -247,7 +247,7 @@ export default function DashboardPage() {
               { href:'/treasury/send',       label:'💸 Send Payment', color:'#22C55E', desc:'Transfer funds to any address' },
               { href:'/treasury/receive',     label:'📥 Receive',      color:'#60A5FA', desc:'Create payment requests + QR' },
               { href:'/treasury/swap',        label:'🔄 Swap Assets',  color:'#A855F7', desc:'AI-optimized DEX routing' },
-              { href:'/treasury/analytics',   label:'📉 Analytics',    color:'#F59E0B', desc:'Treasury performance insights' },
+              { href:'/treasury/analytics',   label:'📉 Analytics',    color:'#F59E0B', desc:'Yield Operations Hub performance insights' },
               { href:'/treasury/payroll',     label:'💰 Payroll',      color:TEAL,      desc:'Manage streaming payments' },
               { href:'/treasury/settings',    label:'⚙️ Settings',     color:'rgba(255,255,255,0.5)', desc:'Configure preferences' },
             ].map(a => (

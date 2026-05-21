@@ -67,7 +67,7 @@ export default function FHETradeForm({ walletAddress }: { walletAddress?: string
         }),
       })
       clearTimeout(timeout)
-      if (res.ok) toast.success('Private trade submitted to CipherVault')
+      if (res.ok) toast.success('Private trade submitted to Private vault')
     } catch {
       // ignore — demo mode
     }

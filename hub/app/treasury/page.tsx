@@ -18,7 +18,7 @@ const FEATURES = [
   },
   {
     icon: '💼',
-    title: 'Treasury Management',
+    title: 'Yield Operations Hub Management',
     desc: 'Real-time portfolio view across all blockchains and wallets.',
     detail: 'Asset allocation, yield tracking, risk analysis, predictive simulations',
     color: '#059669',
@@ -40,7 +40,7 @@ const FEATURES = [
 ]
 
 const STATS = [
-  { label: 'Treasury Managed', value: '$1.2M+' },
+  { label: 'Yield Operations Hub Managed', value: '$1.2M+' },
   { label: 'AI Agents Online', value: '7' },
   { label: 'Chains Supported', value: '8+' },
   { label: 'Gas Saved (Avg)', value: '23%' },
@@ -192,13 +192,13 @@ export default function TreasuryLanding() {
   }, [])
 
   return (
-    <div className="treasury-container">
+    <div className="Yield Operations Hub-container">
       {/* Google Fonts Link */}
       <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500;600;700&family=Dancing+Script:wght@600&family=Fira+Code:wght@400&display=swap" rel="stylesheet" />
 
       {/* Embedded Vanilla CSS Stylesheet */}
       <style dangerouslySetInnerHTML={{ __html: `
-        .treasury-container {
+        .Yield Operations Hub-container {
           background-color: #F0FDF4;
           color: #064E3B;
           font-family: 'DM Sans', sans-serif;
@@ -245,7 +245,7 @@ export default function TreasuryLanding() {
           .custom-cursor-dot, .custom-cursor-ring {
             display: none !important;
           }
-          .treasury-container {
+          .Yield Operations Hub-container {
             cursor: auto !important;
           }
         }
@@ -629,7 +629,7 @@ export default function TreasuryLanding() {
         <section className="hero-section">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <div className="eyebrow-cursive" style={{ justifyContent: 'center' }}>
-              ✦ Autonomous Treasury OS
+              ✦ Autonomous Yield Operations Hub OS
             </div>
 
             <h1 className="hero-title">
@@ -639,7 +639,7 @@ export default function TreasuryLanding() {
             </h1>
 
             <p className="hero-subtext" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
-              AI agents manage payments, optimize routing, and execute treasury operations autonomously.
+              AI agents manage payments, optimize routing, and execute Yield Operations Hub operations autonomously.
               PalmFlow AI — the Autonomous Financial Operating System for DAOs and enterprises.
             </p>
 
@@ -735,7 +735,7 @@ export default function TreasuryLanding() {
         <section className="stats-grid-container">
           <div className="quick-actions-card">
             <div className="eyebrow-cursive" style={{ justifyContent: 'center' }}>Get Started</div>
-            <h2 className="qa-title">Ready to automate your treasury?</h2>
+            <h2 className="qa-title">Ready to automate your Yield Operations Hub?</h2>
             <p className="qa-desc">
               Connect your wallet and let AI agents manage your finances autonomously.
             </p>
@@ -762,7 +762,7 @@ export default function TreasuryLanding() {
 
         {/* Footer note */}
         <div className="footer-note">
-          PalmFlow AI is a production-ready financial OS. Connect your wallet to start managing treasury operations.
+          PalmFlow AI is a production-ready financial OS. Connect your wallet to start managing Yield Operations Hub operations.
           All operations are non-custodial — your keys, your funds.
         </div>
       </div>

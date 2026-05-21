@@ -40,7 +40,7 @@ export default function HistoryPage() {
     const csv = `${header}\n${rows}`
     const a = document.createElement('a')
     a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }))
-    a.download = 'treasury-history.csv'
+    a.download = 'Yield Operations Hub-history.csv'
     a.click()
     toast.success('History exported')
   }
@@ -52,7 +52,7 @@ export default function HistoryPage() {
         <div>
           <div style={{ fontSize: 11, color: TEAL, fontFamily: MONO, letterSpacing: '0.1em', marginBottom: 4 }}>PALMFLOW AI / HISTORY</div>
           <h1 style={{ margin: 0, fontSize: 24, fontWeight: 700 }}>Transaction History</h1>
-          <p style={{ margin: '6px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>Immutable audit log of all treasury operations</p>
+          <p style={{ margin: '6px 0 0', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>Immutable audit log of all Yield Operations Hub operations</p>
         </div>
         <button onClick={exportCSV} style={{ padding: '9px 18px', borderRadius: 8, border: `1px solid ${BDR}`, background: 'rgba(255,255,255,0.04)', color: 'rgba(255,255,255,0.6)', fontSize: 12, cursor: 'pointer' }}>
           ↓ Export CSV

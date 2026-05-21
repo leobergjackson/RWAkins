@@ -49,12 +49,12 @@ export default function CommandPalette() {
     { id: 'nav-story', title: 'Open Executive Storytelling Mode', subtitle: 'Immersive slide presentation for accelerators', category: 'Navigation', action: () => router.push('/story') },
     { id: 'nav-credit', title: 'Open Credit Passport Score', subtitle: 'View soulbound NFT & NCRD APYs', category: 'Navigation', action: () => router.push('/credit') },
     { id: 'nav-lend', title: 'Open AI Lending Desk', subtitle: 'Negotiate interest rates statefully', category: 'Navigation', action: () => router.push('/lend') },
-    { id: 'nav-split', title: 'Open SyncSplit payments', subtitle: 'Stellar Soroban multi-party splits', category: 'Navigation', action: () => router.push('/split') },
-    { id: 'nav-agents', title: 'Open Solana Agent Mesh', subtitle: 'Deploy & delegate autonomous workers', category: 'Navigation', action: () => router.push('/agents') },
-    { id: 'nav-treasury', title: 'Open Treasury AI Manager', subtitle: 'Payroll streaming & governance', category: 'Navigation', action: () => router.push('/treasury') },
-    { id: 'nav-shadow', title: 'Open Shadow OS Console', subtitle: 'Command 7 corporate AI departments', category: 'Navigation', action: () => router.push('/shadow') },
+    { id: 'nav-split', title: 'Open Bill split payments', subtitle: 'Stellar Soroban multi-party splits', category: 'Navigation', action: () => router.push('/split') },
+    { id: 'nav-agents', title: 'Open Solana Agent co-ordinator', subtitle: 'Deploy & delegate autonomous workers', category: 'Navigation', action: () => router.push('/agents') },
+    { id: 'nav-Yield Operations Hub', title: 'Open Yield Operations Hub Manager', subtitle: 'Payroll streaming & governance', category: 'Navigation', action: () => router.push('/treasury') },
+    { id: 'nav-shadow', title: 'Open Stealth Execution Suite Console', subtitle: 'Command 7 corporate AI departments', category: 'Navigation', action: () => router.push('/shadow') },
     { id: 'nav-vault', title: 'Open Private Vault Secure Trades', subtitle: 'Zero-metadata secure bridge trades', category: 'Navigation', action: () => router.push('/vault') },
-    { id: 'nav-legacy', title: 'Open Legacy Vault Inheritance', subtitle: 'Self-claiming secure heir lockers', category: 'Navigation', action: () => router.push('/legacy') },
+    { id: 'nav-legacy', title: 'Open Family vault Inheritance', subtitle: 'Self-claiming secure heir lockers', category: 'Navigation', action: () => router.push('/legacy') },
 
     {
       id: 'act-demo',
@@ -212,7 +212,7 @@ export default function CommandPalette() {
     },
     {
       id: 'strat-stabilize',
-      title: 'Stabilize Treasury Confidence',
+      title: 'Stabilize Yield Operations Hub Confidence',
       subtitle: 'Deploy APY sweep sweepers to balance cashflows',
       category: 'Actions',
       action: () => {
@@ -223,13 +223,13 @@ export default function CommandPalette() {
             id: `evt-${Date.now()}`,
             type: 'kubryx_treasury_shift',
             payload: JSON.stringify({ balanced: true }),
-            description: 'Treasury Balanced: stabilization APY sweep dispatched.',
+            description: 'Yield Operations Hub Balanced: stabilization APY sweep dispatched.',
             timestamp: new Date().toISOString()
           }
           state.events = [newEvt, ...(state.events || [])]
           localStorage.setItem('kubryx_global_ops_layer', JSON.stringify(state))
           window.dispatchEvent(new Event('kubryx_global_ops_update'))
-          toast.success('Treasury rebalancing sweep dispatched!')
+          toast.success('Yield Operations Hub rebalancing sweep dispatched!')
         }
       }
     },

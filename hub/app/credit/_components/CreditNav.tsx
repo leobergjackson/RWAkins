@@ -40,7 +40,7 @@ export default function CreditNav() {
           marginRight: 8,
         }}
       >
-        NEUROCREDIT
+        Credit PassportIT
       </span>
       {NAV_ITEMS.map((item) => {
         const isActive = item.exact ? pathname === item.href : pathname.startsWith(item.href)

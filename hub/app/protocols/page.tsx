@@ -49,8 +49,8 @@ export default function ProtocolsPage() {
       syncColor: '#10B981'
     },
     {
-      id: 'stellar-syncsplit-vault',
-      name: 'SyncSplit Settlement Desk',
+      id: 'stellar-Bill split-vault',
+      name: 'Bill split Settlement Desk',
       chain: 'Stellar Testnet',
       address: 'GBB3...O8R4',
       explorer: 'https://stellar.expert/explorer/testnet/account/GBB32831828381029381028301823018GBB3O8R4',
@@ -61,8 +61,8 @@ export default function ProtocolsPage() {
       syncColor: activeScenario === 'chain_congestion' ? '#F5C518' : '#10B981'
     },
     {
-      id: 'arbitrum-lendora-desk',
-      name: 'Lendora High-Yield Desk',
+      id: 'arbitrum-Protocol Borrow Engine-desk',
+      name: 'Protocol Borrow Engine High-Yield Desk',
       chain: 'Arbitrum Sepolia',
       address: '0x99A3...B840',
       explorer: 'https://sepolia.arbiscan.io/address/0x99A32101238491028382910283012838192B840',
@@ -367,7 +367,7 @@ export default function ProtocolsPage() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {[
             { time: '14:38:12', chain: 'Solana Devnet', event: 'Autonomous Worker Signature Verified', hash: '5sJk...92La', link: 'https://explorer.solana.com/tx/5sJk28310f81829a?cluster=devnet' },
-            { time: '14:37:44', chain: 'QIE Mainnet', event: 'SyncSplit Settlement Multi-Party Stream Opened', hash: '0x38...892e', link: 'https://mainnet.qie.info/tx/0x38283818291028a3819c9e8e2c01928' },
+            { time: '14:37:44', chain: 'QIE Mainnet', event: 'Bill split Settlement Multi-Party Stream Opened', hash: '0x38...892e', link: 'https://mainnet.qie.info/tx/0x38283818291028a3819c9e8e2c01928' },
             { time: '14:36:20', chain: 'Arbitrum Sepolia', event: 'Staking Exposure Allocation Balanced', hash: '0x81...012e', link: 'https://sepolia.arbiscan.io/tx/0x812e9283181829c38182103f191029' }
           ].map((item, idx) => (
             <div 
