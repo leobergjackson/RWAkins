@@ -1,4 +1,5 @@
 #!/bin/bash
+# Built by vsrupeshkumar
 cd "$(dirname "$0")"
 pkill -f "next dev" 2>/dev/null
 sleep 1

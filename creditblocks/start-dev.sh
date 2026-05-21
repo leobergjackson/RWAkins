@@ -1,4 +1,5 @@
 #!/bin/bash
+# Built by vsrupeshkumar
 
 # NeuroCred Development Startup Script
 # This script starts both backend and frontend in development mode

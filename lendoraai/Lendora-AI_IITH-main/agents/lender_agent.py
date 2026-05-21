@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Lendora AI - Lender Agent (Luna)
 A privacy-first AI agent that manages lending operations and responds to borrower negotiations.

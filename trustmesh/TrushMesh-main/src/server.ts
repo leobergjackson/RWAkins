@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import Fastify, { type FastifyInstance, type FastifyServerOptions } from "fastify";
 import cors from "@fastify/cors";
 import jwt from "@fastify/jwt";

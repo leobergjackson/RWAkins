@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import type { Config } from "tailwindcss";
 
 export default {

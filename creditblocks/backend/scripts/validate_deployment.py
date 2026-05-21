@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Built by vsrupeshkumar
 """
 Pre-deployment validation script for Render.
 Validates environment variables before the application starts.

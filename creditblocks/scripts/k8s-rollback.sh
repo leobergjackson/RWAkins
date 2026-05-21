@@ -1,4 +1,5 @@
 #!/bin/bash
+# Built by vsrupeshkumar
 # Kubernetes rollback script for NeuroCred deployments
 
 set -e

@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import { motion } from "framer-motion";
 import { ArrowRight, Coins } from "lucide-react";
 import { StablecoinLogo } from "@/lib/stablecoinLogos";

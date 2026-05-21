@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Error Boundary Component
  * Catches React errors and displays a fallback UI

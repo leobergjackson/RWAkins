@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 export type JobStatus = "PENDING" | "ACTIVE" | "COMPLETE" | "REVOKED";
 export type AgentStatus = "ACTIVE" | "WARNING" | "REVOKED" | "COMPLETE";
 export type AgentType = "PLANNER" | "EXECUTOR" | "ANALYZER" | "TRADER" | "CONFIRMER";

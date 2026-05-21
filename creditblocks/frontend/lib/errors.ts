@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Centralized error handling utilities
  * Maps backend error codes to user-friendly messages

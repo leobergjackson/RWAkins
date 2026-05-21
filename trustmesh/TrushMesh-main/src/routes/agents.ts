@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import type { FastifyInstance } from "fastify";
 import { z } from "zod";
 import { ok } from "../lib/envelope.js";

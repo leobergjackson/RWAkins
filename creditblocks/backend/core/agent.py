@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 NeuroLend AI Agent for loan negotiation
 Simple rule-based agent (can be upgraded to LangChain later)

@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import { motion, AnimatePresence } from 'motion/react';
 
 const EVENT_STYLES = {

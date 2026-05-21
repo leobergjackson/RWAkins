@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Badge service for managing verification badges and calculating badge boosts
 """

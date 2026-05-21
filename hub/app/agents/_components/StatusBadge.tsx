@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 type Variant = 'active' | 'complete' | 'revoked' | 'pending' | 'warning' | 'idle'
 
 const STYLES: Record<Variant, { bg: string; fg: string; border: string }> = {

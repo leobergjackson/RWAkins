@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 EIP-712 signature generation and verification for loan offers
 Handles graceful degradation when private key is invalid or missing

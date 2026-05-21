@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Lendora AI - FastAPI Backend Server
 Complete API for the Privacy-First DeFi Lending Platform

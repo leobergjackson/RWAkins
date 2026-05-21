@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Lendora AI - Logo Component
  * Professional logo with gradient and icon

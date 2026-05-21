@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Encrypted secrets management
 Uses Fernet (symmetric encryption) to encrypt sensitive values

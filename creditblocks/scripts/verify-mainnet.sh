@@ -1,4 +1,5 @@
 #!/bin/bash
+# Built by vsrupeshkumar
 
 # QIE Mainnet Contract Verification Script
 # This script helps verify NeuroCred contracts on QIE Mainnet

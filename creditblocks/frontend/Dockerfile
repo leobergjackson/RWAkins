@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 # Multi-stage Dockerfile for NeuroCred Frontend
 # Stage 1: Dependencies
 FROM node:20-alpine AS deps

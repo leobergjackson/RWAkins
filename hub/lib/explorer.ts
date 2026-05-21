@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 export type ExplorerChain = 'qie' | 'solana' | 'stellar' | 'arbitrum'
 
 const BASES: Record<ExplorerChain, string> = {

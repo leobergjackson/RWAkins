@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Nonce management for loan offers to prevent replay attacks
 Enhanced with timestamp validation and persistence support

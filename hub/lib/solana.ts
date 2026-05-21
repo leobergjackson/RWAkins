@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 const SOLANA_RPC = process.env.NEXT_PUBLIC_SOLANA_RPC || 'https://api.devnet.solana.com'
 const SOLANA_FALLBACK_RPC = 'https://api.mainnet-beta.solana.com'
 

@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Lendora AI - Notification Dropdown Component
  * Displays notifications with unread badge and click-outside-to-close functionality

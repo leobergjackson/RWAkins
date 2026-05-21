@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Lendora AI - Chainlink Oracle Integration
 Replaces Charli3 oracle for Ethereum stack

@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 // Core wallet connection and signing logic (used by WalletContext)
 import { ACTIVE_CHAIN } from './constants'
 

@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import type { Metadata } from 'next'
 
 const title = 'SyncSplit — Kubryx'

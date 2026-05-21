@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Lendora AI - Wallet Connection Hook
  * React hook for managing Ethereum wallet state

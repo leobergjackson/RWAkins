@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 // Simple AES-GCM wrapper using Web Crypto API.
 // NOTE: This is for demo purposes only.
 // TODO: Use real key management / KMS / shared key exchange in production.

@@ -1,4 +1,5 @@
 #!/bin/bash
+# Built by vsrupeshkumar
 # Rollback all NeuroCred services
 
 set -e

@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """Lendora AI entrypoint — works under both `python main.py` and `uvicorn main:app`.
 
 We import the FastAPI `app` lazily so any startup crash inside server.py is

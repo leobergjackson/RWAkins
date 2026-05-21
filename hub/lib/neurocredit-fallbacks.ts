@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 export type StakingTier = 'None' | 'Bronze' | 'Silver' | 'Gold'
 
 export const STAKING_TIERS = {

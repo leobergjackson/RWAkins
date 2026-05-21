@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 module.exports = {
   extends: [
     'next/core-web-vitals',

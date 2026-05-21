@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Lendora AI - Borrower Agent (Lenny)
 Privacy-First DeFi Lending on Ethereum

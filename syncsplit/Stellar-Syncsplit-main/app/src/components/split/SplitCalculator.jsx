@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { validateAddress, truncateAddress, formatXLM, CONTRACT_ID } from '../../utils/stellar';

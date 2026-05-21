@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import { BrowserProvider } from 'ethers';
 
 export async function connectWallet() {

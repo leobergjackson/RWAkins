@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { LENDORA_ACCENT, AI_SUGGESTIONS, getStaticAIResponse } from '@/lib/lend-fallbacks'

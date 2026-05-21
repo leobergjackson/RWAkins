@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 declare module "@ika.xyz/sdk" {
   export const Curve: any;
   export const Hash: any;

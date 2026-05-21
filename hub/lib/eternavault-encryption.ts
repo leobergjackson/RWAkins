@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 // Client-side AES-GCM-256 encryption with PBKDF2/SHA-256 key derivation.
 // Vault key NEVER leaves the browser — only encrypted blobs are sent to the backend.
 

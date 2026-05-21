@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Lendora AI - Oracle Integration
 Credit score oracles

@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Lendora AI - Global State Management Context
  * Manages loans and transactions with localStorage persistence

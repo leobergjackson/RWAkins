@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 export const LENDORA_ACCENT = '#f59e0b'
 
 export const FALLBACK_LEND_STATS = [

@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Lendora AI - Ethereum Wallet Integration
  * Supports MetaMask, WalletConnect, and other EIP-1193 wallets

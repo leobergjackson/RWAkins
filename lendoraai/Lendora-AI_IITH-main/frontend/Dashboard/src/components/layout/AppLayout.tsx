@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Lendora AI - Unified App Layout Component
  * Standardized layout with fixed sidebar, top header, and content area

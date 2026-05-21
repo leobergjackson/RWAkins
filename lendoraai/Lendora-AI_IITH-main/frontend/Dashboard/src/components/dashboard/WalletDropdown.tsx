@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Lendora AI - Wallet Dropdown Component
  * Compact wallet display for navigation bar with popover details

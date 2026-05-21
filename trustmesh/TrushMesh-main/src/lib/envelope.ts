@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 export type ApiEnvelope<T> = {
   data: T | null;
   meta?: Record<string, unknown>;

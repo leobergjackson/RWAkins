@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Background worker for transaction indexing
 Uses RQ (Redis Queue) for async processing

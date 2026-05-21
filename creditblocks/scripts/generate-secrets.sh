@@ -1,4 +1,5 @@
 #!/bin/bash
+# Built by vsrupeshkumar
 # Generate secrets for environment configuration
 
 set -e

@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 RQ Worker for score computation tasks
 """

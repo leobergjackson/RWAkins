@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 declare module "canvas-confetti" {
   type Origin = {
     x?: number;

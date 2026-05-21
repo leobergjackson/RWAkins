@@ -1,4 +1,5 @@
 #!/bin/bash
+# Built by vsrupeshkumar
 # Security scanning script
 # Runs bandit, safety, and other security tools
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+# Built by vsrupeshkumar
 # Stop NeuroCred backend and frontend services
 
 echo "🛑 Stopping NeuroCred Services"

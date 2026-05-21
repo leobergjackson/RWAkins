@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Lendora AI - Agents Module
 Privacy-First AI Agents for DeFi Lending on Ethereum

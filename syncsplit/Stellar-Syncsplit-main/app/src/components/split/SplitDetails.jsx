@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { truncateAddress, formatXLM } from '../../utils/stellar';

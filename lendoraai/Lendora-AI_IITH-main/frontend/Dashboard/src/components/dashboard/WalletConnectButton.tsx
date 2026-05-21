@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Lendora AI - Wallet Connect Button Component
  * Compact button with popover for wallet connection in navigation bar

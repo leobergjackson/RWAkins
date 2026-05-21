@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Stablecoin Logo URLs
  * Maps stablecoin symbols to their logo image URLs

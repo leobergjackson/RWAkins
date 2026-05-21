@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import { Connection, PublicKey } from "@solana/web3.js";
 // [IKA-VERIFY] Package name confirmed as @ika.xyz/sdk per npm and docs.ika.xyz
 // @ts-ignore - Temporary until official types are correctly exported

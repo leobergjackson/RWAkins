@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Copy text to clipboard with feedback
  */

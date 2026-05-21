@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Privacy-compliant analytics utilities
 """

@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import dotenv from 'dotenv';
 import { createClient } from '@supabase/supabase-js';
 

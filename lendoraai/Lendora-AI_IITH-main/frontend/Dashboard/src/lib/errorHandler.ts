@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Global Error Handler
  * Catches and displays errors gracefully

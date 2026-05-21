@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Lendora AI - Credit Score Oracle Integration
 Fetches real credit scores from external oracles

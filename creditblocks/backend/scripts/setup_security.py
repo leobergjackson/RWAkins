@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Built by vsrupeshkumar
 """
 Security setup script
 Generates encryption keys and JWT secrets for CreditBlocks backend

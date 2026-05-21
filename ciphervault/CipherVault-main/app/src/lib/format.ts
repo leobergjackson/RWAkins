@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 // ── Currency formatting ───────────────────────────────────────────────────────
 
 /** Format a raw USD value (6 decimal places in u64) to a human-readable string */

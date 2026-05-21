@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Authentication middleware
 Supports both API keys and JWT tokens

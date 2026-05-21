@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 const STATIC_ALLOWED = [
   'https://kubryx.vercel.app',
   'https://kubryx-2xclq5gjr-vsrupeshoffl-5415s-projects.vercel.app',

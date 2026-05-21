@@ -1,4 +1,5 @@
 #!/bin/bash
+# Built by vsrupeshkumar
 # Start NeuroCred backend and frontend services
 
 set -e

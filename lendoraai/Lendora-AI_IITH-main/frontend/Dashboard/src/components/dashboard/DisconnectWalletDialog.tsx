@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Lendora AI - Disconnect Wallet Dialog
  * Dialog component for wallet disconnection with Log Out and Switch Wallet options

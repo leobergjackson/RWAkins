@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import { useQuery } from '@tanstack/react-query';
 
 function getCreditRating(efficiency: number): { grade: string; color: string } {

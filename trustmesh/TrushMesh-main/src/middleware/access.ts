@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import type { FastifyInstance } from "fastify";
 import { AppError } from "../lib/errors.js";
 

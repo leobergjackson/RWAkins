@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Lendora AI - Portfolio Page
  * Shows real wallet balance, total borrowed/lent, and account summary

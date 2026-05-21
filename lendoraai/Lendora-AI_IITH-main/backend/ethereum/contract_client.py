@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Lendora AI - Ethereum Contract Client
 Web3.py client for interacting with deployed contracts

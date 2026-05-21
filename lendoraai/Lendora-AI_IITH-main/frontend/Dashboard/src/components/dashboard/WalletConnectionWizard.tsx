@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 /**
  * Simplified Wallet Connection for Wizard
  * Neutral, informational error messages

@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 export type JobStatus = 'active' | 'complete' | 'revoked' | 'pending' | 'warning'
 export type NodeStatus = 'active' | 'revoked' | 'complete' | 'warning' | 'idle'
 export type AgentType = 'planner' | 'executor' | 'analyzer' | 'trader' | 'confirmer'

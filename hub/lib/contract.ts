@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 // QIE contract utilities — ABI encoding, decoding, formatting
 
 export function encodeAddress(address: string): string {

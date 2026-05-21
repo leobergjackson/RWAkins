@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Lendora AI - Multi-Agent Negotiation System
 Supports multiple borrowers and lenders negotiating simultaneously

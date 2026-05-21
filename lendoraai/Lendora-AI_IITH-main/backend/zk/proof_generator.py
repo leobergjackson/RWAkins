@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 """
 Lendora AI - ZK Proof Generator (Circom/SnarkJS)
 Replaces Midnight Network ZK proof generation

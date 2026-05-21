@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 import type { NextConfig } from "next";
 
 // Conditionally import Sentry only if available

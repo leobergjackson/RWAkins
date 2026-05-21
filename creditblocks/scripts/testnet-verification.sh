@@ -1,4 +1,5 @@
 #!/bin/bash
+# Built by vsrupeshkumar
 
 # Testnet Verification Script
 # Tests all features on testnet before mainnet deployment

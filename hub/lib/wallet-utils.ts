@@ -1,3 +1,4 @@
+// Built by vsrupeshkumar
 export const QIE_MAINNET = {
   chainId: '0x7C6',
   chainName: 'QIE Mainnet',

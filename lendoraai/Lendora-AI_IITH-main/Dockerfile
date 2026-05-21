@@ -1,3 +1,4 @@
+# Built by vsrupeshkumar
 # Lendora AI - Full Stack Dockerfile
 # Combined backend and frontend for single-container deployment
 
