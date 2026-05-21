@@ -915,9 +915,11 @@ function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: 16, paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.1)', fontSize: 13, color: '#64748B' }}>
-          <span>© 2025 Kubryx. Founder & Developer: vsrupeshkumar. All rights reserved.</span>
-          <span>Built for the multi-chain future · Apache-2.0 License</span>
+        <div style={{ paddingTop: 32, borderTop: '1px solid rgba(255,255,255,0.1)', fontSize: 12, lineHeight: 1.6, color: 'rgba(148,163,184,0.7)', display: 'flex', flexDirection: 'column', gap: 12, textAlign: 'center', maxWidth: 960, margin: '0 auto' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: '#fff', marginBottom: 4 }}>© 2026 vsrupeshkumar. All Rights Reserved.</div>
+          <p style={{ margin: 0 }}>This platform, including its source code, system architecture, infrastructure design, backend systems, frontend implementation, APIs, databases, UI/UX, production workflows, and all related intellectual property, was independently designed and developed by vsrupeshkumar as Founder, Architect, System Designer, Frontend Developer, Backend Developer, and Production Engineer.</p>
+          <p style={{ margin: 0 }}>Unauthorized copying, reproduction, modification, redistribution, reverse engineering, resale, or commercial use of this platform or any portion of its codebase or architecture is strictly prohibited without explicit prior written permission from the author.</p>
+          <p style={{ margin: 0 }}>Any unauthorized use may result in legal action under applicable copyright and intellectual property laws.</p>
         </div>
       </div>
     </footer>
