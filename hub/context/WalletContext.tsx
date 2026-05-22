@@ -38,6 +38,28 @@ function getPhantom(): PhantomProvider | undefined {
   return (window as unknown as { solana?: PhantomProvider }).solana
 }
 
+// ── Timeout helpers ───────────────────────────────────────────────────────────
+// Wallet provider requests can hang indefinitely — a MetaMask popup that never
+// surfaces, a dead chain RPC, a dismissed prompt. These guards guarantee every
+// awaited call settles, so the UI can never stick on "Connecting…".
+
+const RPC_TIMEOUT = 5_000      // data reads: eth_chainId, eth_getBalance, getBalance
+const CONNECT_TIMEOUT = 15_000 // user-interaction calls: requestAccounts, chain switch
+
+/** Rejects if `promise` has not settled within `ms` milliseconds. */
+function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(
+      () => reject(new Error(`${label} timed out after ${ms / 1000}s`)),
+      ms,
+    )
+    promise.then(
+      (value) => { clearTimeout(timer); resolve(value) },
+      (err) => { clearTimeout(timer); reject(err) },
+    )
+  })
+}
+
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 export interface EVMWalletState {
@@ -116,14 +138,17 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     const eth = getEthereum()
     if (!eth) return
     try {
-      const chainIdHex = await eth.request({ method: 'eth_chainId' }) as string
+      const chainIdHex = await withTimeout(
+        eth.request({ method: 'eth_chainId' }) as Promise<string>,
+        RPC_TIMEOUT, 'eth_chainId',
+      )
       setEvm(p => (p.address === address ? { ...p, chainId: parseInt(chainIdHex, 16) } : p))
     } catch { /* keep the connection without a chainId */ }
     try {
-      const balanceHex = await eth.request({
-        method: 'eth_getBalance',
-        params: [address, 'latest'],
-      }) as string
+      const balanceHex = await withTimeout(
+        eth.request({ method: 'eth_getBalance', params: [address, 'latest'] }) as Promise<string>,
+        RPC_TIMEOUT, 'eth_getBalance',
+      )
       setEvm(p => (p.address === address ? { ...p, balance: weiHexToEther(balanceHex) } : p))
     } catch { /* keep the connection without a balance */ }
   }
@@ -141,17 +166,39 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       return
     }
     setEvm(p => ({ ...p, isConnecting: true, error: null }))
+
+    // Hard safety net — even if every guard below somehow fails, the UI must
+    // never stay stuck on "Connecting…".
+    const safetyNet = setTimeout(() => {
+      setEvm(p => (p.isConnecting
+        ? { ...p, isConnecting: false, error: 'Connection timed out' }
+        : p))
+    }, CONNECT_TIMEOUT + 3_000)
+
     try {
-      const accounts = await eth.request({ method: 'eth_requestAccounts' }) as string[]
+      // eth_requestAccounts opens the MetaMask popup. If the popup never
+      // surfaces (a request is already pending, the extension is locked, the
+      // OS notification is suppressed) this promise hangs forever — the
+      // timeout guarantees it settles.
+      const accounts = await withTimeout(
+        eth.request({ method: 'eth_requestAccounts' }) as Promise<string[]>,
+        CONNECT_TIMEOUT,
+        'Wallet connection request',
+      )
       if (accounts.length > 0) await loadEVMDetails(accounts[0])
-      else setEvm(p => ({ ...p, isConnecting: false }))
+      else setEvm(p => ({ ...p, error: 'No accounts returned' }))
     } catch (e) {
       const code = (e as { code?: number })?.code
-      setEvm(p => ({
-        ...p,
-        isConnecting: false,
-        error: code === 4001 ? 'Rejected by user' : 'Connection failed',
-      }))
+      const message = (e as { message?: string })?.message ?? ''
+      let error = 'Connection failed'
+      if (code === 4001) error = 'Rejected by user'
+      else if (code === -32002) error = 'A connection request is already pending — open the MetaMask extension'
+      else if (message.includes('timed out')) error = 'Connection timed out — open the MetaMask extension and retry'
+      setEvm(p => ({ ...p, error }))
+    } finally {
+      // Guaranteed reset — the wallet can never be left "Connecting…".
+      clearTimeout(safetyNet)
+      setEvm(p => (p.isConnecting ? { ...p, isConnecting: false } : p))
     }
   }, [])
 
@@ -159,25 +206,33 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     const eth = getEthereum()
     if (!eth) return
     try {
-      await eth.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: chainIdHex }],
-      })
+      await withTimeout(
+        eth.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: chainIdHex }],
+        }),
+        CONNECT_TIMEOUT, 'Network switch',
+      )
     } catch (err) {
       // Network not in MetaMask — add it (QIE Mainnet is not bundled by default).
       if ((err as { code?: number })?.code === 4902) {
         const net = NETWORKS[networkKey as keyof typeof NETWORKS]
         if (!net || net.chainId == null) return
-        await eth.request({
-          method: 'wallet_addEthereumChain',
-          params: [{
-            chainId: net.chainId,
-            chainName: net.name,
-            rpcUrls: [net.rpcUrl],
-            blockExplorerUrls: [net.explorer],
-            nativeCurrency: net.currency,
-          }],
-        })
+        try {
+          await withTimeout(
+            eth.request({
+              method: 'wallet_addEthereumChain',
+              params: [{
+                chainId: net.chainId,
+                chainName: net.name,
+                rpcUrls: [net.rpcUrl],
+                blockExplorerUrls: [net.explorer],
+                nativeCurrency: net.currency,
+              }],
+            }),
+            CONNECT_TIMEOUT, 'Add network',
+          )
+        } catch { /* user dismissed or the prompt never settled */ }
       }
     }
   }, [])
@@ -185,24 +240,30 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   // ─ Solana helpers ──────────────────────────────────────────────────────────
 
   async function loadSolanaDetails(address: string) {
+    // Connection is confirmed — commit it immediately (parity with the EVM path).
+    setSolana(p => ({
+      ...p, address, isConnecting: false, isConnected: true, error: null,
+    }))
+    // Balance is best-effort — an AbortController bounds the fetch so it can
+    // never hang the connect flow.
     try {
+      const controller = new AbortController()
+      const timer = setTimeout(() => controller.abort(), RPC_TIMEOUT)
       const res = await fetch(NETWORKS.SOLANA_DEVNET.rpcUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           jsonrpc: '2.0', id: 1, method: 'getBalance', params: [address],
         }),
+        signal: controller.signal,
       })
+      clearTimeout(timer)
       const json = await res.json()
       const lamports: number = json?.result?.value ?? 0
-      setSolana({
-        address,
-        balance: (lamports / 1e9).toFixed(4),
-        isConnecting: false, isConnected: true, error: null,
-      })
-    } catch {
-      setSolana(p => ({ ...p, address, isConnecting: false, isConnected: true, error: null }))
-    }
+      setSolana(p => (p.address === address
+        ? { ...p, balance: (lamports / 1e9).toFixed(4) }
+        : p))
+    } catch { /* keep the connection without a balance */ }
   }
 
   const disconnectSolana = useCallback(async () => {
@@ -221,15 +282,29 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       return
     }
     setSolana(p => ({ ...p, isConnecting: true, error: null }))
+
+    // Hard safety net — the UI must never stay stuck on "Connecting…".
+    const safetyNet = setTimeout(() => {
+      setSolana(p => (p.isConnecting
+        ? { ...p, isConnecting: false, error: 'Connection timed out' }
+        : p))
+    }, CONNECT_TIMEOUT + 3_000)
+
     try {
-      const r = await ph.connect()
+      const r = await withTimeout(ph.connect(), CONNECT_TIMEOUT, 'Wallet connection request')
       await loadSolanaDetails(r.publicKey.toString())
     } catch (e) {
+      const message = (e as { message?: string })?.message ?? 'Connection failed'
       setSolana(p => ({
         ...p,
-        isConnecting: false,
-        error: (e as { message?: string })?.message || 'Connection failed',
+        error: message.includes('timed out')
+          ? 'Connection timed out — open the Phantom extension and retry'
+          : message,
       }))
+    } finally {
+      // Guaranteed reset.
+      clearTimeout(safetyNet)
+      setSolana(p => (p.isConnecting ? { ...p, isConnecting: false } : p))
     }
   }, [])
 
