@@ -22,17 +22,18 @@ import { getCreditTier } from '@/lib/platform/scoring'
 import { PlatformModeBadge } from '@/components/ui/PlatformModeBadge'
 import LiveCrossChainPulse from '@/components/ui/LiveCrossChainPulse'
 
-/* ── Theme ──────────────────────────────────────────── */
-const BG      = '#0a0e27'
-const SIDE    = '#0c1232'
+/* ── Theme — light, landing-page aesthetic ──────────── */
+const BG      = '#FAFBFF'
+const SIDE    = '#FFFFFF'
+const INK     = '#0A0F2E'
 const ACCENT  = '#6366f1'
 const PINK    = '#ec4899'
 const CYAN    = '#06b6d4'
 const GREEN   = '#10b981'
-const BORDER  = 'rgba(255,255,255,0.08)'
+const BORDER  = 'rgba(15,23,42,0.08)'
 const MONO    = '"Fira Code","JetBrains Mono",monospace'
-const MUTED   = 'rgba(255,255,255,0.6)'
-const MUTED2  = 'rgba(255,255,255,0.35)'
+const MUTED   = 'rgba(15,23,42,0.62)'
+const MUTED2  = 'rgba(15,23,42,0.4)'
 
 /* ── Navigation items ───────────────────────────────── */
 const NAV = [
@@ -118,7 +119,7 @@ function DashSidebar({
             display: 'grid', placeItems: 'center',
             fontSize: 14, fontWeight: 900, color: '#fff',
           }}>K</div>
-          <span style={{ fontSize: 16, fontWeight: 800, color: '#fff', letterSpacing: '-0.02em' }}>Kubryx</span>
+          <span style={{ fontSize: 16, fontWeight: 800, color: INK, letterSpacing: '-0.02em' }}>Kubryx</span>
         </div>
 
         {/* Nav items */}
@@ -145,14 +146,15 @@ function DashSidebar({
                   padding: '9px 12px',
                   borderRadius: 8,
                   fontSize: 14,
-                  fontWeight: active ? 600 : 400,
-                  color: active ? '#fff' : MUTED,
-                  background: active ? 'rgba(255,255,255,0.1)' : 'transparent',
+                  fontWeight: active ? 700 : 500,
+                  color: active ? INK : MUTED,
+                  background: active ? 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(236,72,153,0.08))' : 'transparent',
+                  border: active ? '1px solid rgba(99,102,241,0.25)' : '1px solid transparent',
                   transition: 'all 0.15s',
                 }}
                 onMouseEnter={e => {
-                  if (!active) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.06)'
-                  if (!active) (e.currentTarget as HTMLElement).style.color = '#fff'
+                  if (!active) (e.currentTarget as HTMLElement).style.background = 'rgba(15,23,42,0.04)'
+                  if (!active) (e.currentTarget as HTMLElement).style.color = INK
                 }}
                 onMouseLeave={e => {
                   if (!active) (e.currentTarget as HTMLElement).style.background = 'transparent'
@@ -169,16 +171,16 @@ function DashSidebar({
         {/* Credit identity mini-card */}
         <div style={{ padding: '0 16px 12px' }}>
           <div style={{
-            background: `${tier.color}12`,
+            background: `linear-gradient(135deg, ${tier.color}12, rgba(99,102,241,0.04))`,
             border: `1px solid ${tier.color}30`,
-            borderRadius: 8,
+            borderRadius: 12,
             padding: 12,
           }}>
             <div style={{ fontSize: 9, fontWeight: 700, color: tier.color, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 8, fontFamily: MONO }}>
               Credit Identity
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 6 }}>
-              <span style={{ fontSize: 24, fontWeight: 900, color: '#fff', fontFamily: MONO, lineHeight: 1 }}>
+              <span style={{ fontSize: 24, fontWeight: 900, color: INK, fontFamily: MONO, lineHeight: 1 }}>
                 {platform.creditScore}
               </span>
               <span style={{
@@ -201,15 +203,15 @@ function DashSidebar({
         {/* Wallet card */}
         <div style={{ padding: 16 }}>
           <div style={{
-            background: 'rgba(139,92,246,0.2)',
-            border: '1px solid rgba(139,92,246,0.4)',
-            borderRadius: 8,
+            background: 'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(236,72,153,0.06))',
+            border: '1px solid rgba(99,102,241,0.25)',
+            borderRadius: 12,
             padding: 12,
           }}>
-            <div style={{ fontSize: 10, fontWeight: 700, color: 'rgba(139,92,246,0.85)', letterSpacing: '0.14em', marginBottom: 6 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, color: '#6366f1', letterSpacing: '0.14em', marginBottom: 6 }}>
               WALLET
             </div>
-            <div style={{ fontFamily: MONO, fontSize: 13, color: '#fff', marginBottom: 4 }}>
+            <div style={{ fontFamily: MONO, fontSize: 13, color: INK, marginBottom: 4, fontWeight: 700 }}>
               {wallet
                 ? `${wallet.slice(0, 6)}…${wallet.slice(-4)}`
                 : '0x9F3C…E3A1'}
@@ -221,11 +223,12 @@ function DashSidebar({
               onClick={onDisconnect}
               style={{
                 background: 'transparent', border: 'none',
-                color: MUTED2, fontSize: 11, cursor: 'pointer', padding: 0,
+                color: MUTED, fontSize: 11, cursor: 'pointer', padding: 0,
                 transition: 'color 0.15s',
+                fontWeight: 600,
               }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
-              onMouseLeave={e => (e.currentTarget.style.color = MUTED2)}
+              onMouseEnter={e => (e.currentTarget.style.color = PINK)}
+              onMouseLeave={e => (e.currentTarget.style.color = MUTED)}
             >
               Disconnect
             </button>
@@ -263,13 +266,13 @@ function StatCard({ card }: { card: StatCardData }) {
       onMouseLeave={() => setHov(false)}
       style={{
         position: 'relative',
-        background: 'rgba(255,255,255,0.03)',
-        backgroundImage: `linear-gradient(135deg, ${card.bg} 0%, transparent 60%)`,
-        border: `1px solid ${hov ? card.border : 'rgba(255,255,255,0.08)'}`,
-        borderRadius: 14,
-        padding: '18px 20px',
-        transform: hov ? 'translateY(-2px)' : 'translateY(0)',
-        boxShadow: hov ? `0 10px 32px ${card.bg}, 0 0 0 1px ${card.border}` : '0 4px 16px rgba(0,0,0,0.2)',
+        background: '#FFFFFF',
+        backgroundImage: `linear-gradient(135deg, ${card.bg} 0%, rgba(255,255,255,0.95) 70%)`,
+        border: `1px solid ${hov ? card.border : BORDER}`,
+        borderRadius: 18,
+        padding: '20px 22px',
+        transform: hov ? 'translateY(-3px)' : 'translateY(0)',
+        boxShadow: hov ? `0 16px 40px ${card.accent}25, 0 4px 12px rgba(15,23,42,0.06)` : '0 4px 14px rgba(15,23,42,0.05)',
         transition: 'all 0.25s ease',
         cursor: 'default',
         overflow: 'hidden',
@@ -280,36 +283,38 @@ function StatCard({ card }: { card: StatCardData }) {
         position: 'absolute',
         top: -40,
         right: -40,
-        width: 120,
-        height: 120,
+        width: 140,
+        height: 140,
         borderRadius: '50%',
-        background: card.bg,
-        filter: 'blur(40px)',
-        opacity: hov ? 0.9 : 0.5,
+        background: card.accent,
+        filter: 'blur(50px)',
+        opacity: hov ? 0.28 : 0.16,
         transition: 'opacity 0.25s',
         pointerEvents: 'none',
       }} />
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'relative' }}>
-        <div style={{ fontSize: 10, fontWeight: 800, color: 'rgba(255,255,255,0.55)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
+        <div style={{ fontSize: 10, fontWeight: 800, color: 'rgba(15,23,42,0.5)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
           {card.label}
         </div>
         <div style={{
-          width: 28, height: 28,
-          borderRadius: 8,
-          background: card.bg,
-          border: `1px solid ${card.border}`,
+          width: 32, height: 32,
+          borderRadius: 10,
+          background: `linear-gradient(135deg, ${card.accent}, ${card.accent}88)`,
+          color: '#fff',
           display: 'grid', placeItems: 'center',
-          fontSize: 14,
+          fontSize: 15,
+          fontWeight: 800,
+          boxShadow: `0 6px 16px ${card.accent}40`,
         }}>
           {card.icon}
         </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 12, position: 'relative' }}>
-        <span style={{ fontSize: 34, fontWeight: 900, color: '#fff', letterSpacing: '-0.04em', lineHeight: 1, fontFamily: '"Inter",system-ui,sans-serif' }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 14, position: 'relative' }}>
+        <span style={{ fontSize: 36, fontWeight: 900, color: INK, letterSpacing: '-0.04em', lineHeight: 1, fontFamily: '"Inter",system-ui,sans-serif' }}>
           {card.value}
         </span>
       </div>
-      <div style={{ fontSize: 11, fontWeight: 600, color: card.subColor, marginTop: 6, position: 'relative' }}>
+      <div style={{ fontSize: 11.5, fontWeight: 700, color: card.accent, marginTop: 8, position: 'relative' }}>
         {card.sub}
       </div>
     </div>
@@ -318,9 +323,9 @@ function StatCard({ card }: { card: StatCardData }) {
 
 /* ── Protocol Activity (chart + controls) ───────────── */
 const TOOLTIP_STYLE = {
-  contentStyle: { background: '#0f1430', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12 },
+  contentStyle: { background: '#fff', border: '1px solid rgba(15,23,42,0.1)', borderRadius: 10, fontSize: 12, boxShadow: '0 8px 24px rgba(15,23,42,0.1)' },
   labelStyle: { color: MUTED2 },
-  itemStyle: { color: '#fff' },
+  itemStyle: { color: INK },
 }
 
 function ProtocolActivity() {
@@ -345,7 +350,7 @@ function ProtocolActivity() {
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED2 }}>
             Protocol Activity
           </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: INK, marginTop: 2 }}>
             Last {range === '1D' ? '24 hours' : range === '7D' ? '7 days' : range === '30D' ? '30 days' : 'all time'}
           </div>
         </div>
@@ -356,14 +361,15 @@ function ProtocolActivity() {
               key={r}
               onClick={() => changeRange(r)}
               style={{
-                padding: '4px 10px',
-                borderRadius: 6,
+                padding: '5px 12px',
+                borderRadius: 999,
                 border: `1px solid ${range === r ? ACCENT : BORDER}`,
-                background: range === r ? `${ACCENT}25` : 'transparent',
-                color: range === r ? '#fff' : MUTED2,
-                fontSize: 12, fontWeight: range === r ? 700 : 400,
+                background: range === r ? `linear-gradient(135deg, ${ACCENT}, ${PINK})` : '#fff',
+                color: range === r ? '#fff' : MUTED,
+                fontSize: 12, fontWeight: range === r ? 700 : 500,
                 cursor: 'pointer',
                 transition: 'all 0.15s',
+                boxShadow: range === r ? `0 4px 14px ${ACCENT}40` : '0 1px 4px rgba(15,23,42,0.04)',
               }}
             >
               {r}
@@ -374,12 +380,13 @@ function ProtocolActivity() {
 
       {/* Chart container */}
       <div key={fadeKey} style={{
-        background: 'rgba(255,255,255,0.02)',
+        background: '#FFFFFF',
         border: `1px solid ${BORDER}`,
-        borderRadius: 10,
+        borderRadius: 16,
         padding: '20px 16px 12px',
         marginTop: 12,
         animation: 'fadein 0.3s ease',
+        boxShadow: '0 4px 18px rgba(15,23,42,0.05)',
       }}>
         {mounted ? (
           <ResponsiveContainer width="100%" height={240}>
@@ -394,7 +401,7 @@ function ProtocolActivity() {
                   <stop offset="95%" stopColor={CYAN} stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="rgba(255,255,255,0.05)" strokeDasharray="3 3" vertical={false} />
+              <CartesianGrid stroke="rgba(15,23,42,0.06)" strokeDasharray="3 3" vertical={false} />
               <XAxis
                 dataKey="date"
                 tick={{ fill: MUTED2, fontSize: 10 }}
@@ -586,10 +593,10 @@ export default function DashboardPage() {
     : DASH_STATS.uptimeSub
 
   const statCards: StatCardData[] = [
-    { label: 'Active Tools',  value: activeToolsValue,                                               sub: 'backends live',                                          bg: 'rgba(99,102,241,0.18)',  border: 'rgba(99,102,241,0.4)',  subColor: '#A5B4FC', icon: '◈', accent: '#6366f1' },
-    { label: 'Chains',        value: DASH_STATS.chains.toString(),                                   sub: DASH_STATS.chainsSub,                                     bg: 'rgba(6,182,212,0.18)',   border: 'rgba(6,182,212,0.4)',   subColor: '#67E8F9', icon: '⛓', accent: '#06b6d4' },
-    { label: 'Active Agents', value: liveAgents !== null ? liveAgents.toLocaleString() : '—',        sub: liveAgents !== null ? 'via TrustMesh' : 'loading…',       bg: 'rgba(16,185,129,0.18)',  border: 'rgba(16,185,129,0.4)',  subColor: '#6EE7B7', icon: '⬡', accent: '#10b981' },
-    { label: 'Backends Live', value: backendsLiveStr,                                                sub: lastUpdatedSub,                                           bg: 'rgba(236,72,153,0.18)',  border: 'rgba(236,72,153,0.4)',  subColor: '#F9A8D4', icon: '◎', accent: '#ec4899' },
+    { label: 'Active Tools',  value: activeToolsValue,                                               sub: 'backends live',                                          bg: 'rgba(99,102,241,0.08)',  border: 'rgba(99,102,241,0.3)',  subColor: '#6366f1', icon: '◈', accent: '#6366f1' },
+    { label: 'Chains',        value: DASH_STATS.chains.toString(),                                   sub: DASH_STATS.chainsSub,                                     bg: 'rgba(6,182,212,0.08)',   border: 'rgba(6,182,212,0.3)',   subColor: '#06b6d4', icon: '⛓', accent: '#06b6d4' },
+    { label: 'Active Agents', value: liveAgents !== null ? liveAgents.toLocaleString() : '—',        sub: liveAgents !== null ? 'via TrustMesh' : 'loading…',       bg: 'rgba(16,185,129,0.08)',  border: 'rgba(16,185,129,0.3)',  subColor: '#10b981', icon: '⬡', accent: '#10b981' },
+    { label: 'Backends Live', value: backendsLiveStr,                                                sub: lastUpdatedSub,                                           bg: 'rgba(236,72,153,0.08)',  border: 'rgba(236,72,153,0.3)',  subColor: '#ec4899', icon: '◎', accent: '#ec4899' },
   ]
 
   function handleDisconnect() {
@@ -602,7 +609,7 @@ export default function DashboardPage() {
       height: '100vh',
       width: '100vw',
       background: BG,
-      color: '#fff',
+      color: INK,
       fontFamily: '"Inter",system-ui,sans-serif',
       overflow: 'hidden',
     }}>
@@ -617,7 +624,7 @@ export default function DashboardPage() {
 
       {/* Main panel */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0, position: 'relative' }}>
-        {/* Ambient gradient + floating orbs — purely decorative, behind all content */}
+        {/* Ambient gradient + floating orbs — light theme, soft pastel auras */}
         <div aria-hidden="true" style={{
           position: 'absolute',
           inset: 0,
@@ -625,16 +632,15 @@ export default function DashboardPage() {
           zIndex: 0,
           overflow: 'hidden',
         }}>
-          <div style={{ position: 'absolute', top: -200, left: -120, width: 520, height: 520, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.18), transparent 70%)', filter: 'blur(40px)' }} />
-          <div style={{ position: 'absolute', top: 240, right: -160, width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(236,72,153,0.12), transparent 70%)', filter: 'blur(60px)' }} />
-          <div style={{ position: 'absolute', bottom: -180, left: '30%', width: 480, height: 480, borderRadius: '50%', background: 'radial-gradient(circle, rgba(6,182,212,0.10), transparent 70%)', filter: 'blur(50px)' }} />
-          {/* Dot grid texture */}
+          <div style={{ position: 'absolute', top: -260, left: -120, width: 560, height: 560, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.22), transparent 70%)', filter: 'blur(60px)' }} />
+          <div style={{ position: 'absolute', top: 180, right: -180, width: 620, height: 620, borderRadius: '50%', background: 'radial-gradient(circle, rgba(236,72,153,0.18), transparent 70%)', filter: 'blur(80px)' }} />
+          <div style={{ position: 'absolute', bottom: -220, left: '30%', width: 520, height: 520, borderRadius: '50%', background: 'radial-gradient(circle, rgba(6,182,212,0.15), transparent 70%)', filter: 'blur(70px)' }} />
+          {/* Diagonal stripe texture, very soft */}
           <div style={{
             position: 'absolute', inset: 0,
-            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px)',
-            backgroundSize: '28px 28px',
-            maskImage: 'linear-gradient(to bottom, black, transparent 70%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, black, transparent 70%)',
+            backgroundImage: 'repeating-linear-gradient(45deg, rgba(99,102,241,0.05) 0px, rgba(99,102,241,0.05) 1px, transparent 1px, transparent 14px)',
+            maskImage: 'linear-gradient(to bottom, black 20%, transparent 90%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 90%)',
           }} />
         </div>
 
@@ -647,7 +653,7 @@ export default function DashboardPage() {
           justifyContent: 'space-between',
           padding: '0 24px',
           borderBottom: `1px solid ${BORDER}`,
-          background: 'rgba(10,14,39,0.7)',
+          background: 'rgba(255,255,255,0.78)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           position: 'sticky',
@@ -666,7 +672,7 @@ export default function DashboardPage() {
             )}
             <div style={{ fontSize: 13, color: MUTED, display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ color: ACCENT, fontSize: 14 }}>✦</span>
-              <span style={{ fontWeight: 700, color: '#fff' }}>Kubryx</span>
+              <span style={{ fontWeight: 700, color: INK }}>Kubryx</span>
               <span style={{ color: MUTED2 }}>/</span>
               <span style={{ color: MUTED2 }}>Overview</span>
             </div>
@@ -711,15 +717,15 @@ export default function DashboardPage() {
               </span>
             </div>
             <h1 style={{
-              fontSize: isMobile ? 28 : 40,
+              fontSize: isMobile ? 28 : 44,
               fontWeight: 900,
-              color: '#fff',
+              color: INK,
               letterSpacing: '-0.035em',
               lineHeight: 1.05,
               margin: 0,
             }}>
               {greeting}, <span style={{
-                background: `linear-gradient(135deg, ${ACCENT}, ${PINK})`,
+                background: 'linear-gradient(135deg, #3B5BFA, #8B5CF6 55%, #EC4899)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -754,16 +760,17 @@ export default function DashboardPage() {
           <div style={{ padding: '20px 24px 0' }}>
             <div style={{
               position: 'relative',
-              background: `linear-gradient(135deg, ${creditTier.bg}, rgba(99,102,241,0.04))`,
+              background: `linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,255,255,0.85))`,
               border: `1px solid ${creditTier.border}`,
-              borderRadius: 16,
+              borderRadius: 18,
               padding: '20px 24px',
               display: 'flex',
               alignItems: 'center',
               gap: 20,
               flexWrap: 'wrap',
               overflow: 'hidden',
-              boxShadow: `0 8px 32px ${creditTier.bg}`,
+              boxShadow: `0 12px 36px ${creditTier.color}18, 0 4px 12px rgba(15,23,42,0.05)`,
+              backdropFilter: 'blur(10px)',
             }}>
               {/* Glow halo behind score */}
               <div aria-hidden style={{
@@ -793,12 +800,13 @@ export default function DashboardPage() {
                     width: '100%',
                     height: '100%',
                     borderRadius: '50%',
-                    background: '#0a0e27',
+                    background: '#FFFFFF',
                     display: 'grid',
                     placeItems: 'center',
+                    boxShadow: 'inset 0 2px 6px rgba(15,23,42,0.04)',
                   }}>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: 22, fontWeight: 900, color: '#fff', fontFamily: MONO, letterSpacing: '-0.02em', lineHeight: 1 }}>
+                      <div style={{ fontSize: 22, fontWeight: 900, color: INK, fontFamily: MONO, letterSpacing: '-0.02em', lineHeight: 1 }}>
                         {platform.creditScore !== null ? platform.creditScore : '—'}
                       </div>
                       <div style={{ fontSize: 8, fontWeight: 700, color: creditTier.color, fontFamily: MONO, letterSpacing: '0.14em', marginTop: 2 }}>
@@ -831,7 +839,7 @@ export default function DashboardPage() {
                 <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.16em', color: MUTED2, textTransform: 'uppercase' }}>
                   Credit Identity · Soulbound on QIE Mainnet
                 </div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', lineHeight: 1.3 }}>
+                <div style={{ fontSize: 15, fontWeight: 700, color: INK, lineHeight: 1.3 }}>
                   {creditTier.treasuryTier}
                 </div>
               </div>
@@ -878,12 +886,13 @@ export default function DashboardPage() {
                   const dotColor = !b.isLive ? '#ef4444' : isSlowMs ? '#f59e0b' : '#10b981'
                   return (
                     <div key={b.name} style={{
-                      background: 'rgba(255,255,255,0.03)', border: `1px solid ${BORDER}`,
-                      borderRadius: 10, padding: '10px 12px',
+                      background: '#FFFFFF', border: `1px solid ${BORDER}`,
+                      borderRadius: 12, padding: '10px 12px',
                       display: 'flex', alignItems: 'center', gap: 8,
+                      boxShadow: '0 2px 8px rgba(15,23,42,0.04)',
                     }}>
-                      <span style={{ width: 7, height: 7, borderRadius: '50%', background: dotColor, flexShrink: 0 }} />
-                      <span style={{ flex: 1, fontSize: 11, fontWeight: 600, color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{b.name}</span>
+                      <span style={{ width: 7, height: 7, borderRadius: '50%', background: dotColor, flexShrink: 0, boxShadow: `0 0 6px ${dotColor}80` }} />
+                      <span style={{ flex: 1, fontSize: 11, fontWeight: 600, color: INK, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{b.name}</span>
                       <span style={{ fontSize: 10, fontFamily: MONO, color: b.isLive ? (isSlowMs ? '#f59e0b' : '#10b981') : '#ef4444' }}>
                         {b.latency !== null ? `${b.latency}ms` : 'down'}
                       </span>
@@ -896,7 +905,7 @@ export default function DashboardPage() {
 
           {/* Live cross-chain integration pulse */}
           <div style={{ margin: '0 24px 24px' }}>
-            <LiveCrossChainPulse />
+            <LiveCrossChainPulse theme="light" />
           </div>
 
           {/* Protocol activity chart */}

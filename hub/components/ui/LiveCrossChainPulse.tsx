@@ -15,6 +15,8 @@ import { getCreditTier } from '@/lib/platform/scoring'
 import { useTrustMesh } from '@/hooks/useTrustMesh'
 import { usePrices } from '@/hooks/usePrices'
 
+type Theme = 'light' | 'dark'
+
 type CellProps = {
   chain: string
   chainColor: string
@@ -23,9 +25,20 @@ type CellProps = {
   sub: string
   href: string
   pulse: number
+  theme: Theme
 }
 
-function Cell({ chain, chainColor, label, value, sub, href, pulse }: CellProps) {
+function Cell({ chain, chainColor, label, value, sub, href, pulse, theme }: CellProps) {
+  const isLight = theme === 'light'
+  const baseBg = isLight ? '#FFFFFF' : 'rgba(255,255,255,0.04)'
+  const hoverBg = isLight ? '#FFFFFF' : 'rgba(255,255,255,0.07)'
+  const borderCol = isLight ? 'rgba(15,23,42,0.08)' : 'rgba(255,255,255,0.08)'
+  const labelCol = isLight ? 'rgba(15,23,42,0.45)' : 'rgba(255,255,255,0.45)'
+  const valueCol = isLight ? '#0A0F2E' : '#fff'
+  const subCol = isLight ? 'rgba(15,23,42,0.6)' : 'rgba(255,255,255,0.55)'
+  const shadow = isLight ? '0 4px 14px rgba(15,23,42,0.05)' : 'none'
+  const hoverShadow = isLight ? `0 12px 32px ${chainColor}25, 0 4px 12px rgba(15,23,42,0.06)` : 'none'
+
   return (
     <Link
       href={href}
@@ -35,20 +48,23 @@ function Cell({ chain, chainColor, label, value, sub, href, pulse }: CellProps) 
         textDecoration: 'none',
         padding: '14px 18px',
         borderRadius: 14,
-        background: 'rgba(255,255,255,0.04)',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: baseBg,
+        border: `1px solid ${borderCol}`,
         position: 'relative',
         overflow: 'hidden',
-        transition: 'transform 0.2s, background 0.2s',
+        transition: 'transform 0.2s, background 0.2s, box-shadow 0.2s',
         display: 'block',
+        boxShadow: shadow,
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.background = 'rgba(255,255,255,0.07)'
+        e.currentTarget.style.background = hoverBg
         e.currentTarget.style.transform = 'translateY(-2px)'
+        if (hoverShadow) e.currentTarget.style.boxShadow = hoverShadow
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'rgba(255,255,255,0.04)'
+        e.currentTarget.style.background = baseBg
         e.currentTarget.style.transform = 'translateY(0)'
+        e.currentTarget.style.boxShadow = shadow
       }}
     >
       <span
@@ -66,20 +82,20 @@ function Cell({ chain, chainColor, label, value, sub, href, pulse }: CellProps) 
           {chain}
         </span>
       </div>
-      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', marginBottom: 4 }}>
+      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', color: labelCol, textTransform: 'uppercase', marginBottom: 4 }}>
         {label}
       </div>
-      <div style={{ fontSize: 19, fontWeight: 800, color: '#fff', fontFamily: '"Fira Code","JetBrains Mono",monospace', letterSpacing: '-0.01em' }}>
+      <div style={{ fontSize: 19, fontWeight: 800, color: valueCol, fontFamily: '"Fira Code","JetBrains Mono",monospace', letterSpacing: '-0.01em' }}>
         {value}
       </div>
-      <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)', marginTop: 4, fontWeight: 500 }}>
+      <div style={{ fontSize: 11, color: subCol, marginTop: 4, fontWeight: 500 }}>
         {sub}
       </div>
     </Link>
   )
 }
 
-export default function LiveCrossChainPulse({ compact = false }: { compact?: boolean }) {
+export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }: { compact?: boolean; theme?: Theme }) {
   const platform = useKubrykPlatform()
   const tier = getCreditTier(platform.creditScore)
   const mesh = useTrustMesh()
@@ -119,14 +135,14 @@ export default function LiveCrossChainPulse({ compact = false }: { compact?: boo
       {!compact && (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14, flexWrap: 'wrap', gap: 8 }}>
           <div>
-            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}>
+            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.18em', color: theme === 'light' ? 'rgba(15,23,42,0.5)' : 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}>
               Live Cross-Chain State
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: theme === 'light' ? '#0A0F2E' : '#fff', marginTop: 2 }}>
               One credit score. Four chains. Continuously reconciled.
             </div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11, color: 'rgba(255,255,255,0.55)', fontFamily: '"Fira Code","JetBrains Mono",monospace' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11, color: theme === 'light' ? 'rgba(15,23,42,0.6)' : 'rgba(255,255,255,0.55)', fontFamily: '"Fira Code","JetBrains Mono",monospace' }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981' }} />
               {mesh.isLive ? 'Solana Devnet' : 'reconnecting'}
@@ -139,6 +155,7 @@ export default function LiveCrossChainPulse({ compact = false }: { compact?: boo
 
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'stretch' }}>
         <Cell
+          theme={theme}
           chain="QIE Mainnet"
           chainColor="#D97706"
           label="Credit Passport"
@@ -148,9 +165,10 @@ export default function LiveCrossChainPulse({ compact = false }: { compact?: boo
           pulse={tick}
         />
 
-        <Arrow />
+        <Arrow theme={theme} />
 
         <Cell
+          theme={theme}
           chain="Solana Devnet"
           chainColor="#9945FF"
           label="Agent Coordinator"
@@ -160,9 +178,10 @@ export default function LiveCrossChainPulse({ compact = false }: { compact?: boo
           pulse={tick + 1}
         />
 
-        <Arrow />
+        <Arrow theme={theme} />
 
         <Cell
+          theme={theme}
           chain="Arbitrum One"
           chainColor="#28A0F0"
           label="Lending Rate"
@@ -172,9 +191,10 @@ export default function LiveCrossChainPulse({ compact = false }: { compact?: boo
           pulse={tick + 2}
         />
 
-        <Arrow />
+        <Arrow theme={theme} />
 
         <Cell
+          theme={theme}
           chain="Stellar"
           chainColor="#7E36BB"
           label="Family Vault"
@@ -188,9 +208,9 @@ export default function LiveCrossChainPulse({ compact = false }: { compact?: boo
   )
 }
 
-function Arrow() {
+function Arrow({ theme }: { theme: Theme }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', color: 'rgba(255,255,255,0.25)', fontSize: 18, flexShrink: 0 }}>
+    <div style={{ display: 'flex', alignItems: 'center', color: theme === 'light' ? 'rgba(15,23,42,0.25)' : 'rgba(255,255,255,0.25)', fontSize: 18, flexShrink: 0 }}>
       →
     </div>
   )

@@ -5,9 +5,10 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useDashboardActivity } from '@/hooks/useDashboardActivity'
 import type { DashboardStats } from '@/lib/api/dashboard'
 
-const BORDER = 'rgba(255,255,255,0.08)'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.35)'
+const BORDER = 'rgba(15,23,42,0.08)'
+const MUTED  = 'rgba(15,23,42,0.6)'
+const MUTED2 = 'rgba(15,23,42,0.4)'
+const INK    = '#0A0F2E'
 const GREEN  = '#10b981'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
@@ -22,7 +23,7 @@ export default function ActivityFeed({ stats }: { stats?: DashboardStats | null 
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED2 }}>
             Live Activity Feed
           </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: INK, marginTop: 2 }}>
             Real-time network events
           </div>
         </div>
@@ -42,12 +43,13 @@ export default function ActivityFeed({ stats }: { stats?: DashboardStats | null 
 
       {/* Feed list */}
       <div style={{
-        background: 'rgba(255,255,255,0.02)',
+        background: '#FFFFFF',
         border: `1px solid ${BORDER}`,
-        borderRadius: 10,
+        borderRadius: 16,
         padding: 8,
         maxHeight: 420,
         overflowY: 'auto',
+        boxShadow: '0 4px 18px rgba(15,23,42,0.05)',
       }}>
         <AnimatePresence initial={false}>
           {feed.map(item => (
@@ -69,7 +71,7 @@ export default function ActivityFeed({ stats }: { stats?: DashboardStats | null 
                 background: 'transparent',
                 transition: 'background 0.15s',
               }}
-              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.03)')}
+              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(15,23,42,0.03)')}
               onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
             >
               <div style={{
@@ -86,7 +88,7 @@ export default function ActivityFeed({ stats }: { stats?: DashboardStats | null 
                   <span style={{ fontSize: 12, fontWeight: 700, color: item.protocolColor }}>
                     {item.protocol}
                   </span>
-                  <span style={{ fontSize: 12, color: '#fff' }}>
+                  <span style={{ fontSize: 12, color: INK, fontWeight: 600 }}>
                     {item.action}
                   </span>
                 </div>

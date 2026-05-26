@@ -5,15 +5,16 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { FALLBACK_TOOLS, type ToolCard, type ToolStatus } from '@/lib/dashboard-fallbacks'
 
-const BORDER = 'rgba(255,255,255,0.08)'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.35)'
+const BORDER = 'rgba(15,23,42,0.08)'
+const MUTED  = 'rgba(15,23,42,0.62)'
+const MUTED2 = 'rgba(15,23,42,0.4)'
+const INK    = '#0A0F2E'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
 const STATUS_STYLE: Record<ToolStatus, { label: string; bg: string; fg: string; border: string }> = {
-  live: { label: 'LIVE',        bg: 'rgba(16,185,129,0.15)', fg: '#10b981', border: 'rgba(16,185,129,0.4)' },
-  beta: { label: 'BETA',        bg: 'rgba(245,158,11,0.15)', fg: '#f59e0b', border: 'rgba(245,158,11,0.4)' },
-  soon: { label: 'COMING SOON', bg: 'rgba(255,255,255,0.06)', fg: 'rgba(255,255,255,0.5)', border: 'rgba(255,255,255,0.15)' },
+  live: { label: 'LIVE',        bg: 'rgba(16,185,129,0.12)', fg: '#10b981', border: 'rgba(16,185,129,0.4)' },
+  beta: { label: 'BETA',        bg: 'rgba(245,158,11,0.12)', fg: '#f59e0b', border: 'rgba(245,158,11,0.4)' },
+  soon: { label: 'COMING SOON', bg: 'rgba(15,23,42,0.06)',   fg: 'rgba(15,23,42,0.5)', border: 'rgba(15,23,42,0.15)' },
 }
 
 function Card({ tool }: { tool: ToolCard }) {
@@ -26,28 +27,31 @@ function Card({ tool }: { tool: ToolCard }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        background: hov && !disabled ? `${tool.color}10` : 'rgba(255,255,255,0.02)',
+        background: '#FFFFFF',
+        backgroundImage: hov && !disabled ? `linear-gradient(135deg, ${tool.color}10, rgba(255,255,255,0.96))` : 'none',
         border: `1px solid ${hov && !disabled ? tool.color + '55' : BORDER}`,
-        borderRadius: 12,
-        padding: 16,
+        borderRadius: 16,
+        padding: 18,
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
         gap: 12,
-        transition: 'all 0.18s ease',
-        transform: hov && !disabled ? 'scale(1.015)' : 'scale(1)',
-        opacity: disabled ? 0.55 : 1,
+        transition: 'all 0.2s ease',
+        transform: hov && !disabled ? 'translateY(-3px)' : 'translateY(0)',
+        opacity: disabled ? 0.6 : 1,
         cursor: disabled ? 'not-allowed' : 'pointer',
+        boxShadow: hov && !disabled ? `0 12px 32px ${tool.color}25, 0 4px 12px rgba(15,23,42,0.06)` : '0 4px 14px rgba(15,23,42,0.05)',
       }}
     >
       {/* Top row: icon + status */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <div style={{
-          width: 38, height: 38, borderRadius: 10,
-          background: `${tool.color}20`,
+          width: 40, height: 40, borderRadius: 12,
+          background: `linear-gradient(135deg, ${tool.color}, ${tool.color}cc)`,
+          color: '#fff',
           display: 'grid', placeItems: 'center',
-          fontSize: 16, fontWeight: 800,
-          color: tool.color,
+          fontSize: 17, fontWeight: 900,
+          boxShadow: `0 6px 18px ${tool.color}40`,
         }}>
           {tool.name[0]}
         </div>
@@ -64,7 +68,7 @@ function Card({ tool }: { tool: ToolCard }) {
 
       {/* Name + description */}
       <div>
-        <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', lineHeight: 1.2 }}>
+        <div style={{ fontSize: 15, fontWeight: 800, color: INK, lineHeight: 1.2 }}>
           {tool.name}
         </div>
         <div style={{ fontSize: 12, color: MUTED, marginTop: 4, lineHeight: 1.4 }}>
@@ -79,7 +83,7 @@ function Card({ tool }: { tool: ToolCard }) {
             <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', color: MUTED2, textTransform: 'uppercase' }}>
               {s.label}
             </div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', fontFamily: MONO, marginTop: 2 }}>
+            <div style={{ fontSize: 13, fontWeight: 800, color: INK, fontFamily: MONO, marginTop: 2 }}>
               {s.value}
             </div>
           </div>
@@ -118,7 +122,7 @@ export default function ToolQuickAccess() {
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED2 }}>
             Operations Network
           </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: INK, marginTop: 2 }}>
             All 8 protocol tools
           </div>
         </div>
