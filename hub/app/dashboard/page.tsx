@@ -74,6 +74,8 @@ function DashSidebar({
   isMobile: boolean
 }) {
   const pathname = usePathname()
+  const platform = useKubrykPlatform()
+  const tier = getCreditTier(platform.creditScore)
 
   const transform = isMobile
     ? (mobileOpen ? 'translateX(0)' : 'translateX(-100%)')
@@ -162,6 +164,38 @@ function DashSidebar({
             )
           })}
         </nav>
+
+        {/* Credit identity mini-card */}
+        <div style={{ padding: '0 16px 12px' }}>
+          <div style={{
+            background: `${tier.color}12`,
+            border: `1px solid ${tier.color}30`,
+            borderRadius: 8,
+            padding: 12,
+          }}>
+            <div style={{ fontSize: 9, fontWeight: 700, color: tier.color, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 8, fontFamily: MONO }}>
+              Credit Identity
+            </div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 6 }}>
+              <span style={{ fontSize: 24, fontWeight: 900, color: '#fff', fontFamily: MONO, lineHeight: 1 }}>
+                {platform.creditScore}
+              </span>
+              <span style={{
+                fontSize: 9, fontWeight: 700, color: tier.color,
+                background: `${tier.color}20`, borderRadius: 999,
+                padding: '2px 7px', letterSpacing: '0.1em', textTransform: 'uppercase',
+              }}>
+                {tier.name}
+              </span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: 10, color: MUTED2 }}>Vault</span>
+              <span style={{ fontSize: 10, fontWeight: 600, fontFamily: MONO, color: platform.vaultActive ? GREEN : MUTED2 }}>
+                {platform.vaultActive ? '● Active' : '○ Inactive'}
+              </span>
+            </div>
+          </div>
+        </div>
 
         {/* Wallet card */}
         <div style={{ padding: 16 }}>

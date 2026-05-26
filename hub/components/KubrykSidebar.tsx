@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { TOOLS as TOOL_REGISTRY } from '../lib/tools'
 import { WalletPill } from './wallet/WalletPill'
+import { useKubrykPlatform } from '../context/KubrykPlatformContext'
+import { getCreditTier } from '../lib/platform/scoring'
 
 const GOLD = '#F5C518'
 const BG = '#080808'
@@ -33,6 +35,8 @@ interface Props {
 export default function KubrykSidebar({ collapsed, onToggle, mobileOpen, onMobileClose, isMobile }: Props) {
   const pathname = usePathname()
   const [mounted, setMounted] = useState(false)
+  const platform = useKubrykPlatform()
+  const tier = getCreditTier(platform.creditScore)
 
   useEffect(() => { setMounted(true) }, [])
   if (!mounted) return null
@@ -203,13 +207,14 @@ export default function KubrykSidebar({ collapsed, onToggle, mobileOpen, onMobil
               Platform
             </div>
             {[
-              { label: 'Tools', value: '8' },
-              { label: 'Chains', value: '4' },
-              { label: 'Status', value: 'Live' },
+              { label: 'Score', value: String(platform.creditScore), color: tier.color },
+              { label: 'Tier', value: tier.name, color: tier.color },
+              { label: 'Vault', value: platform.vaultActive ? 'Active' : 'Inactive', color: platform.vaultActive ? '#10b981' : 'rgba(255,255,255,0.35)' },
+              { label: 'Chains', value: '4', color: '#fff' },
             ].map(s => (
               <div key={s.label} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                 <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{s.label}</span>
-                <span style={{ fontSize: 11, fontWeight: 700, color: '#fff', fontFamily: MONO }}>{s.value}</span>
+                <span style={{ fontSize: 11, fontWeight: 700, color: s.color, fontFamily: MONO }}>{s.value}</span>
               </div>
             ))}
           </div>
