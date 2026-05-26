@@ -1,12 +1,14 @@
 // Built by vsrupeshkumar
-// Daily crypto briefing — pulls headlines from up to 3 free news sources in
+// Daily crypto briefing — pulls headlines from 2 free news sources in
 // parallel, dedupes by title, then asks Groq to produce a 3-bullet summary.
 // Everything runs server-side so the API keys never leave the route.
 //
-// Sources, all optional:
-//   - CryptoCompare News  (no key, always queried)
-//   - CryptoPanic         (CRYPTOPANIC_AUTH_TOKEN)
-//   - NewsAPI             (NEWSAPI_KEY)
+// Sources:
+//   - CryptoCompare News  (no key, always queried — aggregates ~50 outlets)
+//   - NewsAPI             (NEWSAPI_KEY, optional)
+//
+// CryptoPanic's free developer tier was discontinued in April 2026, so
+// we no longer query it. Add new free sources here as they appear.
 //
 // Response is cached in-memory for 30 minutes to stay under free-tier limits.
 import { NextResponse } from 'next/server'
@@ -50,35 +52,6 @@ async function fetchCryptoCompare(): Promise<Headline[]> {
     source: d.source || 'CryptoCompare',
     publishedAt: new Date(d.published_on * 1000).toISOString(),
   }))
-}
-
-async function fetchCryptoPanic(token: string): Promise<Headline[]> {
-  const url = `https://cryptopanic.com/api/v1/posts/?auth_token=${encodeURIComponent(token)}&public=true&kind=news`
-  const res = await fetchWithTimeout(url)
-  if (!res.ok) throw new Error(`CryptoPanic HTTP ${res.status}`)
-  const json = await res.json() as {
-    results?: Array<{
-      title: string
-      url: string
-      published_at: string
-      source?: { title?: string }
-      votes?: { positive: number; negative: number }
-    }>
-  }
-  return (json.results ?? []).slice(0, 10).map(d => {
-    const positive = d.votes?.positive ?? 0
-    const negative = d.votes?.negative ?? 0
-    const sentiment: Headline['sentiment'] =
-      positive > negative + 1 ? 'positive' :
-      negative > positive + 1 ? 'negative' : 'neutral'
-    return {
-      title: d.title,
-      url: d.url,
-      source: d.source?.title || 'CryptoPanic',
-      publishedAt: d.published_at,
-      sentiment,
-    }
-  })
 }
 
 async function fetchNewsApi(key: string): Promise<Headline[]> {
@@ -154,16 +127,14 @@ export async function GET() {
     return NextResponse.json(cache.data)
   }
 
-  const cryptoPanicToken = process.env.CRYPTOPANIC_AUTH_TOKEN || ''
   const newsApiKey = process.env.NEWSAPI_KEY || ''
 
   const results = await Promise.allSettled([
     fetchCryptoCompare(),
-    cryptoPanicToken ? fetchCryptoPanic(cryptoPanicToken) : Promise.resolve([]),
-    newsApiKey      ? fetchNewsApi(newsApiKey)            : Promise.resolve([]),
+    newsApiKey ? fetchNewsApi(newsApiKey) : Promise.resolve([]),
   ])
 
-  const sourceNames = ['CryptoCompare', 'CryptoPanic', 'NewsAPI']
+  const sourceNames = ['CryptoCompare', 'NewsAPI']
   const sources = results.map((r, i) => ({ name: sourceNames[i], ok: r.status === 'fulfilled' && (r.value as Headline[]).length > 0 }))
 
   const combined: Headline[] = []
