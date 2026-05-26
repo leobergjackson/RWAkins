@@ -52,8 +52,10 @@ export default function UploadPage() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [dragging, setDragging] = useState(false)
-  const [status, setStatus] = useState<'idle' | 'encrypting' | 'uploading' | 'done' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'encrypting' | 'uploading' | 'pinning' | 'done' | 'error'>('idle')
   const [uploadId, setUploadId] = useState('')
+  const [ipfsCid, setIpfsCid] = useState('')
+  const [ipfsUrl, setIpfsUrl] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -96,18 +98,27 @@ export default function UploadPage() {
       })
 
       // Best-effort: also pin the encrypted blob to IPFS via Pinata.
-      // If the route or the JWT is unconfigured, this fails silently —
-      // the EternalVault upload above remains the source of truth.
+      // Non-fatal if it fails — EternalVault upload above remains the
+      // source of truth, but a successful pin gives the user a verifiable
+      // CID + public IPFS gateway URL they can share with heirs.
+      setStatus('pinning')
       try {
         const ipfsForm = new FormData()
         ipfsForm.append('file', new Blob([encryptedBlob], { type: 'application/octet-stream' }), `${file.name}.enc`)
         ipfsForm.append('name', `kubryx:${(title || file.name).slice(0, 60)}`)
         const pin = await fetch('/api/pinata/upload', { method: 'POST', body: ipfsForm })
         if (pin.ok) {
-          const { cid } = await pin.json() as { cid: string }
-          toast.success(`Pinned to IPFS · ${cid.slice(0, 10)}…${cid.slice(-6)}`)
+          const data = await pin.json() as { cid: string; gatewayUrl: string }
+          setIpfsCid(data.cid)
+          setIpfsUrl(data.gatewayUrl)
+          toast.success(`Pinned to IPFS · ${data.cid.slice(0, 10)}…${data.cid.slice(-6)}`)
+        } else {
+          const err = await pin.json().catch(() => ({})) as { error?: string }
+          console.warn('[legacy/upload] IPFS pin skipped:', err.error)
         }
-      } catch { /* non-fatal */ }
+      } catch (e) {
+        console.warn('[legacy/upload] IPFS pin error:', e)
+      }
 
       setUploadId(res.id)
       setStatus('done')
@@ -199,6 +210,46 @@ export default function UploadPage() {
           <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', margin: '0 0 16px' }}>
             Your file is encrypted and stored. Only you (and your heirs, when the time comes) can decrypt it.
           </p>
+
+          {ipfsCid && (
+            <div style={{
+              marginBottom: 16,
+              padding: '12px 14px',
+              background: 'rgba(59,130,246,0.08)',
+              border: '1px solid rgba(59,130,246,0.25)',
+              borderRadius: 10,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                <span style={{
+                  fontSize: 9, fontWeight: 800, letterSpacing: '0.14em',
+                  padding: '2px 8px', borderRadius: 999,
+                  background: 'rgba(59,130,246,0.18)', color: '#60A5FA',
+                  textTransform: 'uppercase', fontFamily: 'monospace',
+                }}>
+                  ⬢ Pinned to IPFS · via Pinata
+                </span>
+                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)' }}>
+                  Permanent · content-addressed
+                </span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                <code style={{ fontFamily: 'monospace', fontSize: 11, color: '#fff', wordBreak: 'break-all', flex: 1, minWidth: 200 }}>
+                  {ipfsCid}
+                </code>
+                <a
+                  href={ipfsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontSize: 11, fontWeight: 700, color: '#60A5FA',
+                    textDecoration: 'none', whiteSpace: 'nowrap',
+                  }}
+                >
+                  Open on gateway ↗
+                </a>
+              </div>
+            </div>
+          )}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <Link
               href="/legacy/timeline"
