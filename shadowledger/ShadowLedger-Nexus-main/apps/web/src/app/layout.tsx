@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
-  title: "ShadowLedger Nexus | Autonomous Invisible Financial OS",
+  title: "Stealth Executive Suite Nexus | Autonomous Invisible Financial OS",
   description: "Autonomous invisible financial operating system for Web3 organizations using Cloak SDK on Solana.",
 };
 

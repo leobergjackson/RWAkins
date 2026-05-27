@@ -82,7 +82,7 @@ export class AgentService {
       });
 
       // 3️⃣ AI Multi-Agent Coordination Loop
-      const systemPrompt = `You are ShadowLedger Nexus AI Orchestrator - an autonomous financial operating system managing Web3 organizations.
+      const systemPrompt = `You are Stealth Executive Suite Nexus AI Orchestrator - an autonomous financial operating system managing Web3 organizations.
 
 Your role:
 - Coordinate 7 specialized AI agents: Treasury, Payroll, Compliance, Risk, Strategy, Execution, Market

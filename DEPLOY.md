@@ -14,7 +14,7 @@
 ## Step 3: API Keys (5 minutes)
 1. Groq: console.groq.com → Create API key → copy
 2. Gemini: aistudio.google.com → Get API key → copy
-3. OpenRouter (optional, for ShadowLedger): openrouter.ai → copy
+3. OpenRouter (optional, for Stealth Executive Suite): openrouter.ai → copy
 
 ## Step 4: Render Blueprint Deploy (10 minutes)
 1. Go to render.com → New → Blueprint

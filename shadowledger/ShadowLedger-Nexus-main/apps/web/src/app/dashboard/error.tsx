@@ -21,7 +21,7 @@ export default function Error({
       </div>
       <h2 className="text-3xl font-bold mb-2 tracking-tight text-glow-red">Nexus System Failure</h2>
       <p className="text-muted-foreground mb-8 max-w-md">
-        An unhandled exception has occurred in the ShadowLedger core. The automated recovery system is attempting to stabilize the environment.
+        An unhandled exception has occurred in the Stealth Executive Suite core. The automated recovery system is attempting to stabilize the environment.
       </p>
       <div className="flex gap-4">
         <button

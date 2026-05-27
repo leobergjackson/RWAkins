@@ -65,7 +65,7 @@ const MODULES_CONFIG = [
   },
   {
     id: 'shadow',
-    name: 'ShadowLedger',
+    name: 'Stealth Executive Suite',
     icon: '▲',
     chain: 'Solana',
     chainColor: '#C0C0C0',
@@ -276,7 +276,7 @@ function PalmFlowPanel() {
   )
 }
 
-function ShadowLedgerPanel() {
+function StealthExecutiveSuitePanel() {
   const agents = [
     { name: 'Aegis', emoji: '🛡️', status: 'operational' },
     { name: 'Nomad', emoji: '🌍', status: 'operational' },
@@ -328,7 +328,7 @@ export default function KubryxDashboard() {
     split: <SyncSplitPanel />,
     lend: <LendoraPanel />,
     treasury: <PalmFlowPanel />,
-    shadow: <ShadowLedgerPanel />,
+    shadow: <StealthExecutiveSuitePanel />,
   }
 
   if (!isConnected) {

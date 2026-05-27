@@ -4,7 +4,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Seeding ShadowLedger Nexus database...');
+  console.log('Seeding Stealth Executive Suite Nexus database...');
 
   // 1. Create Organization
   const org = await prisma.organization.upsert({

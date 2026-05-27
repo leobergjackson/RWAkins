@@ -65,7 +65,7 @@ Base: `https://kubryx-trustmesh.onrender.com`
 
 ---
 
-## ShadowLedger (Render)
+## Stealth Executive Suite (Render)
 
 Base: `https://kubryx-shadow.onrender.com`
 

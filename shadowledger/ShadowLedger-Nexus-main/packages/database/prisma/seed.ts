@@ -12,8 +12,8 @@ async function main() {
     update: {},
     create: {
       id: 'default-org',
-      name: 'ShadowLedger Nexus DAO',
-      description: 'The primary invisible organizational entity for ShadowLedger operations.',
+      name: 'Stealth Executive Suite Nexus DAO',
+      description: 'The primary invisible organizational entity for Stealth Executive Suite operations.',
     },
   });
 

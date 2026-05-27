@@ -96,7 +96,7 @@ const DEFAULT_ANALYTICS: OperationalAnalytics = {
     'SyncSplit': 99.99,
     'AI Lending': 98.85,
     'Agent Mesh': 99.92,
-    'Shadow OS': 99.97,
+    'Stealth Executive Suite': 99.97,
     'Treasury AI': 99.94,
     'Private Vault': 99.96,
   },

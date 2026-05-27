@@ -10,7 +10,7 @@ NEXT_PUBLIC_CIPHER_URL=https://kubryx-cipher.onrender.com
 NEXT_PUBLIC_LENDORA_URL=https://kubryx-lendora.onrender.com
 (Add to Vercel environment variables before going live)
 
-## ShadowLedger
+## Stealth Executive Suite
 NEXT_PUBLIC_SHADOW_URL=https://kubryx-shadow.onrender.com
 (Add to Vercel environment variables before going live)
 

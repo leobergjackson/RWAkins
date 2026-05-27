@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS agent_activity (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ShadowLedger
+-- Stealth Executive Suite
 CREATE TABLE IF NOT EXISTS organizations (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,

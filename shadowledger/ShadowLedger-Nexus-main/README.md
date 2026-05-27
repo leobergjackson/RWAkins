@@ -1,8 +1,8 @@
-# ShadowLedger Nexus
+# Stealth Executive Suite Nexus
 
 **Autonomous Invisible Financial Operating System for Web3 Organizations**
 
-ShadowLedger Nexus is a production-ready AI-native financial OS designed for DAOs, startups, and enterprises to operate privately on Solana.
+Stealth Executive Suite Nexus is a production-ready AI-native financial OS designed for DAOs, startups, and enterprises to operate privately on Solana.
 
 ## Core Vision
 Build an invisible operational layer where organizations can execute financial activity autonomously and privately while maintaining selective compliance and auditability.
@@ -33,4 +33,4 @@ Build an invisible operational layer where organizations can execute financial a
 4. **Run in development**: `npm run dev`
 
 ---
-"ShadowLedger Nexus: Run an Entire Organization Invisibly On-Chain."
+"Stealth Executive Suite Nexus: Run an Entire Organization Invisibly On-Chain."

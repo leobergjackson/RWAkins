@@ -40,7 +40,7 @@ export default function ShadowPage() {
   const [commandInput, setCommandInput] = useState('')
   const [commandLoading, setCommandLoading] = useState(false)
   const [commandLog, setCommandLog] = useState([
-    'ShadowLedger initialized. 7 agents activated.',
+    'Stealth Executive Suite initialized. 7 agents activated.',
     'Stealth routing enabled. All operations encrypted.',
     'Ready for commands...',
   ])
@@ -84,7 +84,7 @@ export default function ShadowPage() {
       }}>▲</div>
       <div>
         <h2 style={{ fontFamily: 'Clash Display, sans-serif', fontSize: 18, fontWeight: 700, color: '#FFF' }}>
-          ShadowLedger
+          Stealth Executive Suite
         </h2>
         <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.3)', fontFamily: 'Satoshi, sans-serif' }}>
           Invisible Financial OS · 7 Autonomous Agents · Solana Mainnet
@@ -123,7 +123,7 @@ export default function ShadowPage() {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 'calc(100vh - 130px)', gap: 20, padding: 24 }}>
         <div style={{ fontSize: 48 }}>▲</div>
         <h2 style={{ fontFamily: 'Clash Display, sans-serif', fontSize: 28, fontWeight: 700, color: '#FFF', textAlign: 'center' }}>
-          ShadowLedger
+          Stealth Executive Suite
         </h2>
         <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.4)', textAlign: 'center', maxWidth: 420, fontFamily: 'Satoshi, sans-serif', lineHeight: 1.7 }}>
           Connect your wallet to deploy 7 invisible AI agents that run your entire organization on-chain.

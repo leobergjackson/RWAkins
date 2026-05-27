@@ -11,7 +11,7 @@ export function Copilot() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<any[]>([
-    { role: 'assistant', content: 'ShadowLedger Copilot initialized. How can I assist with your invisible operations today?' }
+    { role: 'assistant', content: 'Stealth Executive Suite Copilot initialized. How can I assist with your invisible operations today?' }
   ]);
   const [liveLogs, setLiveLogs] = useState<any[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
