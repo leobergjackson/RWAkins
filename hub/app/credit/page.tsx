@@ -318,6 +318,12 @@ export default function CreditDashboard() {
   const [lastRefreshed, setLastRefreshed] = useState<number | null>(null)
   const [passportVerifiedAt, setPassportVerifiedAt] = useState<number | null>(null)
   const [, setRefreshTick] = useState(0)
+  
+  // Moralis NFT API Integration
+  const [moralisNfts, setMoralisNfts] = useState<any[]>([])
+  const [moralisVerified, setMoralisVerified] = useState<boolean>(false)
+  const [moralisPassport, setMoralisPassport] = useState<any>(null)
+  const [loadingMoralis, setLoadingMoralis] = useState<boolean>(false)
 
   // Cursor position
   const [cursorPos, setCursorPos] = useState({ x: -100, y: -100 })
@@ -374,6 +380,9 @@ export default function CreditDashboard() {
       setIntegrationTier(0)
       setLastRefreshed(null)
       setPassportVerifiedAt(null)
+      setMoralisNfts([])
+      setMoralisVerified(false)
+      setMoralisPassport(null)
       return
     }
     loadDashboard(wallet)
@@ -409,6 +418,22 @@ export default function CreditDashboard() {
         platform.setCredit(bd.score)
       }
       setLastRefreshed(Date.now())
+
+      // Fetch Moralis NFT verification info
+      setLoadingMoralis(true)
+      try {
+        const mvRes = await fetch(`/api/verify-nft?address=${addr}`)
+        if (mvRes.ok) {
+          const mvData = await mvRes.json()
+          setMoralisNfts(mvData.nfts || [])
+          setMoralisVerified(mvData.verified)
+          setMoralisPassport(mvData.creditPassport)
+        }
+      } catch (err) {
+        console.error('Failed to load Moralis NFTs:', err)
+      } finally {
+        setLoadingMoralis(false)
+      }
     } finally {
       setLoading(false)
     }
@@ -447,6 +472,23 @@ export default function CreditDashboard() {
         setOnChain(true)
       }
       setLastRefreshed(Date.now())
+
+      // Refresh Moralis NFT verification info
+      setLoadingMoralis(true)
+      try {
+        const mvRes = await fetch(`/api/verify-nft?address=${wallet}`)
+        if (mvRes.ok) {
+          const mvData = await mvRes.json()
+          setMoralisNfts(mvData.nfts || [])
+          setMoralisVerified(mvData.verified)
+          setMoralisPassport(mvData.creditPassport)
+        }
+      } catch (err) {
+        console.error('Failed to refresh Moralis NFTs:', err)
+      } finally {
+        setLoadingMoralis(false)
+      }
+
       toast.success(res.transactionHash ? 'Score refreshed on-chain' : 'Score refreshed (demo mode)')
     } finally {
       setLoading(false)
@@ -866,7 +908,7 @@ export default function CreditDashboard() {
             </div>
 
             {/* No on-chain passport yet for this wallet */}
-            {passportExists === false && (
+            {passportExists === false && !moralisVerified && (
               <div className="bento-card" style={{
                 marginBottom: 24, padding: '24px 28px',
                 background: 'rgba(245,166,35,0.06)', border: '1px solid rgba(245,166,35,0.3)',
@@ -893,7 +935,7 @@ export default function CreditDashboard() {
             )}
 
             {/* On-chain passport confirmed */}
-            {passportExists === true && passportVerifiedAt && (
+            {(passportExists === true || moralisVerified === true) && (
               <div className="bento-card" style={{
                 marginBottom: 24, padding: '14px 20px',
                 background: 'rgba(34,197,94,0.05)', border: '1px solid rgba(34,197,94,0.25)',
@@ -903,7 +945,7 @@ export default function CreditDashboard() {
                 <div style={{ flex: 1 }}>
                   <span style={{ fontSize: 13, fontWeight: 600, color: '#16A34A' }}>Credit Passport Active</span>
                   <span style={{ fontSize: 12, color: 'rgba(45,26,38,0.4)', marginLeft: 10 }}>
-                    On-chain ✓ · Verified {secsAgo(passportVerifiedAt)}
+                    {moralisVerified ? 'Verified on-chain via Moralis NFT API ✓' : 'On-chain ✓ · Verified ' + (passportVerifiedAt ? secsAgo(passportVerifiedAt) : '')}
                   </span>
                 </div>
                 <span style={{
@@ -1155,6 +1197,82 @@ export default function CreditDashboard() {
                     }} />
                   </button>
                 </div>
+              </div>
+
+              {/* Verified Digital Identity (Moralis Web3 NFT API) */}
+              <div className="bento-card" style={{ gridColumn: '1 / -1', marginTop: 12 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20, flexWrap: 'wrap', gap: 10 }}>
+                  <div>
+                    <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.15em', color: '#F5A623', margin: '0 0 4px', textTransform: 'uppercase' }}>
+                      Verified On-Chain Digital Identity
+                    </p>
+                    <p style={{ fontSize: 13, color: 'rgba(45,26,38,0.5)', margin: 0 }}>
+                      Pulls and verifies Soulbound NFTs & digital assets via live Moralis Web3 NFT API across Arbitrum, Polygon, and Ethereum.
+                    </p>
+                  </div>
+                  <span style={{
+                    fontSize: 11, padding: '4px 12px', borderRadius: 20,
+                    background: 'rgba(245,166,35,0.08)', border: '1px solid rgba(245,166,35,0.2)',
+                    color: '#B47814', fontWeight: 600
+                  }}>
+                    Moralis Live Integration
+                  </span>
+                </div>
+
+                {loadingMoralis ? (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
+                    {[1, 2, 3].map(i => (
+                      <div key={i} style={{ height: 160, borderRadius: 16, background: 'rgba(45,26,38,0.03)', border: '1px solid rgba(45,26,38,0.05)', animation: 'pulse 1.5s infinite' }} />
+                    ))}
+                  </div>
+                ) : moralisNfts.length === 0 ? (
+                  <div style={{ textAlign: 'center', padding: '40px 20px', background: 'rgba(45,26,38,0.02)', borderRadius: 16, border: '1px dashed rgba(45,26,38,0.1)' }}>
+                    <span style={{ fontSize: 32, display: 'block', marginBottom: 12 }}>🖼️</span>
+                    <p style={{ fontSize: 14, fontWeight: 600, color: 'rgba(45,26,38,0.6)', margin: '0 0 4px' }}>No NFTs Found</p>
+                    <p style={{ fontSize: 12, color: 'rgba(45,26,38,0.4)', margin: 0 }}>No external digital identity NFTs found on Arbitrum, Polygon, or Ethereum for this wallet.</p>
+                  </div>
+                ) : (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
+                    {moralisNfts.map((nft, idx) => (
+                      <div key={idx} style={{
+                        borderRadius: 16, background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(45,26,38,0.06)',
+                        padding: '16px', display: 'flex', flexDirection: 'column', gap: 12, transition: 'all 0.2s',
+                        cursor: 'default', backdropFilter: 'blur(4px)'
+                      }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = '#F5A623'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)' }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(45,26,38,0.06)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)' }}>
+                        <div style={{
+                          height: 120, borderRadius: 10, background: 'rgba(45,26,38,0.04)', display: 'flex',
+                          alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative'
+                        }}>
+                          {nft.image ? (
+                            <img src={nft.image} alt={nft.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { (e.target as HTMLElement).style.display = 'none' }} />
+                          ) : (
+                            <span style={{ fontSize: 32 }}>🎫</span>
+                          )}
+                          <span style={{
+                            position: 'absolute', top: 8, right: 8, fontSize: 9, fontWeight: 700,
+                            padding: '3px 8px', borderRadius: 20, background: 'rgba(45,26,38,0.8)', color: '#fff',
+                            letterSpacing: '0.04em'
+                          }}>
+                            {nft.chainName}
+                          </span>
+                        </div>
+                        <div>
+                          <p style={{ fontSize: 13, fontWeight: 700, color: '#2D1A26', margin: '0 0 2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {nft.name}
+                          </p>
+                          <p style={{ fontSize: 11, color: 'rgba(45,26,38,0.4)', margin: '0 0 6px', fontWeight: 600 }}>
+                            {nft.symbol} #{nft.tokenId.length > 8 ? nft.tokenId.slice(0, 6) + '...' : nft.tokenId}
+                          </p>
+                          <p style={{ fontSize: 10, fontFamily: 'monospace', color: 'rgba(45,26,38,0.35)', margin: 0, wordBreak: 'break-all' }}>
+                            {nft.tokenAddress.slice(0, 6)}...{nft.tokenAddress.slice(-4)}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </>
