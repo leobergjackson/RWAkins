@@ -74,13 +74,18 @@ const input: React.CSSProperties = {
   boxSizing: 'border-box',
 }
 
-function TierOrb({ tier }: { tier: StakingTier }) {
-  const config = {
+function TierOrb({ tier }: { tier: StakingTier | string }) {
+  // Robust fallback for unpredictable API payloads
+  const normalizedTier = tier && typeof tier === 'string'
+    ? (tier.charAt(0).toUpperCase() + tier.slice(1).toLowerCase())
+    : 'None'
+
+  const config = ({
     None: { bg: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.15)', glow: 'transparent', label: '—', emoji: '' },
     Bronze: { bg: 'rgba(249,115,22,0.12)', border: 'rgba(249,115,22,0.4)', glow: 'rgba(249,115,22,0.25)', label: 'Bronze', emoji: '🥉' },
     Silver: { bg: 'rgba(156,163,175,0.12)', border: 'rgba(156,163,175,0.4)', glow: 'rgba(156,163,175,0.2)', label: 'Silver', emoji: '🥈' },
     Gold: { bg: 'rgba(245,197,24,0.12)', border: 'rgba(245,197,24,0.4)', glow: 'rgba(245,197,24,0.3)', label: 'Gold', emoji: '🥇' },
-  }[tier]
+  } as any)[normalizedTier] || { bg: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.15)', glow: 'transparent', label: '—', emoji: '' }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, marginBottom: 24 }}>
@@ -91,19 +96,19 @@ function TierOrb({ tier }: { tier: StakingTier }) {
           borderRadius: '50%',
           background: config.bg,
           border: `2px solid ${config.border}`,
-          boxShadow: tier !== 'None' ? `0 0 32px ${config.glow}, 0 0 64px ${config.glow}` : 'none',
+          boxShadow: normalizedTier !== 'None' ? `0 0 32px ${config.glow}, 0 0 64px ${config.glow}` : 'none',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           fontSize: 42,
-          animation: tier !== 'None' ? 'tierPulse 2.5s ease-in-out infinite' : 'none',
+          animation: normalizedTier !== 'None' ? 'tierPulse 2.5s ease-in-out infinite' : 'none',
           transition: 'all 0.5s',
         }}
       >
         {config.emoji || '○'}
       </div>
       <p style={{ fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,0.6)', margin: 0 }}>
-        {tier === 'None' ? 'No Tier' : `${config.emoji} ${config.label} Tier`}
+        {normalizedTier === 'None' ? 'No Tier' : `${config.emoji} ${config.label} Tier`}
       </p>
       <style>{`
         @keyframes tierPulse {
@@ -149,7 +154,10 @@ export default function StakePage() {
     setPageError('')
     try {
       const d = await fetchStaking(addr).catch(() => fallbackStaking)
-      setData(d)
+      // Extract nested data if the backend wraps the response
+      const apiData = (d as any).data ? (d as any).data : d
+      setData({ ...fallbackStaking, ...apiData })
+
       // Overlay real on-chain staking state from NeuroCredStaking (QIE Mainnet):
       // stakedAmount(address) for the amount, integrationTier(address) for the
       // tier. Promise.all is wrapped in catch so a flaky RPC never aborts both.
@@ -252,10 +260,11 @@ export default function StakePage() {
     }
   }
 
-  const tierColor = (tier: StakingTier) => {
-    if (tier === 'Gold') return '#F5C518'
-    if (tier === 'Silver') return '#9CA3AF'
-    if (tier === 'Bronze') return '#F97316'
+  const tierColor = (tier: StakingTier | string) => {
+    const t = tier && typeof tier === 'string' ? tier.toLowerCase() : ''
+    if (t === 'gold') return '#F5C518'
+    if (t === 'silver') return '#9CA3AF'
+    if (t === 'bronze') return '#F97316'
     return 'rgba(255,255,255,0.25)'
   }
 
@@ -334,10 +343,10 @@ export default function StakePage() {
             {/* Stats grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 12, marginBottom: 20 }}>
               {[
-                { label: 'STAKED', value: `${data.stakedAmount ?? 0} NCRD`, color: '#A78BFA' },
-                { label: 'AVAILABLE', value: `${data.availableBalance ?? 0} NCRD`, color: 'rgba(255,255,255,0.7)' },
-                { label: 'CURRENT TIER', value: data.currentTier, color: tierColor(data.currentTier) },
-                { label: 'SCORE BOOST', value: `+${data.scoreBoost ?? 0}`, color: '#22C55E' },
+                { label: 'STAKED', value: `${Number(data.stakedAmount || 0)} NCRD`, color: '#A78BFA' },
+                { label: 'AVAILABLE', value: `${Number(data.availableBalance || 0)} NCRD`, color: 'rgba(255,255,255,0.7)' },
+                { label: 'CURRENT TIER', value: typeof data.currentTier === 'string' ? data.currentTier : 'None', color: tierColor(data.currentTier) },
+                { label: 'SCORE BOOST', value: `+${Number(data.scoreBoost || 0)}`, color: '#22C55E' },
               ].map((s) => (
                 <div key={s.label} style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 10, padding: '12px 14px' }}>
                   <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.3)', margin: '0 0 6px' }}>{s.label}</p>
@@ -347,7 +356,7 @@ export default function StakePage() {
             </div>
 
             {/* Progress to next tier */}
-            {data.nextTierName && (
+            {data.nextTierName && typeof data.nextTierName === 'string' && (
               <div style={{ textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 6 }}>
                   <span>Progress to {data.nextTierName}</span>
@@ -430,8 +439,9 @@ export default function StakePage() {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 14 }}>
             {(Object.entries(STAKING_TIERS) as [StakingTier, typeof STAKING_TIERS.Bronze][]).map(([tier, cfg]) => {
-              const isCurrent = data.currentTier === tier
-              const isLocked = !isCurrent && data.stakedAmount < cfg.required
+              const currentT = typeof data.currentTier === 'string' ? (data.currentTier.charAt(0).toUpperCase() + data.currentTier.slice(1).toLowerCase()) : 'None'
+              const isCurrent = currentT === tier
+              const isLocked = !isCurrent && Number(data.stakedAmount || 0) < cfg.required
               return (
                 <div
                   key={tier}
