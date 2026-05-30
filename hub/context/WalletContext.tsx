@@ -282,7 +282,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     try {
       const controller = new AbortController()
       const timer = setTimeout(() => controller.abort(), RPC_TIMEOUT)
-      const res = await fetch(NETWORKS.SOLANA_DEVNET.rpcUrl, {
+      const res = await fetch(NETWORKS.ARBITRUM_SEPOLIA.rpcUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -90,9 +90,8 @@ const LOGOS = ['Arbitrum Network', 'Arbitrum Sepolia', 'Arbitrum', 'Ethereum', '
 const CHAIN_SWATCHES: Record<string, string> = {
   'Arbitrum Network': 'linear-gradient(135deg,#F5C518,#FFA800)',
   'Arbitrum Sepolia': 'linear-gradient(135deg,#9945FF,#14F195)',
-  'Arbitrum': 'linear-gradient(135deg,#3B82F6,#06B6D4)',
-  'Ethereum': 'linear-gradient(135deg,#6366F1,#8B5CF6)',
   'Arbitrum': 'linear-gradient(135deg,#2D374B,#28A0F0)',
+  'Ethereum': 'linear-gradient(135deg,#6366F1,#8B5CF6)',
   'Anchor Protocol': 'linear-gradient(135deg,#4A6CFE,#A5B4FC)',
   'Soroban': 'linear-gradient(135deg,#000,#3B82F6)',
   'Groq': 'linear-gradient(135deg,#FF6B35,#F5A623)',
