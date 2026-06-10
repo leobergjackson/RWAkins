@@ -11,8 +11,8 @@ type TourStep = {
 
 const TOUR_STEPS: TourStep[] = [
   {
-    title: 'Welcome to Kubryx OS',
-    description: 'Kubryx is a premium, unified blockchain operating system comprising 8 built-in financial and AI tools. Let’s take a 1-minute tour of your command center.',
+    title: 'Welcome to RWAkins OS',
+    description: 'RWAkins is a premium, unified blockchain operating system comprising 8 built-in financial and AI tools. Let’s take a 1-minute tour of your command center.',
   },
   {
     title: 'Multi-Chain Wallet Hub',
@@ -26,7 +26,7 @@ const TOUR_STEPS: TourStep[] = [
   },
   {
     title: 'Live SLA & Latency Diagnostics',
-    description: 'View real-time response speeds and SLA uptime statistics for every connected backend. Kubryx measures API roundtrips dynamically.',
+    description: 'View real-time response speeds and SLA uptime statistics for every connected backend. RWAkins measures API roundtrips dynamically.',
     highlightId: 'command-tools-grid',
   },
   {
@@ -36,7 +36,7 @@ const TOUR_STEPS: TourStep[] = [
   },
   {
     title: 'Demo & Presentation Safeties',
-    description: 'Kubryx is built to be "always presentation-ready". If a backend or wallet is unavailable, the UI automatically enters Demo Mode with deterministic mock data, ensuring a flawless showcase.',
+    description: 'RWAkins is built to be "always presentation-ready". If a backend or wallet is unavailable, the UI automatically enters Demo Mode with deterministic mock data, ensuring a flawless showcase.',
   },
 ]
 
@@ -69,7 +69,7 @@ export default function OnboardingTour() {
       if (el) {
         el.style.position = 'relative'
         el.style.zIndex = '99999'
-        el.style.boxShadow = '0 0 0 9999px rgba(0, 0, 0, 0.75), 0 0 20px rgba(245, 197, 24, 0.6)'
+        el.style.boxShadow = '0 0 0 9999px rgba(0, 0, 0, 0.75), 0 0 20px rgba(59, 91, 250, 0.6)'
         el.style.transition = 'box-shadow 0.3s ease, z-index 0.3s ease'
         el.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }
@@ -137,8 +137,8 @@ export default function OnboardingTour() {
           style={{
             padding: '8px 14px',
             fontSize: 12,
-            background: '#070707',
-            borderColor: 'rgba(245, 197, 24, 0.4)',
+            background: 'var(--cloud-bg)',
+            borderColor: 'rgba(59, 91, 250, 0.4)',
             boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
             display: 'flex',
             alignItems: 'center',
@@ -176,11 +176,11 @@ export default function OnboardingTour() {
           pointerEvents: 'auto',
           width: '90%',
           maxWidth: 420,
-          background: '#0a0a0a',
-          border: '1px solid rgba(245, 197, 24, 0.45)',
+          background: '#ffffff',
+          border: '1px solid rgba(59, 91, 250, 0.45)',
           borderRadius: 12,
           padding: '24px 20px',
-          boxShadow: '0 10px 40px rgba(0,0,0,0.85), inset 0 0 12px rgba(245, 197, 24, 0.05)',
+          boxShadow: '0 10px 40px rgba(0,0,0,0.85), inset 0 0 12px rgba(59, 91, 250, 0.05)',
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
@@ -189,7 +189,7 @@ export default function OnboardingTour() {
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#F5C518', fontWeight: 700 }}>
+          <span style={{ fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#3B5BFA', fontWeight: 700 }}>
             Step {stepIndex + 1} of {TOUR_STEPS.length}
           </span>
           <button
@@ -218,7 +218,7 @@ export default function OnboardingTour() {
 
         {/* Tip helper tailored dynamically to target sections */}
         {step.highlightId === 'wallet-connector-section' && (
-          <div style={{ padding: 10, background: 'rgba(245,197,24,0.02)', borderLeft: '3px solid #F5C518', fontSize: 11, borderRadius: '0 4px 4px 0' }}>
+          <div style={{ padding: 10, background: '#ffffff', borderLeft: '3px solid #3B5BFA', fontSize: 11, borderRadius: '0 4px 4px 0' }}>
             💡 <strong>Wallet Tips:</strong><br />
             • <em>MetaMask</em> asks you to confirm network switching to Mantle Sepolia (5003).<br />
             • Every action is signed in your wallet and settled on-chain on Mantle.<br />
@@ -227,7 +227,7 @@ export default function OnboardingTour() {
         )}
 
         {step.highlightId === 'command-tools-grid' && (
-          <div style={{ padding: 10, background: 'rgba(245,197,24,0.02)', borderLeft: '3px solid #F5C518', fontSize: 11, borderRadius: '0 4px 4px 0' }}>
+          <div style={{ padding: 10, background: '#ffffff', borderLeft: '3px solid #3B5BFA', fontSize: 11, borderRadius: '0 4px 4px 0' }}>
             💡 <strong>Interactive Actions:</strong><br />
             • Click <strong>Open Tool</strong> to access the specialized execution UI.<br />
             • Click <strong>↻</strong> on any card to refresh connection latencies instantly.
@@ -255,8 +255,8 @@ export default function OnboardingTour() {
             style={{
               padding: '6px 16px',
               fontSize: 12,
-              borderColor: '#F5C518',
-              color: '#F5C518',
+              borderColor: '#3B5BFA',
+              color: '#3B5BFA',
               fontWeight: 600,
             }}
           >

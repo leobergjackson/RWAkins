@@ -48,7 +48,7 @@ function Card({ tool }: { tool: ToolCard }) {
         <div style={{
           width: 40, height: 40, borderRadius: 12,
           background: `linear-gradient(135deg, ${tool.color}, ${tool.color}cc)`,
-          color: '#fff',
+          color: '#0A0F2E',
           display: 'grid', placeItems: 'center',
           fontSize: 17, fontWeight: 900,
           boxShadow: `0 6px 18px ${tool.color}40`,

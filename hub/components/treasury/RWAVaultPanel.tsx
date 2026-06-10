@@ -1,5 +1,5 @@
 // Built by vsrupeshkumar
-// The hero of the AI x RWA track: a live KubryxRWAVault panel on Mantle Sepolia.
+// The hero of the AI x RWA track: a live RWAkinsRWAVault panel on Mantle Sepolia.
 // Real on-chain reads → AI (Groq) proposes an allocation → real on-chain rebalance().
 'use client'
 
@@ -114,11 +114,11 @@ export default function RWAVaultPanel() {
   }
 
   const Card = ({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) => (
-    <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 16, padding: 20, ...style }}>{children}</div>
+    <div style={{ background: '#ffffff', border: '1px solid #E2E8F0', borderRadius: 16, padding: 20, ...style }}>{children}</div>
   )
 
   return (
-    <div style={{ maxWidth: 880, margin: '0 auto', padding: '24px 20px 80px', color: '#fff' }}>
+    <div style={{ maxWidth: 880, margin: '0 auto', padding: '24px 20px 80px', color: '#0A0F2E' }}>
       {/* Header + live badge */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
         <h1 style={{ fontSize: 26, fontWeight: 800, margin: 0, letterSpacing: '-0.02em' }}>
@@ -134,7 +134,7 @@ export default function RWAVaultPanel() {
           {live ? 'Live · Mantle Sepolia' : isVaultDeployed ? (evm.isConnected ? 'Switch to Mantle Sepolia' : 'Demo · connect wallet for live vault') : 'Demo · vault not deployed yet'}
         </span>
       </div>
-      <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 14, lineHeight: 1.6, maxWidth: 620, marginTop: 0 }}>
+      <p style={{ color: '#475569', fontSize: 14, lineHeight: 1.6, maxWidth: 620, marginTop: 0 }}>
         The AI proposes an allocation between <b style={{ color: GREEN }}>USDY</b> (stable yield) and{' '}
         <b style={{ color: BLUE }}>mETH</b> (staking yield). The <b>smart contract enforces the risk cap on-chain</b> —
         mETH can never exceed {MAX_RISK_BPS / 100}% no matter what the AI says.
@@ -164,40 +164,40 @@ export default function RWAVaultPanel() {
       {/* Portfolio + yields */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 14, margin: '18px 0' }}>
         <Card>
-          <div style={{ fontSize: 11, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Position {loading && '· …'}</div>
+          <div style={{ fontSize: 11, letterSpacing: '0.1em', color: '#64748B', textTransform: 'uppercase' }}>Position {loading && '· …'}</div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 12 }}>
-            <span style={{ color: GREEN }}>● USDY</span><span style={{ fontFamily: MONO }}>{tok(usdyBal)} <span style={{ color: 'rgba(255,255,255,0.4)' }}>({usdyApy}%)</span></span>
+            <span style={{ color: GREEN }}>● USDY</span><span style={{ fontFamily: MONO }}>{tok(usdyBal)} <span style={{ color: '#64748B' }}>({usdyApy}%)</span></span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-            <span style={{ color: BLUE }}>● mETH</span><span style={{ fontFamily: MONO }}>{tok(methBal)} <span style={{ color: 'rgba(255,255,255,0.4)' }}>({methApy}%)</span></span>
+            <span style={{ color: BLUE }}>● mETH</span><span style={{ fontFamily: MONO }}>{tok(methBal)} <span style={{ color: '#64748B' }}>({methApy}%)</span></span>
           </div>
           {/* Allocation bar */}
-          <div style={{ display: 'flex', height: 10, borderRadius: 99, overflow: 'hidden', marginTop: 14, border: '1px solid rgba(255,255,255,0.1)' }}>
+          <div style={{ display: 'flex', height: 10, borderRadius: 99, overflow: 'hidden', marginTop: 14, border: '1px solid #E2E8F0' }}>
             <div style={{ width: `${usdyBps / 100}%`, background: GREEN }} />
             <div style={{ width: `${methBps / 100}%`, background: BLUE }} />
           </div>
-          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 6, fontFamily: MONO }}>
+          <div style={{ fontSize: 11, color: '#64748B', marginTop: 6, fontFamily: MONO }}>
             Target allocation: {pct(usdyBps)} USDY / {pct(methBps)} mETH
           </div>
         </Card>
 
         {/* Deposit */}
         <Card>
-          <div style={{ fontSize: 11, letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Deposit</div>
+          <div style={{ fontSize: 11, letterSpacing: '0.1em', color: '#64748B', textTransform: 'uppercase' }}>Deposit</div>
           <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
             {(['usdy', 'meth'] as const).map(a => (
               <button key={a} onClick={() => setDepositAsset(a)} style={{
                 flex: 1, padding: '8px', borderRadius: 10, cursor: 'pointer', fontSize: 13, fontWeight: 600,
                 background: depositAsset === a ? (a === 'usdy' ? `${GREEN}22` : `${BLUE}22`) : 'transparent',
-                border: `1px solid ${depositAsset === a ? (a === 'usdy' ? GREEN : BLUE) : 'rgba(255,255,255,0.12)'}`,
-                color: '#fff',
+                border: `1px solid ${depositAsset === a ? (a === 'usdy' ? GREEN : BLUE) : '#E2E8F0'}`,
+                color: '#0A0F2E',
               }}>{a === 'usdy' ? 'kUSDY' : 'kMETH'}</button>
             ))}
           </div>
           <input value={depositAmt} onChange={e => setDepositAmt(e.target.value.replace(/[^0-9.]/g, ''))}
-            inputMode="decimal" style={{ width: '100%', marginTop: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontFamily: MONO }} />
+            inputMode="decimal" style={{ width: '100%', marginTop: 10, padding: '10px 12px', borderRadius: 10, background: '#ffffff', border: '1px solid #E2E8F0', color: '#0A0F2E', fontFamily: MONO }} />
           {live && wallet && (
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginTop: 6, fontFamily: MONO }}>
+            <div style={{ fontSize: 11, color: '#64748B', marginTop: 6, fontFamily: MONO }}>
               Wallet: {tok(depositAsset === 'usdy' ? wallet.usdy : wallet.meth)} {depositAsset === 'usdy' ? 'kUSDY' : 'kMETH'}
               {' · '}
               <button onClick={() => account && withTx('faucet', () => faucetMint(account, depositAsset === 'usdy' ? RWA.usdy : RWA.meth, '1000'))}
@@ -232,7 +232,7 @@ export default function RWAVaultPanel() {
               → Target: <b style={{ color: GREEN }}>{pct(aiRec.usdyBps)} USDY</b> / <b style={{ color: BLUE }}>{pct(aiRec.methBps)} mETH</b>
               {aiRec.clamped && <span style={{ color: AMBER, fontSize: 11 }}> · clamped to risk cap</span>}
             </div>
-            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginTop: 6, lineHeight: 1.5 }}>{aiRec.rationale}</div>
+            <div style={{ fontSize: 13, color: '#334155', marginTop: 6, lineHeight: 1.5 }}>{aiRec.rationale}</div>
             <button
               disabled={!live || !!busy}
               onClick={() => account && withTx('rebalance', () => executeRebalance(account, aiRec.usdyBps, aiRec.methBps))}
@@ -243,8 +243,8 @@ export default function RWAVaultPanel() {
         )}
 
         {/* Manual fallback — always available */}
-        <div style={{ marginTop: 18, paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 8 }}>Or set it manually (mETH capped at {MAX_RISK_BPS / 100}% by the contract):</div>
+        <div style={{ marginTop: 18, paddingTop: 16, borderTop: '1px solid #E2E8F0' }}>
+          <div style={{ fontSize: 12, color: '#64748B', marginBottom: 8 }}>Or set it manually (mETH capped at {MAX_RISK_BPS / 100}% by the contract):</div>
           <input type="range" min={0} max={70} value={manualMeth} onChange={e => setManualMeth(Number(e.target.value))} style={{ width: '100%', accentColor: BLUE }} />
           <div style={{ fontFamily: MONO, fontSize: 13, marginTop: 4 }}>
             <span style={{ color: GREEN }}>{100 - manualMeth}% USDY</span> / <span style={{ color: BLUE }}>{manualMeth}% mETH</span>
@@ -271,8 +271,8 @@ export default function RWAVaultPanel() {
         </div>
       )}
 
-      <div style={{ textAlign: 'center', padding: '28px 0 0', fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>
-        Built by vsrupeshkumar · KubryxRWAVault on Mantle Sepolia (chain 5003)
+      <div style={{ textAlign: 'center', padding: '28px 0 0', fontSize: 12, color: '#94A3B8' }}>
+        Built by vsrupeshkumar · RWAkinsRWAVault on Mantle Sepolia (chain 5003)
       </div>
     </div>
   )
@@ -284,6 +284,6 @@ function btn(color: string, small = false): React.CSSProperties {
     width: small ? 'auto' : '100%',
     padding: small ? '8px 16px' : '12px 18px',
     borderRadius: 12, border: 'none', cursor: 'pointer',
-    background: color, color: '#fff', fontWeight: 700, fontSize: 14,
+    background: color, color: '#0A0F2E', fontWeight: 700, fontSize: 14,
   }
 }

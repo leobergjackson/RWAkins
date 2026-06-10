@@ -19,10 +19,10 @@ import {
 } from '@/lib/agents-fallbacks'
 
 const ACCENT = TRUSTMESH_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const CARD   = '#111111'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.4)'
+const BORDER = '#E2E8F0'
+const CARD   = '#ffffff'
+const MUTED  = '#475569'
+const MUTED2 = '#64748B'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
 const STATUS_COLORS: Record<string, string> = {
@@ -39,9 +39,9 @@ const SEVERITY_COLOR: Record<string, string> = {
 }
 
 const TOOLTIP_STYLE = {
-  contentStyle: { background: '#080808', border: `1px solid ${BORDER}`, borderRadius: 8, fontSize: 12 },
+  contentStyle: { background: '#ffffff', border: `1px solid ${BORDER}`, borderRadius: 8, fontSize: 12 },
   labelStyle: { color: MUTED2 },
-  itemStyle: { color: '#fff' },
+  itemStyle: { color: '#0A0F2E' },
 }
 
 export default function AgentAnalytics() {
@@ -119,14 +119,14 @@ export default function AgentAnalytics() {
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               Execution Slot Latency
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
               Mantle confirmation speed (ms)
             </div>
           </div>
           {mounted && (
             <ResponsiveContainer width="100%" height={240}>
               <LineChart data={latencyData} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
-                <CartesianGrid stroke="rgba(255,255,255,0.05)" strokeDasharray="3 3" vertical={false} />
+                <CartesianGrid stroke="#F8FAFC" strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="slot" tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} domain={[300, 500]} />
                 <Tooltip {...TOOLTIP_STYLE} />
@@ -142,7 +142,7 @@ export default function AgentAnalytics() {
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               Coordinator Settings
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
               Runtime Config
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function AgentAnalytics() {
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: MUTED, marginBottom: 8 }}>
                 <span>Agent Polling Rate (seconds)</span>
-                <span style={{ fontFamily: MONO, fontWeight: 700, color: '#fff' }}>{pollingRate}s</span>
+                <span style={{ fontFamily: MONO, fontWeight: 700, color: '#0A0F2E' }}>{pollingRate}s</span>
               </div>
               <input 
                 type="range" min="1" max="15" step="1" 
@@ -163,7 +163,7 @@ export default function AgentAnalytics() {
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: MUTED, marginBottom: 8 }}>
                 <span>Max Execution Slippage (%)</span>
-                <span style={{ fontFamily: MONO, fontWeight: 700, color: '#fff' }}>{maxSlippage}%</span>
+                <span style={{ fontFamily: MONO, fontWeight: 700, color: '#0A0F2E' }}>{maxSlippage}%</span>
               </div>
               <input 
                 type="range" min="0.1" max="5.0" step="0.1" 
@@ -188,14 +188,14 @@ export default function AgentAnalytics() {
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               Job Throughput
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
               Last 24 hours · hourly
             </div>
           </div>
           {mounted && (
             <ResponsiveContainer width="100%" height={240}>
               <BarChart data={FALLBACK_HOURLY_JOBS} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
-                <CartesianGrid stroke="rgba(255,255,255,0.05)" strokeDasharray="3 3" vertical={false} />
+                <CartesianGrid stroke="#F8FAFC" strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="hour" tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} interval={3} />
                 <YAxis tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} />
                 <Tooltip {...TOOLTIP_STYLE} />
@@ -211,7 +211,7 @@ export default function AgentAnalytics() {
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               Status Mix
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
               Distribution
             </div>
           </div>
@@ -244,7 +244,7 @@ export default function AgentAnalytics() {
               position: 'absolute', top: '38%', left: 0, right: 0,
               textAlign: 'center', pointerEvents: 'none',
             }}>
-              <div style={{ fontSize: 22, fontWeight: 700, color: '#fff' }}>{totalJobs}</div>
+              <div style={{ fontSize: 22, fontWeight: 700, color: '#0A0F2E' }}>{totalJobs}</div>
               <div style={{ fontSize: 10, color: MUTED2, letterSpacing: '0.14em', textTransform: 'uppercase' }}>Total</div>
             </div>
           </div>
@@ -257,7 +257,7 @@ export default function AgentAnalytics() {
           <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
             Integrity Violations
           </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
             Last 7 days
           </div>
         </div>
@@ -283,7 +283,7 @@ export default function AgentAnalytics() {
               flexShrink: 0,
             }} />
             <span style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, minWidth: 70 }}>{v.agent}</span>
-            <span style={{ flex: 1, fontSize: 13, color: '#fff' }}>{v.detail}</span>
+            <span style={{ flex: 1, fontSize: 13, color: '#0A0F2E' }}>{v.detail}</span>
             <span style={{ fontSize: 11, color: MUTED2 }}>{v.date}</span>
           </div>
         ))}
@@ -295,7 +295,7 @@ export default function AgentAnalytics() {
           <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
             Top Agents Leaderboard
           </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
             By jobs completed
           </div>
         </div>
@@ -317,11 +317,11 @@ export default function AgentAnalytics() {
           <tbody>
             {FALLBACK_LEADERS.map(r => (
               <tr key={r.agent}>
-                <td style={{ padding: '10px 12px', color: r.rank <= 3 ? '#F5C518' : MUTED, fontWeight: 700 }}>
+                <td style={{ padding: '10px 12px', color: r.rank <= 3 ? '#3B5BFA' : MUTED, fontWeight: 700 }}>
                   #{r.rank}
                 </td>
                 <td style={{ padding: '10px 12px', fontFamily: MONO, color: ACCENT, fontSize: 12 }}>{r.agent}</td>
-                <td style={{ padding: '10px 12px', color: '#fff', fontFamily: MONO, fontSize: 12 }}>{r.jobs.toLocaleString()}</td>
+                <td style={{ padding: '10px 12px', color: '#0A0F2E', fontFamily: MONO, fontSize: 12 }}>{r.jobs.toLocaleString()}</td>
                 <td style={{ padding: '10px 12px', color: '#10b981', fontSize: 12 }}>{r.integrity}</td>
                 <td style={{ padding: '10px 12px', color: MUTED, fontSize: 12 }}>{r.uptime}</td>
               </tr>

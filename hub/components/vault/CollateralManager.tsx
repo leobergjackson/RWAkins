@@ -10,10 +10,10 @@ import {
 } from '@/lib/vault-fallbacks'
 
 const ACCENT = CIPHERVAULT_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const CARD   = '#111111'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.4)'
+const BORDER = '#E2E8F0'
+const CARD   = '#ffffff'
+const MUTED  = '#475569'
+const MUTED2 = '#64748B'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
 type Mode = 'deposit' | 'withdraw'
@@ -82,13 +82,13 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
             color: '#10b981', fontSize: 28,
             display: 'grid', placeItems: 'center', margin: '0 auto 16px',
           }}>✓</div>
-          <h2 style={{ fontSize: 22, color: '#fff', margin: '0 0 8px', fontFamily: 'Georgia, "Playfair Display", serif' }}>
+          <h2 style={{ fontSize: 22, color: '#0A0F2E', margin: '0 0 8px', fontFamily: 'Georgia, "Playfair Display", serif' }}>
             Collateral {mode === 'deposit' ? 'Deposited' : 'Withdrawn'}
           </h2>
           <p style={{ color: MUTED, fontSize: 13, margin: '0 0 22px' }}>
             {success.amount} · ${success.usd.toLocaleString(undefined, { maximumFractionDigits: 0 })}
           </p>
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 8, padding: 14, marginBottom: 20, textAlign: 'left' }}>
+          <div style={{ background: '#ffffff', borderRadius: 8, padding: 14, marginBottom: 20, textAlign: 'left' }}>
             <DetailRow label="Vault Health" value={`${ratioAfter}%`} color={healthColor(ratioAfter)} />
             <DetailRow label="Transaction" value={success.tx} mono />
           </div>
@@ -103,7 +103,7 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
       {/* Mode toggle */}
       <div style={{
         display: 'inline-flex',
-        background: 'rgba(255,255,255,0.03)',
+        background: '#ffffff',
         border: `1px solid ${BORDER}`,
         borderRadius: 10, padding: 4,
         alignSelf: 'flex-start',
@@ -140,7 +140,7 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
                   key={asset.symbol}
                   onClick={() => setSelected(asset)}
                   style={{
-                    background: isSel ? `${ACCENT}10` : 'rgba(255,255,255,0.02)',
+                    background: isSel ? `${ACCENT}10` : '#F8FAFC',
                     border: `1px solid ${isSel ? ACCENT : BORDER}`,
                     borderRadius: 10, padding: 14,
                     cursor: 'pointer', transition: 'all 0.15s',
@@ -148,8 +148,8 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span style={{ fontSize: 18, color: isSel ? ACCENT : '#fff' }}>{asset.icon}</span>
-                    <span style={{ fontSize: 13, color: '#fff', fontWeight: 700 }}>{asset.symbol}</span>
+                    <span style={{ fontSize: 18, color: isSel ? ACCENT : '#0A0F2E' }}>{asset.icon}</span>
+                    <span style={{ fontSize: 13, color: '#0A0F2E', fontWeight: 700 }}>{asset.symbol}</span>
                   </div>
                   <div style={{ fontSize: 11, color: MUTED2, marginTop: 2 }}>{asset.name}</div>
                   <div style={{ fontSize: 12, color: MUTED, marginTop: 6, fontFamily: MONO }}>
@@ -164,7 +164,7 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
           <div style={{ fontSize: 11, fontWeight: 600, color: MUTED, marginBottom: 6 }}>Amount</div>
           <div style={{
             display: 'flex', alignItems: 'center', gap: 8,
-            background: 'rgba(255,255,255,0.04)',
+            background: '#F8FAFC',
             border: `1px solid ${BORDER}`,
             borderRadius: 8, padding: '10px 14px',
           }}>
@@ -174,7 +174,7 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
               placeholder="0.0"
               style={{
                 flex: 1, background: 'transparent', border: 'none', outline: 'none',
-                color: '#fff', fontSize: 18, fontFamily: MONO,
+                color: '#0A0F2E', fontSize: 18, fontFamily: MONO,
               }}
             />
             <span style={{ fontSize: 13, color: MUTED, fontFamily: MONO }}>{selected.symbol}</span>
@@ -195,7 +195,7 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
           {/* Impact & Target Health */}
           <div style={{
             marginTop: 18, padding: 14,
-            background: 'rgba(255,255,255,0.02)',
+            background: '#F8FAFC',
             border: `1px solid ${BORDER}`, borderRadius: 8,
           }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: MUTED2, marginBottom: 12 }}>
@@ -252,7 +252,7 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               My Positions
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
               Locked collateral
             </div>
           </div>
@@ -275,8 +275,8 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
               {FALLBACK_MY_POSITIONS.map(p => (
                 <tr key={p.asset} style={{ borderBottom: `1px solid ${BORDER}` }}>
                   <td style={{ padding: '12px 0', fontFamily: MONO, color: ACCENT }}>{p.asset}</td>
-                  <td style={{ padding: '12px 0', color: '#fff' }}>{p.amount}</td>
-                  <td style={{ padding: '12px 0', color: '#fff', fontFamily: MONO }}>${p.value.toLocaleString()}</td>
+                  <td style={{ padding: '12px 0', color: '#0A0F2E' }}>{p.amount}</td>
+                  <td style={{ padding: '12px 0', color: '#0A0F2E', fontFamily: MONO }}>${p.value.toLocaleString()}</td>
                   <td style={{ padding: '12px 0', color: '#10b981', fontSize: 11 }}>✓ Locked</td>
                 </tr>
               ))}
@@ -284,7 +284,7 @@ export default function CollateralManager({ walletAddress }: { walletAddress?: s
                 <td colSpan={2} style={{ padding: '14px 0', fontSize: 11, color: MUTED, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                   Total
                 </td>
-                <td style={{ padding: '14px 0', fontSize: 14, color: '#fff', fontFamily: MONO, fontWeight: 700 }}>
+                <td style={{ padding: '14px 0', fontSize: 14, color: '#0A0F2E', fontFamily: MONO, fontWeight: 700 }}>
                   ${totalCurrentUsd.toLocaleString()}
                 </td>
                 <td style={{ padding: '14px 0', fontSize: 11, color: '#10b981' }}>LTV 66.6%</td>
@@ -304,7 +304,7 @@ function ImpactRow({ label, current, after, better, color }: { label: string; cu
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: MONO, fontSize: 12 }}>
         <span style={{ color: MUTED2 }}>{current}</span>
         <span style={{ color: MUTED2 }}>→</span>
-        <span style={{ color: color || (better ? '#10b981' : '#fff'), fontWeight: 700 }}>
+        <span style={{ color: color || (better ? '#10b981' : '#0A0F2E'), fontWeight: 700 }}>
           {after}
         </span>
       </span>
@@ -323,7 +323,7 @@ function DetailRow({ label, value, color, mono }: { label: string; value: string
 
 const primaryBtn: React.CSSProperties = {
   padding: '12px 18px', borderRadius: 8,
-  background: ACCENT, color: '#fff',
+  background: ACCENT, color: '#0A0F2E',
   border: 'none', fontSize: 13, fontWeight: 600,
   cursor: 'pointer',
 }

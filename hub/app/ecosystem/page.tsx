@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useGlobalOperations, KubryxEventType } from '../../lib/global-operations-engine'
+import { useGlobalOperations, RWAkinsEventType } from '../../lib/global-operations-engine'
 import { useStrategicIntelligence } from '../../lib/strategic-intelligence-engine'
 import { useCivilizationOrchestration, InstitutionalAgent, InterAgentNegotiation } from '../../lib/civilization-orchestration-engine'
 import { toast } from '../../lib/toast'
@@ -100,7 +100,7 @@ export default function EcosystemPage() {
 
   // Simulator Inputs
   const [customPayload, setCustomPayload] = useState('{\n  "status": "nominal",\n  "active": true\n}')
-  const [customEventType, setCustomEventType] = useState<KubryxEventType>('kubryx_ecosystem_alert')
+  const [customEventType, setCustomEventType] = useState<RWAkinsEventType>('kubryx_ecosystem_alert')
   const [customEventDesc, setCustomEventDesc] = useState('Custom ecosystem webhook telemetry dispatch.')
 
   // Strategic Explorer State
@@ -166,7 +166,7 @@ export default function EcosystemPage() {
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
       
       {/* Header Panel */}
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Dashboard</Link>
@@ -178,17 +178,17 @@ export default function EcosystemPage() {
           </h1>
         </div>
 
-        <div style={{ padding: '6px 14px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 6 }}>
+        <div style={{ padding: '6px 14px', background: '#F8FAFC', border: '1px solid #F1F5F9', borderRadius: 6 }}>
           <span style={{ fontSize: 10, color: '#888', display: 'block' }}>Operational Consensus</span>
-          <strong style={{ fontSize: 16, color: '#F5C518' }}>{consensusIndex}%</strong>
+          <strong style={{ fontSize: 16, color: '#3B5BFA' }}>{consensusIndex}%</strong>
         </div>
       </header>
 
       {/* Strategic Intelligence Explorer Section */}
-      <section className="card" style={{ padding: 18, marginBottom: 24, border: '1px solid rgba(245,197,24,0.25)', background: 'rgba(245,197,24,0.01)' }}>
+      <section className="card" style={{ padding: 18, marginBottom: 24, border: '1px solid rgba(59,91,250,0.25)', background: '#ffffff' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 14 }}>
           <div>
-            <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#F5C518', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: '#3B5BFA', display: 'flex', alignItems: 'center', gap: 8 }}>
               <span>🧠</span> Strategic Forecast & Scenario Payload Explorer
             </h3>
             <p style={{ margin: '2px 0 0', fontSize: 12, color: '#aaa' }}>
@@ -213,35 +213,35 @@ export default function EcosystemPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: 16 }}>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
-            <div style={{ padding: 10, background: '#020202', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6 }}>
+            <div style={{ padding: 10, background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 6 }}>
               <span style={{ fontSize: 9, color: '#888' }}>Consensus Trajectory</span>
-              <strong style={{ display: 'block', fontSize: 18, color: '#fff', marginTop: 4 }}>{activeForecast?.consensusTrajectory}%</strong>
+              <strong style={{ display: 'block', fontSize: 18, color: '#0A0F2E', marginTop: 4 }}>{activeForecast?.consensusTrajectory}%</strong>
             </div>
-            <div style={{ padding: 10, background: '#020202', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6 }}>
+            <div style={{ padding: 10, background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 6 }}>
               <span style={{ fontSize: 9, color: '#888' }}>Yield Operations Hub Stability</span>
-              <strong style={{ display: 'block', fontSize: 18, color: '#fff', marginTop: 4 }}>{activeForecast?.treasuryStability}%</strong>
+              <strong style={{ display: 'block', fontSize: 18, color: '#0A0F2E', marginTop: 4 }}>{activeForecast?.treasuryStability}%</strong>
             </div>
-            <div style={{ padding: 10, background: '#020202', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6 }}>
+            <div style={{ padding: 10, background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 6 }}>
               <span style={{ fontSize: 9, color: '#888' }}>Governance Volatility</span>
-              <strong style={{ display: 'block', fontSize: 18, color: '#fff', marginTop: 4 }}>{activeForecast?.governanceVolatility}%</strong>
+              <strong style={{ display: 'block', fontSize: 18, color: '#0A0F2E', marginTop: 4 }}>{activeForecast?.governanceVolatility}%</strong>
             </div>
-            <div style={{ padding: 10, background: '#020202', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6 }}>
+            <div style={{ padding: 10, background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 6 }}>
               <span style={{ fontSize: 9, color: '#888' }}>Regional Resilience</span>
-              <strong style={{ display: 'block', fontSize: 18, color: '#fff', marginTop: 4 }}>{activeForecast?.regionalResilience}%</strong>
+              <strong style={{ display: 'block', fontSize: 18, color: '#0A0F2E', marginTop: 4 }}>{activeForecast?.regionalResilience}%</strong>
             </div>
-            <div style={{ padding: 10, background: '#020202', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6 }}>
+            <div style={{ padding: 10, background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 6 }}>
               <span style={{ fontSize: 9, color: '#888' }}>Ecosystem Trust</span>
-              <strong style={{ display: 'block', fontSize: 18, color: '#fff', marginTop: 4 }}>{activeForecast?.ecosystemTrust}%</strong>
+              <strong style={{ display: 'block', fontSize: 18, color: '#0A0F2E', marginTop: 4 }}>{activeForecast?.ecosystemTrust}%</strong>
             </div>
-            <div style={{ padding: 10, background: '#020202', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6 }}>
+            <div style={{ padding: 10, background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 6 }}>
               <span style={{ fontSize: 9, color: '#888' }}>AI Confidence Rate</span>
-              <strong style={{ display: 'block', fontSize: 18, color: '#fff', marginTop: 4 }}>{activeForecast?.aiConfidence}%</strong>
+              <strong style={{ display: 'block', fontSize: 18, color: '#0A0F2E', marginTop: 4 }}>{activeForecast?.aiConfidence}%</strong>
             </div>
           </div>
 
-          <div style={{ background: '#020202', padding: 12, borderRadius: 6, border: '1px solid rgba(255,255,255,0.04)', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ background: 'var(--cloud-bg)', padding: 12, borderRadius: 6, border: '1px solid #F8FAFC', display: 'flex', flexDirection: 'column' }}>
             <span style={{ fontSize: 9, color: '#888', textTransform: 'uppercase', marginBottom: 6, display: 'block' }}>REST API Payload Response</span>
-            <pre style={{ flex: 1, margin: 0, padding: 8, background: '#050505', color: '#10B981', fontSize: 9, fontFamily: 'monospace', overflowX: 'auto', borderRadius: 4 }}>
+            <pre style={{ flex: 1, margin: 0, padding: 8, background: 'var(--cloud-bg)', color: '#10B981', fontSize: 9, fontFamily: 'monospace', overflowX: 'auto', borderRadius: 4 }}>
 {JSON.stringify({
   status: 'success',
   timeframe: selectedForecastTimeframe,
@@ -283,7 +283,7 @@ export default function EcosystemPage() {
                     type="url"
                     value={targetUrl}
                     onChange={(e) => setTargetUrl(e.target.value)}
-                    style={{ width: '100%', padding: '8px 10px', background: '#040404', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: 11, borderRadius: 6, outline: 'none' }}
+                    style={{ width: '100%', padding: '8px 10px', background: 'var(--cloud-bg)', border: '1px solid #E2E8F0', color: '#0A0F2E', fontSize: 11, borderRadius: 6, outline: 'none' }}
                   />
                 </div>
 
@@ -296,14 +296,14 @@ export default function EcosystemPage() {
                         onClick={() => setSelectedWebhook(hook)}
                         style={{
                           padding: 10,
-                          background: selectedWebhook.id === hook.id ? 'rgba(245,197,24,0.06)' : 'rgba(255,255,255,0.01)',
-                          border: selectedWebhook.id === hook.id ? '1px solid #F5C518' : '1px solid rgba(255,255,255,0.04)',
+                          background: selectedWebhook.id === hook.id ? 'rgba(59,91,250,0.06)' : 'rgba(255,255,255,0.01)',
+                          border: selectedWebhook.id === hook.id ? '1px solid #3B5BFA' : '1px solid #F8FAFC',
                           borderRadius: 6,
                           cursor: 'pointer',
                           transition: 'all 0.2s'
                         }}
                       >
-                        <strong style={{ display: 'block', fontSize: 11, color: selectedWebhook.id === hook.id ? '#F5C518' : '#fff' }}>{hook.name}</strong>
+                        <strong style={{ display: 'block', fontSize: 11, color: selectedWebhook.id === hook.id ? '#3B5BFA' : '#0A0F2E' }}>{hook.name}</strong>
                         <span style={{ fontSize: 9, color: '#888' }}>{hook.description}</span>
                       </div>
                     ))}
@@ -321,9 +321,9 @@ export default function EcosystemPage() {
               </div>
 
               {/* Inspect Webhook Panel */}
-              <div style={{ background: '#020202', padding: 14, border: '1px solid rgba(255,255,255,0.04)', borderRadius: 6, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ background: 'var(--cloud-bg)', padding: 14, border: '1px solid #F8FAFC', borderRadius: 6, display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', marginBottom: 6, display: 'block' }}>Payload Schema Inspector</span>
-                <pre style={{ flex: 1, margin: 0, padding: 8, background: '#050505', color: '#F5C518', fontSize: 10, fontFamily: 'monospace', overflowX: 'auto', borderRadius: 4, minHeight: 200 }}>
+                <pre style={{ flex: 1, margin: 0, padding: 8, background: 'var(--cloud-bg)', color: '#3B5BFA', fontSize: 10, fontFamily: 'monospace', overflowX: 'auto', borderRadius: 4, minHeight: 200 }}>
                   {inspectPayload || selectedWebhook.payload}
                 </pre>
               </div>
@@ -332,8 +332,8 @@ export default function EcosystemPage() {
           </article>
 
           {/* PHASE 13 — MULTI-AGENT DEVELOPER REPLAY & DEBUGGER SANDBOX */}
-          <article className="card" style={{ padding: 18, border: '1px solid rgba(245,197,24,0.3)', background: 'rgba(0,0,0,0.3)' }}>
-            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700, color: '#F5C518' }}>🏛️ Multi-Agent Developer Replay & Debugger Sandbox</h3>
+          <article className="card" style={{ padding: 18, border: '1px solid rgba(59,91,250,0.3)', background: '#ffffff' }}>
+            <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700, color: '#3B5BFA' }}>🏛️ Multi-Agent Developer Replay & Debugger Sandbox</h3>
             <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
               Simulate inter-agent event dispatches, verify negotiation payloads, and debug multi-agent coalition matrices statefully.
             </p>
@@ -352,29 +352,29 @@ export default function EcosystemPage() {
                         onClick={() => setSelectedSandboxAgent(agent)}
                         style={{
                           padding: '6px 8px',
-                          background: selectedSandboxAgent.id === agent.id ? 'rgba(245,197,24,0.06)' : 'rgba(255,255,255,0.01)',
-                          border: selectedSandboxAgent.id === agent.id ? '1px solid #F5C518' : '1px solid rgba(255,255,255,0.03)',
+                          background: selectedSandboxAgent.id === agent.id ? 'rgba(59,91,250,0.06)' : 'rgba(255,255,255,0.01)',
+                          border: selectedSandboxAgent.id === agent.id ? '1px solid #3B5BFA' : '1px solid #ffffff',
                           borderRadius: 4,
                           cursor: 'pointer',
                           textAlign: 'center',
                           fontSize: 10
                         }}
                       >
-                        <span style={{ color: selectedSandboxAgent.id === agent.id ? '#F5C518' : '#fff', fontWeight: 'bold' }}>{agent.name.split(' ')[0]}</span>
+                        <span style={{ color: selectedSandboxAgent.id === agent.id ? '#3B5BFA' : '#0A0F2E', fontWeight: 'bold' }}>{agent.name.split(' ')[0]}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Diplomatic Event Dispatch Form */}
-                <div style={{ padding: 10, background: '#020202', borderRadius: 6, border: '1px solid rgba(255,255,255,0.03)' }}>
+                <div style={{ padding: 10, background: 'var(--cloud-bg)', borderRadius: 6, border: '1px solid #ffffff' }}>
                   <span style={{ display: 'block', fontSize: 10, color: '#888', marginBottom: 6 }}>Trigger Diplomatic Event Simulation</span>
                   
                   <div style={{ display: 'flex', gap: 6, marginBottom: 8 }}>
                     <select
                       value={simEventType}
                       onChange={(e: any) => setSimEventType(e.target.value)}
-                      style={{ flex: 1, padding: '4px 8px', background: '#050505', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: 10, borderRadius: 4, outline: 'none' }}
+                      style={{ flex: 1, padding: '4px 8px', background: 'var(--cloud-bg)', border: '1px solid #E2E8F0', color: '#0A0F2E', fontSize: 10, borderRadius: 4, outline: 'none' }}
                     >
                       <option value="kubryx_agent_negotiation">kubryx_agent_negotiation</option>
                       <option value="kubryx_agent_conflict">kubryx_agent_conflict</option>
@@ -393,12 +393,12 @@ export default function EcosystemPage() {
                     value={simEventDesc}
                     onChange={(e) => setSimEventDesc(e.target.value)}
                     placeholder="Describe custom sandbox trigger context..."
-                    style={{ width: '100%', padding: '4px 8px', background: '#050505', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: 10, borderRadius: 4, outline: 'none' }}
+                    style={{ width: '100%', padding: '4px 8px', background: 'var(--cloud-bg)', border: '1px solid #E2E8F0', color: '#0A0F2E', fontSize: 10, borderRadius: 4, outline: 'none' }}
                   />
                 </div>
 
                 {/* Coalition Debugger Log */}
-                <div style={{ padding: 10, background: '#020202', borderRadius: 6, border: '1px solid rgba(255,255,255,0.03)', fontSize: 11 }}>
+                <div style={{ padding: 10, background: 'var(--cloud-bg)', borderRadius: 6, border: '1px solid #ffffff', fontSize: 11 }}>
                   <span style={{ display: 'block', fontSize: 10, color: '#888', marginBottom: 6 }}>Coalition Debugger State Dump</span>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                     <span>Active Dispute Conflict:</span>
@@ -406,7 +406,7 @@ export default function EcosystemPage() {
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span>Coalition Consensus Index:</span>
-                    <strong style={{ color: '#F5C518' }}>{coalitionScore}% Score</strong>
+                    <strong style={{ color: '#3B5BFA' }}>{coalitionScore}% Score</strong>
                   </div>
                 </div>
 
@@ -424,7 +424,7 @@ export default function EcosystemPage() {
                       const matched = negotiations.find(n => n.id === e.target.value)
                       if (matched) setSelectedSandboxNeg(matched)
                     }}
-                    style={{ width: '100%', padding: '6px 10px', background: '#040404', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: 11, borderRadius: 6, outline: 'none', marginBottom: 8 }}
+                    style={{ width: '100%', padding: '6px 10px', background: 'var(--cloud-bg)', border: '1px solid #E2E8F0', color: '#0A0F2E', fontSize: 11, borderRadius: 6, outline: 'none', marginBottom: 8 }}
                   >
                     {negotiations.map((neg) => (
                       <option key={neg.id} value={neg.id}>{neg.topic.slice(0, 30)}...</option>
@@ -433,9 +433,9 @@ export default function EcosystemPage() {
                 </div>
 
                 {/* Negotiation Payload Inspector */}
-                <div style={{ flex: 1, background: '#020202', padding: 10, border: '1px solid rgba(255,255,255,0.04)', borderRadius: 6, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ flex: 1, background: 'var(--cloud-bg)', padding: 10, border: '1px solid #F8FAFC', borderRadius: 6, display: 'flex', flexDirection: 'column' }}>
                   <span style={{ fontSize: 9, color: '#888', textTransform: 'uppercase', marginBottom: 4, display: 'block' }}>Negotiation Payload Inspector</span>
-                  <pre style={{ flex: 1, margin: 0, padding: 6, background: '#050505', color: '#10B981', fontSize: 9, fontFamily: 'monospace', overflowX: 'auto', borderRadius: 4 }}>
+                  <pre style={{ flex: 1, margin: 0, padding: 6, background: 'var(--cloud-bg)', color: '#10B981', fontSize: 9, fontFamily: 'monospace', overflowX: 'auto', borderRadius: 4 }}>
 {JSON.stringify({
   negotiationId: selectedSandboxNeg.id,
   topic: selectedSandboxNeg.topic,
@@ -468,8 +468,8 @@ export default function EcosystemPage() {
                   <label style={{ display: 'block', fontSize: 11, color: '#888', marginBottom: 4 }}>Select Target Event Type</label>
                   <select
                     value={customEventType}
-                    onChange={(e) => setCustomEventType(e.target.value as KubryxEventType)}
-                    style={{ width: '100%', padding: '6px 10px', background: '#040404', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: 11, borderRadius: 6, outline: 'none' }}
+                    onChange={(e) => setCustomEventType(e.target.value as RWAkinsEventType)}
+                    style={{ width: '100%', padding: '6px 10px', background: 'var(--cloud-bg)', border: '1px solid #E2E8F0', color: '#0A0F2E', fontSize: 11, borderRadius: 6, outline: 'none' }}
                   >
                     <option value="kubryx_ecosystem_alert">kubryx_ecosystem_alert</option>
                     <option value="kubryx_region_outage">kubryx_region_outage</option>
@@ -489,20 +489,20 @@ export default function EcosystemPage() {
                     value={customEventDesc}
                     onChange={(e) => setCustomEventDesc(e.target.value)}
                     required
-                    style={{ width: '100%', padding: '6px 10px', background: '#040404', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: 11, borderRadius: 6, outline: 'none' }}
+                    style={{ width: '100%', padding: '6px 10px', background: 'var(--cloud-bg)', border: '1px solid #E2E8F0', color: '#0A0F2E', fontSize: 11, borderRadius: 6, outline: 'none' }}
                   />
                 </div>
 
                 <button type="submit" className="btn-outline" style={{ padding: 10, fontSize: 12, marginTop: 8 }}>⚡ Propagate Custom Event</button>
               </form>
 
-              <div style={{ background: '#020202', padding: 14, border: '1px solid rgba(255,255,255,0.04)', borderRadius: 6, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ background: 'var(--cloud-bg)', padding: 14, border: '1px solid #F8FAFC', borderRadius: 6, display: 'flex', flexDirection: 'column' }}>
                 <label style={{ display: 'block', fontSize: 11, color: '#888', marginBottom: 4 }}>Custom Payload (JSON)</label>
                 <textarea 
                   value={customPayload}
                   onChange={(e) => setCustomPayload(e.target.value)}
                   rows={6}
-                  style={{ flex: 1, padding: 8, background: '#050505', color: '#10B981', fontSize: 10, fontFamily: 'monospace', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 4, outline: 'none', resize: 'none' }}
+                  style={{ flex: 1, padding: 8, background: 'var(--cloud-bg)', color: '#10B981', fontSize: 10, fontFamily: 'monospace', border: '1px solid #E2E8F0', borderRadius: 4, outline: 'none', resize: 'none' }}
                 />
               </div>
 
@@ -528,7 +528,7 @@ export default function EcosystemPage() {
                   style={{
                     padding: '8px 12px',
                     background: 'rgba(255,255,255,0.01)',
-                    borderLeft: '2px solid #F5C518',
+                    borderLeft: '2px solid #3B5BFA',
                     borderRadius: '0 4px 4px 0',
                     fontSize: 11
                   }}
@@ -537,7 +537,7 @@ export default function EcosystemPage() {
                     <span>[{evt.type}]</span>
                     <span>{new Date(evt.timestamp).toLocaleTimeString()}</span>
                   </div>
-                  <span style={{ color: '#fff', fontSize: 11 }}>{evt.description}</span>
+                  <span style={{ color: '#0A0F2E', fontSize: 11 }}>{evt.description}</span>
                 </div>
               ))}
             </div>
@@ -557,7 +557,7 @@ export default function EcosystemPage() {
                   style={{
                     padding: 10,
                     background: 'rgba(255,255,255,0.01)',
-                    border: '1px solid rgba(255,255,255,0.03)',
+                    border: '1px solid #ffffff',
                     borderRadius: 6,
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -565,7 +565,7 @@ export default function EcosystemPage() {
                   }}
                 >
                   <div>
-                    <strong style={{ fontSize: 11, color: '#fff' }}>{snap.description}</strong>
+                    <strong style={{ fontSize: 11, color: '#0A0F2E' }}>{snap.description}</strong>
                     <span style={{ display: 'block', fontSize: 8, color: '#888', marginTop: 2 }}>
                       Consensus: {snap.consensusIndex}% • Votes: {snap.activeGovernanceVotes}
                     </span>
@@ -594,33 +594,33 @@ export default function EcosystemPage() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, fontSize: 11 }}>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(245,197,24,0.06)', border: '1px solid #F5C518', display: 'flex', alignItems: 'center', justifySelf: 'center', justifyContent: 'center', fontSize: 10, color: '#F5C518' }}>1</div>
+                <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#ffffff', border: '1px solid #3B5BFA', display: 'flex', alignItems: 'center', justifySelf: 'center', justifyContent: 'center', fontSize: 10, color: '#3B5BFA' }}>1</div>
                 <div>
-                  <strong style={{ color: '#fff' }}>Telemetry Ingestion Bus</strong>
+                  <strong style={{ color: '#0A0F2E' }}>Telemetry Ingestion Bus</strong>
                   <span style={{ display: 'block', fontSize: 9, color: '#888' }}>Monitors pings, latencies and packet overflows</span>
                 </div>
               </div>
 
               <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(245,197,24,0.06)', border: '1px solid #F5C518', display: 'flex', alignItems: 'center', justifySelf: 'center', justifyContent: 'center', fontSize: 10, color: '#F5C518' }}>2</div>
+                <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#ffffff', border: '1px solid #3B5BFA', display: 'flex', alignItems: 'center', justifySelf: 'center', justifyContent: 'center', fontSize: 10, color: '#3B5BFA' }}>2</div>
                 <div>
-                  <strong style={{ color: '#fff' }}>Cognitive Prioritizations</strong>
+                  <strong style={{ color: '#0A0F2E' }}>Cognitive Prioritizations</strong>
                   <span style={{ display: 'block', fontSize: 9, color: '#888' }}>Heuristic clusters analyze situational awareness indexes</span>
                 </div>
               </div>
 
               <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(245,197,24,0.06)', border: '1px solid #F5C518', display: 'flex', alignItems: 'center', justifySelf: 'center', justifyContent: 'center', fontSize: 10, color: '#F5C518' }}>3</div>
+                <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#ffffff', border: '1px solid #3B5BFA', display: 'flex', alignItems: 'center', justifySelf: 'center', justifyContent: 'center', fontSize: 10, color: '#3B5BFA' }}>3</div>
                 <div>
-                  <strong style={{ color: '#fff' }}>Consensus Policy Gating</strong>
+                  <strong style={{ color: '#0A0F2E' }}>Consensus Policy Gating</strong>
                   <span style={{ display: 'block', fontSize: 9, color: '#888' }}>Enforces maximum drifts, block thresholds and key locks</span>
                 </div>
               </div>
 
               <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(245,197,24,0.06)', border: '1px solid #F5C518', display: 'flex', alignItems: 'center', justifySelf: 'center', justifyContent: 'center', fontSize: 10, color: '#F5C518' }}>4</div>
+                <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#ffffff', border: '1px solid #3B5BFA', display: 'flex', alignItems: 'center', justifySelf: 'center', justifyContent: 'center', fontSize: 10, color: '#3B5BFA' }}>4</div>
                 <div>
-                  <strong style={{ color: '#fff' }}>Sovereign Edge execution</strong>
+                  <strong style={{ color: '#0A0F2E' }}>Sovereign Edge execution</strong>
                   <span style={{ display: 'block', fontSize: 9, color: '#888' }}>Reroutes regional loads automatically across 5 deployment zones</span>
                 </div>
               </div>

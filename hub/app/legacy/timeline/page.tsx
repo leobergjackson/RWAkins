@@ -79,13 +79,13 @@ function DecryptModal({
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 100,
-        background: 'rgba(15,23,42,0.5)',
+        background: '#ffffff',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: 24,
       }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div style={{ ...card, maxWidth: 440, width: '100%', background: '#ffffff', borderColor: 'rgba(245,197,24,0.2)' }}>
+      <div style={{ ...card, maxWidth: 440, width: '100%', background: '#ffffff', borderColor: 'rgba(59,91,250,0.2)' }}>
         <p style={{ fontFamily: SERIF, fontSize: 18, fontWeight: 700, margin: '0 0 6px' }}>
           🔓 Decrypt File
         </p>
@@ -158,7 +158,7 @@ function StoryModal({ file, onClose }: { file: VaultFile; onClose: () => void })
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 100,
-        background: 'rgba(15,23,42,0.5)',
+        background: '#ffffff',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: 24,
       }}
@@ -310,9 +310,9 @@ function FileCard({
           <button
             onClick={() => setShowDecrypt(true)}
             style={{
-              background: 'rgba(245,197,24,0.08)',
+              background: '#ffffff',
               color: '#3B5BFA',
-              border: '1px solid rgba(245,197,24,0.25)',
+              border: '1px solid rgba(59,91,250,0.25)',
               borderRadius: 7, padding: '6px 14px',
               fontSize: 11, fontWeight: 600, cursor: 'pointer',
             }}
@@ -393,8 +393,8 @@ export default function TimelinePage() {
           ...card,
           textAlign: 'center',
           padding: '48px 24px',
-          border: '1px solid rgba(245,197,24,0.15)',
-          background: 'rgba(245,197,24,0.03)',
+          border: '1px solid rgba(59,91,250,0.15)',
+          background: '#ffffff',
         }}>
           <p style={{ fontSize: 32, marginBottom: 12 }}>🛡</p>
           <p style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 700, margin: '0 0 10px' }}>
@@ -409,7 +409,7 @@ export default function TimelinePage() {
         <div style={{ textAlign: 'center', padding: '48px 0' }}>
           <span style={{
             display: 'inline-block', width: 28, height: 28,
-            border: '2px solid rgba(245,197,24,0.2)',
+            border: '2px solid rgba(59,91,250,0.2)',
             borderTop: '2px solid #3B5BFA',
             borderRadius: '50%', animation: 'spin 0.8s linear infinite',
           }} />

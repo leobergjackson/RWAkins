@@ -14,14 +14,14 @@ const TABS: { id: LendTabId; label: string }[] = [
 
 export default function LendoraTabBar({ active, onChange }: { active: LendTabId; onChange: (t: LendTabId) => void }) {
   return (
-    <nav style={{ display: 'flex', padding: '0 16px', background: '#0C0C0C', borderBottom: '1px solid rgba(255,255,255,0.08)', overflowX: 'auto' }}>
+    <nav style={{ display: 'flex', padding: '0 16px', background: '#ffffff', borderBottom: '1px solid #E2E8F0', overflowX: 'auto' }}>
       {TABS.map(t => {
         const isA = active === t.id
         return (
           <button key={t.id} onClick={() => onChange(t.id)} style={{
             padding: '14px 16px', background: 'transparent', border: 'none',
             borderBottom: `2px solid ${isA ? LENDORA_ACCENT : 'transparent'}`,
-            color: isA ? LENDORA_ACCENT : 'rgba(255,255,255,0.55)',
+            color: isA ? LENDORA_ACCENT : '#475569',
             fontSize: 13, fontWeight: isA ? 600 : 500, cursor: 'pointer',
             transition: 'color 0.15s, border-color 0.15s', whiteSpace: 'nowrap',
           }}>{t.label}</button>

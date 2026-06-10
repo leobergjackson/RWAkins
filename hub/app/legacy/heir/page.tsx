@@ -72,13 +72,13 @@ function HeirDecryptModal({ file, onClose }: { file: VaultFile; onClose: () => v
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 100,
-        background: 'rgba(15,23,42,0.5)',
+        background: '#ffffff',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: 24,
       }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div style={{ ...card, maxWidth: 440, width: '100%', background: '#ffffff', borderColor: 'rgba(245,197,24,0.2)' }}>
+      <div style={{ ...card, maxWidth: 440, width: '100%', background: '#ffffff', borderColor: 'rgba(59,91,250,0.2)' }}>
         <p style={{ fontFamily: SERIF, fontSize: 18, fontWeight: 700, margin: '0 0 6px' }}>🔓 Decrypt Inherited File</p>
         <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 18px' }}>
           {file.title || file.originalName || file.name}
@@ -188,7 +188,7 @@ export default function HeirPage() {
 
       {/* Wallet connect prompt */}
       {!wallet && installed && (
-        <div style={{ ...card, marginBottom: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, padding: '14px 18px', background: 'rgba(245,197,24,0.04)', border: '1px solid rgba(245,197,24,0.15)' }}>
+        <div style={{ ...card, marginBottom: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, padding: '14px 18px', background: '#ffffff', border: '1px solid rgba(59,91,250,0.15)' }}>
           <p style={{ fontSize: 13, color: '#64748B', margin: 0 }}>
             Connect your heir wallet to proceed
           </p>
@@ -266,8 +266,8 @@ export default function HeirPage() {
         <div style={{
           ...card,
           marginBottom: 20,
-          background: unlocked.allowed ? 'rgba(245,197,24,0.05)' : '#F8FAFC',
-          border: `1px solid ${unlocked.allowed ? 'rgba(245,197,24,0.2)' : '#E2E8F0'}`,
+          background: unlocked.allowed ? 'rgba(59,91,250,0.05)' : '#F8FAFC',
+          border: `1px solid ${unlocked.allowed ? 'rgba(59,91,250,0.2)' : '#E2E8F0'}`,
         }}>
           <p style={{ fontSize: 14, fontWeight: 700, color: unlocked.allowed ? '#3B5BFA' : '#64748B', margin: '0 0 8px' }}>
             {unlocked.allowed ? '🔓 Access Granted' : '🔒 Access Denied'}
@@ -299,8 +299,8 @@ export default function HeirPage() {
                   <button
                     onClick={() => setSelectedFile(f)}
                     style={{
-                      background: 'rgba(245,197,24,0.1)', color: '#3B5BFA',
-                      border: '1px solid rgba(245,197,24,0.25)',
+                      background: '#ffffff', color: '#3B5BFA',
+                      border: '1px solid rgba(59,91,250,0.25)',
                       borderRadius: 6, padding: '6px 14px',
                       fontSize: 11, fontWeight: 600, cursor: 'pointer',
                     }}
@@ -338,9 +338,9 @@ export default function HeirPage() {
             type="submit"
             disabled={registering}
             style={{
-              background: registering ? '#E2E8F0' : 'rgba(245,197,24,0.12)',
+              background: registering ? '#E2E8F0' : 'rgba(59,91,250,0.12)',
               color: registering ? '#64748B' : '#3B5BFA',
-              border: '1px solid rgba(245,197,24,0.3)',
+              border: '1px solid rgba(59,91,250,0.3)',
               borderRadius: 8, padding: '10px 22px',
               fontSize: 13, fontWeight: 600, cursor: registering ? 'not-allowed' : 'pointer',
             }}

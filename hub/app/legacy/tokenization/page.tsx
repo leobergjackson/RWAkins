@@ -132,7 +132,7 @@ export default function TokenizationPage() {
 
       {/* Wallet connect */}
       {!wallet && (
-        <div style={{ ...card, marginBottom: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, padding: '14px 18px', background: 'rgba(245,197,24,0.04)', border: '1px solid rgba(245,197,24,0.15)' }}>
+        <div style={{ ...card, marginBottom: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, padding: '14px 18px', background: '#ffffff', border: '1px solid rgba(59,91,250,0.15)' }}>
           <p style={{ fontSize: 13, color: '#64748B', margin: 0 }}>
             Connect wallet to load/save your token profile
           </p>
@@ -150,7 +150,7 @@ export default function TokenizationPage() {
           <div style={{ padding: '20px 0', display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{
               display: 'inline-block', width: 18, height: 18,
-              border: '2px solid rgba(245,197,24,0.2)',
+              border: '2px solid rgba(59,91,250,0.2)',
               borderTop: '2px solid #3B5BFA',
               borderRadius: '50%', animation: 'spin 0.8s linear infinite',
             }} />
@@ -246,8 +246,8 @@ export default function TokenizationPage() {
 
       {/* Disclaimer */}
       <div style={{
-        background: 'rgba(245,197,24,0.03)',
-        border: '1px solid rgba(245,197,24,0.10)',
+        background: '#ffffff',
+        border: '1px solid rgba(59,91,250,0.10)',
         borderRadius: 10,
         padding: '14px 16px',
         marginTop: 20,

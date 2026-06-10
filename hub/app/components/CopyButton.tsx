@@ -19,7 +19,7 @@ export default function CopyButton({ text, className }: { text: string; classNam
       onClick={copy}
       title="Copy to clipboard"
       className={className}
-      style={{ background: 'none', border: 'none', cursor: 'pointer', opacity: copied ? 1 : 0.5, padding: '0 4px', fontSize: 13, color: copied ? '#F5C518' : 'inherit' }}
+      style={{ background: 'none', border: 'none', cursor: 'pointer', opacity: copied ? 1 : 0.5, padding: '0 4px', fontSize: 13, color: copied ? '#3B5BFA' : 'inherit' }}
     >
       {copied ? '✓' : '⧉'}
     </button>

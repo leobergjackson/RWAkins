@@ -78,12 +78,12 @@ export default function ExecutiveWalkthrough() {
           style={{
             padding: '8px 16px',
             fontSize: 12,
-            background: 'linear-gradient(135deg, #F5C518, #E2B20F)',
-            color: '#000',
+            background: 'linear-gradient(135deg, #3B5BFA, #2563EB)',
+            color: '#0A0F2E',
             fontWeight: 700,
             border: 'none',
             borderRadius: 20,
-            boxShadow: '0 4px 15px rgba(245, 197, 24, 0.4)',
+            boxShadow: '0 4px 15px rgba(59, 91, 250, 0.4)',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
@@ -106,9 +106,9 @@ export default function ExecutiveWalkthrough() {
         left: 0,
         width: '100%',
         zIndex: 99997,
-        background: '#070707',
-        borderBottom: '2px solid #F5C518',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.9), 0 0 10px rgba(245,197,24,0.1)',
+        background: 'var(--cloud-bg)',
+        borderBottom: '2px solid #3B5BFA',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.9), 0 0 10px rgba(59,91,250,0.1)',
         padding: '14px 20px',
         display: 'flex',
         alignItems: 'center',
@@ -122,8 +122,8 @@ export default function ExecutiveWalkthrough() {
         <span 
           style={{ 
             fontSize: 11, 
-            background: '#F5C518', 
-            color: '#000', 
+            background: '#3B5BFA', 
+            color: '#0A0F2E', 
             padding: '4px 10px', 
             borderRadius: 4, 
             fontWeight: 800, 
@@ -134,7 +134,7 @@ export default function ExecutiveWalkthrough() {
           Executive Demo ({demoStep + 1}/{SHOWCASE_FLOW.length})
         </span>
         <div>
-          <h4 style={{ margin: 0, fontSize: 14, color: '#fff', fontWeight: 700 }}>
+          <h4 style={{ margin: 0, fontSize: 14, color: '#0A0F2E', fontWeight: 700 }}>
             {step.title}
           </h4>
           <p style={{ margin: '2px 0 0', fontSize: 12, color: '#ccc', lineHeight: 1.3 }}>
@@ -154,9 +154,9 @@ export default function ExecutiveWalkthrough() {
           style={{
             padding: '6px 12px',
             fontSize: 11,
-            borderColor: autoAdvance ? '#F5C518' : 'rgba(255,255,255,0.15)',
-            color: autoAdvance ? '#F5C518' : '#aaa',
-            background: autoAdvance ? 'rgba(245,197,24,0.05)' : '#000'
+            borderColor: autoAdvance ? '#3B5BFA' : '#CBD5E1',
+            color: autoAdvance ? '#3B5BFA' : '#aaa',
+            background: autoAdvance ? 'rgba(59,91,250,0.05)' : '#ffffff'
           }}
         >
           {autoAdvance ? '⏱ Auto: ON (10s)' : '⏱ Auto-Advance'}
@@ -178,8 +178,8 @@ export default function ExecutiveWalkthrough() {
             style={{ 
               padding: '6px 14px', 
               fontSize: 11, 
-              background: '#F5C518', 
-              color: '#000',
+              background: '#3B5BFA', 
+              color: '#0A0F2E',
               fontWeight: 600,
               border: 'none',
               borderRadius: 4

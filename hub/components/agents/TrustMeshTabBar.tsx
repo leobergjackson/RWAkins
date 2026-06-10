@@ -13,8 +13,8 @@ const TABS: { id: AgentsTabId; label: string; icon: string }[] = [
   { id: 'analytics', label: 'Analytics',     icon: '◴' },
 ]
 
-const BORDER = 'rgba(255,255,255,0.08)'
-const MUTED  = 'rgba(255,255,255,0.55)'
+const BORDER = '#E2E8F0'
+const MUTED  = '#475569'
 
 export default function TrustMeshTabBar({
   active,
@@ -30,7 +30,7 @@ export default function TrustMeshTabBar({
         display: 'flex',
         gap: 0,
         padding: '0 16px',
-        background: '#0C0C0C',
+        background: '#ffffff',
         borderBottom: `1px solid ${BORDER}`,
         overflowX: 'auto',
       }}

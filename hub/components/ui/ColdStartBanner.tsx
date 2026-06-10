@@ -37,23 +37,23 @@ export function ColdStartBanner({ onRetry, serviceName = 'Backend', retryInterva
       border: '1px solid rgba(234,179,8,0.25)',
       borderRadius: 10,
       fontSize: 12,
-      color: 'rgba(255,255,255,0.75)',
+      color: '#334155',
       fontWeight: 500,
     }}>
       {/* Spinner */}
       <span style={{
         width: 14, height: 14, borderRadius: '50%',
         border: '2px solid rgba(234,179,8,0.25)',
-        borderTopColor: '#EAB308',
+        borderTopColor: '#3B5BFA',
         display: 'inline-block',
         animation: 'spin 0.9s linear infinite',
         flexShrink: 0,
       }} />
       <span>
-        <span style={{ color: '#EAB308', fontWeight: 700 }}>{serviceName}</span>
+        <span style={{ color: '#3B5BFA', fontWeight: 700 }}>{serviceName}</span>
         {' '}waking up (Render free tier, ~30s)
-        {' · '}Auto-retry in <span style={{ color: '#EAB308', fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{countdown}s</span>
-        {attempt > 1 && <span style={{ color: 'rgba(255,255,255,0.4)', marginLeft: 6 }}>· attempt {attempt}</span>}
+        {' · '}Auto-retry in <span style={{ color: '#3B5BFA', fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}>{countdown}s</span>
+        {attempt > 1 && <span style={{ color: '#64748B', marginLeft: 6 }}>· attempt {attempt}</span>}
       </span>
       <button
         onClick={() => { onRetry(); setCountdown(retryInterval); setAttempt(a => a + 1) }}
@@ -62,7 +62,7 @@ export function ColdStartBanner({ onRetry, serviceName = 'Backend', retryInterva
           background: 'rgba(234,179,8,0.15)',
           border: '1px solid rgba(234,179,8,0.35)',
           borderRadius: 6, padding: '4px 10px',
-          fontSize: 11, fontWeight: 700, color: '#EAB308',
+          fontSize: 11, fontWeight: 700, color: '#3B5BFA',
           cursor: 'pointer',
         }}
       >

@@ -4,9 +4,9 @@
 import { CIPHERVAULT_ACCENT } from '@/lib/vault-fallbacks'
 
 const ACCENT = CIPHERVAULT_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.35)'
+const BORDER = '#E2E8F0'
+const MUTED  = '#475569'
+const MUTED2 = '#94A3B8'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
 function short(addr: string) { return `${addr.slice(0, 6)}…${addr.slice(-4)}` }
@@ -26,12 +26,12 @@ export default function CipherVaultHero({
 }) {
   return (
     <div style={{
-      background: '#0C0C0C',
+      background: '#ffffff',
       borderBottom: `1px solid ${BORDER}`,
       padding: '24px 28px',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: MUTED2, fontFamily: MONO, marginBottom: 14 }}>
-        <span>Kubryx</span>
+        <span>RWAkins</span>
         <span>›</span>
         <span style={{ color: ACCENT }}>Private vault</span>
       </div>
@@ -46,7 +46,7 @@ export default function CipherVaultHero({
               fontSize: 20, color: ACCENT, fontWeight: 800,
             }}>◈</div>
             <div>
-              <div style={{ fontSize: 24, fontWeight: 700, color: '#fff', fontFamily: 'Georgia, "Playfair Display", serif', letterSpacing: '-0.01em', lineHeight: 1 }}>
+              <div style={{ fontSize: 24, fontWeight: 700, color: '#0A0F2E', fontFamily: 'Georgia, "Playfair Display", serif', letterSpacing: '-0.01em', lineHeight: 1 }}>
                 Private vault
               </div>
               <div style={{ fontSize: 12, color: MUTED2, marginTop: 4 }}>
@@ -78,7 +78,7 @@ export default function CipherVaultHero({
               cursor: 'pointer', transition: 'all 0.15s',
               fontFamily: walletAddress ? MONO : 'inherit',
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#F8FAFC' }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
           >
             {walletAddress ? short(walletAddress) : 'Connect Wallet'}
@@ -87,7 +87,7 @@ export default function CipherVaultHero({
             onClick={onDeposit}
             style={{
               padding: '10px 16px', borderRadius: 8,
-              background: ACCENT, color: '#fff',
+              background: ACCENT, color: '#0A0F2E',
               fontSize: 13, fontWeight: 600,
               border: 'none', cursor: 'pointer',
               display: 'inline-flex', alignItems: 'center', gap: 6,

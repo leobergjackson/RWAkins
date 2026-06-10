@@ -190,7 +190,7 @@ export default function ComparePage() {
         </div>
 
         {/* Unique differentiators */}
-        <div style={{ marginTop: 24, padding: '22px', borderRadius: 16, background: 'rgba(45,212,191,0.05)', border: '1px solid rgba(45,212,191,0.15)' }}>
+        <div style={{ marginTop: 24, padding: '22px', borderRadius: 16, background: '#ffffff', border: '1px solid rgba(59,91,250,0.15)' }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: '#0A0F2E', marginBottom: 12 }}>
             RWAkins Unique Differentiators
           </div>

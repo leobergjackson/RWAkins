@@ -16,10 +16,10 @@ import {
 import { TRUSTMESH_ACCENT } from '@/lib/agents-fallbacks'
 
 const ACCENT = TRUSTMESH_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const CARD   = '#111111'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.4)'
+const BORDER = '#E2E8F0'
+const CARD   = '#ffffff'
+const MUTED  = '#475569'
+const MUTED2 = '#64748B'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 const PAGE_SIZE = 10
 
@@ -119,9 +119,9 @@ export default function NodeRegistry() {
           placeholder="Search agents by name, ID, SNS…"
           style={{
             padding: '10px 14px', borderRadius: 8,
-            background: 'rgba(255,255,255,0.04)',
+            background: '#F8FAFC',
             border: `1px solid ${BORDER}`,
-            color: '#fff', fontSize: 13, outline: 'none',
+            color: '#0A0F2E', fontSize: 13, outline: 'none',
           }}
         />
         <select
@@ -186,7 +186,7 @@ export default function NodeRegistry() {
                       transition: 'background 0.15s',
                       background: selected?.id === n.id ? 'rgba(99,102,241,0.08)' : 'transparent',
                     }}
-                    onMouseEnter={e => { if (selected?.id !== n.id) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)' }}
+                    onMouseEnter={e => { if (selected?.id !== n.id) (e.currentTarget as HTMLElement).style.background = '#ffffff' }}
                     onMouseLeave={e => { if (selected?.id !== n.id) (e.currentTarget as HTMLElement).style.background = 'transparent' }}
                   >
                     <td style={tdStyle}><span style={{ fontFamily: MONO, color: ACCENT }}>{n.id}</span></td>
@@ -280,7 +280,7 @@ function DetailPanel({
       <aside style={{
         position: 'fixed', top: 0, right: 0, bottom: 0,
         width: 360, maxWidth: '90vw',
-        background: '#0C0C0C',
+        background: '#ffffff',
         borderLeft: `1px solid ${BORDER}`,
         zIndex: 61,
         padding: 24,
@@ -304,7 +304,7 @@ function DetailPanel({
             display: 'grid', placeItems: 'center',
           }}>{node.name[0].toUpperCase()}</div>
           <div>
-            <div style={{ fontSize: 17, fontWeight: 700, color: '#fff' }}>{node.name}</div>
+            <div style={{ fontSize: 17, fontWeight: 700, color: '#0A0F2E' }}>{node.name}</div>
             <div style={{ fontSize: 11, color: STATUS_COLOR[node.status], display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: STATUS_COLOR[node.status] }} />
               {node.status} · Mantle Sepolia
@@ -326,10 +326,10 @@ function DetailPanel({
             onClick={() => onCopy(node.wallet, copyKey)}
             style={{
               width: '100%', textAlign: 'left',
-              background: 'rgba(255,255,255,0.04)',
+              background: '#F8FAFC',
               border: `1px solid ${BORDER}`,
               borderRadius: 8, padding: '10px 12px',
-              fontFamily: MONO, fontSize: 12, color: '#fff',
+              fontFamily: MONO, fontSize: 12, color: '#0A0F2E',
               cursor: 'pointer',
               wordBreak: 'break-all',
             }}
@@ -351,11 +351,11 @@ function DetailPanel({
               style={{
                 display: 'block', textDecoration: 'none',
                 padding: '8px 10px', borderRadius: 6,
-                background: 'rgba(255,255,255,0.03)', marginBottom: 6,
+                background: '#ffffff', marginBottom: 6,
               }}
             >
               <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT }}>{j.id}</div>
-              <div style={{ fontSize: 12, color: '#fff', marginTop: 2 }}>{j.owner}</div>
+              <div style={{ fontSize: 12, color: '#0A0F2E', marginTop: 2 }}>{j.owner}</div>
               <div style={{ fontSize: 11, color: MUTED, marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {j.description}
               </div>
@@ -370,7 +370,7 @@ function DetailPanel({
             style={{
               padding: '10px 14px', borderRadius: 8,
               border: `1px solid ${BORDER}`,
-              color: '#fff', textDecoration: 'none',
+              color: '#0A0F2E', textDecoration: 'none',
               fontSize: 12, textAlign: 'center',
             }}
           >
@@ -380,7 +380,7 @@ function DetailPanel({
             href={`/agents/jobs/${node.jobId}`}
             style={{
               padding: '10px 14px', borderRadius: 8,
-              background: ACCENT, color: '#fff', textDecoration: 'none',
+              background: ACCENT, color: '#0A0F2E', textDecoration: 'none',
               fontSize: 12, fontWeight: 600, textAlign: 'center',
             }}
           >
@@ -401,7 +401,7 @@ function DetailRow({ label, value, mono }: { label: string; value: string; mono?
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: `1px solid ${BORDER}` }}>
       <span style={{ fontSize: 11, color: MUTED2, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{label}</span>
-      <span style={{ fontSize: 12, color: '#fff', fontFamily: mono ? MONO : 'inherit', textAlign: 'right', maxWidth: '60%', overflow: 'hidden', textOverflow: 'ellipsis' }}>{value}</span>
+      <span style={{ fontSize: 12, color: '#0A0F2E', fontFamily: mono ? MONO : 'inherit', textAlign: 'right', maxWidth: '60%', overflow: 'hidden', textOverflow: 'ellipsis' }}>{value}</span>
     </div>
   )
 }
@@ -412,24 +412,24 @@ const thStyle: React.CSSProperties = {
   borderBottom: `1px solid ${BORDER}`,
   fontSize: 10, fontWeight: 700, letterSpacing: '0.14em',
   textTransform: 'uppercase', color: MUTED2,
-  background: 'rgba(255,255,255,0.02)',
+  background: '#F8FAFC',
 }
 const tdStyle: React.CSSProperties = {
   padding: '12px 16px',
-  color: '#fff',
+  color: '#0A0F2E',
 }
 const selectStyle: React.CSSProperties = {
   padding: '10px 14px', borderRadius: 8,
-  background: 'rgba(255,255,255,0.04)',
+  background: '#F8FAFC',
   border: `1px solid ${BORDER}`,
-  color: '#fff', fontSize: 13, outline: 'none',
+  color: '#0A0F2E', fontSize: 13, outline: 'none',
   textTransform: 'capitalize',
 }
 function pageBtn(disabled: boolean): React.CSSProperties {
   return {
     padding: '4px 12px', borderRadius: 6,
     background: 'transparent', border: `1px solid ${BORDER}`,
-    color: disabled ? MUTED2 : '#fff', fontSize: 12,
+    color: disabled ? MUTED2 : '#0A0F2E', fontSize: 12,
     cursor: disabled ? 'not-allowed' : 'pointer',
     opacity: disabled ? 0.5 : 1,
   }

@@ -8,10 +8,10 @@ import { getCreditTier, TIER_BORROW_RATES } from '@/lib/platform/scoring'
 import { PlatformModeBadge } from '@/components/ui/PlatformModeBadge'
 
 const A = LENDORA_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const CARD = '#111111'
-const MUTED = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.4)'
+const BORDER = '#E2E8F0'
+const CARD = '#ffffff'
+const MUTED = '#475569'
+const MUTED2 = '#64748B'
 const MONO = '"Fira Code","JetBrains Mono",monospace'
 
 const healthColor = (h: number) => h >= 2 ? '#10b981' : h >= 1.2 ? '#f59e0b' : '#ef4444'
@@ -31,10 +31,10 @@ export default function LendDashboard({ onGoToBorrow, onGoToLoans }: { onGoToBor
     <div style={{ padding: 28, display: 'flex', flexDirection: 'column', gap: 24 }}>
 
       {/* Credit Passport integration banner */}
-      <div style={{ background: `linear-gradient(135deg, ${tier.bg}, rgba(0,229,204,0.03))`, border: `1px solid ${tier.border}`, borderRadius: 10, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+      <div style={{ background: `linear-gradient(135deg, ${tier.bg}, rgba(59,91,250,0.03))`, border: `1px solid ${tier.border}`, borderRadius: 10, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
         <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: tier.color, fontFamily: MONO }}>{tier.name.toUpperCase()} TIER</span>
-        <span style={{ fontSize: 12, fontWeight: 700, color: '#fff', fontFamily: MONO }}>{liveScore !== null ? `${liveScore}/1000` : '—'}</span>
-        <div style={{ width: 1, height: 16, background: 'rgba(255,255,255,0.1)' }} />
+        <span style={{ fontSize: 12, fontWeight: 700, color: '#0A0F2E', fontFamily: MONO }}>{liveScore !== null ? `${liveScore}/1000` : '—'}</span>
+        <div style={{ width: 1, height: 16, background: '#E2E8F0' }} />
         <span style={{ fontSize: 11, color: MUTED, flex: 1 }}>Borrow rate: <span style={{ color: tier.color, fontWeight: 700 }}>{liveRate}</span> · Vault LTV: <span style={{ color: tier.color, fontWeight: 700 }}>{tier.vaultLTV}%</span></span>
         {liveScore === null && <span style={{ fontSize: 10, color: MUTED2 }}>Connect Credit Passport to see your rate</span>}
         <PlatformModeBadge />
@@ -44,7 +44,7 @@ export default function LendDashboard({ onGoToBorrow, onGoToLoans }: { onGoToBor
         {FALLBACK_LEND_STATS.map(s => (
           <div key={s.label} style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 12, padding: '18px 20px' }}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>{s.label}</div>
-            <div style={{ fontSize: 28, fontWeight: 700, color: '#fff', marginTop: 8, letterSpacing: '-0.02em', lineHeight: 1 }}>{s.value}</div>
+            <div style={{ fontSize: 28, fontWeight: 700, color: '#0A0F2E', marginTop: 8, letterSpacing: '-0.02em', lineHeight: 1 }}>{s.value}</div>
             <div style={{ fontSize: 11, fontWeight: 600, color: s.kind === 'up' ? '#10b981' : '#ef4444', marginTop: 8 }}>
               {s.kind === 'up' ? '↑ ' : '↓ '}{s.change}
             </div>
@@ -56,7 +56,7 @@ export default function LendDashboard({ onGoToBorrow, onGoToLoans }: { onGoToBor
         <div style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 12, padding: 20 }}>
           <div style={{ marginBottom: 12 }}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>Rate History</div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>30 days · supply vs borrow</div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>30 days · supply vs borrow</div>
           </div>
           {mounted && (
             <ResponsiveContainer width="100%" height={240}>
@@ -65,10 +65,10 @@ export default function LendDashboard({ onGoToBorrow, onGoToLoans }: { onGoToBor
                   <linearGradient id="sup" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={A} stopOpacity={0.3} /><stop offset="95%" stopColor={A} stopOpacity={0} /></linearGradient>
                   <linearGradient id="bor" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#ef4444" stopOpacity={0.2} /><stop offset="95%" stopColor="#ef4444" stopOpacity={0} /></linearGradient>
                 </defs>
-                <CartesianGrid stroke="rgba(255,255,255,0.05)" vertical={false} />
+                <CartesianGrid stroke="#F8FAFC" vertical={false} />
                 <XAxis dataKey="date" tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} interval={4} />
                 <YAxis tick={{ fill: MUTED2, fontSize: 10 }} axisLine={false} tickLine={false} unit="%" />
-                <Tooltip contentStyle={{ background: '#080808', border: `1px solid ${BORDER}`, borderRadius: 8, fontSize: 12 }} />
+                <Tooltip contentStyle={{ background: '#ffffff', border: `1px solid ${BORDER}`, borderRadius: 8, fontSize: 12 }} />
                 <Area type="monotone" dataKey="supplyAPY" name="Supply APY" stroke={A} fill="url(#sup)" strokeWidth={2} />
                 <Area type="monotone" dataKey="borrowAPR" name="Borrow APR" stroke="#ef4444" fill="url(#bor)" strokeWidth={2} />
               </AreaChart>
@@ -96,7 +96,7 @@ export default function LendDashboard({ onGoToBorrow, onGoToLoans }: { onGoToBor
         {FALLBACK_AI_ACTIVITY.map((a, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 0', borderBottom: i < FALLBACK_AI_ACTIVITY.length - 1 ? `1px solid ${BORDER}` : 'none' }}>
             <span style={{ color: '#10b981' }}>✓</span>
-            <span style={{ flex: 1, fontSize: 13, color: '#fff' }}>{a.detail}</span>
+            <span style={{ flex: 1, fontSize: 13, color: '#0A0F2E' }}>{a.detail}</span>
             <span style={{ fontSize: 11, color: MUTED2, fontFamily: MONO }}>{a.time}</span>
           </div>
         ))}
@@ -109,7 +109,7 @@ function Row({ label, value, color }: { label: string; value: string; color?: st
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0' }}>
       <span style={{ fontSize: 12, color: MUTED }}>{label}</span>
-      <span style={{ fontSize: 13, color: color || '#fff', fontWeight: 700, fontFamily: MONO }}>{value}</span>
+      <span style={{ fontSize: 13, color: color || '#0A0F2E', fontWeight: 700, fontFamily: MONO }}>{value}</span>
     </div>
   )
 }

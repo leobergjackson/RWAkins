@@ -71,7 +71,7 @@ export default function CoordinationPage() {
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
       
       {/* Header Panel */}
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Dashboard</Link>
@@ -90,9 +90,9 @@ export default function CoordinationPage() {
             style={{
               padding: '8px 16px',
               fontSize: 12,
-              borderColor: replayActive ? '#F5C518' : 'rgba(255,255,255,0.15)',
-              color: replayActive ? '#F5C518' : '#aaa',
-              background: replayActive ? 'rgba(245,197,24,0.05)' : '#000'
+              borderColor: replayActive ? '#3B5BFA' : '#CBD5E1',
+              color: replayActive ? '#3B5BFA' : '#aaa',
+              background: replayActive ? 'rgba(59,91,250,0.05)' : '#ffffff'
             }}
           >
             {replayActive ? '⏸ Stop Replay' : '▶ Coordination Replay Mode'}
@@ -153,22 +153,22 @@ export default function CoordinationPage() {
                   Interactive dependency graph mapping agent propagation paths across mainnet nodes.
                 </p>
               </div>
-              <span style={{ fontSize: 10, color: '#888' }}>Replay Step: <strong style={{ color: '#F5C518' }}>{replayTick + 1}/6</strong></span>
+              <span style={{ fontSize: 10, color: '#888' }}>Replay Step: <strong style={{ color: '#3B5BFA' }}>{replayTick + 1}/6</strong></span>
             </div>
 
-            <div style={{ position: 'relative', height: 280, background: '#030303', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 8, overflow: 'hidden' }}>
+            <div style={{ position: 'relative', height: 280, background: 'var(--cloud-bg)', border: '1px solid #ffffff', borderRadius: 8, overflow: 'hidden' }}>
               <svg viewBox="0 0 500 280" style={{ width: '100%', height: '100%' }}>
                 
                 {/* Connection paths */}
-                <line x1="80" y1="140" x2="250" y2="60" stroke={replayTick === 1 ? '#F5C518' : 'rgba(255,255,255,0.05)'} strokeWidth={replayTick === 1 ? 3 : 1} />
-                <line x1="80" y1="140" x2="250" y2="220" stroke={replayTick === 2 ? '#F5C518' : 'rgba(255,255,255,0.05)'} strokeWidth={replayTick === 2 ? 3 : 1} />
-                <line x1="250" y1="60" x2="420" y2="140" stroke={replayTick === 3 ? '#F5C518' : 'rgba(255,255,255,0.05)'} strokeWidth={replayTick === 3 ? 3 : 1} />
-                <line x1="250" y1="220" x2="420" y2="140" stroke={replayTick === 4 ? '#F5C518' : 'rgba(255,255,255,0.05)'} strokeWidth={replayTick === 4 ? 3 : 1} />
-                <line x1="80" y1="140" x2="420" y2="140" stroke={replayTick === 5 ? '#F5C518' : 'rgba(255,255,255,0.05)'} strokeWidth={replayTick === 5 ? 3 : 1} />
+                <line x1="80" y1="140" x2="250" y2="60" stroke={replayTick === 1 ? '#3B5BFA' : '#F8FAFC'} strokeWidth={replayTick === 1 ? 3 : 1} />
+                <line x1="80" y1="140" x2="250" y2="220" stroke={replayTick === 2 ? '#3B5BFA' : '#F8FAFC'} strokeWidth={replayTick === 2 ? 3 : 1} />
+                <line x1="250" y1="60" x2="420" y2="140" stroke={replayTick === 3 ? '#3B5BFA' : '#F8FAFC'} strokeWidth={replayTick === 3 ? 3 : 1} />
+                <line x1="250" y1="220" x2="420" y2="140" stroke={replayTick === 4 ? '#3B5BFA' : '#F8FAFC'} strokeWidth={replayTick === 4 ? 3 : 1} />
+                <line x1="80" y1="140" x2="420" y2="140" stroke={replayTick === 5 ? '#3B5BFA' : '#F8FAFC'} strokeWidth={replayTick === 5 ? 3 : 1} />
 
                 {/* Animated propagation signal packets */}
                 {replayActive && (
-                  <circle r="4" fill="#F5C518">
+                  <circle r="4" fill="#3B5BFA">
                     <animateMotion
                       dur="5s"
                       repeatCount="indefinite"
@@ -195,15 +195,15 @@ export default function CoordinationPage() {
                         cx={node.x}
                         cy={node.y}
                         r={isHovered ? 16 : 12}
-                        fill="#0a0a0a"
-                        stroke={isHovered ? '#F5C518' : node.color}
+                        fill="#3B5BFA"
+                        stroke={isHovered ? '#3B5BFA' : node.color}
                         strokeWidth="2"
                         style={{ transition: 'all 0.2s ease' }}
                       />
                       <text
                         x={node.x}
                         y={node.y + 26}
-                        fill="#fff"
+                        fill="#0A0F2E"
                         fontSize="10"
                         fontWeight="bold"
                         textAnchor="middle"
@@ -222,8 +222,8 @@ export default function CoordinationPage() {
                     position: 'absolute',
                     top: 10,
                     right: 10,
-                    background: 'rgba(7,7,7,0.95)',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: '#ffffff',
+                    border: '1px solid #E2E8F0',
                     borderRadius: 6,
                     padding: 10,
                     width: 180,
@@ -231,7 +231,7 @@ export default function CoordinationPage() {
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                    <strong style={{ color: '#F5C518' }}>
+                    <strong style={{ color: '#3B5BFA' }}>
                       {selectedNode === 'node-qie' ? 'Mantle Network' : selectedNode === 'node-sol' ? 'Mantle Sepolia' : selectedNode === 'node-stellar' ? 'Mantle Sepolia' : 'Mantle Network'}
                     </strong>
                     <button onClick={() => setSelectedNode(null)} style={{ background: 'none', border: 'none', color: '#EF4444', fontSize: 10, cursor: 'pointer' }}>Close</button>
@@ -257,12 +257,12 @@ export default function CoordinationPage() {
                   style={{
                     padding: 12,
                     background: 'rgba(255,255,255,0.01)',
-                    border: '1px solid rgba(255,255,255,0.03)',
+                    border: '1px solid #ffffff',
                     borderRadius: 6
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                    <strong style={{ fontSize: 12, color: '#fff' }}>{out.chainName}</strong>
+                    <strong style={{ fontSize: 12, color: '#0A0F2E' }}>{out.chainName}</strong>
                     <span 
                       style={{ 
                         fontSize: 8, 
@@ -312,18 +312,18 @@ export default function CoordinationPage() {
                     justifyContent: 'space-between',
                     padding: '8px 12px',
                     background: 'rgba(255,255,255,0.01)',
-                    border: '1px solid rgba(255,255,255,0.03)',
+                    border: '1px solid #ffffff',
                     borderRadius: 6,
                     fontSize: 11
                   }}
                 >
                   <div>
-                    <strong style={{ color: '#fff' }}>{ag.name}</strong>
+                    <strong style={{ color: '#0A0F2E' }}>{ag.name}</strong>
                     <span style={{ display: 'block', fontSize: 9, color: '#888' }}>{ag.role}</span>
                   </div>
 
                   <div style={{ textAlign: 'right' }}>
-                    <span style={{ display: 'block', fontWeight: 'bold', color: ag.workload > 80 ? '#EF4444' : '#F5C518' }}>
+                    <span style={{ display: 'block', fontWeight: 'bold', color: ag.workload > 80 ? '#EF4444' : '#3B5BFA' }}>
                       Load: {ag.workload}%
                     </span>
                     <span style={{ fontSize: 9, color: '#888' }}>Trust: {ag.trustScore}%</span>
@@ -349,9 +349,9 @@ export default function CoordinationPage() {
                 style={{
                   padding: '8px 12px',
                   borderRadius: 6,
-                  background: '#040404',
-                  border: '1px solid rgba(255,255,255,0.15)',
-                  color: '#fff',
+                  background: 'var(--cloud-bg)',
+                  border: '1px solid #CBD5E1',
+                  color: '#0A0F2E',
                   fontSize: 11,
                   outline: 'none'
                 }}
@@ -364,9 +364,9 @@ export default function CoordinationPage() {
                   style={{
                     padding: '8px 8px',
                     borderRadius: 6,
-                    background: '#040404',
-                    border: '1px solid rgba(255,255,255,0.15)',
-                    color: '#fff',
+                    background: 'var(--cloud-bg)',
+                    border: '1px solid #CBD5E1',
+                    color: '#0A0F2E',
                     fontSize: 11,
                     outline: 'none'
                   }}
@@ -383,9 +383,9 @@ export default function CoordinationPage() {
                   style={{
                     padding: '8px 8px',
                     borderRadius: 6,
-                    background: '#040404',
-                    border: '1px solid rgba(255,255,255,0.15)',
-                    color: '#fff',
+                    background: 'var(--cloud-bg)',
+                    border: '1px solid #CBD5E1',
+                    color: '#0A0F2E',
                     fontSize: 11,
                     outline: 'none'
                   }}
@@ -426,14 +426,14 @@ export default function CoordinationPage() {
                 display: 'flex',
                 gap: 16,
                 padding: '6px 10px',
-                borderBottom: '1px solid rgba(255,255,255,0.03)',
-                color: idx === replayTick ? '#F5C518' : '#888',
-                background: idx === replayTick ? 'rgba(245,197,24,0.02)' : 'transparent',
+                borderBottom: '1px solid #ffffff',
+                color: idx === replayTick ? '#3B5BFA' : '#888',
+                background: idx === replayTick ? 'rgba(59,91,250,0.02)' : 'transparent',
                 borderRadius: 4,
                 transition: 'all 0.3s ease'
               }}
             >
-              <span style={{ color: idx === replayTick ? '#F5C518' : '#555', width: 50 }}>[{log.time}]</span>
+              <span style={{ color: idx === replayTick ? '#3B5BFA' : '#555', width: 50 }}>[{log.time}]</span>
               <span>{log.text}</span>
             </div>
           ))}

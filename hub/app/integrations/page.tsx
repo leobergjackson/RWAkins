@@ -285,7 +285,7 @@ export default function IntegrationsPage() {
   const getStatusColor = (status: IntegrationItem['status']) => {
     switch (status) {
       case 'active': return '#10B981'
-      case 'degraded': return '#F5C518'
+      case 'degraded': return '#3B5BFA'
       case 'congested': return '#EC4899'
       case 'inactive': return '#EF4444'
       default: return '#888'
@@ -294,7 +294,7 @@ export default function IntegrationsPage() {
 
   return (
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Back to Dashboard</Link>
@@ -306,8 +306,8 @@ export default function IntegrationsPage() {
           </h1>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
-          <span style={{ fontSize: 10, background: 'rgba(245, 197, 24, 0.05)', border: '1px solid rgba(245, 197, 24, 0.25)', color: '#F5C518', padding: '5px 12px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#F5C518' }} />
+          <span style={{ fontSize: 10, background: '#ffffff', border: '1px solid rgba(59, 91, 250, 0.25)', color: '#3B5BFA', padding: '5px 12px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#3B5BFA' }} />
             API Gateway SLA: {analytics.averageLatency}ms
           </span>
         </div>
@@ -331,7 +331,7 @@ export default function IntegrationsPage() {
             position: 'relative', 
             padding: '24px 10px', 
             background: 'rgba(255,255,255,0.01)', 
-            border: '1px solid rgba(255,255,255,0.04)', 
+            border: '1px solid #F8FAFC', 
             borderRadius: 8,
             overflowX: 'auto',
             gap: 20
@@ -340,23 +340,23 @@ export default function IntegrationsPage() {
           {/* Layer 1: Wallets */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 130 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', textAlign: 'center', marginBottom: 4 }}>1. WALLETS</span>
-            <div style={{ padding: '8px 12px', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 12, textAlign: 'center' }}>🦊 MetaMask</div>
-            <div style={{ padding: '8px 12px', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 12, textAlign: 'center' }}>👻 Phantom</div>
-            <div style={{ padding: '8px 12px', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 12, textAlign: 'center' }}>🚀 Freighter</div>
+            <div style={{ padding: '8px 12px', background: '#ffffff', border: '1px solid #E2E8F0', borderRadius: 6, fontSize: 12, textAlign: 'center' }}>🦊 MetaMask</div>
+            <div style={{ padding: '8px 12px', background: '#ffffff', border: '1px solid #E2E8F0', borderRadius: 6, fontSize: 12, textAlign: 'center' }}>👻 Phantom</div>
+            <div style={{ padding: '8px 12px', background: '#ffffff', border: '1px solid #E2E8F0', borderRadius: 6, fontSize: 12, textAlign: 'center' }}>🚀 Freighter</div>
           </div>
 
           {/* Connection Lines (CSS stylized arrows) */}
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minWidth: 40, height: 100 }}>
-            <span style={{ fontSize: 16, color: '#F5C518', animation: 'float 3s ease-in-out infinite' }}>🔀</span>
-            <div style={{ height: 2, width: '100%', background: 'linear-gradient(90deg, rgba(245,197,24,0.1) 0%, #F5C518 50%, rgba(245,197,24,0.1) 100%)', marginTop: 8 }} />
+            <span style={{ fontSize: 16, color: '#3B5BFA', animation: 'float 3s ease-in-out infinite' }}>🔀</span>
+            <div style={{ height: 2, width: '100%', background: 'linear-gradient(90deg, rgba(59,91,250,0.1) 0%, #3B5BFA 50%, rgba(59,91,250,0.1) 100%)', marginTop: 8 }} />
           </div>
 
           {/* Layer 2: API Gateway */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 150, alignItems: 'center' }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', textAlign: 'center', marginBottom: 4 }}>2. SECURE RUPHEX OS GATEWAY</span>
-            <div style={{ padding: '16px 20px', background: '#0a0a0a', border: '2px solid #F5C518', borderRadius: 8, fontSize: 13, textAlign: 'center', fontWeight: 'bold', color: '#F5C518', boxShadow: '0 0 15px rgba(245,197,24,0.15)' }}>
+            <div style={{ padding: '16px 20px', background: '#ffffff', border: '2px solid #3B5BFA', borderRadius: 8, fontSize: 13, textAlign: 'center', fontWeight: 'bold', color: '#3B5BFA', boxShadow: '0 0 15px rgba(59,91,250,0.15)' }}>
               Unified API Proxy
-              <span style={{ display: 'block', fontSize: 9, color: '#fff', opacity: 0.6, marginTop: 4, fontWeight: 'normal' }}>
+              <span style={{ display: 'block', fontSize: 9, color: '#0A0F2E', opacity: 0.6, marginTop: 4, fontWeight: 'normal' }}>
                 Hydration Cache Active
               </span>
             </div>
@@ -364,16 +364,16 @@ export default function IntegrationsPage() {
 
           {/* Connection Lines */}
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minWidth: 40, height: 100 }}>
-            <span style={{ fontSize: 16, color: '#F5C518', animation: 'float 3s ease-in-out infinite' }}>⚡</span>
-            <div style={{ height: 2, width: '100%', background: 'linear-gradient(90deg, rgba(245,197,24,0.1) 0%, #F5C518 50%, rgba(245,197,24,0.1) 100%)', marginTop: 8 }} />
+            <span style={{ fontSize: 16, color: '#3B5BFA', animation: 'float 3s ease-in-out infinite' }}>⚡</span>
+            <div style={{ height: 2, width: '100%', background: 'linear-gradient(90deg, rgba(59,91,250,0.1) 0%, #3B5BFA 50%, rgba(59,91,250,0.1) 100%)', marginTop: 8 }} />
           </div>
 
           {/* Layer 3: Blockchains & AI */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 140 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', textAlign: 'center', marginBottom: 4 }}>3. BACKEND & CHAINS</span>
-            <div style={{ padding: '8px 12px', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 11, textAlign: 'center' }}>🧠 Groq AI Orchestrator</div>
-            <div style={{ padding: '8px 12px', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 11, textAlign: 'center' }}>⬡ Mantle Network</div>
-            <div style={{ padding: '8px 12px', background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, fontSize: 11, textAlign: 'center' }}>🚀 Mantle Sepolia</div>
+            <div style={{ padding: '8px 12px', background: '#ffffff', border: '1px solid #E2E8F0', borderRadius: 6, fontSize: 11, textAlign: 'center' }}>🧠 Groq AI Orchestrator</div>
+            <div style={{ padding: '8px 12px', background: '#ffffff', border: '1px solid #E2E8F0', borderRadius: 6, fontSize: 11, textAlign: 'center' }}>⬡ Mantle Network</div>
+            <div style={{ padding: '8px 12px', background: '#ffffff', border: '1px solid #E2E8F0', borderRadius: 6, fontSize: 11, textAlign: 'center' }}>🚀 Mantle Sepolia</div>
           </div>
         </div>
       </section>
@@ -389,9 +389,9 @@ export default function IntegrationsPage() {
               style={{
                 padding: '6px 12px',
                 fontSize: 12,
-                borderColor: selectedCategory === cat ? '#F5C518' : 'rgba(255,255,255,0.08)',
-                background: selectedCategory === cat ? 'rgba(245,197,24,0.06)' : 'transparent',
-                color: selectedCategory === cat ? '#F5C518' : '#fff'
+                borderColor: selectedCategory === cat ? '#3B5BFA' : '#E2E8F0',
+                background: selectedCategory === cat ? 'rgba(59,91,250,0.06)' : 'transparent',
+                color: selectedCategory === cat ? '#3B5BFA' : '#0A0F2E'
               }}
             >
               {cat}
@@ -407,9 +407,9 @@ export default function IntegrationsPage() {
           style={{
             padding: '8px 14px',
             borderRadius: 8,
-            border: '1px solid rgba(255,255,255,0.1)',
-            background: '#0a0a0a',
-            color: '#fff',
+            border: '1px solid #E2E8F0',
+            background: '#ffffff',
+            color: '#0A0F2E',
             fontSize: 13,
             minWidth: 200,
             outline: 'none'
@@ -435,8 +435,8 @@ export default function IntegrationsPage() {
                   display: 'flex', 
                   flexDirection: 'column', 
                   gap: 12, 
-                  background: '#0c0c0c',
-                  border: isExpanded ? '1px solid #F5C518' : '1px solid rgba(255,255,255,0.06)',
+                  background: '#ffffff',
+                  border: isExpanded ? '1px solid #3B5BFA' : '1px solid #F1F5F9',
                   transition: 'border-color 0.2s',
                   position: 'relative'
                 }}
@@ -446,8 +446,8 @@ export default function IntegrationsPage() {
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                     <span style={{ fontSize: 20 }}>{item.logo}</span>
                     <div>
-                      <h3 style={{ fontSize: 15, margin: 0, fontWeight: 700, color: '#fff' }}>{item.name}</h3>
-                      <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      <h3 style={{ fontSize: 15, margin: 0, fontWeight: 700, color: '#0A0F2E' }}>{item.name}</h3>
+                      <span style={{ fontSize: 9, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                         {item.category}
                       </span>
                     </div>
@@ -475,7 +475,7 @@ export default function IntegrationsPage() {
                 </p>
 
                 {/* Substats */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, opacity: 0.8, borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: 8, marginTop: 4 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, opacity: 0.8, borderTop: '1px solid #F8FAFC', paddingTop: 8, marginTop: 4 }}>
                   <span>Latency: <strong className="gold-text">{item.latency}</strong></span>
                   {item.metadata.version && (
                     <span>Version: <strong className="silver-text">{item.metadata.version}</strong></span>
@@ -492,9 +492,9 @@ export default function IntegrationsPage() {
                     padding: '5px 10px', 
                     alignSelf: 'stretch', 
                     textAlign: 'center',
-                    background: isExpanded ? 'rgba(245,197,24,0.04)' : 'transparent',
-                    borderColor: isExpanded ? '#F5C518' : 'rgba(255,255,255,0.15)',
-                    color: isExpanded ? '#F5C518' : '#fff'
+                    background: isExpanded ? 'rgba(59,91,250,0.04)' : 'transparent',
+                    borderColor: isExpanded ? '#3B5BFA' : '#CBD5E1',
+                    color: isExpanded ? '#3B5BFA' : '#0A0F2E'
                   }}
                 >
                   {isExpanded ? '▲ Collapse Metadata' : '▼ View Technical Metadata'}
@@ -506,8 +506,8 @@ export default function IntegrationsPage() {
                     style={{ 
                       marginTop: 10, 
                       padding: '10px 12px', 
-                      background: '#040404', 
-                      border: '1px solid rgba(255,255,255,0.06)', 
+                      background: 'var(--cloud-bg)', 
+                      border: '1px solid #F1F5F9', 
                       borderRadius: 6,
                       fontSize: 11,
                       display: 'flex',
@@ -519,19 +519,19 @@ export default function IntegrationsPage() {
                     {item.metadata.endpoint && (
                       <div>
                         <span style={{ color: '#888', display: 'block', fontSize: 9, textTransform: 'uppercase' }}>Endpoint</span>
-                        <code style={{ color: '#F5C518', fontSize: 10, fontFamily: 'monospace' }}>{item.metadata.endpoint}</code>
+                        <code style={{ color: '#3B5BFA', fontSize: 10, fontFamily: 'monospace' }}>{item.metadata.endpoint}</code>
                       </div>
                     )}
                     {item.metadata.contractAddress && (
                       <div>
                         <span style={{ color: '#888', display: 'block', fontSize: 9, textTransform: 'uppercase' }}>Contract</span>
-                        <code style={{ color: '#fff', fontSize: 10, fontFamily: 'monospace' }}>{item.metadata.contractAddress}</code>
+                        <code style={{ color: '#0A0F2E', fontSize: 10, fontFamily: 'monospace' }}>{item.metadata.contractAddress}</code>
                       </div>
                     )}
                     {item.metadata.nodeType && (
                       <div>
                         <span style={{ color: '#888', display: 'block', fontSize: 9, textTransform: 'uppercase' }}>Node Class</span>
-                        <span style={{ color: '#fff', fontSize: 11 }}>{item.metadata.nodeType}</span>
+                        <span style={{ color: '#0A0F2E', fontSize: 11 }}>{item.metadata.nodeType}</span>
                       </div>
                     )}
                     {item.metadata.payloadExample && (
@@ -539,10 +539,10 @@ export default function IntegrationsPage() {
                         <span style={{ color: '#888', display: 'block', fontSize: 9, textTransform: 'uppercase', marginBottom: 4 }}>Payload / Method</span>
                         <pre 
                           style={{ 
-                            background: '#0a0a0a', 
+                            background: '#ffffff', 
                             padding: '6px 8px', 
                             borderRadius: 4, 
-                            border: '1px solid rgba(255,255,255,0.04)',
+                            border: '1px solid #F8FAFC',
                             margin: 0, 
                             fontSize: 9,
                             fontFamily: 'monospace',

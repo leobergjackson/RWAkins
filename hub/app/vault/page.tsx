@@ -272,7 +272,7 @@ function VaultInner() {
 
       <header className="nav-bar">
         <div className="nav-logo">
-          Kubryx <span className="sparkle-icon">◈</span> Private vault
+          RWAkins <span className="sparkle-icon">◈</span> Private vault
         </div>
         <div className="nav-links">
           <span className={healthStatus === 'live' ? 'badge-live' : 'badge-demo'}>
@@ -345,14 +345,14 @@ function VaultInner() {
 
         {vaultState && (
           <div style={{ display: 'flex', gap: 12, marginBottom: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: 'rgba(255,255,255,0.7)', border: '1px solid #CFFAFE', color: '#083344', fontWeight: 600, fontFamily: 'Fira Code, monospace' }}>
+            <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: '#ECFEFF', border: '1px solid #CFFAFE', color: '#083344', fontWeight: 600, fontFamily: 'Fira Code, monospace' }}>
               Owner: {vaultState.owner.slice(0, 8)}…{vaultState.owner.slice(-6)}
             </div>
             <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: vaultState.deceased ? '#FEE2E2' : '#D1FAE5', border: `1px solid ${vaultState.deceased ? '#FECACA' : '#A7F3D0'}`, color: vaultState.deceased ? '#DC2626' : '#059669', fontWeight: 600 }}>
               {vaultState.deceased ? '⚠ Legacy Mode Active' : '✓ Vault Active'}
             </div>
             {vaultState.unlockDate && (
-              <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: 'rgba(255,255,255,0.7)', border: '1px solid #CFFAFE', color: '#083344', fontWeight: 600 }}>
+              <div style={{ fontSize: 12, padding: '8px 16px', borderRadius: 999, background: '#ECFEFF', border: '1px solid #CFFAFE', color: '#083344', fontWeight: 600 }}>
                 Unlock: {vaultState.unlockDate.toLocaleDateString()}
               </div>
             )}
@@ -365,7 +365,7 @@ function VaultInner() {
         )}
         {(vaultState || platform.vaultActive) && (
           <div style={{ fontSize: 12, padding: '6px 16px', borderRadius: 999, background: 'rgba(168,85,247,0.08)', border: '1px solid rgba(168,85,247,0.25)', color: '#7C3AED', fontWeight: 600, marginBottom: 12 }}>
-            🔐 Active vault → +85 pts to your Kubryx Credit Score
+            🔐 Active vault → +85 pts to your RWAkins Credit Score
           </div>
         )}
         <div style={{ marginBottom: 20 }}>
@@ -401,7 +401,7 @@ function VaultInner() {
         whatItIs="A privacy-preserving custody and trading terminal on Mantle. Users deposit collateral (BTC, ETH, mETH) into smart contracts, register MPC (Multi-Party Computation) secured dWallets, and execute private trades using FHE (Fully Homomorphic Encryption)."
         whyUseIt="Corporate operators need to move assets and hedge positions without exposing their strategies to front-running bots, MEV (Maximal Extractable Value) searchers, or public competitor analysis. The Privacy Vault allows them to interact with DeFi with complete cryptographic confidentiality."
         whyEfficient="<ul><li><b>Client-Side PBKDF2</b>: Secures access keys before anchoring references, removing the need for a central database.</li><li><b>Inverted Dark UI Overlay</b>: The vault component is wrapped in an inverted contrast filter to signal a high-security sandboxed state.</li></ul>"
-        whyBest="Most privacy solutions (like Tornado Cash) are simple pools with high regulatory friction. The Kubryx Privacy Vault is a <b>multi-purpose execution workspace</b> combining collateral locking, secure MPC dWallets, and homomorphic trading in a unified flow."
+        whyBest="Most privacy solutions (like Tornado Cash) are simple pools with high regulatory friction. The RWAkins Privacy Vault is a <b>multi-purpose execution workspace</b> combining collateral locking, secure MPC dWallets, and homomorphic trading in a unified flow."
         themeColor="#06B6D4"
       />
     </div>

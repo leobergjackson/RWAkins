@@ -5,10 +5,10 @@ import { useMemo, useState } from 'react'
 import { CIPHERVAULT_ACCENT, FALLBACK_HISTORY, type HistoryRow } from '@/lib/vault-fallbacks'
 
 const ACCENT = CIPHERVAULT_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const CARD   = '#111111'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.4)'
+const BORDER = '#E2E8F0'
+const CARD   = '#ffffff'
+const MUTED  = '#475569'
+const MUTED2 = '#64748B'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
 const TYPE_COLOR: Record<HistoryRow['type'], string> = {
@@ -75,7 +75,7 @@ export default function VaultHistory() {
               <>
                 <tr key={r.id} onClick={() => setExpanded(e => e === r.id ? null : r.id)}
                     style={{ borderBottom: `1px solid ${BORDER}`, cursor: 'pointer' }}
-                    onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.02)')}
+                    onMouseEnter={e => (e.currentTarget.style.background = '#F8FAFC')}
                     onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
                   <td style={tdStyle}>
                     <span style={{
@@ -92,7 +92,7 @@ export default function VaultHistory() {
                 </tr>
                 {expanded === r.id && (
                   <tr key={`${r.id}-d`}>
-                    <td colSpan={6} style={{ padding: '14px 16px', background: 'rgba(255,255,255,0.02)', borderBottom: `1px solid ${BORDER}` }}>
+                    <td colSpan={6} style={{ padding: '14px 16px', background: '#F8FAFC', borderBottom: `1px solid ${BORDER}` }}>
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
                         <Detail label="Tx Hash" value={r.txHash} />
                         <Detail label="Block" value={r.block} />
@@ -115,7 +115,7 @@ function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <div style={{ fontSize: 10, color: MUTED2, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>{label}</div>
-      <div style={{ fontFamily: MONO, fontSize: 12, color: '#fff' }}>{value}</div>
+      <div style={{ fontFamily: MONO, fontSize: 12, color: '#0A0F2E' }}>{value}</div>
     </div>
   )
 }
@@ -125,12 +125,12 @@ const thStyle: React.CSSProperties = {
   borderBottom: `1px solid ${BORDER}`,
   fontSize: 10, fontWeight: 700, letterSpacing: '0.14em',
   textTransform: 'uppercase', color: MUTED2,
-  background: 'rgba(255,255,255,0.02)',
+  background: '#F8FAFC',
 }
-const tdStyle: React.CSSProperties = { padding: '12px 16px', color: '#fff' }
+const tdStyle: React.CSSProperties = { padding: '12px 16px', color: '#0A0F2E' }
 const selectStyle: React.CSSProperties = {
   padding: '10px 14px', borderRadius: 8,
-  background: 'rgba(255,255,255,0.04)',
+  background: '#F8FAFC',
   border: `1px solid ${BORDER}`,
-  color: '#fff', fontSize: 13, outline: 'none',
+  color: '#0A0F2E', fontSize: 13, outline: 'none',
 }

@@ -98,11 +98,11 @@ export default function DefiTVLWidget() {
             return (
               <div key={p.name} style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                padding: '8px 10px', borderRadius: 12, background: 'rgba(255,255,255,0.4)',
+                padding: '8px 10px', borderRadius: 12, background: '#64748B',
                 border: '1px solid rgba(99,102,241,0.04)', transition: 'all 0.2s'
               }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.8)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(99,102,241,0.15)' }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.4)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(99,102,241,0.04)' }}>
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#1E293B'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(99,102,241,0.15)' }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = '#64748B'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(99,102,241,0.04)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <img src={p.logo} alt={p.name} style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(99,102,241,0.1)' }} />
                   <div>

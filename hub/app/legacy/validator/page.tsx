@@ -173,8 +173,8 @@ export default function ValidatorPage() {
 
       {/* Info disclaimer */}
       <div style={{
-        background: 'rgba(245,197,24,0.04)',
-        border: '1px solid rgba(245,197,24,0.12)',
+        background: '#ffffff',
+        border: '1px solid rgba(59,91,250,0.12)',
         borderRadius: 12,
         padding: '16px 18px',
       }}>

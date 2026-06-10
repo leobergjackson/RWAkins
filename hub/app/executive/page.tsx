@@ -109,7 +109,7 @@ export default function ExecutivePage() {
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
       
       {/* Header Panel */}
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Dashboard</Link>
@@ -148,33 +148,33 @@ export default function ExecutivePage() {
       </header>
 
       {/* Strategic Intelligence Console Panel */}
-      <section className="card" style={{ padding: 18, marginBottom: 24, border: '1px solid rgba(245,197,24,0.25)', background: 'rgba(245,197,24,0.01)' }}>
+      <section className="card" style={{ padding: 18, marginBottom: 24, border: '1px solid rgba(59,91,250,0.25)', background: '#ffffff' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 14 }}>
           <div>
-            <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#F5C518', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#3B5BFA', display: 'flex', alignItems: 'center', gap: 8 }}>
               <span>🧠</span> Autonomous Strategic Intelligence Console
             </h2>
             <p style={{ margin: '2px 0 0', fontSize: 12, color: '#aaa' }}>
               Operates predictive scenario forecasts, AI strategic recommendations, and multi-step sovereign mitigation plans.
             </p>
           </div>
-          <div style={{ padding: '6px 14px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 6 }}>
+          <div style={{ padding: '6px 14px', background: '#F8FAFC', border: '1px solid #F1F5F9', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888', display: 'block' }}>Strategic Confidence</span>
-            <strong style={{ fontSize: 16, color: '#F5C518' }}>{strategicConfidence}%</strong>
+            <strong style={{ fontSize: 16, color: '#3B5BFA' }}>{strategicConfidence}%</strong>
           </div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
           
           {/* AI Recommendation Feed */}
-          <div style={{ background: '#020202', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6, padding: 14 }}>
+          <div style={{ background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 6, padding: 14 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>AI Recommendation Feed</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 8, maxHeight: 180, overflowY: 'auto' }}>
               {recommendations.map((rec) => (
-                <div key={rec.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: 8 }}>
+                <div key={rec.id} style={{ borderBottom: '1px solid #F8FAFC', paddingBottom: 8 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 2 }}>
-                    <strong style={{ color: '#fff' }}>{rec.title}</strong>
-                    <span style={{ color: '#F5C518' }}>+{rec.estimatedGain}% Gain</span>
+                    <strong style={{ color: '#0A0F2E' }}>{rec.title}</strong>
+                    <span style={{ color: '#3B5BFA' }}>+{rec.estimatedGain}% Gain</span>
                   </div>
                   <span style={{ display: 'block', fontSize: 10, color: '#888' }}>{rec.description}</span>
                   <div style={{ display: 'flex', gap: 6, fontSize: 8, color: '#666', marginTop: 4, fontFamily: 'monospace' }}>
@@ -187,7 +187,7 @@ export default function ExecutivePage() {
           </div>
 
           {/* Autonomous Mitigation Timeline */}
-          <div style={{ background: '#020202', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6, padding: 14 }}>
+          <div style={{ background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 6, padding: 14 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mitigation Planner</span>
             {activeMitigationPlan ? (
               <div style={{ marginTop: 8 }}>
@@ -195,7 +195,7 @@ export default function ExecutivePage() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {activeMitigationPlan.steps.map((step, idx) => (
                     <div key={idx} style={{ fontSize: 10, color: '#ccc', display: 'flex', gap: 6 }}>
-                      <span style={{ color: '#F5C518' }}>✔</span>
+                      <span style={{ color: '#3B5BFA' }}>✔</span>
                       <span>{step}</span>
                     </div>
                   ))}
@@ -211,13 +211,13 @@ export default function ExecutivePage() {
           </div>
 
           {/* Strategic Risk Heatmap & Projections */}
-          <div style={{ background: '#020202', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6, padding: 14 }}>
+          <div style={{ background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 6, padding: 14 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Consensus Forecast Matrix</span>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginTop: 8 }}>
               {forecasts.map((f) => (
-                <div key={f.timeframe} style={{ padding: 8, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 4, textAlign: 'center' }}>
-                  <strong style={{ display: 'block', fontSize: 10, color: '#F5C518' }}>{f.timeframe}</strong>
-                  <strong style={{ display: 'block', fontSize: 14, color: '#fff', margin: '4px 0' }}>{f.consensusTrajectory}%</strong>
+                <div key={f.timeframe} style={{ padding: 8, background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', borderRadius: 4, textAlign: 'center' }}>
+                  <strong style={{ display: 'block', fontSize: 10, color: '#3B5BFA' }}>{f.timeframe}</strong>
+                  <strong style={{ display: 'block', fontSize: 14, color: '#0A0F2E', margin: '4px 0' }}>{f.consensusTrajectory}%</strong>
                   <span style={{ fontSize: 8, color: '#666' }}>Consensus</span>
                 </div>
               ))}
@@ -232,10 +232,10 @@ export default function ExecutivePage() {
       </section>
 
       {/* PHASE 13 - EXECUTIVE CIVILIZATION COMMAND CENTER */}
-      <section className="card" style={{ padding: 18, marginBottom: 24, border: '1px solid rgba(245,197,24,0.3)', background: 'rgba(0,0,0,0.4)' }}>
-        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 12, marginBottom: 16 }}>
+      <section className="card" style={{ padding: 18, marginBottom: 24, border: '1px solid rgba(59,91,250,0.3)', background: '#ffffff' }}>
+        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, borderBottom: '1px solid #E2E8F0', paddingBottom: 12, marginBottom: 16 }}>
           <div>
-            <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#F5C518', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#3B5BFA', display: 'flex', alignItems: 'center', gap: 8 }}>
               <span>🏛️</span> Executive Civilization Command Center
             </h2>
             <p style={{ margin: '2px 0 0', fontSize: 12, color: '#aaa' }}>
@@ -248,7 +248,7 @@ export default function ExecutivePage() {
             <button onClick={initiateNegotiation} className="btn-outline" style={{ padding: '6px 12px', fontSize: 10 }}>🤝 Propose Action</button>
             <button onClick={simulateDeadlock} className="btn-outline" style={{ padding: '6px 12px', fontSize: 10, color: '#EF4444', borderColor: 'rgba(239,68,68,0.2)' }}>⚠️ Deadlock</button>
             <button onClick={triggerInstability} className="btn-outline" style={{ padding: '6px 12px', fontSize: 10, color: '#EF4444', borderColor: 'rgba(239,68,68,0.2)' }}>💥 Trigger Drift</button>
-            <button onClick={replayCrisis} className="btn-outline" style={{ padding: '6px 12px', fontSize: 10, color: '#F5C518', borderColor: 'rgba(245,197,24,0.2)' }}>⚡ Replay Crisis</button>
+            <button onClick={replayCrisis} className="btn-outline" style={{ padding: '6px 12px', fontSize: 10, color: '#3B5BFA', borderColor: 'rgba(59,91,250,0.2)' }}>⚡ Replay Crisis</button>
             <button onClick={stabilizeTrust} className="btn-outline" style={{ padding: '6px 12px', fontSize: 10, color: '#10B981', borderColor: 'rgba(16,185,129,0.2)' }}>🛡️ Stabilize Trust</button>
             <button onClick={restoreEquilibrium} className="btn-gold" style={{ padding: '6px 12px', fontSize: 10 }}>🔄 Restore Equilibrium</button>
           </div>
@@ -256,25 +256,25 @@ export default function ExecutivePage() {
 
         {/* Global Coalition Stability Metrics */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12, marginBottom: 18 }}>
-          <div style={{ padding: 12, background: '#020202', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'var(--cloud-bg)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Coalition Stability Score</span>
-            <strong style={{ display: 'block', fontSize: 24, color: '#F5C518', marginTop: 4 }}>{coalitionScore}%</strong>
+            <strong style={{ display: 'block', fontSize: 24, color: '#3B5BFA', marginTop: 4 }}>{coalitionScore}%</strong>
             <span style={{ fontSize: 8, color: '#666', display: 'block', marginTop: 4 }}>Harmonized agent alignment</span>
           </div>
 
-          <div style={{ padding: 12, background: '#020202', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'var(--cloud-bg)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Negotiation Confidence</span>
             <strong style={{ display: 'block', fontSize: 24, color: '#10B981', marginTop: 4 }}>{negotiationConfidence}%</strong>
             <span style={{ fontSize: 8, color: '#666', display: 'block', marginTop: 4 }}>Agreement threshold safety</span>
           </div>
 
-          <div style={{ padding: 12, background: '#020202', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'var(--cloud-bg)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Stabilization Alignment</span>
-            <strong style={{ display: 'block', fontSize: 24, color: '#fff', marginTop: 4 }}>{stabilizationAlignment}%</strong>
+            <strong style={{ display: 'block', fontSize: 24, color: '#0A0F2E', marginTop: 4 }}>{stabilizationAlignment}%</strong>
             <span style={{ fontSize: 8, color: '#666', display: 'block', marginTop: 4 }}>Policy check integrity</span>
           </div>
 
-          <div style={{ padding: 12, background: '#020202', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'var(--cloud-bg)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Active Crisis Conflict</span>
             <strong style={{ display: 'block', fontSize: 11, color: activeConflict ? '#EF4444' : '#10B981', marginTop: 8, minHeight: 30, overflow: 'hidden' }}>
               {activeConflict || 'Nominal Equilibrium Secured'}
@@ -289,15 +289,15 @@ export default function ExecutivePage() {
               key={agent.id}
               style={{
                 padding: 14,
-                background: '#020202',
-                border: '1px solid rgba(255,255,255,0.03)',
-                borderTop: agent.status === 'active_dispute' ? '2px solid #EF4444' : '2px solid #F5C518',
+                background: 'var(--cloud-bg)',
+                border: '1px solid #ffffff',
+                borderTop: agent.status === 'active_dispute' ? '2px solid #EF4444' : '2px solid #3B5BFA',
                 borderRadius: 6
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                 <div>
-                  <strong style={{ fontSize: 13, color: '#fff', display: 'block' }}>{agent.name}</strong>
+                  <strong style={{ fontSize: 13, color: '#0A0F2E', display: 'block' }}>{agent.name}</strong>
                   <span style={{ fontSize: 9, color: '#666' }}>{agent.role}</span>
                 </div>
                 <span 
@@ -307,18 +307,18 @@ export default function ExecutivePage() {
                     padding: '2px 6px',
                     borderRadius: 4,
                     textTransform: 'uppercase',
-                    background: agent.status === 'active_dispute' ? 'rgba(239,68,68,0.1)' : 'rgba(245,197,24,0.1)',
-                    color: agent.status === 'active_dispute' ? '#EF4444' : '#F5C518'
+                    background: agent.status === 'active_dispute' ? 'rgba(239,68,68,0.1)' : 'rgba(59,91,250,0.1)',
+                    color: agent.status === 'active_dispute' ? '#EF4444' : '#3B5BFA'
                   }}
                 >
                   {agent.status}
                 </span>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, margin: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.02)', paddingBottom: 6 }}>
-                <span>Confidence: <strong style={{ color: '#fff' }}>{agent.confidence}%</strong></span>
-                <span>Trust: <strong style={{ color: '#fff' }}>{agent.trustWeight}%</strong></span>
-                <span>Influence: <strong style={{ color: '#fff' }}>{agent.influenceRate}%</strong></span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, margin: '8px 0', borderBottom: '1px solid #F8FAFC', paddingBottom: 6 }}>
+                <span>Confidence: <strong style={{ color: '#0A0F2E' }}>{agent.confidence}%</strong></span>
+                <span>Trust: <strong style={{ color: '#0A0F2E' }}>{agent.trustWeight}%</strong></span>
+                <span>Influence: <strong style={{ color: '#0A0F2E' }}>{agent.influenceRate}%</strong></span>
               </div>
 
               <span style={{ display: 'block', fontSize: 10, color: '#888', fontStyle: 'italic', marginBottom: 8 }}>
@@ -327,7 +327,7 @@ export default function ExecutivePage() {
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
                 {agent.responsibility.map((resp, idx) => (
-                  <span key={idx} style={{ fontSize: 8, background: 'rgba(255,255,255,0.03)', color: '#aaa', padding: '1px 4px', borderRadius: 3 }}>
+                  <span key={idx} style={{ fontSize: 8, background: '#ffffff', color: '#aaa', padding: '1px 4px', borderRadius: 3 }}>
                     {resp}
                   </span>
                 ))}
@@ -339,18 +339,18 @@ export default function ExecutivePage() {
         {/* Dynamic Diplomacy Stream & Sovereign Negotiation Feed */}
         <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: 16 }}>
           
-          <div style={{ background: '#020202', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6, padding: 14 }}>
+          <div style={{ background: 'var(--cloud-bg)', border: '1px solid #ffffff', borderRadius: 6, padding: 14 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: 8 }}>Sovereign Negotiation Feed</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxHeight: 180, overflowY: 'auto' }}>
               {negotiations.map((neg) => (
-                <div key={neg.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.02)', paddingBottom: 8 }}>
+                <div key={neg.id} style={{ borderBottom: '1px solid #F8FAFC', paddingBottom: 8 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
-                    <strong style={{ color: '#fff' }}>{neg.topic}</strong>
+                    <strong style={{ color: '#0A0F2E' }}>{neg.topic}</strong>
                     <span 
                       style={{ 
                         fontSize: 8, 
                         fontWeight: 'bold', 
-                        color: neg.status === 'agreed' ? '#10B981' : neg.status === 'disputed' ? '#EF4444' : '#F5C518',
+                        color: neg.status === 'agreed' ? '#10B981' : neg.status === 'disputed' ? '#EF4444' : '#3B5BFA',
                         textTransform: 'uppercase'
                       }}
                     >
@@ -366,18 +366,18 @@ export default function ExecutivePage() {
             </div>
           </div>
 
-          <div style={{ background: '#020202', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6, padding: 14 }}>
+          <div style={{ background: 'var(--cloud-bg)', border: '1px solid #ffffff', borderRadius: 6, padding: 14 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: 8 }}>Institutional Diplomacy Stream</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: 180, overflowY: 'auto' }}>
               {diplomaticRelations.slice(0, 8).map((rel, idx) => (
-                <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 10, borderBottom: '1px solid rgba(255,255,255,0.02)', paddingBottom: 4 }}>
+                <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 10, borderBottom: '1px solid #F8FAFC', paddingBottom: 4 }}>
                   <div style={{ display: 'flex', gap: 4 }}>
-                    <strong style={{ color: '#fff' }}>{rel.fromAgent.split(' ')[0]}</strong>
+                    <strong style={{ color: '#0A0F2E' }}>{rel.fromAgent.split(' ')[0]}</strong>
                     <span style={{ color: '#666' }}>⇄</span>
-                    <strong style={{ color: '#fff' }}>{rel.toAgent.split(' ')[0]}</strong>
+                    <strong style={{ color: '#0A0F2E' }}>{rel.toAgent.split(' ')[0]}</strong>
                   </div>
                   <div style={{ display: 'flex', gap: 8 }}>
-                    <span>Trust: <strong style={{ color: '#F5C518' }}>{rel.trustScore}%</strong></span>
+                    <span>Trust: <strong style={{ color: '#3B5BFA' }}>{rel.trustScore}%</strong></span>
                     <span>Align: <strong style={{ color: '#10B981' }}>{rel.alignmentScore}%</strong></span>
                   </div>
                 </div>
@@ -393,15 +393,15 @@ export default function ExecutivePage() {
         
         {/* Consensus Stability Meter */}
         <article className="card" style={{ padding: 18, display: 'flex', gap: 20, alignItems: 'center' }}>
-          <div style={{ position: 'relative', width: 90, height: 90, borderRadius: '50%', background: 'rgba(255,255,255,0.01)', border: '4px solid rgba(245,197,24,0.05)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ position: 'relative', width: 90, height: 90, borderRadius: '50%', background: 'rgba(255,255,255,0.01)', border: '4px solid rgba(59,91,250,0.05)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Consensus</span>
-            <strong style={{ fontSize: 22, fontWeight: 800, color: '#F5C518' }}>{consensusIndex}%</strong>
-            <div style={{ position: 'absolute', inset: -4, borderRadius: '50%', border: '4px solid #F5C518', borderRightColor: 'transparent', borderBottomColor: 'transparent', transform: `rotate(${consensusIndex * 3.6}deg)`, transition: 'transform 0.5s ease' }} />
+            <strong style={{ fontSize: 22, fontWeight: 800, color: '#3B5BFA' }}>{consensusIndex}%</strong>
+            <div style={{ position: 'absolute', inset: -4, borderRadius: '50%', border: '4px solid #3B5BFA', borderRightColor: 'transparent', borderBottomColor: 'transparent', transform: `rotate(${consensusIndex * 3.6}deg)`, transition: 'transform 0.5s ease' }} />
           </div>
 
           <div style={{ flex: 1 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Global Consensus Stability Monitor</span>
-            <h3 style={{ margin: '4px 0', fontSize: 18, fontWeight: 800, color: '#fff' }}>Sovereign Sync Network Status</h3>
+            <h3 style={{ margin: '4px 0', fontSize: 18, fontWeight: 800, color: '#0A0F2E' }}>Sovereign Sync Network Status</h3>
             <p style={{ margin: 0, fontSize: 12, color: '#aaa', lineHeight: 1.4 }}>
               Authoritative operational confidence metric computed dynamically across multi-region quorums, ledger synchronization trust, and AI validation backoffs.
             </p>
@@ -415,7 +415,7 @@ export default function ExecutivePage() {
               <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Operational Drift Detection</span>
               <span style={{ fontSize: 9, background: 'rgba(239,68,68,0.08)', color: '#EF4444', padding: '2px 6px', borderRadius: 4 }}>ACTIVE WAVE</span>
             </div>
-            <strong style={{ display: 'block', fontSize: 26, fontWeight: 800, marginTop: 6, color: '#fff' }}>
+            <strong style={{ display: 'block', fontSize: 26, fontWeight: 800, marginTop: 6, color: '#0A0F2E' }}>
               ±{driftIndex}% drift rate
             </strong>
           </div>
@@ -430,7 +430,7 @@ export default function ExecutivePage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Sovereignty & Ecosystem</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#F5C518' }}>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#3B5BFA' }}>
               {sovereigntyIndex}% / {ecosystemScore}%
             </strong>
           </div>
@@ -440,7 +440,7 @@ export default function ExecutivePage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Mempool Pressure</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#fff' }}>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#0A0F2E' }}>
               {livingTelemetry.mempoolPressure} TPS
             </strong>
           </div>
@@ -454,13 +454,13 @@ export default function ExecutivePage() {
               {orchestrationPressure}%
             </strong>
           </div>
-          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Stabilization Forecast: <strong style={{ color: '#F5C518' }}>{livingTelemetry.stabilizationForecast}%</strong></span>
+          <span style={{ fontSize: 9, color: '#888', marginTop: 10 }}>Stabilization Forecast: <strong style={{ color: '#3B5BFA' }}>{livingTelemetry.stabilizationForecast}%</strong></span>
         </article>
 
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Maturity & Trust Forecast</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#F5C518' }}>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#3B5BFA' }}>
               {maturityScore}% / {ecosystemTrustForecast}%
             </strong>
           </div>
@@ -483,7 +483,7 @@ export default function ExecutivePage() {
               style={{
                 padding: 14,
                 background: region.status === 'outage' ? 'rgba(239,68,68,0.03)' : 'rgba(255,255,255,0.01)',
-                border: region.status === 'outage' ? '1px solid #EF4444' : '1px solid rgba(255,255,255,0.03)',
+                border: region.status === 'outage' ? '1px solid #EF4444' : '1px solid #ffffff',
                 borderRadius: 6,
                 display: 'flex',
                 flexDirection: 'column',
@@ -493,7 +493,7 @@ export default function ExecutivePage() {
             >
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <strong style={{ fontSize: 13, color: '#fff' }}>{region.name}</strong>
+                  <strong style={{ fontSize: 13, color: '#0A0F2E' }}>{region.name}</strong>
                   <span style={{ fontSize: 9, color: '#888', fontFamily: 'monospace' }}>{region.zone}</span>
                 </div>
 
@@ -553,16 +553,16 @@ export default function ExecutivePage() {
                   style={{
                     padding: '10px 14px',
                     background: 'rgba(255,255,255,0.01)',
-                    borderLeft: '2px solid #F5C518',
+                    borderLeft: '2px solid #3B5BFA',
                     borderRadius: '0 6px 6px 0',
                     fontSize: 12
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                    <span style={{ fontFamily: 'monospace', color: '#F5C518', fontSize: 10 }}>[{evt.type}]</span>
+                    <span style={{ fontFamily: 'monospace', color: '#3B5BFA', fontSize: 10 }}>[{evt.type}]</span>
                     <span style={{ fontSize: 9, color: '#666' }}>{new Date(evt.timestamp).toLocaleTimeString()}</span>
                   </div>
-                  <div style={{ color: '#fff' }}>{evt.description}</div>
+                  <div style={{ color: '#0A0F2E' }}>{evt.description}</div>
                 </div>
               ))}
             </div>
@@ -582,23 +582,23 @@ export default function ExecutivePage() {
                   style={{
                     padding: 14,
                     background: 'rgba(255,255,255,0.01)',
-                    border: '1px solid rgba(255,255,255,0.03)',
+                    border: '1px solid #ffffff',
                     borderRadius: 6
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                    <strong style={{ fontSize: 13, color: '#fff' }}>{cluster.nodeName}</strong>
-                    <span style={{ fontSize: 10, background: 'rgba(245,197,24,0.06)', color: '#F5C518', padding: '2px 6px', borderRadius: 4 }}>
+                    <strong style={{ fontSize: 13, color: '#0A0F2E' }}>{cluster.nodeName}</strong>
+                    <span style={{ fontSize: 10, background: '#ffffff', color: '#3B5BFA', padding: '2px 6px', borderRadius: 4 }}>
                       Cognition Confidence: {cluster.cognitionScore}%
                     </span>
                   </div>
 
                   <div style={{ fontSize: 11, color: '#aaa', marginTop: 4 }}>
                     <span>Prioritized Threat/Anomaly: </span>
-                    <strong style={{ color: '#F5C518' }}>{cluster.prioritizedAnomaly}</strong>
+                    <strong style={{ color: '#3B5BFA' }}>{cluster.prioritizedAnomaly}</strong>
                   </div>
 
-                  <div style={{ fontSize: 10, color: '#777', fontFamily: 'monospace', marginTop: 6, padding: '4px 8px', background: '#040404', borderRadius: 4 }}>
+                  <div style={{ fontSize: 10, color: '#777', fontFamily: 'monospace', marginTop: 6, padding: '4px 8px', background: 'var(--cloud-bg)', borderRadius: 4 }}>
                     Heuristic Rule: {cluster.heuristicRule}
                   </div>
                 </div>
@@ -615,22 +615,22 @@ export default function ExecutivePage() {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
               
-              <div style={{ background: '#030303', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6, padding: 12 }}>
+              <div style={{ background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 6, padding: 12 }}>
                 <span style={{ fontSize: 10, color: '#888' }}>Validator Reliability Drift</span>
-                <strong style={{ display: 'block', fontSize: 20, color: '#fff', margin: '4px 0' }}>
+                <strong style={{ display: 'block', fontSize: 20, color: '#0A0F2E', margin: '4px 0' }}>
                   {livingTelemetry.validatorParticipation}%
                 </strong>
-                <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, overflow: 'hidden' }}>
-                  <div style={{ width: `${livingTelemetry.validatorParticipation}%`, background: '#F5C518', height: '100%' }} />
+                <div style={{ height: 4, background: '#ffffff', borderRadius: 2, overflow: 'hidden' }}>
+                  <div style={{ width: `${livingTelemetry.validatorParticipation}%`, background: '#3B5BFA', height: '100%' }} />
                 </div>
               </div>
 
-              <div style={{ background: '#030303', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 6, padding: 12 }}>
+              <div style={{ background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 6, padding: 12 }}>
                 <span style={{ fontSize: 10, color: '#888' }}>RPC Ingestion Congestion</span>
-                <strong style={{ display: 'block', fontSize: 20, color: '#fff', margin: '4px 0' }}>
+                <strong style={{ display: 'block', fontSize: 20, color: '#0A0F2E', margin: '4px 0' }}>
                   {livingTelemetry.rpcFluctuationRate}ms
                 </strong>
-                <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, overflow: 'hidden' }}>
+                <div style={{ height: 4, background: '#ffffff', borderRadius: 2, overflow: 'hidden' }}>
                   <div style={{ width: `${Math.min(100, livingTelemetry.rpcFluctuationRate / 5)}%`, background: '#EF4444', height: '100%' }} />
                 </div>
               </div>
@@ -657,7 +657,7 @@ export default function ExecutivePage() {
                   style={{
                     padding: 12,
                     background: threat.compromiseSimulationActive ? 'rgba(239,68,68,0.03)' : 'rgba(255,255,255,0.01)',
-                    border: threat.compromiseSimulationActive ? '1px solid #EF4444' : '1px solid rgba(255,255,255,0.03)',
+                    border: threat.compromiseSimulationActive ? '1px solid #EF4444' : '1px solid #ffffff',
                     borderRadius: 6,
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -665,7 +665,7 @@ export default function ExecutivePage() {
                   }}
                 >
                   <div>
-                    <strong style={{ fontSize: 12, color: '#fff' }}>{threat.vector}</strong>
+                    <strong style={{ fontSize: 12, color: '#0A0F2E' }}>{threat.vector}</strong>
                     <span style={{ display: 'block', fontSize: 8, color: '#888', marginTop: 2 }}>
                       Severity: {threat.severity} • Likelihood: {threat.likelihood}%
                     </span>
@@ -703,7 +703,7 @@ export default function ExecutivePage() {
                 onChange={(e) => setSnapNameInput(e.target.value)}
                 placeholder="Checkpoint label..."
                 required
-                style={{ flex: 1, padding: '6px 10px', background: '#040404', border: '1px solid rgba(255,255,255,0.12)', color: '#fff', fontSize: 11, borderRadius: 6, outline: 'none' }}
+                style={{ flex: 1, padding: '6px 10px', background: 'var(--cloud-bg)', border: '1px solid #E2E8F0', color: '#0A0F2E', fontSize: 11, borderRadius: 6, outline: 'none' }}
               />
               <button type="submit" className="btn-outline" style={{ padding: '6px 12px', fontSize: 11, minWidth: 100 }}>📸 Take Snap</button>
             </form>
@@ -717,7 +717,7 @@ export default function ExecutivePage() {
                     style={{
                       padding: 12,
                       background: 'rgba(255,255,255,0.01)',
-                      border: '1px solid rgba(255,255,255,0.03)',
+                      border: '1px solid #ffffff',
                       borderRadius: 6,
                       display: 'flex',
                       justifyContent: 'space-between',
@@ -725,7 +725,7 @@ export default function ExecutivePage() {
                     }}
                   >
                     <div>
-                      <strong style={{ fontSize: 12, color: '#fff' }}>{snap.description}</strong>
+                      <strong style={{ fontSize: 12, color: '#0A0F2E' }}>{snap.description}</strong>
                       <span style={{ display: 'block', fontSize: 9, color: '#888', marginTop: 2 }}>
                         Captured: {new Date(snap.timestamp).toLocaleString()} • Consensus Score: {snap.consensusIndex}%
                       </span>
@@ -752,9 +752,9 @@ export default function ExecutivePage() {
       {/* Epoch Archive Modal */}
       {showEpochModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(5px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
-          <div className="card" style={{ width: '90%', maxWidth: 450, padding: 24, border: '1px solid rgba(245,197,24,0.4)' }}>
+          <div className="card" style={{ width: '90%', maxWidth: 450, padding: 24, border: '1px solid rgba(59,91,250,0.4)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-              <h3 style={{ margin: 0, fontSize: 18, color: '#fff' }}>Archive Maturity Epoch</h3>
+              <h3 style={{ margin: 0, fontSize: 18, color: '#0A0F2E' }}>Archive Maturity Epoch</h3>
               <button onClick={() => setShowEpochModal(false)} style={{ background: 'none', border: 'none', color: '#888', fontSize: 16, cursor: 'pointer' }}>✕</button>
             </div>
 
@@ -767,7 +767,7 @@ export default function ExecutivePage() {
                   onChange={(e) => setEpochNameInput(e.target.value)}
                   placeholder="e.g. Core Staking Quorum Upgrade"
                   required
-                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
+                  style={{ width: '100%', padding: '8px 12px', background: 'var(--cloud-bg)', border: '1px solid #CBD5E1', color: '#0A0F2E', fontSize: 12, borderRadius: 6, outline: 'none' }}
                 />
               </div>
 
@@ -779,7 +779,7 @@ export default function ExecutivePage() {
                   placeholder="Summarize the core structural upgrades, compliance additions, or performance adjustments..."
                   required
                   rows={4}
-                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none', resize: 'none' }}
+                  style={{ width: '100%', padding: '8px 12px', background: 'var(--cloud-bg)', border: '1px solid #CBD5E1', color: '#0A0F2E', fontSize: 12, borderRadius: 6, outline: 'none', resize: 'none' }}
                 />
               </div>
 

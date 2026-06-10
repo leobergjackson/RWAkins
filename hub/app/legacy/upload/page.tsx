@@ -335,7 +335,7 @@ export default function UploadPage() {
                   padding: '28px 20px',
                   textAlign: 'center',
                   cursor: 'pointer',
-                  background: dragging ? 'rgba(245,197,24,0.04)' : file ? 'rgba(34,197,94,0.04)' : 'transparent',
+                  background: dragging ? 'rgba(59,91,250,0.04)' : file ? 'rgba(34,197,94,0.04)' : 'transparent',
                   transition: 'all 0.2s',
                 }}
               >
@@ -491,8 +491,8 @@ export default function UploadPage() {
             flexWrap: 'wrap',
             gap: 10,
             padding: '14px 18px',
-            background: 'rgba(245,197,24,0.04)',
-            border: '1px solid rgba(245,197,24,0.15)',
+            background: '#ffffff',
+            border: '1px solid rgba(59,91,250,0.15)',
           }}
         >
           <p style={{ fontSize: 13, color: '#64748B', margin: 0 }}>

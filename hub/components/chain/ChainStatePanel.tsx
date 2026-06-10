@@ -16,10 +16,10 @@ export default function ChainStatePanel({ toolId = 'dashboard', theme = 'light' 
   const s = useChainState(toolId)
   const isLight = theme === 'light'
 
-  const bg = isLight ? '#FFFFFF' : 'rgba(255,255,255,0.04)'
-  const border = isLight ? 'rgba(15,23,42,0.08)' : 'rgba(255,255,255,0.08)'
+  const bg = isLight ? '#FFFFFF' : '#F8FAFC'
+  const border = isLight ? 'rgba(15,23,42,0.08)' : '#E2E8F0'
   const ink = isLight ? '#0A0F2E' : '#fff'
-  const muted = isLight ? 'rgba(15,23,42,0.5)' : 'rgba(255,255,255,0.45)'
+  const muted = isLight ? 'rgba(15,23,42,0.5)' : '#64748B'
 
   const blockLabel = s.type === 'solana' ? 'Slot' : s.type === 'stellar' ? 'Ledger' : 'Block'
 
@@ -52,7 +52,7 @@ export default function ChainStatePanel({ toolId = 'dashboard', theme = 'light' 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 10 }}>
         {metrics.map(m => (
           <div key={m.label} style={{
-            background: isLight ? 'rgba(15,23,42,0.02)' : 'rgba(255,255,255,0.03)',
+            background: isLight ? 'rgba(15,23,42,0.02)' : '#ffffff',
             border: `1px solid ${border}`, borderRadius: 11, padding: '10px 12px',
           }}>
             <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', color: muted, textTransform: 'uppercase' }}>{m.label}</div>

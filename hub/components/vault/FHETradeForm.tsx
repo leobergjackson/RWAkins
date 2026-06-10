@@ -6,10 +6,10 @@ import { toast } from '@/lib/toast'
 import { CIPHERVAULT_ACCENT, FALLBACK_ASSET_META } from '@/lib/vault-fallbacks'
 
 const ACCENT = CIPHERVAULT_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const CARD   = '#111111'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.4)'
+const BORDER = '#E2E8F0'
+const CARD   = '#ffffff'
+const MUTED  = '#475569'
+const MUTED2 = '#64748B'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
 const apiBase = process.env.NEXT_PUBLIC_CIPHER_URL || process.env.NEXT_PUBLIC_CIPHER_API || ''
@@ -108,7 +108,7 @@ export default function FHETradeForm({ walletAddress }: { walletAddress?: string
           display: 'grid', placeItems: 'center', fontSize: 16, flexShrink: 0,
         }}>🔒</div>
         <div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 4 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#0A0F2E', marginBottom: 4 }}>
             Fully Homomorphic Encryption (FHE) Trades
           </div>
           <div style={{ fontSize: 12, color: MUTED, lineHeight: 1.6 }}>
@@ -136,7 +136,7 @@ export default function FHETradeForm({ walletAddress }: { walletAddress?: string
           <div style={{ display: 'flex', justifyContent: 'center', margin: '14px 0' }}>
             <button onClick={swap} style={{
               width: 36, height: 36, borderRadius: 10,
-              background: 'rgba(255,255,255,0.05)',
+              background: '#F8FAFC',
               border: `1px solid ${BORDER}`,
               color: ACCENT, fontSize: 16,
               cursor: 'pointer', transition: 'all 0.15s',
@@ -166,11 +166,11 @@ export default function FHETradeForm({ walletAddress }: { walletAddress?: string
               ]).map(p => (
                 <button key={p.id} onClick={() => setPrivacy(p.id)} style={{
                   textAlign: 'left', padding: '10px 14px', borderRadius: 8,
-                  background: privacy === p.id ? `${ACCENT}10` : 'rgba(255,255,255,0.02)',
+                  background: privacy === p.id ? `${ACCENT}10` : '#F8FAFC',
                   border: `1px solid ${privacy === p.id ? ACCENT : BORDER}`,
                   cursor: 'pointer', transition: 'all 0.15s',
                 }}>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: privacy === p.id ? ACCENT : '#fff' }}>{p.label}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: privacy === p.id ? ACCENT : '#0A0F2E' }}>{p.label}</div>
                   <div style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>{p.desc}</div>
                 </button>
               ))}
@@ -184,7 +184,7 @@ export default function FHETradeForm({ walletAddress }: { walletAddress?: string
               {['0.5', '1', '2'].map(s => (
                 <button key={s} onClick={() => setSlippage(s)} style={{
                   padding: '6px 14px', borderRadius: 6,
-                  background: slippage === s ? `${ACCENT}20` : 'rgba(255,255,255,0.04)',
+                  background: slippage === s ? `${ACCENT}20` : '#F8FAFC',
                   border: `1px solid ${slippage === s ? ACCENT : BORDER}`,
                   color: slippage === s ? ACCENT : MUTED,
                   fontSize: 12, fontWeight: 600, cursor: 'pointer',
@@ -199,7 +199,7 @@ export default function FHETradeForm({ walletAddress }: { walletAddress?: string
           {amountNum > 0 && (
             <div style={{
               marginTop: 18, padding: 14,
-              background: 'rgba(255,255,255,0.02)',
+              background: '#F8FAFC',
               border: `1px solid ${BORDER}`, borderRadius: 8,
               display: 'flex', flexDirection: 'column', gap: 6,
             }}>
@@ -232,7 +232,7 @@ export default function FHETradeForm({ walletAddress }: { walletAddress?: string
             {step !== 'idle' && step !== 'done' && (
               <div style={{
                 padding: 16, borderRadius: 8,
-                background: 'rgba(255,255,255,0.02)',
+                background: '#F8FAFC',
                 border: `1px solid ${ACCENT}40`,
                 display: 'flex', alignItems: 'center', gap: 12,
               }}>
@@ -241,7 +241,7 @@ export default function FHETradeForm({ walletAddress }: { walletAddress?: string
                   border: `2px solid ${ACCENT}40`, borderTopColor: ACCENT,
                   animation: 'spin 0.7s linear infinite',
                 }} />
-                <span style={{ fontSize: 12, color: '#fff' }}>{STEP_LABELS[step]}</span>
+                <span style={{ fontSize: 12, color: '#0A0F2E' }}>{STEP_LABELS[step]}</span>
                 <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
               </div>
             )}
@@ -252,7 +252,7 @@ export default function FHETradeForm({ walletAddress }: { walletAddress?: string
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                   <span style={{ color: '#10b981', fontSize: 18 }}>✓</span>
-                  <span style={{ fontSize: 13, color: '#fff', fontWeight: 700 }}>Private Trade Executed</span>
+                  <span style={{ fontSize: 13, color: '#0A0F2E', fontWeight: 700 }}>Private Trade Executed</span>
                 </div>
                 <div style={{ fontSize: 11, color: MUTED, marginBottom: 6 }}>
                   Sold: <span style={{ color: ACCENT, fontFamily: MONO }}>[ENCRYPTED]</span> · Received: <span style={{ color: ACCENT, fontFamily: MONO }}>[ENCRYPTED]</span>
@@ -270,7 +270,7 @@ export default function FHETradeForm({ walletAddress }: { walletAddress?: string
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               Recent FHE Trades
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
               Network feed
             </div>
           </div>
@@ -293,7 +293,7 @@ export default function FHETradeForm({ walletAddress }: { walletAddress?: string
               {RECENT_TRADES.map((t, i) => (
                 <tr key={i} style={{ borderBottom: `1px solid ${BORDER}` }}>
                   <td style={{ padding: '10px 0', color: MUTED }}>{t.time}</td>
-                  <td style={{ padding: '10px 0', color: '#fff', fontFamily: MONO }}>{t.pair}</td>
+                  <td style={{ padding: '10px 0', color: '#0A0F2E', fontFamily: MONO }}>{t.pair}</td>
                   <td style={{ padding: '10px 0', color: ACCENT, fontFamily: MONO }}>[PRIVATE]</td>
                   <td style={{ padding: '10px 0', color: '#10b981', fontSize: 11 }}>{t.proof}</td>
                 </tr>
@@ -323,7 +323,7 @@ function AssetInput({
   const [open, setOpen] = useState(false)
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.04)',
+      background: '#F8FAFC',
       border: `1px solid ${BORDER}`,
       borderRadius: 8, padding: '10px 14px',
       position: 'relative',
@@ -331,10 +331,10 @@ function AssetInput({
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <button onClick={() => setOpen(o => !o)} style={{
           display: 'flex', alignItems: 'center', gap: 8,
-          background: 'rgba(255,255,255,0.04)',
+          background: '#F8FAFC',
           border: `1px solid ${BORDER}`,
           borderRadius: 6, padding: '6px 10px',
-          color: '#fff', fontSize: 13, fontWeight: 600,
+          color: '#0A0F2E', fontSize: 13, fontWeight: 600,
           cursor: 'pointer',
         }}>
           <span style={{ fontSize: 16 }}>{asset.icon}</span>
@@ -348,7 +348,7 @@ function AssetInput({
           disabled={!editable}
           style={{
             flex: 1, background: 'transparent', border: 'none', outline: 'none',
-            color: '#fff', fontSize: 18, fontFamily: MONO, textAlign: 'right',
+            color: '#0A0F2E', fontSize: 18, fontFamily: MONO, textAlign: 'right',
           }}
         />
       </div>
@@ -359,7 +359,7 @@ function AssetInput({
       {open && (
         <div style={{
           position: 'absolute', top: 'calc(100% + 4px)', left: 0,
-          background: '#0C0C0C', border: `1px solid ${BORDER}`,
+          background: '#ffffff', border: `1px solid ${BORDER}`,
           borderRadius: 8, padding: 4, zIndex: 10, minWidth: 140,
           boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
         }}>
@@ -368,9 +368,9 @@ function AssetInput({
               display: 'flex', alignItems: 'center', gap: 8,
               width: '100%', padding: '8px 12px', borderRadius: 6,
               background: 'transparent', border: 'none', cursor: 'pointer',
-              color: '#fff', fontSize: 13, textAlign: 'left',
+              color: '#0A0F2E', fontSize: 13, textAlign: 'left',
             }}
-              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.05)')}
+              onMouseEnter={e => (e.currentTarget.style.background = '#F8FAFC')}
               onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
             >
               <span>{a.icon}</span>
@@ -388,14 +388,14 @@ function Row({ label, value }: { label: string; value: string }) {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
       <span style={{ color: MUTED }}>{label}</span>
-      <span style={{ color: '#fff', fontFamily: MONO }}>{value}</span>
+      <span style={{ color: '#0A0F2E', fontFamily: MONO }}>{value}</span>
     </div>
   )
 }
 
 const primaryBtn: React.CSSProperties = {
   padding: '12px 18px', borderRadius: 8,
-  background: ACCENT, color: '#fff',
+  background: ACCENT, color: '#0A0F2E',
   border: 'none', fontSize: 13, fontWeight: 600,
   cursor: 'pointer',
 }

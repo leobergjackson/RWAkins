@@ -108,7 +108,7 @@ export default function LegacyLandingPage() {
           width: 32px;
           height: 32px;
           border-color: #3B5BFA;
-          background-color: rgba(245, 197, 24, 0.08);
+          background-color: rgba(59, 91, 250, 0.08);
         }
 
         @media (max-width: 768px) {
@@ -124,7 +124,7 @@ export default function LegacyLandingPage() {
           transform: translateX(-50%);
           width: 800px;
           height: 600px;
-          background: radial-gradient(ellipse, rgba(245, 197, 24, 0.15) 0%, transparent 60%);
+          background: radial-gradient(ellipse, rgba(59, 91, 250, 0.15) 0%, transparent 60%);
           pointer-events: none;
           z-index: 0;
         }
@@ -165,7 +165,7 @@ export default function LegacyLandingPage() {
         header.nav-bar {
           background-color: rgba(250, 250, 250, 0.85);
           backdrop-filter: blur(12px);
-          border-bottom: 1px solid rgba(245, 197, 24, 0.3);
+          border-bottom: 1px solid rgba(59, 91, 250, 0.3);
           position: sticky;
           top: 0;
           z-index: 1000;
@@ -230,7 +230,7 @@ export default function LegacyLandingPage() {
         /* ── Cards ── */
         .glass-card {
           background: #FFFFFF;
-          border: 1px solid rgba(245, 197, 24, 0.4);
+          border: 1px solid rgba(59, 91, 250, 0.4);
           border-radius: 24px;
           padding: 32px;
           box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
@@ -342,7 +342,7 @@ export default function LegacyLandingPage() {
           {/* Wallet State */}
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             {wallet ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#FFFFFF', padding: '8px 16px', borderRadius: 24, border: '1px solid rgba(245,197,24,0.3)', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#FFFFFF', padding: '8px 16px', borderRadius: 24, border: '1px solid rgba(59,91,250,0.3)', boxShadow: '0 4px 12px rgba(0,0,0,0.03)' }}>
                 <span style={{ fontFamily: 'monospace', fontSize: 14, color: '#1A1A1A', fontWeight: 500 }}>
                   {truncateAddress(wallet)}
                 </span>
@@ -395,7 +395,7 @@ export default function LegacyLandingPage() {
               { href: '/legacy/tokenization', icon: '🪙', label: 'DLT Token', desc: 'Link QIEDEX asset token' },
             ].map((item) => (
               <Link key={item.href} href={item.href} style={{
-                background: '#FFFFFF', border: '1px solid rgba(245, 197, 24, 0.3)', borderRadius: 16,
+                background: '#FFFFFF', border: '1px solid rgba(59, 91, 250, 0.3)', borderRadius: 16,
                 padding: '20px', display: 'flex', alignItems: 'center', gap: 16, textDecoration: 'none',
                 transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: '0 4px 12px rgba(0,0,0,0.02)'
               }}
@@ -420,7 +420,7 @@ export default function LegacyLandingPage() {
 
         {/* Disclaimer */}
         <div style={{
-          background: 'rgba(245,197,24,0.08)', border: '1px solid rgba(245,197,24,0.2)',
+          background: '#ffffff', border: '1px solid rgba(59,91,250,0.2)',
           borderRadius: 16, padding: '24px', maxWidth: 800, margin: '0 auto', textAlign: 'center'
         }}>
           <p style={{ fontSize: 13, color: 'rgba(26,26,26,0.6)', margin: 0, lineHeight: 1.6 }}>

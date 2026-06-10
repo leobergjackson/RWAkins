@@ -334,7 +334,7 @@ export default function DevelopersPage() {
 
   return (
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Back to Dashboard</Link>
@@ -342,15 +342,15 @@ export default function DevelopersPage() {
             <span style={{ fontSize: 13, color: '#aaa' }}>Developer Portal</span>
           </div>
           <h1 style={{ margin: '6px 0 0', fontSize: 28, fontWeight: 800, letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span>🛠️</span> Kubryx Developer Platform
+            <span>🛠️</span> RWAkins Developer Platform
           </h1>
         </div>
       </header>
 
       {/* Gateway Status Controller Card */}
-      <section className="card" style={{ marginBottom: 24, display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap', background: 'linear-gradient(180deg, rgba(245, 197, 24, 0.02) 0%, rgba(0,0,0,0) 100%)', border: '1px solid rgba(245, 197, 24, 0.2)' }}>
+      <section className="card" style={{ marginBottom: 24, display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap', background: 'linear-gradient(180deg, rgba(59, 91, 250, 0.02) 0%, rgba(0,0,0,0) 100%)', border: '1px solid rgba(59, 91, 250, 0.2)' }}>
         <div>
-          <h3 style={{ margin: '0 0 4px', fontSize: 14, color: '#F5C518', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          <h3 style={{ margin: '0 0 4px', fontSize: 14, color: '#3B5BFA', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             Gateway Simulation Controller
           </h3>
           <p style={{ margin: 0, fontSize: 12, color: '#ccc' }}>
@@ -363,9 +363,9 @@ export default function DevelopersPage() {
             onClick={() => { setGatewayStatus(200); toast.success('API Gateway Status: 200 OK') }}
             className="btn-outline" 
             style={{ 
-              borderColor: gatewayStatus === 200 ? '#10B981' : 'rgba(255,255,255,0.08)', 
+              borderColor: gatewayStatus === 200 ? '#10B981' : '#E2E8F0', 
               background: gatewayStatus === 200 ? 'rgba(16,185,129,0.05)' : 'transparent',
-              color: gatewayStatus === 200 ? '#10B981' : '#fff',
+              color: gatewayStatus === 200 ? '#10B981' : '#0A0F2E',
               fontSize: 12
             }}
           >
@@ -376,9 +376,9 @@ export default function DevelopersPage() {
             onClick={() => { setGatewayStatus(429); toast.success('API Gateway Status: 429 Rate Limited') }}
             className="btn-outline" 
             style={{ 
-              borderColor: gatewayStatus === 429 ? '#EF4444' : 'rgba(255,255,255,0.08)', 
+              borderColor: gatewayStatus === 429 ? '#EF4444' : '#E2E8F0', 
               background: gatewayStatus === 429 ? 'rgba(239,68,68,0.05)' : 'transparent',
-              color: gatewayStatus === 429 ? '#EF4444' : '#fff',
+              color: gatewayStatus === 429 ? '#EF4444' : '#0A0F2E',
               fontSize: 12
             }}
           >
@@ -389,9 +389,9 @@ export default function DevelopersPage() {
             onClick={() => { setGatewayStatus(503); toast.success('API Gateway Status: 503 RPC Degraded') }}
             className="btn-outline" 
             style={{ 
-              borderColor: gatewayStatus === 503 ? '#F5C518' : 'rgba(255,255,255,0.08)', 
-              background: gatewayStatus === 503 ? 'rgba(245,197,24,0.05)' : 'transparent',
-              color: gatewayStatus === 503 ? '#F5C518' : '#fff',
+              borderColor: gatewayStatus === 503 ? '#3B5BFA' : '#E2E8F0', 
+              background: gatewayStatus === 503 ? 'rgba(59,91,250,0.05)' : 'transparent',
+              color: gatewayStatus === 503 ? '#3B5BFA' : '#0A0F2E',
               fontSize: 12
             }}
           >
@@ -421,9 +421,9 @@ export default function DevelopersPage() {
                     justifyContent: 'flex-start',
                     gap: 10,
                     fontSize: 12,
-                    borderColor: activeCategory === cat.id ? '#F5C518' : 'rgba(255,255,255,0.08)',
-                    background: activeCategory === cat.id ? 'rgba(245,197,24,0.04)' : 'transparent',
-                    color: activeCategory === cat.id ? '#F5C518' : '#fff'
+                    borderColor: activeCategory === cat.id ? '#3B5BFA' : '#E2E8F0',
+                    background: activeCategory === cat.id ? 'rgba(59,91,250,0.04)' : 'transparent',
+                    color: activeCategory === cat.id ? '#3B5BFA' : '#0A0F2E'
                   }}
                 >
                   <span>{cat.icon}</span> {cat.label}
@@ -449,8 +449,8 @@ export default function DevelopersPage() {
                         flexDirection: 'column',
                         alignItems: 'flex-start',
                         gap: 4,
-                        borderColor: isActive ? '#F5C518' : 'rgba(255,255,255,0.08)',
-                        background: isActive ? 'rgba(245,197,24,0.04)' : '#000'
+                        borderColor: isActive ? '#3B5BFA' : '#E2E8F0',
+                        background: isActive ? 'rgba(59,91,250,0.04)' : '#ffffff'
                       }}
                     >
                       <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
@@ -466,9 +466,9 @@ export default function DevelopersPage() {
                         >
                           {ep.method}
                         </span>
-                        <strong style={{ fontSize: 12, color: isActive ? '#F5C518' : '#fff' }}>{ep.path}</strong>
+                        <strong style={{ fontSize: 12, color: isActive ? '#3B5BFA' : '#0A0F2E' }}>{ep.path}</strong>
                       </div>
-                      <span style={{ fontSize: 9, opacity: 0.6, background: 'rgba(255,255,255,0.04)', padding: '1px 4px', borderRadius: 2 }}>
+                      <span style={{ fontSize: 9, opacity: 0.6, background: '#F8FAFC', padding: '1px 4px', borderRadius: 2 }}>
                         {ep.tool}
                       </span>
                     </button>
@@ -487,24 +487,24 @@ export default function DevelopersPage() {
             <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               
               {/* Endpoint Header */}
-              <div style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: 12 }}>
+              <div style={{ borderBottom: '1px solid #F8FAFC', paddingBottom: 12 }}>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                   <span style={{ fontSize: 10, background: activeEndpoint.method === 'POST' ? 'rgba(59,130,246,0.1)' : 'rgba(16,185,129,0.1)', color: activeEndpoint.method === 'POST' ? '#3B82F6' : '#10B981', padding: '3px 8px', borderRadius: 4, fontWeight: 800 }}>
                     {activeEndpoint.method}
                   </span>
-                  <h2 style={{ fontSize: 18, margin: 0, color: '#fff' }}>{activeEndpoint.path}</h2>
+                  <h2 style={{ fontSize: 18, margin: 0, color: '#0A0F2E' }}>{activeEndpoint.path}</h2>
                 </div>
                 <p style={{ margin: '6px 0 0', fontSize: 13, color: '#ccc' }}>{activeEndpoint.description}</p>
               </div>
 
               {/* Param definitions */}
               <div>
-                <h4 style={{ margin: '0 0 6px', fontSize: 12, color: '#F5C518', textTransform: 'uppercase' }}>Parameters</h4>
+                <h4 style={{ margin: '0 0 6px', fontSize: 12, color: '#3B5BFA', textTransform: 'uppercase' }}>Parameters</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   {activeEndpoint.params.map((p) => (
-                    <div key={p.name} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', padding: '6px 12px', borderRadius: 6 }}>
+                    <div key={p.name} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', padding: '6px 12px', borderRadius: 6 }}>
                       <span>
-                        <code style={{ color: '#F5C518', fontWeight: 600 }}>{p.name}</code>
+                        <code style={{ color: '#3B5BFA', fontWeight: 600 }}>{p.name}</code>
                         <span style={{ color: '#666', fontSize: 10, marginLeft: 6 }}>({p.type})</span>
                         {p.required && <span style={{ color: '#EF4444', fontSize: 9, marginLeft: 6, fontWeight: 800 }}>REQUIRED</span>}
                       </span>
@@ -517,7 +517,7 @@ export default function DevelopersPage() {
               {/* Payload Linter & Validation Alert */}
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                  <h4 style={{ margin: 0, fontSize: 12, color: '#F5C518', textTransform: 'uppercase' }}>Request Body (Payload Editor)</h4>
+                  <h4 style={{ margin: 0, fontSize: 12, color: '#3B5BFA', textTransform: 'uppercase' }}>Request Body (Payload Editor)</h4>
                   {activeEndpoint.method === 'POST' && (
                     <span style={{ fontSize: 10, color: '#888' }}>JSON compliant linter active</span>
                   )}
@@ -531,8 +531,8 @@ export default function DevelopersPage() {
                     width: '100%',
                     height: 120,
                     padding: 12,
-                    background: '#040404',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: 'var(--cloud-bg)',
+                    border: '1px solid #E2E8F0',
                     borderRadius: 8,
                     color: activeEndpoint.method === 'GET' ? '#666' : '#10B981',
                     fontFamily: 'monospace',
@@ -561,26 +561,26 @@ export default function DevelopersPage() {
 
               {/* HTTP Request / Response Timeline UI */}
               {timelineMetrics && (
-                <div style={{ background: '#040404', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 8, padding: 14 }}>
-                  <h4 style={{ margin: '0 0 10px', fontSize: 11, color: '#F5C518', textTransform: 'uppercase' }}>
+                <div style={{ background: 'var(--cloud-bg)', border: '1px solid #F1F5F9', borderRadius: 8, padding: 14 }}>
+                  <h4 style={{ margin: '0 0 10px', fontSize: 11, color: '#3B5BFA', textTransform: 'uppercase' }}>
                     API roundtrip Execution Timeline
                   </h4>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, fontSize: 10 }}>
-                    <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', padding: 8, borderRadius: 4, textAlign: 'center' }}>
+                    <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', padding: 8, borderRadius: 4, textAlign: 'center' }}>
                       <span style={{ color: '#888', display: 'block', marginBottom: 2 }}>DNS Lookup</span>
                       <strong>{timelineMetrics.dns}ms</strong>
                     </div>
-                    <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', padding: 8, borderRadius: 4, textAlign: 'center' }}>
+                    <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', padding: 8, borderRadius: 4, textAlign: 'center' }}>
                       <span style={{ color: '#888', display: 'block', marginBottom: 2 }}>TCP Handshake</span>
                       <strong>{timelineMetrics.tcp}ms</strong>
                     </div>
-                    <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', padding: 8, borderRadius: 4, textAlign: 'center' }}>
+                    <div style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', padding: 8, borderRadius: 4, textAlign: 'center' }}>
                       <span style={{ color: '#888', display: 'block', marginBottom: 2 }}>Gateway Proxy</span>
                       <strong>{timelineMetrics.proxy}ms</strong>
                     </div>
-                    <div style={{ background: 'rgba(245,197,24,0.03)', border: '1px solid rgba(245,197,24,0.2)', padding: 8, borderRadius: 4, textAlign: 'center' }}>
-                      <span style={{ color: '#F5C518', display: 'block', marginBottom: 2 }}>Total Roundtrip</span>
-                      <strong style={{ color: '#F5C518' }}>{timelineMetrics.roundtrip}ms</strong>
+                    <div style={{ background: '#ffffff', border: '1px solid rgba(59,91,250,0.2)', padding: 8, borderRadius: 4, textAlign: 'center' }}>
+                      <span style={{ color: '#3B5BFA', display: 'block', marginBottom: 2 }}>Total Roundtrip</span>
+                      <strong style={{ color: '#3B5BFA' }}>{timelineMetrics.roundtrip}ms</strong>
                     </div>
                   </div>
                 </div>
@@ -605,12 +605,12 @@ export default function DevelopersPage() {
                 <div 
                   style={{ 
                     padding: 12, 
-                    background: '#030303', 
-                    border: '1px solid rgba(255,255,255,0.05)', 
+                    background: 'var(--cloud-bg)', 
+                    border: '1px solid #F8FAFC', 
                     borderRadius: 8, 
                     fontSize: 11, 
                     fontFamily: 'monospace', 
-                    color: gatewayStatus === 200 ? '#10B981' : gatewayStatus === 429 ? '#EF4444' : '#F5C518',
+                    color: gatewayStatus === 200 ? '#10B981' : gatewayStatus === 429 ? '#EF4444' : '#3B5BFA',
                     minHeight: 140,
                     overflowX: 'auto',
                     display: 'flex',
@@ -651,15 +651,15 @@ export default function DevelopersPage() {
           {/* 2. Webhooks Simulator Workspace */}
           {activeCategory === 'webhooks' && (
             <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <div style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: 12 }}>
-                <h2 style={{ fontSize: 18, margin: 0, color: '#fff' }}>Webhook Simulator Engine</h2>
+              <div style={{ borderBottom: '1px solid #F8FAFC', paddingBottom: 12 }}>
+                <h2 style={{ fontSize: 18, margin: 0, color: '#0A0F2E' }}>Webhook Simulator Engine</h2>
                 <p style={{ margin: '6px 0 0', fontSize: 13, color: '#ccc' }}>
                   Register destination URLs to receive live simulated operational alerts and anomaly alerts.
                 </p>
               </div>
 
               <div>
-                <label style={{ fontSize: 12, color: '#F5C518', display: 'block', marginBottom: 6, textTransform: 'uppercase' }}>
+                <label style={{ fontSize: 12, color: '#3B5BFA', display: 'block', marginBottom: 6, textTransform: 'uppercase' }}>
                   Destination Webhook URL
                 </label>
                 <input
@@ -670,9 +670,9 @@ export default function DevelopersPage() {
                     width: '100%',
                     padding: '8px 12px',
                     borderRadius: 8,
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    background: '#040404',
-                    color: '#fff',
+                    border: '1px solid #E2E8F0',
+                    background: 'var(--cloud-bg)',
+                    color: '#0A0F2E',
                     fontFamily: 'monospace',
                     fontSize: 12,
                     outline: 'none'
@@ -682,7 +682,7 @@ export default function DevelopersPage() {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <div>
-                  <label style={{ fontSize: 12, color: '#F5C518', display: 'block', marginBottom: 6, textTransform: 'uppercase' }}>
+                  <label style={{ fontSize: 12, color: '#3B5BFA', display: 'block', marginBottom: 6, textTransform: 'uppercase' }}>
                     Select Simulated Hook Event
                   </label>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -695,9 +695,9 @@ export default function DevelopersPage() {
                           textAlign: 'left',
                           fontSize: 12,
                           padding: '10px 12px',
-                          borderColor: selectedWebhookIndex === i ? '#F5C518' : 'rgba(255,255,255,0.08)',
-                          background: selectedWebhookIndex === i ? 'rgba(245,197,24,0.04)' : 'transparent',
-                          color: selectedWebhookIndex === i ? '#F5C518' : '#fff'
+                          borderColor: selectedWebhookIndex === i ? '#3B5BFA' : '#E2E8F0',
+                          background: selectedWebhookIndex === i ? 'rgba(59,91,250,0.04)' : 'transparent',
+                          color: selectedWebhookIndex === i ? '#3B5BFA' : '#0A0F2E'
                         }}
                       >
                         <strong>{sch.event}</strong>
@@ -719,14 +719,14 @@ export default function DevelopersPage() {
                 </div>
 
                 <div>
-                  <label style={{ fontSize: 12, color: '#F5C518', display: 'block', marginBottom: 6, textTransform: 'uppercase' }}>
+                  <label style={{ fontSize: 12, color: '#3B5BFA', display: 'block', marginBottom: 6, textTransform: 'uppercase' }}>
                     Webhook Propagations logs
                   </label>
                   <div 
                     style={{ 
                       padding: 12, 
-                      background: '#030303', 
-                      border: '1px solid rgba(255,255,255,0.05)', 
+                      background: 'var(--cloud-bg)', 
+                      border: '1px solid #F8FAFC', 
                       borderRadius: 8,
                       maxHeight: 280,
                       overflowY: 'auto',
@@ -741,7 +741,7 @@ export default function DevelopersPage() {
                       </p>
                     ) : (
                       webhookLogs.map((log) => (
-                        <div key={log.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: 8 }}>
+                        <div key={log.id} style={{ borderBottom: '1px solid #F8FAFC', paddingBottom: 8 }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, marginBottom: 2 }}>
                             <strong style={{ color: '#10B981' }}>{log.event}</strong>
                             <span style={{ color: '#888' }}>{log.timestamp}</span>
@@ -749,7 +749,7 @@ export default function DevelopersPage() {
                           <span style={{ fontSize: 9, background: 'rgba(16,185,129,0.1)', color: '#10B981', padding: '1px 4px', borderRadius: 2 }}>
                             {log.status.toUpperCase()}
                           </span>
-                          <pre style={{ margin: '4px 0 0', padding: 6, background: '#080808', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 4, fontSize: 9, fontFamily: 'monospace', color: '#ccc', overflowX: 'auto' }}>
+                          <pre style={{ margin: '4px 0 0', padding: 6, background: '#ffffff', border: '1px solid #F8FAFC', borderRadius: 4, fontSize: 9, fontFamily: 'monospace', color: '#ccc', overflowX: 'auto' }}>
                             {log.payload}
                           </pre>
                         </div>
@@ -764,10 +764,10 @@ export default function DevelopersPage() {
           {/* 3. Event Schema Browser */}
           {activeCategory === 'schemas' && (
             <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <div style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: 12 }}>
-                <h2 style={{ fontSize: 18, margin: 0, color: '#fff' }}>Unified Event Schema Browser</h2>
+              <div style={{ borderBottom: '1px solid #F8FAFC', paddingBottom: 12 }}>
+                <h2 style={{ fontSize: 18, margin: 0, color: '#0A0F2E' }}>Unified Event Schema Browser</h2>
                 <p style={{ margin: '6px 0 0', fontSize: 13, color: '#ccc' }}>
-                  Kubryx orchestrates cross-tool states using standard structured schemas. Review specifications.
+                  RWAkins orchestrates cross-tool states using standard structured schemas. Review specifications.
                 </p>
               </div>
 
@@ -784,10 +784,10 @@ export default function DevelopersPage() {
                     schema: `{\n  "id": "os-evt-171597...",\n  "tool": "Stealth Execution Suite",\n  "action": "Triggered CFO bot allocation review",\n  "wallet": "0x08DA91C8...",\n  "chain": "Mantle Network",\n  "timestamp": "2026-05-17T19:34:17.000Z",\n  "explorerUrl": "https://explorer.sepolia.mantle.xyz/address/..."\n}`
                   }
                 ].map((sch) => (
-                  <div key={sch.title} style={{ padding: 12, background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 8 }}>
-                    <h4 style={{ margin: 0, fontSize: 13, color: '#F5C518' }}>{sch.title}</h4>
+                  <div key={sch.title} style={{ padding: 12, background: '#ffffff', border: '1px solid #F8FAFC', borderRadius: 8 }}>
+                    <h4 style={{ margin: 0, fontSize: 13, color: '#3B5BFA' }}>{sch.title}</h4>
                     <p style={{ margin: '4px 0 10px', fontSize: 11, color: '#888' }}>{sch.desc}</p>
-                    <pre style={{ margin: 0, padding: 8, background: '#040404', border: '1px solid rgba(255,255,255,0.02)', borderRadius: 4, fontSize: 9, fontFamily: 'monospace', color: '#10B981', overflowX: 'auto' }}>
+                    <pre style={{ margin: 0, padding: 8, background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 4, fontSize: 9, fontFamily: 'monospace', color: '#10B981', overflowX: 'auto' }}>
                       {sch.schema}
                     </pre>
                   </div>
@@ -799,8 +799,8 @@ export default function DevelopersPage() {
           {/* 4. Diagnostics Trace Logs */}
           {activeCategory === 'logs' && (
             <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <div style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: 12 }}>
-                <h2 style={{ fontSize: 18, margin: 0, color: '#fff' }}>Unified Diagnostics Trace Logs</h2>
+              <div style={{ borderBottom: '1px solid #F8FAFC', paddingBottom: 12 }}>
+                <h2 style={{ fontSize: 18, margin: 0, color: '#0A0F2E' }}>Unified Diagnostics Trace Logs</h2>
                 <p style={{ margin: '6px 0 0', fontSize: 13, color: '#ccc' }}>
                   Live API gateway telemetry trace logs tracking client interactions and backend latency.
                 </p>
@@ -813,13 +813,13 @@ export default function DevelopersPage() {
                   display: 'flex', 
                   flexDirection: 'column', 
                   gap: 8,
-                  background: '#030303',
-                  border: '1px solid rgba(255,255,255,0.05)',
+                  background: 'var(--cloud-bg)',
+                  border: '1px solid #F8FAFC',
                   borderRadius: 8,
                   padding: 12
                 }}
               >
-                <div style={{ display: 'flex', gap: 10, fontSize: 10, color: '#666', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: 6 }}>
+                <div style={{ display: 'flex', gap: 10, fontSize: 10, color: '#666', borderBottom: '1px solid #F8FAFC', paddingBottom: 6 }}>
                   <span style={{ width: 60 }}>METHOD</span>
                   <span style={{ width: 150 }}>ENDPOINT</span>
                   <span style={{ width: 60 }}>STATUS</span>
@@ -835,9 +835,9 @@ export default function DevelopersPage() {
                 ].map((log, i) => (
                   <div key={i} style={{ display: 'flex', gap: 10, fontSize: 11, fontFamily: 'monospace', color: log.status === 200 ? '#10B981' : '#EF4444', paddingBottom: 4 }}>
                     <span style={{ width: 60, fontWeight: 'bold' }}>{log.m}</span>
-                    <span style={{ width: 150, color: '#fff' }}>{log.path}</span>
+                    <span style={{ width: 150, color: '#0A0F2E' }}>{log.path}</span>
                     <span style={{ width: 60 }}>{log.status}</span>
-                    <span style={{ width: 70, color: '#F5C518' }}>{log.lat}ms</span>
+                    <span style={{ width: 70, color: '#3B5BFA' }}>{log.lat}ms</span>
                     <span style={{ flex: 1, color: '#666', fontSize: 10 }}>{log.agent}</span>
                   </div>
                 ))}

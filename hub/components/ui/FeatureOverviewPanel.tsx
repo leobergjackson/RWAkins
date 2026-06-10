@@ -34,7 +34,7 @@ export default function FeatureOverviewPanel({
           right: '30px',
           zIndex: 9999,
           background: themeColor,
-          color: '#fff',
+          color: '#0A0F2E',
           border: 'none',
           borderRadius: '50%',
           width: '56px',
@@ -114,7 +114,7 @@ export default function FeatureOverviewPanel({
             </div>
             
             <div style={{ padding: '16px 24px', background: `${themeColor}10`, fontSize: '12px', color: `${themeColor}`, fontWeight: 600, textAlign: 'center' }}>
-              Kubryx OS Hackathon Submission
+              RWAkins OS Hackathon Submission
             </div>
           </motion.div>
         )}

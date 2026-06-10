@@ -66,10 +66,10 @@ export default function ChainSwitcher({ toolId, theme = 'dark', compact = false 
     setOpen(false)
   }
 
-  const bg = isLight ? '#FFFFFF' : 'rgba(255,255,255,0.04)'
-  const border = isLight ? 'rgba(15,23,42,0.12)' : 'rgba(255,255,255,0.1)'
+  const bg = isLight ? '#FFFFFF' : '#F8FAFC'
+  const border = isLight ? 'rgba(15,23,42,0.12)' : '#E2E8F0'
   const textCol = isLight ? '#0A0F2E' : '#fff'
-  const subCol = isLight ? 'rgba(15,23,42,0.5)' : 'rgba(255,255,255,0.45)'
+  const subCol = isLight ? 'rgba(15,23,42,0.5)' : '#64748B'
   const menuBg = isLight ? '#FFFFFF' : '#0C0C0C'
 
   return (
@@ -143,7 +143,7 @@ export default function ChainSwitcher({ toolId, theme = 'dark', compact = false 
                   border: 'none', cursor: 'pointer', textAlign: 'left',
                   color: textCol,
                 }}
-                onMouseEnter={e => { if (!selected) (e.currentTarget as HTMLElement).style.background = isLight ? 'rgba(15,23,42,0.04)' : 'rgba(255,255,255,0.04)' }}
+                onMouseEnter={e => { if (!selected) (e.currentTarget as HTMLElement).style.background = isLight ? 'rgba(15,23,42,0.04)' : '#F8FAFC' }}
                 onMouseLeave={e => { if (!selected) (e.currentTarget as HTMLElement).style.background = 'transparent' }}
               >
                 <Dot color={c.color} />

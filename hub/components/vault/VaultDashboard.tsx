@@ -22,10 +22,10 @@ const privacyData = [
 ]
 
 const ACCENT = CIPHERVAULT_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const CARD   = '#111111'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.4)'
+const BORDER = '#E2E8F0'
+const CARD   = '#ffffff'
+const MUTED  = '#475569'
+const MUTED2 = '#64748B'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
 function fmtUsd(n: number) {
@@ -65,7 +65,7 @@ export default function VaultDashboard({
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               {s.label}
             </div>
-            <div style={{ fontSize: 28, fontWeight: 700, color: '#fff', marginTop: 8, letterSpacing: '-0.02em', lineHeight: 1 }}>
+            <div style={{ fontSize: 28, fontWeight: 700, color: '#0A0F2E', marginTop: 8, letterSpacing: '-0.02em', lineHeight: 1 }}>
               {s.value}
             </div>
             <div style={{ fontSize: 11, fontWeight: 600, color: s.changeKind === 'up' ? '#10b981' : s.changeKind === 'down' ? '#ef4444' : MUTED, marginTop: 8 }}>
@@ -88,7 +88,7 @@ export default function VaultDashboard({
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               Vault Overview
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
               Chain breakdown
             </div>
           </div>
@@ -103,15 +103,15 @@ export default function VaultDashboard({
                       display: 'grid', placeItems: 'center',
                       fontSize: 11, fontWeight: 700,
                     }}>{c.symbol[0]}</span>
-                    <span style={{ fontSize: 13, color: '#fff', fontWeight: 600 }}>{c.chain}</span>
+                    <span style={{ fontSize: 13, color: '#0A0F2E', fontWeight: 600 }}>{c.chain}</span>
                     <span style={{ fontSize: 11, color: MUTED2, fontFamily: MONO }}>{c.symbol}</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                    <span style={{ fontSize: 13, color: '#fff', fontWeight: 700, fontFamily: MONO }}>{c.value}</span>
+                    <span style={{ fontSize: 13, color: '#0A0F2E', fontWeight: 700, fontFamily: MONO }}>{c.value}</span>
                     <span style={{ fontSize: 11, color: MUTED2 }}>{c.pct}%</span>
                   </div>
                 </div>
-                <div style={{ height: 8, background: 'rgba(255,255,255,0.04)', borderRadius: 4, overflow: 'hidden' }}>
+                <div style={{ height: 8, background: '#F8FAFC', borderRadius: 4, overflow: 'hidden' }}>
                   <div style={{
                     width: `${c.pct}%`, height: '100%',
                     background: c.color, borderRadius: 4,
@@ -135,7 +135,7 @@ export default function VaultDashboard({
               <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
                 My Vault
               </div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2, fontFamily: MONO }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2, fontFamily: MONO }}>
                 {walletAddress ? `${walletAddress.slice(0, 6)}…${walletAddress.slice(-4)}` : 'Not connected'}
               </div>
             </div>
@@ -184,7 +184,7 @@ export default function VaultDashboard({
                   </defs>
                   <XAxis dataKey="name" stroke={BORDER} fontSize={10} tickLine={false} axisLine={false} />
                   <Tooltip 
-                    contentStyle={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 8, fontSize: 12, color: '#fff' }}
+                    contentStyle={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 8, fontSize: 12, color: '#0A0F2E' }}
                     itemStyle={{ color: ACCENT }}
                   />
                   <Area type="monotone" dataKey="score" stroke={ACCENT} fillOpacity={1} fill="url(#colorScore)" />
@@ -208,7 +208,7 @@ export default function VaultDashboard({
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               Recent Activity
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
               Across the vault
             </div>
           </div>
@@ -232,7 +232,7 @@ export default function VaultDashboard({
                 display: 'grid', placeItems: 'center',
                 fontSize: 14, fontWeight: 700, flexShrink: 0,
               }}>{a.icon}</span>
-              <span style={{ fontSize: 13, color: '#fff', fontWeight: 600, minWidth: 90 }}>{a.protocol}</span>
+              <span style={{ fontSize: 13, color: '#0A0F2E', fontWeight: 600, minWidth: 90 }}>{a.protocol}</span>
               <span style={{ flex: 1, fontSize: 12, color: MUTED }}>{a.detail}</span>
               <span style={{ fontSize: 11, color: MUTED2, fontFamily: MONO }}>{a.address}</span>
               <span style={{ fontSize: 11, color: MUTED2, minWidth: 64, textAlign: 'right' }}>{a.time}</span>
@@ -249,7 +249,7 @@ function SummaryRow({ label, value, accent, color }: { label: string; value: str
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '6px 0' }}>
       <span style={{ fontSize: 12, color: MUTED }}>{label}</span>
-      <span style={{ fontSize: accent ? 16 : 13, fontWeight: 700, color: color || '#fff', fontFamily: MONO }}>{value}</span>
+      <span style={{ fontSize: accent ? 16 : 13, fontWeight: 700, color: color || '#0A0F2E', fontFamily: MONO }}>{value}</span>
     </div>
   )
 }

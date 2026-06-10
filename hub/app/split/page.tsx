@@ -1931,7 +1931,7 @@ export default function SyncSplitPage() {
         </div>
         {stellarLive && stellarStats && (
           <div style={{ fontSize: 12, padding: '6px 16px', borderRadius: 999, background: 'rgba(244,114,182,0.08)', border: '1px solid rgba(244,114,182,0.25)', color: '#BE185D', fontWeight: 600, marginBottom: 16 }}>
-            ⭐ {stellarStats.totalTransactions} Mantle payments → feeds your Kubryx Credit Score
+            ⭐ {stellarStats.totalTransactions} Mantle payments → feeds your RWAkins Credit Score
           </div>
         )}
         <div className="scroll-indicator" onClick={() => scrollTo('stats')}>
@@ -1951,19 +1951,19 @@ export default function SyncSplitPage() {
               href={STELLAR_EXPLORER}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ fontSize: 11, fontFamily: 'monospace', color: 'rgba(255,255,255,0.5)', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', padding: '3px 10px', borderRadius: 99, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 4 }}
+              style={{ fontSize: 11, fontFamily: 'monospace', color: '#64748B', background: '#F1F5F9', border: '1px solid #E2E8F0', padding: '3px 10px', borderRadius: 99, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 4 }}
             >
               {STELLAR_SHORT} ↗
             </a>
             <button
               onClick={() => { refreshStellar(); setStellarLastUpdated(Date.now()) }}
-              style={{ fontSize: 11, padding: '3px 10px', borderRadius: 99, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}
+              style={{ fontSize: 11, padding: '3px 10px', borderRadius: 99, background: '#E2E8F0', border: '1px solid #E2E8F0', color: '#475569', cursor: 'pointer' }}
             >
               ↻ Refresh
             </button>
           </div>
           {stellarLastUpdated && (
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>
+            <span style={{ fontSize: 11, color: '#94A3B8' }}>
               Last updated: {secsAgo(stellarLastUpdated)}
             </span>
           )}
@@ -2158,7 +2158,7 @@ export default function SyncSplitPage() {
                         dataKey="value" nameKey="name"
                         cx="50%" cy="50%"
                         innerRadius={40} outerRadius={70}
-                        stroke="rgba(255,255,255,0.8)"
+                        stroke="#1E293B"
                       >
                         {participantList.map((addr, idx) => {
                           const colors = ['#F9A8D4', '#FBCFE8', '#F472B6', '#E879F9']
@@ -2535,7 +2535,7 @@ export default function SyncSplitPage() {
             Built on Mantle Sepolia
           </div>
           <div className="footer-right-cursive">
-            Part of the Kubryx Sovereign Operations Network • Built by vsrupeshkumar
+            Part of the RWAkins Sovereign Operations Network • Built by vsrupeshkumar
           </div>
         </div>
       </footer>

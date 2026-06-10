@@ -28,13 +28,13 @@ type FeedItem = { id: string; agentType: string; action: string; timestamp: stri
 
 const apiBase = process.env.NEXT_PUBLIC_SHADOW_URL || process.env.NEXT_PUBLIC_SHADOW_API || ''
 
-const P = '#64748B', PL = '#94A3B8', GOLD = '#EAB308', GRN = '#10B981'
+const P = '#64748B', PL = '#94A3B8', GOLD = '#3B5BFA', GRN = '#10B981'
 const RED = '#EF4444', ORG = '#F97316', BLU = '#3B82F6'
 const BG = '#F8FAFC', MONO = '"JetBrains Mono","Fira Code","Courier New",monospace'
-const CARD = 'rgba(255,255,255,0.85)', BORDER = 'rgba(255,255,255,0.6)'
+const CARD = '#1E293B', BORDER = '#475569'
 
 const DEPTS = [
-  { type:'cfo',         name:'CFO Agent',         icon:'💰', role:'Yield Operations Hub oversight, rebalancing & capital allocation', color:'#EAB308', bg:'rgba(234,179,8,0.15)',    bd:'rgba(234,179,8,0.3)',    metric:'12,480.50', unit:'MNT',    label:'Yield Operations Hub Balance',   action:'Rebalance Yield Operations Hub' },
+  { type:'cfo',         name:'CFO Agent',         icon:'💰', role:'Yield Operations Hub oversight, rebalancing & capital allocation', color:'#3B5BFA', bg:'rgba(234,179,8,0.15)',    bd:'rgba(234,179,8,0.3)',    metric:'12,480.50', unit:'MNT',    label:'Yield Operations Hub Balance',   action:'Rebalance Yield Operations Hub' },
   { type:'payroll',     name:'Payroll Agent',      icon:'💸', role:'Real-time MNT salary streaming to team wallets',       color:'#10B981', bg:'rgba(16,185,129,0.15)',  bd:'rgba(16,185,129,0.3)',  metric:'0.00034',   unit:'MNT/s',  label:'Stream Rate',        action:'Process payroll batch' },
   { type:'compliance',  name:'Compliance Agent',   icon:'⚖️', role:'Regulatory rule enforcement & AML screening',         color:'#3B82F6', bg:'rgba(59,130,246,0.15)',  bd:'rgba(59,130,246,0.3)',  metric:'347',       unit:'rules',  label:'Rules Checked',      action:'Run compliance sweep' },
   { type:'audit',       name:'Audit Agent',        icon:'🔍', role:'Immutable transaction logging & on-chain audit trail', color:'#8B5CF6', bg:'rgba(139,92,246,0.15)',  bd:'rgba(139,92,246,0.3)',  metric:'1,847',     unit:'txns',   label:'Txns Logged',        action:'Run full audit' },
@@ -117,7 +117,7 @@ function AgentCard({
       </div>
 
       {/* Metric */}
-      <div style={{ background:'rgba(255,255,255,0.05)', borderRadius:12, padding:'16px', display:'flex', justifyContent:'space-between', alignItems:'center', border: '1px solid rgba(255,255,255,0.08)' }}>
+      <div style={{ background:'#F8FAFC', borderRadius:12, padding:'16px', display:'flex', justifyContent:'space-between', alignItems:'center', border: '1px solid #E2E8F0' }}>
         <div>
           <p style={{ fontSize:11, color:'#64748B', margin:'0 0 4px', textTransform:'uppercase', letterSpacing:'0.05em', fontWeight: 600 }}>{dept.label}</p>
           <p style={{ fontSize:24, fontWeight:800, color:'#E2E8F0', margin:0, fontFamily:MONO }}>
@@ -150,7 +150,7 @@ function AgentCard({
         disabled={busy || pageLoading}
         title={!enabled ? 'Runs in offline mode — connect Phantom to push on-chain' : undefined}
         style={{
-          background: busy ? 'rgba(255,255,255,0.06)' : dept.bg,
+          background: busy ? '#F1F5F9' : dept.bg,
           color: busy ? '#64748B' : dept.color,
           border: `1px solid ${dept.bd}`,
           borderRadius: 12, padding: '12px 0', fontSize: 14, fontWeight: 700,
@@ -449,7 +449,7 @@ export default function ShadowPage() {
       {/* Top Bar */}
       <header className="nav-bar" style={{ display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:16 }}>
         <div style={{ display:'flex', alignItems:'center', gap:12 }}>
-          <div style={{ width: 36, height: 36, background: '#0F172A', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🌑</div>
+          <div style={{ width: 36, height: 36, background: '#ffffff', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>🌑</div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ fontSize:14, fontWeight:800, color:'#0A0F2E', letterSpacing:'0.1em' }}>Stealth Execution Suite</span>
             <span style={{ fontSize:10, color:'#475569', letterSpacing:'0.06em', fontWeight: 600 }}>NEXUS v2.0</span>
@@ -462,11 +462,11 @@ export default function ShadowPage() {
             {isDemo ? 'Testnet Data' : 'Live'}
           </span>
           {/* Mantle */}
-          <span style={{ fontSize:12, padding:'6px 14px', borderRadius:999, background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.1)', color:'#94A3B8', display:'flex', alignItems:'center', gap:6, fontWeight:700 }}>
+          <span style={{ fontSize:12, padding:'6px 14px', borderRadius:999, background:'#F1F5F9', border:'1px solid #E2E8F0', color:'#94A3B8', display:'flex', alignItems:'center', gap:6, fontWeight:700 }}>
             <span style={{ width:6, height:6, borderRadius:'50%', background:'#64748B' }} />Mantle Sepolia
           </span>
           {/* Health */}
-          <span style={{ fontSize:12, padding:'6px 14px', borderRadius:999, background:health==='ok'?'rgba(16,185,129,0.12)':health==='checking'?'rgba(255,255,255,0.06)':'rgba(239,68,68,0.12)', border:`1px solid ${health==='ok'?'rgba(16,185,129,0.3)':health==='checking'?'rgba(255,255,255,0.12)':'rgba(239,68,68,0.3)'}`, color:health==='ok'?'#10B981':health==='checking'?'#94A3B8':'#EF4444', display:'flex', alignItems:'center', gap:6, fontWeight:700 }}>
+          <span style={{ fontSize:12, padding:'6px 14px', borderRadius:999, background:health==='ok'?'rgba(16,185,129,0.12)':health==='checking'?'#F1F5F9':'rgba(239,68,68,0.12)', border:`1px solid ${health==='ok'?'rgba(16,185,129,0.3)':health==='checking'?'#E2E8F0':'rgba(239,68,68,0.3)'}`, color:health==='ok'?'#10B981':health==='checking'?'#94A3B8':'#EF4444', display:'flex', alignItems:'center', gap:6, fontWeight:700 }}>
             <span style={{ width:6, height:6, borderRadius:'50%', background:health==='ok'?'#10B981':health==='checking'?'#94A3B8':'#EF4444' }} />
             {health==='checking'?`Connecting… (${healthAttempt}/3)`:health==='ok'?'API Online':'API Offline'}
           </span>
@@ -482,7 +482,7 @@ export default function ShadowPage() {
           </span>
           <PlatformModeBadge />
           {/* Stealth */}
-          <button onClick={()=>setStealth(s=>!s)} style={{ fontSize:12, padding:'6px 16px', borderRadius:999, cursor:'pointer', background:stealth?'rgba(239,68,68,0.12)':'rgba(255,255,255,0.06)', border:`1px solid ${stealth?'rgba(239,68,68,0.3)':'rgba(255,255,255,0.12)'}`, color:stealth?'#EF4444':'#CBD5E1', fontWeight:700, transition: 'all 0.2s' }} onMouseOver={e => !stealth && (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')} onMouseOut={e => !stealth && (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}>
+          <button onClick={()=>setStealth(s=>!s)} style={{ fontSize:12, padding:'6px 16px', borderRadius:999, cursor:'pointer', background:stealth?'rgba(239,68,68,0.12)':'#F1F5F9', border:`1px solid ${stealth?'rgba(239,68,68,0.3)':'#E2E8F0'}`, color:stealth?'#EF4444':'#CBD5E1', fontWeight:700, transition: 'all 0.2s' }} onMouseOver={e => !stealth && (e.currentTarget.style.background = '#E2E8F0')} onMouseOut={e => !stealth && (e.currentTarget.style.background = '#F1F5F9')}>
             {stealth?'🔴 STEALTH ON':'⚫ Stealth Off'}
           </button>
           {/* Jailbreak simulator — visceral demo of the policy engine */}
@@ -550,14 +550,14 @@ export default function ShadowPage() {
         {/* Alerts */}
         {error && <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ background:'rgba(239,68,68,0.1)', border:'1px solid rgba(239,68,68,0.3)', borderRadius:12, padding:'16px 20px', marginBottom:24, fontSize:14, fontWeight: 600, color:'#F87171' }}>❌ {error}</motion.div>}
         {message && <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ background:'rgba(16,185,129,0.1)', border:'1px solid rgba(16,185,129,0.25)', borderRadius:12, padding:'16px 20px', marginBottom:24, fontSize:14, fontWeight: 600, color:'#34D399' }}>✅ {message}</motion.div>}
-        {!wallet && <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.08)', borderRadius:12, padding:'16px 20px', marginBottom:24, fontSize:14, fontWeight: 600, color:'#94A3B8', display: 'flex', alignItems: 'center', gap: 8 }}>
+        {!wallet && <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ background:'#F8FAFC', border:'1px solid #E2E8F0', borderRadius:12, padding:'16px 20px', marginBottom:24, fontSize:14, fontWeight: 600, color:'#94A3B8', display: 'flex', alignItems: 'center', gap: 8 }}>
           <span>🔗</span> Connect Phantom to enable agent triggers and org management.
         </motion.div>}
 
         {/* Stats Strip */}
         <div className="bento-grid" style={{ marginBottom: 40 }}>
           {[
-            { label:'Yield Operations Hub Balance',   value: stealth?'●●●●●':'12,480.50 MNT', icon:'💰', color:'#EAB308', bg:'rgba(234,179,8,0.15)' },
+            { label:'Yield Operations Hub Balance',   value: stealth?'●●●●●':'12,480.50 MNT', icon:'💰', color:'#3B5BFA', bg:'rgba(234,179,8,0.15)' },
             { label:'Active Agents',       value:`${agents.filter(a=>(a.status||'active')==='active').length||6} / 7`,         icon:'🤖', color:'#10B981', bg:'rgba(16,185,129,0.15)' },
             { label:'MNT Streamed Today',  value: stealth?'●●●●●':`${streamed.toFixed(4)} MNT`, icon:'💸', color:'#3B82F6', bg:'rgba(59,130,246,0.15)' },
             { label:'Threat Level',        value:'2 / 10 — LOW',                                icon:'🛡', color:'#10B981', bg:'rgba(16,185,129,0.15)' },
@@ -588,13 +588,13 @@ export default function ShadowPage() {
             <form onSubmit={setupOrg} style={{ display:'grid', gridTemplateColumns:'1fr 1fr auto', gap:24, alignItems:'end' }}>
               <div>
                 <label style={{ display:'block', fontSize:12, fontWeight: 700, color:'#94A3B8', marginBottom:8, letterSpacing:'0.05em' }}>ORGANIZATION NAME</label>
-                <input value={orgName} onChange={e=>setOrgName(e.target.value)} placeholder="Stealth Executive Suite DAO" style={{ width:'100%', padding:'14px 16px', background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.12)', borderRadius:12, color:'#E2E8F0', fontSize:14, fontWeight: 500, boxSizing:'border-box', outline:'none', transition: 'border-color 0.2s' }} onFocus={e => e.target.style.borderColor = 'rgba(255,255,255,0.3)'} onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.12)'} />
+                <input value={orgName} onChange={e=>setOrgName(e.target.value)} placeholder="Stealth Executive Suite DAO" style={{ width:'100%', padding:'14px 16px', background:'#F1F5F9', border:'1px solid #E2E8F0', borderRadius:12, color:'#E2E8F0', fontSize:14, fontWeight: 500, boxSizing:'border-box', outline:'none', transition: 'border-color 0.2s' }} onFocus={e => e.target.style.borderColor = '#94A3B8'} onBlur={e => e.target.style.borderColor = '#E2E8F0'} />
               </div>
               <div>
                 <label style={{ display:'block', fontSize:12, fontWeight: 700, color:'#94A3B8', marginBottom:8, letterSpacing:'0.05em' }}>ADMIN WALLET (SOLANA)</label>
-                <input value={admin} onChange={e=>setAdmin(e.target.value)} placeholder="Mantle public key" style={{ width:'100%', padding:'14px 16px', background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.12)', borderRadius:12, color:'#E2E8F0', fontSize:14, fontWeight: 500, fontFamily:MONO, boxSizing:'border-box', outline:'none', transition: 'border-color 0.2s' }} onFocus={e => e.target.style.borderColor = 'rgba(255,255,255,0.3)'} onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.12)'} />
+                <input value={admin} onChange={e=>setAdmin(e.target.value)} placeholder="Mantle public key" style={{ width:'100%', padding:'14px 16px', background:'#F1F5F9', border:'1px solid #E2E8F0', borderRadius:12, color:'#E2E8F0', fontSize:14, fontWeight: 500, fontFamily:MONO, boxSizing:'border-box', outline:'none', transition: 'border-color 0.2s' }} onFocus={e => e.target.style.borderColor = '#94A3B8'} onBlur={e => e.target.style.borderColor = '#E2E8F0'} />
               </div>
-              <button type="submit" disabled={loading} style={{ background:'linear-gradient(135deg,#4338CA,#6366F1)', color:'#fff', border:'none', borderRadius:12, padding:'14px 32px', fontSize:14, fontWeight:700, cursor:loading?'not-allowed':'pointer', whiteSpace:'nowrap', transition: 'filter 0.2s' }} onMouseOver={e => e.currentTarget.style.filter = 'brightness(1.12)'} onMouseOut={e => e.currentTarget.style.filter = 'brightness(1)'}>
+              <button type="submit" disabled={loading} style={{ background:'linear-gradient(135deg,#4338CA,#6366F1)', color: '#0A0F2E', border:'none', borderRadius:12, padding:'14px 32px', fontSize:14, fontWeight:700, cursor:loading?'not-allowed':'pointer', whiteSpace:'nowrap', transition: 'filter 0.2s' }} onMouseOver={e => e.currentTarget.style.filter = 'brightness(1.12)'} onMouseOut={e => e.currentTarget.style.filter = 'brightness(1)'}>
                 {loading?'⟳ Saving…':'💾 Save Configuration'}
               </button>
             </form>
@@ -607,16 +607,16 @@ export default function ShadowPage() {
           <div className="glass-card" style={{ padding: '32px' }}>
             <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: 24 }}>
               <p style={{ fontSize:18, fontWeight:800, color:'#E2E8F0', margin:0 }}>💰 Yield Operations Hub Overview</p>
-              <span style={{ fontSize:11, color:'#94A3B8', fontFamily:MONO, background: 'rgba(255,255,255,0.06)', padding: '4px 12px', borderRadius: 999 }}>CFO AGENT MANAGED</span>
+              <span style={{ fontSize:11, color:'#94A3B8', fontFamily:MONO, background: '#F1F5F9', padding: '4px 12px', borderRadius: 999 }}>CFO AGENT MANAGED</span>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:16, marginBottom: 24 }}>
               {[
                 { label:'24h Inflow',      value:'+420.00 MNT', color:'#10B981', bg:'rgba(16,185,129,0.15)'  },
                 { label:'24h Outflow',     value:'-180.00 MNT', color:'#EF4444', bg:'rgba(239,68,68,0.15)'   },
-                { label:'Reserve Pool',    value:'4,992.20 MNT', color:'#EAB308', bg:'rgba(234,179,8,0.15)'  },
+                { label:'Reserve Pool',    value:'4,992.20 MNT', color:'#3B5BFA', bg:'rgba(234,179,8,0.15)'  },
                 { label:'Operations Pool', value:'7,488.30 MNT', color:'#3B82F6', bg:'rgba(59,130,246,0.15)' },
               ].map(m=>(
-                <div key={m.label} style={{ background:'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius:16, padding:'16px' }}>
+                <div key={m.label} style={{ background:'#F8FAFC', border: '1px solid #E2E8F0', borderRadius:16, padding:'16px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: m.color }} />
                     <p style={{ fontSize:11, color:'#94A3B8', margin:0, textTransform:'uppercase', letterSpacing:'0.04em', fontWeight: 600 }}>{m.label}</p>
@@ -626,13 +626,13 @@ export default function ShadowPage() {
               ))}
             </div>
             <div style={{ display:'flex', alignItems:'center', gap:16, marginBottom: 24 }}>
-              <div style={{ flex:1, height:8, borderRadius:4, background:'rgba(255,255,255,0.08)', overflow:'hidden' }}>
-                <motion.div initial={{ width: 0 }} animate={{ width: '60%' }} transition={{ duration: 1 }} style={{ height:'100%', borderRadius:4, background:`linear-gradient(90deg, #EAB308, #F97316)` }} />
+              <div style={{ flex:1, height:8, borderRadius:4, background:'#E2E8F0', overflow:'hidden' }}>
+                <motion.div initial={{ width: 0 }} animate={{ width: '60%' }} transition={{ duration: 1 }} style={{ height:'100%', borderRadius:4, background:`linear-gradient(90deg, #3B5BFA, #F97316)` }} />
               </div>
               <span style={{ fontSize:12, fontWeight: 600, color:'#94A3B8', whiteSpace:'nowrap' }}>60% Ops / 40% Reserve</span>
             </div>
             {/* Payroll streams */}
-            <div style={{ padding:'20px', background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.08)', borderRadius:16 }}>
+            <div style={{ padding:'20px', background:'#F8FAFC', border:'1px solid #E2E8F0', borderRadius:16 }}>
               <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:12 }}>
                 <p style={{ fontSize:14, fontWeight:700, color:'#E2E8F0', margin:0 }}>💸 Active Payroll Streams</p>
                 <span style={{ fontSize:13, color:'#10B981', fontFamily:MONO, fontWeight: 700 }}>{stealth?'●●● MNT/s':`${RATE} MNT/s total`}</span>
@@ -663,7 +663,7 @@ export default function ShadowPage() {
                         key={item.id||i} 
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        style={{ padding:'16px', background: i===0?'rgba(255,255,255,0.07)':'rgba(255,255,255,0.03)', border:`1px solid ${i===0?'rgba(255,255,255,0.1)':'rgba(255,255,255,0.05)'}`, borderRadius:12 }}
+                        style={{ padding:'16px', background: i===0?'#E2E8F0':'#ffffff', border:`1px solid ${i===0?'#E2E8F0':'#F8FAFC'}`, borderRadius:12 }}
                       >
                         <div style={{ display:'flex', justifyContent:'space-between', marginBottom:6 }}>
                           <span style={{ fontSize:12, fontWeight:700, color: i===0?'#E2E8F0':'#94A3B8' }}>{item.agentType}</span>
@@ -726,7 +726,7 @@ export default function ShadowPage() {
                 { label:'Risk Score',   value:`${riskPct}/100`,        color:riskPct<30?'#10B981':riskPct<60?'#F59E0B':'#EF4444' },
                 { label:'Q4 Forecast',  value:q4>0?`${Math.round(q4).toLocaleString()}`:'DEFICIT', color:q4>0?'#10B981':'#EF4444' },
               ].map(m=>(
-                <div key={m.label} style={{ background:'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius:16, padding:'16px 12px', textAlign:'center' }}>
+                <div key={m.label} style={{ background:'#F8FAFC', border: '1px solid #E2E8F0', borderRadius:16, padding:'16px 12px', textAlign:'center' }}>
                   <p style={{ fontSize:11, color:'#94A3B8', margin:'0 0 8px', textTransform:'uppercase', letterSpacing:'0.04em', fontWeight: 600 }}>{m.label}</p>
                   <p style={{ fontSize:20, fontWeight:800, color:m.color, margin:0, fontFamily:MONO }}>{m.value}</p>
                 </div>
@@ -734,7 +734,7 @@ export default function ShadowPage() {
             </div>
             <div>
               <div style={{ display:'flex', justifyContent:'space-between', fontSize:11, fontWeight: 700, color:'#64748B', marginBottom:8 }}><span>LOW RISK</span><span>HIGH RISK</span></div>
-              <div style={{ height:8, borderRadius:4, background:'rgba(255,255,255,0.08)', overflow:'hidden' }}>
+              <div style={{ height:8, borderRadius:4, background:'#E2E8F0', overflow:'hidden' }}>
                 <div style={{ width:`${riskPct}%`, height:'100%', borderRadius:4, background:`linear-gradient(90deg, #10B981, #F59E0B, #EF4444)`, transition:'width 0.4s' }} />
               </div>
             </div>
@@ -750,17 +750,17 @@ export default function ShadowPage() {
             <div style={{ display:'flex', flexDirection:'column', gap:12, flex: 1 }}>
               {['Mask wallet addresses','Redact Yield Operations Hub balances','Redact activity logs','Blur agent metrics'].map(item=>(
                 <div key={item} style={{ display:'flex', alignItems:'center', gap:12, fontSize:13, fontWeight: 600, color:stealth?'#E2E8F0':'#94A3B8' }}>
-                  <span style={{ width:8, height:8, borderRadius:'50%', background:stealth?'#EF4444':'rgba(255,255,255,0.15)', flexShrink:0 }} />{item}
+                  <span style={{ width:8, height:8, borderRadius:'50%', background:stealth?'#EF4444':'#CBD5E1', flexShrink:0 }} />{item}
                 </div>
               ))}
             </div>
 
-            <button onClick={()=>setStealth(s=>!s)} style={{ background:stealth?'#EF4444':'rgba(255,255,255,0.06)', color:stealth?'#fff':'#E2E8F0', border:stealth?'none':'1px solid rgba(255,255,255,0.12)', borderRadius:12, padding:'14px 0', fontSize:14, fontWeight:700, cursor:'pointer', width:'100%', transition: 'all 0.2s', boxShadow: stealth ? '0 4px 20px rgba(239,68,68,0.35)' : 'none' }}>
+            <button onClick={()=>setStealth(s=>!s)} style={{ background:stealth?'#EF4444':'#F1F5F9', color:stealth?'#fff':'#E2E8F0', border:stealth?'none':'1px solid #E2E8F0', borderRadius:12, padding:'14px 0', fontSize:14, fontWeight:700, cursor:'pointer', width:'100%', transition: 'all 0.2s', boxShadow: stealth ? '0 4px 20px rgba(239,68,68,0.35)' : 'none' }}>
               {stealth?'🔴 Disable Stealth Mode':'⚫ Enable Stealth Mode'}
             </button>
 
             {/* Compliance quick summary */}
-            <div style={{ padding:'20px', background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.08)', borderRadius:16, marginTop: 8 }}>
+            <div style={{ padding:'20px', background:'#F8FAFC', border:'1px solid #E2E8F0', borderRadius:16, marginTop: 8 }}>
               <p style={{ fontSize:13, fontWeight:800, color:'#10B981', margin:'0 0 12px' }}>⚖️ Compliance Summary</p>
               {[{ k:'AML Rules', v:'347 / 347 passed' },{ k:'KYC Flags', v:'0 active' },{ k:'Last Sweep', v:'2m ago' }].map(r=>(
                 <div key={r.k} style={{ display:'flex', justifyContent:'space-between', fontSize:13, color:'#94A3B8', marginTop:8, fontWeight: 600 }}>

@@ -90,7 +90,7 @@ export default function GovernancePage() {
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
       
       {/* Header Panel */}
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Dashboard</Link>
@@ -117,7 +117,7 @@ export default function GovernancePage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Global Consensus Index</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#F5C518' }}>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#3B5BFA' }}>
               {consensusIndex}%
             </strong>
           </div>
@@ -127,7 +127,7 @@ export default function GovernancePage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Infrastructure Sovereignty</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#F5C518' }}>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#3B5BFA' }}>
               {sovereigntyIndex}%
             </strong>
           </div>
@@ -147,7 +147,7 @@ export default function GovernancePage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Quorum Integrity</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#fff' }}>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#0A0F2E' }}>
               {quorumIntegrity}%
             </strong>
           </div>
@@ -157,10 +157,10 @@ export default function GovernancePage() {
       </section>
 
       {/* PHASE 13 — COALITION GOVERNANCE SIMULATION & DISPUTE MONITOR */}
-      <section className="card" style={{ padding: 18, marginBottom: 24, border: '1px solid rgba(245,197,24,0.3)', background: 'rgba(0,0,0,0.3)' }}>
-        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 10, marginBottom: 14 }}>
+      <section className="card" style={{ padding: 18, marginBottom: 24, border: '1px solid rgba(59,91,250,0.3)', background: '#ffffff' }}>
+        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, borderBottom: '1px solid #E2E8F0', paddingBottom: 10, marginBottom: 14 }}>
           <div>
-            <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: '#F5C518' }}>🏛️ Multi-Agent Coalition Governance Simulation</h3>
+            <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: '#3B5BFA' }}>🏛️ Multi-Agent Coalition Governance Simulation</h3>
             <p style={{ margin: '2px 0 0', fontSize: 12, color: '#aaa' }}>
               Simulate legislative partitions, vote influence scaling, and diplomatic dispute resolution statefully.
             </p>
@@ -176,14 +176,14 @@ export default function GovernancePage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
           
           {/* Institutional Negotiation Chains */}
-          <div style={{ background: '#020202', padding: 14, border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ background: 'var(--cloud-bg)', padding: 14, border: '1px solid #ffffff', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: 8 }}>Institutional Negotiation Chains</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxHeight: 180, overflowY: 'auto' }}>
               {negotiations.map((neg) => (
-                <div key={neg.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.02)', paddingBottom: 6 }}>
+                <div key={neg.id} style={{ borderBottom: '1px solid #F8FAFC', paddingBottom: 6 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
-                    <strong style={{ color: '#fff' }}>{neg.topic}</strong>
-                    <span style={{ fontSize: 9, color: '#F5C518', fontWeight: 'bold' }}>{neg.status}</span>
+                    <strong style={{ color: '#0A0F2E' }}>{neg.topic}</strong>
+                    <span style={{ fontSize: 9, color: '#3B5BFA', fontWeight: 'bold' }}>{neg.status}</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 8, color: '#666', marginTop: 4 }}>
                     <span>Proposer: {neg.proposer} ⇄ Responder: {neg.responder}</span>
@@ -195,17 +195,17 @@ export default function GovernancePage() {
           </div>
 
           {/* Policy Diplomacy Weighting */}
-          <div style={{ background: '#020202', padding: 14, border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ background: 'var(--cloud-bg)', padding: 14, border: '1px solid #ffffff', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: 8 }}>Sovereign Influence Propagation</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {agents.slice(0, 4).map((agent) => (
                 <div key={agent.id} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10 }}>
-                    <span style={{ color: '#fff' }}>{agent.name} Weight</span>
-                    <strong style={{ color: '#F5C518' }}>{agent.influenceRate}% Influence</strong>
+                    <span style={{ color: '#0A0F2E' }}>{agent.name} Weight</span>
+                    <strong style={{ color: '#3B5BFA' }}>{agent.influenceRate}% Influence</strong>
                   </div>
-                  <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2 }}>
-                    <div style={{ width: `${agent.influenceRate}%`, background: agent.status === 'active_dispute' ? '#EF4444' : '#F5C518', height: '100%' }} />
+                  <div style={{ height: 4, background: '#ffffff', borderRadius: 2 }}>
+                    <div style={{ width: `${agent.influenceRate}%`, background: agent.status === 'active_dispute' ? '#EF4444' : '#3B5BFA', height: '100%' }} />
                   </div>
                 </div>
               ))}
@@ -213,7 +213,7 @@ export default function GovernancePage() {
           </div>
 
           {/* Multi-Agent Quorum Forecasting */}
-          <div style={{ background: '#020202', padding: 14, border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ background: 'var(--cloud-bg)', padding: 14, border: '1px solid #ffffff', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: 8 }}>Multi-Agent Quorum Forecasting</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 11 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -226,7 +226,7 @@ export default function GovernancePage() {
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: '#aaa' }}>Negotiation Compliance Gating:</span>
-                <strong style={{ color: '#fff' }}>{negotiationConfidence}% Confidence</strong>
+                <strong style={{ color: '#0A0F2E' }}>{negotiationConfidence}% Confidence</strong>
               </div>
               <span style={{ display: 'block', fontSize: 8, color: '#666', marginTop: 4, fontStyle: 'italic' }}>
                 *Quorums re-calculate at 4000ms intervals based on inter-agent telemetry bus state.
@@ -246,25 +246,25 @@ export default function GovernancePage() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12 }}>
           
-          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888' }}>EVM RPC Migration</span>
             <strong style={{ display: 'block', fontSize: 18, color: '#10B981', margin: '4px 0' }}>95.4% Probability</strong>
             <span style={{ fontSize: 8, color: '#666' }}>Risk Factor: LOW</span>
           </div>
 
-          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888' }}>Payroll APY Sweep</span>
-            <strong style={{ display: 'block', fontSize: 18, color: '#F5C518', margin: '4px 0' }}>84.2% Probability</strong>
+            <strong style={{ display: 'block', fontSize: 18, color: '#3B5BFA', margin: '4px 0' }}>84.2% Probability</strong>
             <span style={{ fontSize: 8, color: '#666' }}>Risk Factor: MEDIUM</span>
           </div>
 
-          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888' }}>Hardening Mantle Bridge</span>
             <strong style={{ display: 'block', fontSize: 18, color: '#10B981', margin: '4px 0' }}>92.8% Probability</strong>
             <span style={{ fontSize: 8, color: '#666' }}>Risk Factor: LOW</span>
           </div>
 
-          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888' }}>Decouple SaaS Regulators</span>
             <strong style={{ display: 'block', fontSize: 18, color: '#EF4444', margin: '4px 0' }}>42.5% Probability</strong>
             <span style={{ fontSize: 8, color: '#666' }}>Risk Factor: HIGH</span>
@@ -282,53 +282,53 @@ export default function GovernancePage() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12 }}>
           
-          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
-              <strong style={{ color: '#fff' }}>Singapore (ap-southeast-1)</strong>
-              <span style={{ color: '#F5C518' }}>30% Weight</span>
+              <strong style={{ color: '#0A0F2E' }}>Singapore (ap-southeast-1)</strong>
+              <span style={{ color: '#3B5BFA' }}>30% Weight</span>
             </div>
-            <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, marginTop: 6 }}>
-              <div style={{ width: '30%', background: '#F5C518', height: '100%' }} />
+            <div style={{ height: 4, background: '#ffffff', borderRadius: 2, marginTop: 6 }}>
+              <div style={{ width: '30%', background: '#3B5BFA', height: '100%' }} />
             </div>
           </div>
 
-          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
-              <strong style={{ color: '#fff' }}>Frankfurt (eu-central-1)</strong>
-              <span style={{ color: '#F5C518' }}>25% Weight</span>
+              <strong style={{ color: '#0A0F2E' }}>Frankfurt (eu-central-1)</strong>
+              <span style={{ color: '#3B5BFA' }}>25% Weight</span>
             </div>
-            <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, marginTop: 6 }}>
-              <div style={{ width: '25%', background: '#F5C518', height: '100%' }} />
+            <div style={{ height: 4, background: '#ffffff', borderRadius: 2, marginTop: 6 }}>
+              <div style={{ width: '25%', background: '#3B5BFA', height: '100%' }} />
             </div>
           </div>
 
-          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
-              <strong style={{ color: '#fff' }}>Virginia (us-east-1)</strong>
-              <span style={{ color: '#F5C518' }}>20% Weight</span>
+              <strong style={{ color: '#0A0F2E' }}>Virginia (us-east-1)</strong>
+              <span style={{ color: '#3B5BFA' }}>20% Weight</span>
             </div>
-            <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, marginTop: 6 }}>
-              <div style={{ width: '20%', background: '#F5C518', height: '100%' }} />
+            <div style={{ height: 4, background: '#ffffff', borderRadius: 2, marginTop: 6 }}>
+              <div style={{ width: '20%', background: '#3B5BFA', height: '100%' }} />
             </div>
           </div>
 
-          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
-              <strong style={{ color: '#fff' }}>Tokyo (ap-northeast-1)</strong>
-              <span style={{ color: '#F5C518' }}>15% Weight</span>
+              <strong style={{ color: '#0A0F2E' }}>Tokyo (ap-northeast-1)</strong>
+              <span style={{ color: '#3B5BFA' }}>15% Weight</span>
             </div>
-            <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, marginTop: 6 }}>
-              <div style={{ width: '15%', background: '#F5C518', height: '100%' }} />
+            <div style={{ height: 4, background: '#ffffff', borderRadius: 2, marginTop: 6 }}>
+              <div style={{ width: '15%', background: '#3B5BFA', height: '100%' }} />
             </div>
           </div>
 
-          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ padding: 12, background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', borderRadius: 6 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
-              <strong style={{ color: '#fff' }}>Sydney (ap-southeast-2)</strong>
-              <span style={{ color: '#F5C518' }}>10% Weight</span>
+              <strong style={{ color: '#0A0F2E' }}>Sydney (ap-southeast-2)</strong>
+              <span style={{ color: '#3B5BFA' }}>10% Weight</span>
             </div>
-            <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, marginTop: 6 }}>
-              <div style={{ width: '10%', background: '#F5C518', height: '100%' }} />
+            <div style={{ height: 4, background: '#ffffff', borderRadius: 2, marginTop: 6 }}>
+              <div style={{ width: '10%', background: '#3B5BFA', height: '100%' }} />
             </div>
           </div>
 
@@ -363,16 +363,16 @@ export default function GovernancePage() {
                       style={{
                         padding: 16,
                         background: 'rgba(255,255,255,0.01)',
-                        border: '1px solid rgba(255,255,255,0.04)',
+                        border: '1px solid #F8FAFC',
                         borderRadius: 8
                       }}
                     >
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 8, marginBottom: 6 }}>
                         <div>
-                          <span style={{ fontSize: 9, background: 'rgba(245,197,24,0.06)', color: '#F5C518', padding: '1px 6px', borderRadius: 4, textTransform: 'uppercase', fontWeight: 'bold' }}>
+                          <span style={{ fontSize: 9, background: '#ffffff', color: '#3B5BFA', padding: '1px 6px', borderRadius: 4, textTransform: 'uppercase', fontWeight: 'bold' }}>
                             {prop.type.replace('_', ' ')}
                           </span>
-                          <h4 style={{ margin: '6px 0 2px', fontSize: 14, fontWeight: 700, color: '#fff' }}>{prop.title}</h4>
+                          <h4 style={{ margin: '6px 0 2px', fontSize: 14, fontWeight: 700, color: '#0A0F2E' }}>{prop.title}</h4>
                           <span style={{ fontSize: 10, color: '#888' }}>Proposer: <strong style={{ color: '#ccc' }}>{prop.proposer}</strong></span>
                         </div>
 
@@ -396,7 +396,7 @@ export default function GovernancePage() {
                           <button 
                             onClick={() => handleSimulate(prop.id)}
                             className="btn-outline" 
-                            style={{ padding: '4px 10px', fontSize: 10, height: 'auto', borderColor: 'rgba(245,197,24,0.3)', color: '#F5C518' }}
+                            style={{ padding: '4px 10px', fontSize: 10, height: 'auto', borderColor: 'rgba(59,91,250,0.3)', color: '#3B5BFA' }}
                             disabled={prop.status !== 'voting'}
                           >
                             ⚡ Fast-Forward Quorum
@@ -411,13 +411,13 @@ export default function GovernancePage() {
                       </div>
 
                       {/* Vote progress indicators */}
-                      <div style={{ background: '#040404', borderRadius: 6, padding: '8px 12px', border: '1px solid rgba(255,255,255,0.02)' }}>
+                      <div style={{ background: 'var(--cloud-bg)', borderRadius: 6, padding: '8px 12px', border: '1px solid #F8FAFC' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, marginBottom: 4 }}>
-                          <span>Ballots Cast: <strong style={{ color: '#fff' }}>{totalVotes} ballots</strong></span>
+                          <span>Ballots Cast: <strong style={{ color: '#0A0F2E' }}>{totalVotes} ballots</strong></span>
                           <span>Outcome: <strong style={{ color: forPercent >= 60 ? '#10B981' : '#EF4444' }}>{forPercent.toFixed(1)}% Support</strong></span>
                         </div>
-                        <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, overflow: 'hidden' }}>
-                          <div style={{ width: `${forPercent}%`, background: '#F5C518', height: '100%' }} />
+                        <div style={{ height: 4, background: '#ffffff', borderRadius: 2, overflow: 'hidden' }}>
+                          <div style={{ width: `${forPercent}%`, background: '#3B5BFA', height: '100%' }} />
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 8, color: '#666', marginTop: 4 }}>
                           <span>YEA: {prop.votesFor} • NAY: {prop.votesAgainst}</span>
@@ -443,14 +443,14 @@ export default function GovernancePage() {
               Current secure multi-user context designated for governance checks.
             </p>
 
-            <div style={{ background: '#020202', padding: 12, borderRadius: 6, border: '1px solid rgba(255,255,255,0.03)' }}>
+            <div style={{ background: 'var(--cloud-bg)', padding: 12, borderRadius: 6, border: '1px solid #ffffff' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 6 }}>
                 <span style={{ color: '#888' }}>Active Organization:</span>
-                <strong style={{ color: '#F5C518' }}>{activeOrg?.name || 'Sovereign Network'}</strong>
+                <strong style={{ color: '#3B5BFA' }}>{activeOrg?.name || 'Sovereign Network'}</strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 6 }}>
                 <span style={{ color: '#888' }}>Workspace Zone:</span>
-                <strong style={{ color: '#fff' }}>{activeWorkspace?.name || 'Main Zone'}</strong>
+                <strong style={{ color: '#0A0F2E' }}>{activeWorkspace?.name || 'Main Zone'}</strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
                 <span style={{ color: '#888' }}>Vault Key:</span>
@@ -475,12 +475,12 @@ export default function GovernancePage() {
                   style={{
                     padding: 12,
                     background: 'rgba(255,255,255,0.01)',
-                    border: '1px solid rgba(255,255,255,0.03)',
+                    border: '1px solid #ffffff',
                     borderRadius: 6
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>
-                    <strong style={{ color: '#fff' }}>{prop.title}</strong>
+                    <strong style={{ color: '#0A0F2E' }}>{prop.title}</strong>
                     <span 
                       style={{ 
                         fontSize: 8, 
@@ -508,9 +508,9 @@ export default function GovernancePage() {
       {/* Submit Proposal Modal */}
       {showCreateModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(5px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
-          <div className="card" style={{ width: '90%', maxWidth: 500, padding: 24, border: '1px solid rgba(245,197,24,0.4)' }}>
+          <div className="card" style={{ width: '90%', maxWidth: 500, padding: 24, border: '1px solid rgba(59,91,250,0.4)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-              <h3 style={{ margin: 0, fontSize: 18, color: '#fff' }}>Submit Sovereign Governance KIP</h3>
+              <h3 style={{ margin: 0, fontSize: 18, color: '#0A0F2E' }}>Submit Sovereign Governance KIP</h3>
               <button onClick={() => setShowCreateModal(false)} style={{ background: 'none', border: 'none', color: '#888', fontSize: 16, cursor: 'pointer' }}>✕</button>
             </div>
 
@@ -523,7 +523,7 @@ export default function GovernancePage() {
                   onChange={(e) => setPropTitle(e.target.value)}
                   placeholder="e.g. KIP-27: Hardening Mantle Bridge"
                   required
-                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
+                  style={{ width: '100%', padding: '8px 12px', background: 'var(--cloud-bg)', border: '1px solid #CBD5E1', color: '#0A0F2E', fontSize: 12, borderRadius: 6, outline: 'none' }}
                 />
               </div>
 
@@ -532,7 +532,7 @@ export default function GovernancePage() {
                 <select 
                   value={propType}
                   onChange={(e) => setPropType(e.target.value as ProposalType)}
-                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
+                  style={{ width: '100%', padding: '8px 12px', background: 'var(--cloud-bg)', border: '1px solid #CBD5E1', color: '#0A0F2E', fontSize: 12, borderRadius: 6, outline: 'none' }}
                 >
                   <option value="treasury_rebalancing">Yield Operations Hub Rebalancing</option>
                   <option value="protocol_migration">Protocol Migration</option>
@@ -551,7 +551,7 @@ export default function GovernancePage() {
                   placeholder="Summarize the dynamic operations proposal details..."
                   required
                   rows={3}
-                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none', resize: 'none' }}
+                  style={{ width: '100%', padding: '8px 12px', background: 'var(--cloud-bg)', border: '1px solid #CBD5E1', color: '#0A0F2E', fontSize: 12, borderRadius: 6, outline: 'none', resize: 'none' }}
                 />
               </div>
 
@@ -562,7 +562,7 @@ export default function GovernancePage() {
                   value={propRationale}
                   onChange={(e) => setPropRationale(e.target.value)}
                   placeholder="Provide zero-knowledge verification proof why this is necessary..."
-                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
+                  style={{ width: '100%', padding: '8px 12px', background: 'var(--cloud-bg)', border: '1px solid #CBD5E1', color: '#0A0F2E', fontSize: 12, borderRadius: 6, outline: 'none' }}
                 />
               </div>
 

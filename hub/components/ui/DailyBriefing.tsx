@@ -157,7 +157,7 @@ export default function DailyBriefing() {
             {loading && !data && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {[0, 1, 2].map(i => (
-                  <div key={i} style={{ height: 14, background: 'rgba(15,23,42,0.06)', borderRadius: 6, width: `${85 - i * 8}%`, animation: 'pulse 1.4s ease-in-out infinite', animationDelay: `${i * 0.1}s` }} />
+                  <div key={i} style={{ height: 14, background: '#ffffff', borderRadius: 6, width: `${85 - i * 8}%`, animation: 'pulse 1.4s ease-in-out infinite', animationDelay: `${i * 0.1}s` }} />
                 ))}
                 <style>{`@keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: 0.4 } }`}</style>
               </div>
@@ -171,7 +171,7 @@ export default function DailyBriefing() {
                       flexShrink: 0,
                       width: 22, height: 22, borderRadius: 8,
                       background: 'linear-gradient(135deg, #6366f1, #ec4899)',
-                      color: '#fff', fontSize: 11, fontWeight: 800,
+                      color: '#0A0F2E', fontSize: 11, fontWeight: 800,
                       display: 'grid', placeItems: 'center',
                       boxShadow: '0 4px 10px rgba(99,102,241,0.35)',
                     }}>
@@ -206,7 +206,7 @@ export default function DailyBriefing() {
           {loading && !data && (
             <div style={{ padding: 14 }}>
               {[0, 1, 2, 3].map(i => (
-                <div key={i} style={{ height: 16, background: 'rgba(15,23,42,0.05)', borderRadius: 6, marginBottom: 10, width: `${90 - i * 5}%` }} />
+                <div key={i} style={{ height: 16, background: '#ffffff', borderRadius: 6, marginBottom: 10, width: `${90 - i * 5}%` }} />
               ))}
             </div>
           )}

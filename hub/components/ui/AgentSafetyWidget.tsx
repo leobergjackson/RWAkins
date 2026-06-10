@@ -150,7 +150,7 @@ function Tile({ accent, label, value, sub }: { accent: string; label: string; va
     <div style={{
       position: 'relative',
       background: '#FFFFFF',
-      backgroundImage: `linear-gradient(135deg, ${accent}15 0%, rgba(255,255,255,0.95) 70%)`,
+      backgroundImage: `linear-gradient(135deg, ${accent}15 0%, #0A0F2E 70%)`,
       border: `1px solid ${accent}30`,
       borderRadius: 16,
       padding: '16px 18px',
@@ -160,7 +160,7 @@ function Tile({ accent, label, value, sub }: { accent: string; label: string; va
       <div aria-hidden style={{ position: 'absolute', top: -40, right: -40, width: 120, height: 120, borderRadius: '50%', background: accent, filter: 'blur(50px)', opacity: 0.18, pointerEvents: 'none' }} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
         <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>{label}</div>
-        <span style={{ width: 22, height: 22, borderRadius: 7, background: `linear-gradient(135deg, ${accent}, ${accent}aa)`, color: '#fff', display: 'grid', placeItems: 'center', fontSize: 11, fontWeight: 900, boxShadow: `0 4px 12px ${accent}40` }}>🛡</span>
+        <span style={{ width: 22, height: 22, borderRadius: 7, background: `linear-gradient(135deg, ${accent}, ${accent}aa)`, color: '#0A0F2E', display: 'grid', placeItems: 'center', fontSize: 11, fontWeight: 900, boxShadow: `0 4px 12px ${accent}40` }}>🛡</span>
       </div>
       <div style={{ fontSize: 28, fontWeight: 900, color: INK, marginTop: 8, letterSpacing: '-0.03em', position: 'relative', fontFamily: MONO }}>{value}</div>
       <div style={{ fontSize: 11, fontWeight: 600, color: accent, marginTop: 4, position: 'relative' }}>{sub}</div>

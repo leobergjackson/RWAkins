@@ -13,8 +13,8 @@ const TABS: { id: VaultTabId; label: string; icon: string }[] = [
   { id: 'history',    label: 'History',       icon: '◴' },
 ]
 
-const BORDER = 'rgba(255,255,255,0.08)'
-const MUTED  = 'rgba(255,255,255,0.55)'
+const BORDER = '#E2E8F0'
+const MUTED  = '#475569'
 
 export default function CipherVaultTabBar({
   active,
@@ -26,7 +26,7 @@ export default function CipherVaultTabBar({
   return (
     <nav style={{
       display: 'flex', gap: 0, padding: '0 16px',
-      background: '#0C0C0C',
+      background: '#ffffff',
       borderBottom: `1px solid ${BORDER}`,
       overflowX: 'auto',
     }}>

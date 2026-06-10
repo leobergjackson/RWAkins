@@ -5,10 +5,10 @@ import { useState } from 'react'
 import { CIPHERVAULT_ACCENT, FALLBACK_DWALLETS, type DWallet } from '@/lib/vault-fallbacks'
 
 const ACCENT = CIPHERVAULT_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const CARD   = '#111111'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.4)'
+const BORDER = '#E2E8F0'
+const CARD   = '#ffffff'
+const MUTED  = '#475569'
+const MUTED2 = '#64748B'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
 const CHAIN_COLOR: Record<string, string> = {
@@ -74,7 +74,7 @@ export default function DWalletManager({ walletAddress }: { walletAddress?: stri
           flexShrink: 0,
         }}>ℹ</div>
         <div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 4 }}>What is a dWallet?</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#0A0F2E', marginBottom: 4 }}>What is a dWallet?</div>
           <div style={{ fontSize: 12, color: MUTED, lineHeight: 1.6 }}>
             A dWallet is an MPC-secured wallet where the private key is split across multiple parties.
             No single party can sign alone — your assets stay private and safe.
@@ -89,14 +89,14 @@ export default function DWalletManager({ walletAddress }: { walletAddress?: stri
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               My dWallets
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
               {wallets.length} active
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {wallets.map(w => (
               <div key={w.id} style={{
-                background: 'rgba(255,255,255,0.02)',
+                background: '#F8FAFC',
                 border: `1px solid ${BORDER}`,
                 borderRadius: 10, padding: 14,
               }}>
@@ -108,7 +108,7 @@ export default function DWalletManager({ walletAddress }: { walletAddress?: stri
                     display: 'grid', placeItems: 'center',
                     fontSize: 11, fontWeight: 700,
                   }}>{w.chain[0]}</span>
-                  <span style={{ fontSize: 13, color: '#fff', fontWeight: 700 }}>dWallet #{w.id}</span>
+                  <span style={{ fontSize: 13, color: '#0A0F2E', fontWeight: 700 }}>dWallet #{w.id}</span>
                   <span style={{ fontSize: 11, color: MUTED2 }}>· {w.chain}</span>
                   <span style={{ marginLeft: 'auto', fontSize: 11, color: '#10b981' }}>● {w.mpcStatus}</span>
                 </div>
@@ -127,7 +127,7 @@ export default function DWalletManager({ walletAddress }: { walletAddress?: stri
                   </button>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 12 }}>
-                  <span style={{ fontSize: 15, color: '#fff', fontWeight: 700, fontFamily: MONO }}>{w.balance}</span>
+                  <span style={{ fontSize: 15, color: '#0A0F2E', fontWeight: 700, fontFamily: MONO }}>{w.balance}</span>
                   <span style={{ fontSize: 12, color: MUTED }}>{w.value}</span>
                   <span style={{ marginLeft: 'auto', fontSize: 11, color: MUTED2 }}>Created: {w.createdAt}</span>
                 </div>
@@ -146,7 +146,7 @@ export default function DWalletManager({ walletAddress }: { walletAddress?: stri
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               Register New dWallet
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
               MPC custody setup
             </div>
           </div>
@@ -157,11 +157,11 @@ export default function DWalletManager({ walletAddress }: { walletAddress?: stri
               borderRadius: 10, textAlign: 'center',
             }}>
               <div style={{ fontSize: 24, color: '#10b981', marginBottom: 6 }}>✓</div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 4 }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#0A0F2E', marginBottom: 4 }}>
                 dWallet #{registered.id} registered
               </div>
               <div style={{ fontSize: 11, color: MUTED, marginBottom: 4 }}>{registered.chain} · {registered.mpcStatus}</div>
-              <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, wordBreak: 'break-all', padding: 8, background: 'rgba(255,255,255,0.04)', borderRadius: 6, marginTop: 8 }}>
+              <div style={{ fontFamily: MONO, fontSize: 11, color: ACCENT, wordBreak: 'break-all', padding: 8, background: '#F8FAFC', borderRadius: 6, marginTop: 8 }}>
                 {short(registered.address, 12, 8)}
               </div>
               <button onClick={() => setRegistered(null)} style={{ ...primaryBtn, marginTop: 14 }}>Register Another</button>
@@ -173,7 +173,7 @@ export default function DWalletManager({ walletAddress }: { walletAddress?: stri
                   {(['BTC', 'ETH', 'MNT'] as const).map(c => (
                     <button key={c} onClick={() => setChain(c)} style={{
                       flex: 1, padding: '8px 12px', borderRadius: 8,
-                      background: chain === c ? `${CHAIN_COLOR[c]}20` : 'rgba(255,255,255,0.03)',
+                      background: chain === c ? `${CHAIN_COLOR[c]}20` : '#ffffff',
                       border: `1px solid ${chain === c ? CHAIN_COLOR[c] : BORDER}`,
                       color: chain === c ? CHAIN_COLOR[c] : MUTED,
                       fontSize: 12, fontWeight: 600,
@@ -190,12 +190,12 @@ export default function DWalletManager({ walletAddress }: { walletAddress?: stri
                   {(['2-of-3', '3-of-5'] as const).map(m => (
                     <button key={m} onClick={() => setMpc(m)} style={{
                       textAlign: 'left', padding: '10px 14px', borderRadius: 8,
-                      background: mpc === m ? `${ACCENT}10` : 'rgba(255,255,255,0.02)',
+                      background: mpc === m ? `${ACCENT}10` : '#F8FAFC',
                       border: `1px solid ${mpc === m ? ACCENT : BORDER}`,
-                      color: '#fff', fontSize: 12, fontWeight: 500,
+                      color: '#0A0F2E', fontSize: 12, fontWeight: 500,
                       cursor: 'pointer', transition: 'all 0.15s',
                     }}>
-                      <span style={{ fontWeight: 700, color: mpc === m ? ACCENT : '#fff' }}>{m}</span>
+                      <span style={{ fontWeight: 700, color: mpc === m ? ACCENT : '#0A0F2E' }}>{m}</span>
                       <span style={{ marginLeft: 8, color: MUTED2, fontSize: 11 }}>
                         {m === '2-of-3' ? '(Recommended)' : '(High Security)'}
                       </span>
@@ -250,15 +250,15 @@ const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '10px 12px',
   borderRadius: 8,
-  background: 'rgba(255,255,255,0.04)',
+  background: '#F8FAFC',
   border: `1px solid ${BORDER}`,
-  color: '#fff', fontSize: 13, outline: 'none',
+  color: '#0A0F2E', fontSize: 13, outline: 'none',
   fontFamily: 'inherit',
 }
 
 const primaryBtn: React.CSSProperties = {
   padding: '12px 18px', borderRadius: 8,
-  background: ACCENT, color: '#fff',
+  background: ACCENT, color: '#0A0F2E',
   border: 'none', fontSize: 13, fontWeight: 600,
   cursor: 'pointer',
 }

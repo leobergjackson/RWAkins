@@ -74,7 +74,7 @@ export default function PoliciesPage() {
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
       
       {/* Header Panel */}
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Dashboard</Link>
@@ -99,8 +99,8 @@ export default function PoliciesPage() {
       {conflictCount > 0 && (
         <section 
           style={{
-            background: 'rgba(245, 197, 24, 0.06)',
-            border: '1px solid rgba(245, 197, 24, 0.3)',
+            background: '#ffffff',
+            border: '1px solid rgba(59, 91, 250, 0.3)',
             borderRadius: 8,
             padding: '12px 16px',
             marginBottom: 20,
@@ -112,13 +112,13 @@ export default function PoliciesPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <span style={{ fontSize: 20 }}>⚠️</span>
             <div>
-              <strong style={{ color: '#F5C518', fontSize: 13 }}>POLICY CONFLICT DETECTED</strong>
+              <strong style={{ color: '#3B5BFA', fontSize: 13 }}>POLICY CONFLICT DETECTED</strong>
               <p style={{ margin: '2px 0 0', fontSize: 11, color: '#ccc' }}>
                 Drift rebalancing criteria conflict with maximum gas limitations. Check priority levels.
               </p>
             </div>
           </div>
-          <span style={{ fontSize: 10, background: 'rgba(245, 197, 24, 0.15)', color: '#F5C518', padding: '4px 8px', borderRadius: 4, fontWeight: 'bold' }}>
+          <span style={{ fontSize: 10, background: '#ffffff', color: '#3B5BFA', padding: '4px 8px', borderRadius: 4, fontWeight: 'bold' }}>
             {conflictCount} Conflicts Active
           </span>
         </section>
@@ -134,9 +134,9 @@ export default function PoliciesPage() {
             style={{
               padding: '6px 12px',
               fontSize: 11,
-              borderColor: selectedCategory === cat ? '#F5C518' : 'rgba(255,255,255,0.08)',
-              color: selectedCategory === cat ? '#F5C518' : '#aaa',
-              background: selectedCategory === cat ? 'rgba(245,197,24,0.05)' : '#000'
+              borderColor: selectedCategory === cat ? '#3B5BFA' : '#E2E8F0',
+              color: selectedCategory === cat ? '#3B5BFA' : '#aaa',
+              background: selectedCategory === cat ? 'rgba(59,91,250,0.05)' : '#ffffff'
             }}
           >
             {cat}
@@ -158,13 +158,13 @@ export default function PoliciesPage() {
                 className="card"
                 style={{
                   padding: 16,
-                  borderLeft: `4px solid ${pol.conflictDetected ? '#EF4444' : '#F5C518'}`
+                  borderLeft: `4px solid ${pol.conflictDetected ? '#EF4444' : '#3B5BFA'}`
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 8, marginBottom: 6 }}>
                   <div>
                     <span style={{ fontSize: 9, color: '#888', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{pol.category}</span>
-                    <h3 style={{ margin: '2px 0 0', fontSize: 15, fontWeight: 700, color: '#fff' }}>{pol.name}</h3>
+                    <h3 style={{ margin: '2px 0 0', fontSize: 15, fontWeight: 700, color: '#0A0F2E' }}>{pol.name}</h3>
                   </div>
 
                   <div style={{ display: 'flex', gap: 6 }}>
@@ -196,13 +196,13 @@ export default function PoliciesPage() {
                 <p style={{ margin: '0 0 12px', fontSize: 12, color: '#ccc', lineHeight: 1.4 }}>{pol.description}</p>
 
                 {/* Constraint details */}
-                <div style={{ display: 'flex', gap: 16, borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: 10, fontSize: 10, color: '#888' }}>
+                <div style={{ display: 'flex', gap: 16, borderTop: '1px solid #F8FAFC', paddingTop: 10, fontSize: 10, color: '#888' }}>
                   <span>Last Triggered/Violated: <strong style={{ color: '#ccc' }}>{pol.lastViolated}</strong></span>
                   <span>Conflict Risk: <strong style={{ color: pol.conflictDetected ? '#EF4444' : '#10B981' }}>{pol.conflictDetected ? 'High' : 'None'}</strong></span>
                 </div>
 
                 {isReplaying && (
-                  <div style={{ marginTop: 12, padding: 10, background: '#030303', border: '1px solid rgba(245,197,24,0.2)', borderRadius: 6, fontSize: 10, fontFamily: 'monospace', color: '#F5C518' }}>
+                  <div style={{ marginTop: 12, padding: 10, background: 'var(--cloud-bg)', border: '1px solid rgba(59,91,250,0.2)', borderRadius: 6, fontSize: 10, fontFamily: 'monospace', color: '#3B5BFA' }}>
                     📡 [REPLAYING CONSTRAINT]: Initializing historical log audit check... Uptime parameters verified nominal.
                   </div>
                 )}
@@ -222,21 +222,21 @@ export default function PoliciesPage() {
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, fontSize: 11 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid #F8FAFC' }}>
                 <span style={{ color: '#aaa' }}>Max Multi-Sig Threshold:</span>
-                <strong style={{ color: '#fff' }}>USDC 50,000 / block</strong>
+                <strong style={{ color: '#0A0F2E' }}>USDC 50,000 / block</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid #F8FAFC' }}>
                 <span style={{ color: '#aaa' }}>Max Staking Allocation Drift:</span>
-                <strong style={{ color: '#fff' }}>15% boundary</strong>
+                <strong style={{ color: '#0A0F2E' }}>15% boundary</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: '1px solid #F8FAFC' }}>
                 <span style={{ color: '#aaa' }}>Min Validator Confidence:</span>
-                <strong style={{ color: '#fff' }}>85% aggregate score</strong>
+                <strong style={{ color: '#0A0F2E' }}>85% aggregate score</strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: '#aaa' }}>Sovereignty Index Baseline:</span>
-                <strong style={{ color: '#fff' }}>90% required</strong>
+                <strong style={{ color: '#0A0F2E' }}>90% required</strong>
               </div>
             </div>
           </article>
@@ -248,9 +248,9 @@ export default function PoliciesPage() {
       {/* Add Policy Modal */}
       {showAddPolicy && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(5px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
-          <div className="card" style={{ width: '90%', maxWidth: 450, padding: 24, border: '1px solid rgba(245,197,24,0.4)' }}>
+          <div className="card" style={{ width: '90%', maxWidth: 450, padding: 24, border: '1px solid rgba(59,91,250,0.4)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-              <h3 style={{ margin: 0, fontSize: 18, color: '#fff' }}>Register New Policy Constraint</h3>
+              <h3 style={{ margin: 0, fontSize: 18, color: '#0A0F2E' }}>Register New Policy Constraint</h3>
               <button onClick={() => setShowAddPolicy(false)} style={{ background: 'none', border: 'none', color: '#888', fontSize: 16, cursor: 'pointer' }}>✕</button>
             </div>
 
@@ -263,7 +263,7 @@ export default function PoliciesPage() {
                   onChange={(e) => setNewPolicyName(e.target.value)}
                   placeholder="e.g. Max-Gas-Cap-Mantle"
                   required
-                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
+                  style={{ width: '100%', padding: '8px 12px', background: 'var(--cloud-bg)', border: '1px solid #CBD5E1', color: '#0A0F2E', fontSize: 12, borderRadius: 6, outline: 'none' }}
                 />
               </div>
 
@@ -272,7 +272,7 @@ export default function PoliciesPage() {
                 <select 
                   value={newPolicyCat}
                   onChange={(e) => setNewPolicyCat(e.target.value)}
-                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none' }}
+                  style={{ width: '100%', padding: '8px 12px', background: 'var(--cloud-bg)', border: '1px solid #CBD5E1', color: '#0A0F2E', fontSize: 12, borderRadius: 6, outline: 'none' }}
                 >
                   <option value="Telemetry Escalation">Telemetry Escalation</option>
                   <option value="AI Constraint">AI Constraint</option>
@@ -290,7 +290,7 @@ export default function PoliciesPage() {
                   placeholder="Detail the automated boundaries or failover paths..."
                   required
                   rows={3}
-                  style={{ width: '100%', padding: '8px 12px', background: '#040404', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', fontSize: 12, borderRadius: 6, outline: 'none', resize: 'none' }}
+                  style={{ width: '100%', padding: '8px 12px', background: 'var(--cloud-bg)', border: '1px solid #CBD5E1', color: '#0A0F2E', fontSize: 12, borderRadius: 6, outline: 'none', resize: 'none' }}
                 />
               </div>
 

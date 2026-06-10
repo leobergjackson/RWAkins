@@ -36,12 +36,12 @@ export default function PerformancePage() {
     if (activeScenario === 'degraded_rpc') {
       resilienceScore = 84.2
       resilienceStatus = 'DEGRADED RPC BACKOFF'
-      resilienceColor = '#F5C518'
+      resilienceColor = '#3B5BFA'
       regressionWarning = 'Outage alert: High roundtrip RPC latency regression (+900ms) on Ethereum Sequencers.'
     } else if (activeScenario === 'chain_congestion') {
       resilienceScore = 89.6
       resilienceStatus = 'CONGESTED HIGH LTV'
-      resilienceColor = '#F5C518'
+      resilienceColor = '#3B5BFA'
       regressionWarning = 'Network alert: Mempool saturation detected. Gas estimated threshold exceeded by 400%.'
     } else if (activeScenario === 'telemetry_anomaly_spikes') {
       resilienceScore = 68.4
@@ -51,7 +51,7 @@ export default function PerformancePage() {
     } else if (activeScenario === 'suspicious_activity') {
       resilienceScore = 92.0
       resilienceStatus = 'KEY LOCKDOWN SAFE'
-      resilienceColor = '#F5C518'
+      resilienceColor = '#3B5BFA'
       regressionWarning = 'Security alert: Suspicious key compromise. Isolated zero-metadata routing keys.'
     }
   } else if (currentMode === 'executive') {
@@ -106,7 +106,7 @@ export default function PerformancePage() {
 
   return (
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Back to Dashboard</Link>
@@ -118,7 +118,7 @@ export default function PerformancePage() {
           </h1>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
-          <span style={{ fontSize: 10, background: 'rgba(245, 197, 24, 0.05)', border: '1px solid rgba(245, 197, 24, 0.25)', color: '#F5C518', padding: '5px 12px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+          <span style={{ fontSize: 10, background: '#ffffff', border: '1px solid rgba(59, 91, 250, 0.25)', color: '#3B5BFA', padding: '5px 12px', borderRadius: 20, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
             Active Mode: {currentMode.toUpperCase()}
           </span>
         </div>
@@ -152,7 +152,7 @@ export default function PerformancePage() {
       <section 
         style={{ 
           width: '100%', 
-          background: 'rgba(0,0,0,0.4)', 
+          background: '#ffffff', 
           border: `1px solid ${resilienceColor}`, 
           borderRadius: 10, 
           padding: '16px 20px', 
@@ -176,7 +176,7 @@ export default function PerformancePage() {
         <div style={{ display: 'flex', gap: 20 }}>
           <div style={{ textAlign: 'right' }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Resilience Score</span>
-            <h4 style={{ margin: 0, fontSize: 24, color: '#fff', fontWeight: 800 }}>{resilienceScore}/100</h4>
+            <h4 style={{ margin: 0, fontSize: 24, color: '#0A0F2E', fontWeight: 800 }}>{resilienceScore}/100</h4>
           </div>
           <div style={{ textAlign: 'right' }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Uptime Confidence</span>
@@ -194,8 +194,8 @@ export default function PerformancePage() {
             {hydrationTime}ms
           </strong>
           <span style={{ fontSize: 11, color: '#10B981' }}>✔ Dynamic hydration bound stable</span>
-          <div style={{ height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 2, marginTop: 12, overflow: 'hidden' }}>
-            <div style={{ width: `${(hydrationTime/300)*100}%`, height: '100%', background: '#F5C518' }} />
+          <div style={{ height: 4, background: '#F1F5F9', borderRadius: 2, marginTop: 12, overflow: 'hidden' }}>
+            <div style={{ width: `${(hydrationTime/300)*100}%`, height: '100%', background: '#3B5BFA' }} />
           </div>
         </div>
 
@@ -205,7 +205,7 @@ export default function PerformancePage() {
             {cacheHitRate}%
           </strong>
           <span style={{ fontSize: 11, color: '#10B981' }}>✔ Redis gateway caching nominal</span>
-          <div style={{ height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 2, marginTop: 12, overflow: 'hidden' }}>
+          <div style={{ height: 4, background: '#F1F5F9', borderRadius: 2, marginTop: 12, overflow: 'hidden' }}>
             <div style={{ width: `${cacheHitRate}%`, height: '100%', background: '#10B981' }} />
           </div>
         </div>
@@ -218,7 +218,7 @@ export default function PerformancePage() {
           <span style={{ fontSize: 11, color: activeScenario === 'degraded_rpc' ? '#EF4444' : '#10B981' }}>
             {activeScenario === 'degraded_rpc' ? '⚠ Gateway backlog active' : '✔ SLA benchmark fully met'}
           </span>
-          <div style={{ height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 2, marginTop: 12, overflow: 'hidden' }}>
+          <div style={{ height: 4, background: '#F1F5F9', borderRadius: 2, marginTop: 12, overflow: 'hidden' }}>
             <div style={{ width: `${Math.min(100, (analytics.averageLatency/1000)*100)}%`, height: '100%', background: activeScenario === 'degraded_rpc' ? '#EF4444' : '#10B981' }} />
           </div>
         </div>
@@ -229,8 +229,8 @@ export default function PerformancePage() {
             {heapSize}MB
           </strong>
           <span style={{ fontSize: 11, color: '#10B981' }}>✔ Heap limit under 128MB ceiling</span>
-          <div style={{ height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 2, marginTop: 12, overflow: 'hidden' }}>
-            <div style={{ width: `${(heapSize/128)*100}%`, height: '100%', background: '#F5C518' }} />
+          <div style={{ height: 4, background: '#F1F5F9', borderRadius: 2, marginTop: 12, overflow: 'hidden' }}>
+            <div style={{ width: `${(heapSize/128)*100}%`, height: '100%', background: '#3B5BFA' }} />
           </div>
         </div>
 
@@ -247,21 +247,21 @@ export default function PerformancePage() {
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 6 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: 6 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #F8FAFC', paddingBottom: 6 }}>
               <span style={{ fontSize: 12, color: '#ccc' }}>API Request Retry Frequency</span>
-              <strong style={{ fontSize: 12, color: retryRate > 5 ? '#EF4444' : '#fff' }}>{retryRate}%</strong>
+              <strong style={{ fontSize: 12, color: retryRate > 5 ? '#EF4444' : '#0A0F2E' }}>{retryRate}%</strong>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: 6 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #F8FAFC', paddingBottom: 6 }}>
               <span style={{ fontSize: 12, color: '#ccc' }}>Active Fallback Activations</span>
-              <strong style={{ fontSize: 12, color: '#fff' }}>{analytics.fallbackActivations} activations</strong>
+              <strong style={{ fontSize: 12, color: '#0A0F2E' }}>{analytics.fallbackActivations} activations</strong>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: 6 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #F8FAFC', paddingBottom: 6 }}>
               <span style={{ fontSize: 12, color: '#ccc' }}>Heap Garbage Sweep Frequency</span>
-              <strong style={{ fontSize: 12, color: '#fff' }}>Every 45s (Automatic)</strong>
+              <strong style={{ fontSize: 12, color: '#0A0F2E' }}>Every 45s (Automatic)</strong>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 4 }}>
               <span style={{ fontSize: 12, color: '#ccc' }}>SLA DNS Resolution Handshake</span>
-              <strong style={{ fontSize: 12, color: '#fff' }}>4.2ms</strong>
+              <strong style={{ fontSize: 12, color: '#0A0F2E' }}>4.2ms</strong>
             </div>
           </div>
         </div>
@@ -280,7 +280,7 @@ export default function PerformancePage() {
                 style={{ 
                   padding: '8px 10px', 
                   background: 'rgba(255,255,255,0.01)', 
-                  border: '1px solid rgba(255,255,255,0.04)', 
+                  border: '1px solid #F8FAFC', 
                   borderRadius: 6,
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -288,10 +288,10 @@ export default function PerformancePage() {
                 }}
               >
                 <div>
-                  <strong style={{ display: 'block', fontSize: 11, color: '#fff' }}>{log.event}</strong>
+                  <strong style={{ display: 'block', fontSize: 11, color: '#0A0F2E' }}>{log.event}</strong>
                   <span style={{ fontSize: 9, color: '#666' }}>{log.time}</span>
                 </div>
-                <span style={{ fontSize: 10, color: '#F5C518', fontWeight: 'bold', fontFamily: 'monospace' }}>
+                <span style={{ fontSize: 10, color: '#3B5BFA', fontWeight: 'bold', fontFamily: 'monospace' }}>
                   {log.duration}
                 </span>
               </div>

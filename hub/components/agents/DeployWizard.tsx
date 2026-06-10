@@ -9,10 +9,10 @@ import { TRUSTMESH_ACCENT } from '@/lib/agents-fallbacks'
 import { simTx, type SimTx } from '@/lib/sim-tx'
 
 const ACCENT = TRUSTMESH_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const CARD   = '#111111'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.4)'
+const BORDER = '#E2E8F0'
+const CARD   = '#ffffff'
+const MUTED  = '#475569'
+const MUTED2 = '#64748B'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
 type Step = 1 | 2 | 3
@@ -114,13 +114,13 @@ export default function DeployWizard({ walletAddress }: { walletAddress?: string
             color: '#10b981', fontSize: 28,
             display: 'grid', placeItems: 'center', margin: '0 auto 16px',
           }}>✓</div>
-          <h2 style={{ fontSize: 22, color: '#fff', margin: '0 0 8px', fontFamily: 'Georgia, "Playfair Display", serif' }}>
+          <h2 style={{ fontSize: 22, color: '#0A0F2E', margin: '0 0 8px', fontFamily: 'Georgia, "Playfair Display", serif' }}>
             Agent Deployed Successfully!
           </h2>
           <p style={{ color: MUTED, fontSize: 13, margin: '0 0 24px' }}>
             Your agent is live on Mantle devnet and ready to receive jobs.
           </p>
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 8, padding: 14, textAlign: 'left', marginBottom: 20 }}>
+          <div style={{ background: '#ffffff', borderRadius: 8, padding: 14, textAlign: 'left', marginBottom: 20 }}>
             <DetailLine label="Transaction" value={result.tx.short} mono />
             <DetailLine label="Job ID"      value={result.jobId} mono />
             <DetailLine label="SNS"         value={result.sns} />
@@ -160,7 +160,7 @@ export default function DeployWizard({ walletAddress }: { walletAddress?: string
           <div key={s} style={{ display: 'flex', alignItems: 'center' }}>
             <div style={{
               width: 32, height: 32, borderRadius: '50%',
-              background: step >= s ? ACCENT : 'rgba(255,255,255,0.06)',
+              background: step >= s ? ACCENT : '#F1F5F9',
               color: step >= s ? '#fff' : MUTED,
               fontSize: 13, fontWeight: 700,
               display: 'grid', placeItems: 'center',
@@ -198,13 +198,13 @@ export default function DeployWizard({ walletAddress }: { walletAddress?: string
                       textAlign: 'left',
                       padding: '12px 14px',
                       borderRadius: 8,
-                      background: type === t ? `${ACCENT}15` : 'rgba(255,255,255,0.02)',
+                      background: type === t ? `${ACCENT}15` : '#F8FAFC',
                       border: `1px solid ${type === t ? ACCENT : BORDER}`,
                       cursor: 'pointer',
                       transition: 'all 0.15s',
                     }}
                   >
-                    <div style={{ fontSize: 13, fontWeight: 700, color: type === t ? ACCENT : '#fff' }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: type === t ? ACCENT : '#0A0F2E' }}>
                       {TYPE_INFO[t].title}
                     </div>
                     <div style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>
@@ -300,7 +300,7 @@ export default function DeployWizard({ walletAddress }: { walletAddress?: string
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase', marginBottom: 12 }}>
               Deployment Summary
             </div>
-            <div style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${BORDER}`, borderRadius: 10, padding: 16, marginBottom: 20 }}>
+            <div style={{ background: '#F8FAFC', border: `1px solid ${BORDER}`, borderRadius: 10, padding: 16, marginBottom: 20 }}>
               <DetailLine label="Agent Name"  value={name} />
               <DetailLine label="Type"         value={TYPE_INFO[type].title} />
               <DetailLine label="SNS Name"     value={`${snsSubdomain}.kubryx.sol`} />
@@ -348,19 +348,19 @@ function DetailLine({ label, value, mono }: { label: string; value: string; mono
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: `1px solid ${BORDER}` }}>
       <span style={{ fontSize: 11, color: MUTED2 }}>{label}</span>
-      <span style={{ fontSize: 12, color: '#fff', fontFamily: mono ? MONO : 'inherit' }}>{value}</span>
+      <span style={{ fontSize: 12, color: '#0A0F2E', fontFamily: mono ? MONO : 'inherit' }}>{value}</span>
     </div>
   )
 }
 
 function KeyRow({ label, value, mono, action }: { label: string; value: string; mono?: boolean; action?: React.ReactNode }) {
   return (
-    <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${BORDER}`, borderRadius: 8, padding: 10 }}>
+    <div style={{ background: '#F8FAFC', border: `1px solid ${BORDER}`, borderRadius: 8, padding: 10 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
         <span style={{ fontSize: 11, color: MUTED2, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{label}</span>
         {action}
       </div>
-      <div style={{ fontFamily: mono ? MONO : 'inherit', fontSize: 11, color: '#fff', wordBreak: 'break-all' }}>
+      <div style={{ fontFamily: mono ? MONO : 'inherit', fontSize: 11, color: '#0A0F2E', wordBreak: 'break-all' }}>
         {value}
       </div>
     </div>
@@ -371,14 +371,14 @@ const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '10px 12px',
   borderRadius: 8,
-  background: 'rgba(255,255,255,0.04)',
+  background: '#F8FAFC',
   border: `1px solid ${BORDER}`,
-  color: '#fff', fontSize: 13, outline: 'none',
+  color: '#0A0F2E', fontSize: 13, outline: 'none',
   fontFamily: 'inherit',
 }
 const primaryBtn: React.CSSProperties = {
   padding: '10px 18px', borderRadius: 8,
-  background: ACCENT, color: '#fff',
+  background: ACCENT, color: '#0A0F2E',
   border: 'none', fontSize: 13, fontWeight: 600,
   cursor: 'pointer',
 }

@@ -83,14 +83,14 @@ function DefiLlamaWidget() {
   }, [])
 
   if (!data) return (
-    <div style={{ padding: '8px 16px', background: 'rgba(255,255,255,0.7)', borderRadius: 9999, border: '1px solid #E0E7FF', display: 'flex', alignItems: 'center', gap: 8 }}>
+    <div style={{ padding: '8px 16px', background: '#EEF2FF', borderRadius: 9999, border: '1px solid #E0E7FF', display: 'flex', alignItems: 'center', gap: 8 }}>
       <span style={{ fontSize: 12, fontWeight: 700, color: '#4338CA' }}>DeFiLlama TVL</span>
       <span className="animate-pulse" style={{ height: 14, width: 64, borderRadius: 6, background: 'rgba(99,102,241,0.15)' }} />
     </div>
   )
 
   return (
-    <div style={{ padding: '8px 16px', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(10px)', borderRadius: 9999, border: '1px solid #E0E7FF', display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 2px 10px rgba(99,102,241,0.1)' }}>
+    <div style={{ padding: '8px 16px', background: '#EEF2FF', backdropFilter: 'blur(10px)', borderRadius: 9999, border: '1px solid #E0E7FF', display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 2px 10px rgba(99,102,241,0.1)' }}>
       <span style={{ fontSize: 12, fontWeight: 700, color: '#4338CA' }}>Global DeFi TVL:</span>
       <span style={{ fontSize: 14, fontWeight: 800, color: '#1E1B4B' }}>
         ${(data.total / 1e9).toFixed(2)}B
@@ -128,7 +128,7 @@ function LendMarketRow() {
         return (
           <div key={it.id} style={{
             display: 'flex', alignItems: 'center', gap: 8,
-            background: 'rgba(255,255,255,0.7)', border: '1px solid #E0E7FF',
+            background: '#EEF2FF', border: '1px solid #E0E7FF',
             borderRadius: 9999, padding: '8px 16px',
           }}>
             <span style={{ fontSize: 12, fontWeight: 700, color: '#4338CA' }}>{it.label}</span>
@@ -400,7 +400,7 @@ function LendInner() {
         }
         .stat-card {
           border-radius: 24px;
-          border: 1px solid rgba(255,255,255,0.6);
+          border: 1px solid #475569;
           padding: 32px 28px;
           display: flex;
           flex-direction: column;
@@ -476,7 +476,7 @@ function LendInner() {
         }
 
         /* 
-          IMPORTANT: The original Lend components are styled for dark mode (#080808 background, #111111 cards).
+          IMPORTANT: The original Lend components are styled for dark mode (#ffffff background, #ffffff cards).
           To seamlessly integrate them into our premium light aesthetic without altering their source code,
           we use a filter inversion strategy. Invert(1) swaps light/dark, while hue-rotate(180deg) restores
           the original color hues (so greens stay green, reds stay red, and indigos stay roughly indigo).
@@ -485,7 +485,7 @@ function LendInner() {
           filter: invert(1) hue-rotate(180deg) brightness(1.05) contrast(1.02);
           border-radius: 24px;
           overflow: hidden;
-          background: #000; /* Pre-inverted base color */
+          background: var(--cloud-bg); /* light base */
           box-shadow: 0 20px 60px rgba(99, 102, 241, 0.15);
         }
         
@@ -538,7 +538,7 @@ function LendInner() {
       <header className="nav-bar">
         <div className="nav-logo">
           <span className="sparkle-icon">✧</span>
-          Kubryx Lend
+          RWAkins Lend
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#6366F1', fontWeight: 600 }}>

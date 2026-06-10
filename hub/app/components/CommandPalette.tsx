@@ -382,8 +382,8 @@ export default function CommandPalette() {
           style={{
             padding: '8px 14px',
             fontSize: 12,
-            background: '#070707',
-            borderColor: 'rgba(245, 197, 24, 0.4)',
+            background: 'var(--cloud-bg)',
+            borderColor: 'rgba(59, 91, 250, 0.4)',
             boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
             cursor: 'pointer',
             display: 'flex',
@@ -391,7 +391,7 @@ export default function CommandPalette() {
             gap: 6
           }}
         >
-          <span>⌘</span> Search OS <kbd style={{ background: 'rgba(255,255,255,0.08)', padding: '1px 4px', borderRadius: 3, fontSize: 10 }}>Ctrl+K</kbd>
+          <span>⌘</span> Search OS <kbd style={{ background: '#E2E8F0', padding: '1px 4px', borderRadius: 3, fontSize: 10 }}>Ctrl+K</kbd>
         </button>
       </div>
     )
@@ -420,18 +420,18 @@ export default function CommandPalette() {
         style={{
           width: '90%',
           maxWidth: 550,
-          background: '#0a0a0a',
-          border: '1px solid rgba(245, 197, 24, 0.45)',
+          background: '#ffffff',
+          border: '1px solid rgba(59, 91, 250, 0.45)',
           borderRadius: 12,
-          boxShadow: '0 20px 60px rgba(0,0,0,0.9), inset 0 0 15px rgba(245, 197, 24, 0.05)',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.9), inset 0 0 15px rgba(59, 91, 250, 0.05)',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column'
         }}
       >
         {/* Search Input */}
-        <div style={{ display: 'flex', alignItems: 'center', padding: '14px 18px', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-          <span style={{ fontSize: 18, marginRight: 10, color: 'rgba(255,255,255,0.4)' }}>🔍</span>
+        <div style={{ display: 'flex', alignItems: 'center', padding: '14px 18px', borderBottom: '1px solid #E2E8F0' }}>
+          <span style={{ fontSize: 18, marginRight: 10, color: '#64748B' }}>🔍</span>
           <input
             autoFocus
             type="text"
@@ -442,7 +442,7 @@ export default function CommandPalette() {
               flex: 1,
               background: 'none',
               border: 'none',
-              color: '#fff',
+              color: '#0A0F2E',
               fontSize: 15,
               outline: 'none',
               fontFamily: 'inherit'
@@ -450,7 +450,7 @@ export default function CommandPalette() {
           />
           <button
             onClick={() => setIsOpen(false)}
-            style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer', fontSize: 12 }}
+            style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', fontSize: 12 }}
             aria-label="Close command search"
           >
             [Esc]
@@ -472,8 +472,8 @@ export default function CommandPalette() {
                   style={{
                     padding: '10px 14px',
                     borderRadius: 8,
-                    background: isSelected ? 'rgba(245, 197, 24, 0.1)' : 'transparent',
-                    border: isSelected ? '1px solid rgba(245, 197, 24, 0.35)' : '1px solid transparent',
+                    background: isSelected ? 'rgba(59, 91, 250, 0.1)' : 'transparent',
+                    border: isSelected ? '1px solid rgba(59, 91, 250, 0.35)' : '1px solid transparent',
                     cursor: 'pointer',
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -483,14 +483,14 @@ export default function CommandPalette() {
                   }}
                 >
                   <div>
-                    <h5 style={{ margin: 0, fontSize: 13, color: isSelected ? '#F5C518' : '#fff', fontWeight: 600 }}>{cmd.title}</h5>
+                    <h5 style={{ margin: 0, fontSize: 13, color: isSelected ? '#3B5BFA' : '#0A0F2E', fontWeight: 600 }}>{cmd.title}</h5>
                     <p style={{ margin: '2px 0 0', fontSize: 11, color: isSelected ? '#fff' : '#888', opacity: 0.8 }}>{cmd.subtitle}</p>
                   </div>
                   <span
                     style={{
                       fontSize: 9,
-                      background: 'rgba(255,255,255,0.05)',
-                      color: isSelected ? '#F5C518' : '#aaa',
+                      background: '#F8FAFC',
+                      color: isSelected ? '#3B5BFA' : '#aaa',
                       padding: '2px 6px',
                       borderRadius: 4,
                       textTransform: 'uppercase',
@@ -507,7 +507,7 @@ export default function CommandPalette() {
         </div>
 
         {/* Footer shortcuts */}
-        <div style={{ padding: '8px 16px', background: '#050505', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', gap: 14, fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>
+        <div style={{ padding: '8px 16px', background: 'var(--cloud-bg)', borderTop: '1px solid #F8FAFC', display: 'flex', gap: 14, fontSize: 10, color: '#94A3B8' }}>
           <span>⌨ <kbd>↑↓</kbd> to navigate</span>
           <span>⏎ to execute</span>
           <span><kbd>Esc</kbd> to exit</span>

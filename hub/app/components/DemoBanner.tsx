@@ -10,8 +10,8 @@ export default function DemoBanner() {
     <div
       className="card"
       style={{
-        borderColor: '#F5C518',
-        background: 'rgba(245,197,24,0.06)',
+        borderColor: '#3B5BFA',
+        background: '#ffffff',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',

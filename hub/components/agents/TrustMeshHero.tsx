@@ -4,9 +4,9 @@
 import { TRUSTMESH_ACCENT, TRUSTMESH_PROGRAM_ID } from '@/lib/agents-fallbacks'
 
 const ACCENT = TRUSTMESH_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.35)'
+const BORDER = '#E2E8F0'
+const MUTED  = '#475569'
+const MUTED2 = '#94A3B8'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
 function short(addr: string) {
@@ -24,7 +24,7 @@ export default function TrustMeshHero({
 }) {
   return (
     <div style={{
-      background: '#0C0C0C',
+      background: '#ffffff',
       borderBottom: `1px solid ${BORDER}`,
       padding: '24px 28px',
     }}>
@@ -33,7 +33,7 @@ export default function TrustMeshHero({
         display: 'flex', alignItems: 'center', gap: 6,
         fontSize: 11, color: MUTED2, fontFamily: MONO, marginBottom: 14,
       }}>
-        <span>Kubryx</span>
+        <span>RWAkins</span>
         <span>›</span>
         <span style={{ color: ACCENT }}>Agent Coordinator</span>
       </div>
@@ -49,7 +49,7 @@ export default function TrustMeshHero({
               fontSize: 20, color: ACCENT, fontWeight: 800,
             }}>⬡</div>
             <div>
-              <div style={{ fontSize: 24, fontWeight: 700, color: '#fff', fontFamily: 'Georgia, "Playfair Display", serif', letterSpacing: '-0.01em', lineHeight: 1 }}>
+              <div style={{ fontSize: 24, fontWeight: 700, color: '#0A0F2E', fontFamily: 'Georgia, "Playfair Display", serif', letterSpacing: '-0.01em', lineHeight: 1 }}>
                 Agent Coordinator
               </div>
               <div style={{ fontSize: 12, color: MUTED2, marginTop: 4 }}>
@@ -68,7 +68,7 @@ export default function TrustMeshHero({
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
             <span style={{
               fontSize: 11, fontFamily: MONO, color: MUTED2,
-              background: 'rgba(255,255,255,0.04)', border: `1px solid ${BORDER}`,
+              background: '#F8FAFC', border: `1px solid ${BORDER}`,
               padding: '4px 8px', borderRadius: 6,
             }}>
               Program: {short(TRUSTMESH_PROGRAM_ID)}
@@ -89,7 +89,7 @@ export default function TrustMeshHero({
               cursor: 'pointer', transition: 'all 0.15s',
               fontFamily: walletAddress ? MONO : 'inherit',
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#F8FAFC' }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
           >
             {walletAddress ? short(walletAddress) : 'Connect Phantom'}
@@ -98,7 +98,7 @@ export default function TrustMeshHero({
             href="/agents?tab=deploy"
             style={{
               padding: '10px 16px', borderRadius: 8,
-              background: ACCENT, color: '#fff',
+              background: ACCENT, color: '#0A0F2E',
               fontSize: 13, fontWeight: 600,
               textDecoration: 'none',
               display: 'inline-flex', alignItems: 'center', gap: 6,

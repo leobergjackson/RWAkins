@@ -16,10 +16,10 @@ import ForceGraphSVG from '@/app/agents/_components/ForceGraphSVG'
 import { TRUSTMESH_ACCENT } from '@/lib/agents-fallbacks'
 
 const ACCENT = TRUSTMESH_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const CARD   = '#111111'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.4)'
+const BORDER = '#E2E8F0'
+const CARD   = '#ffffff'
+const MUTED  = '#475569'
+const MUTED2 = '#64748B'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
 type FilterMode = 'all' | 'active' | 'complete' | 'revoked' | 'pending'
@@ -90,9 +90,9 @@ export default function JobsExplorer() {
               width: '100%',
               padding: '9px 12px',
               borderRadius: 8,
-              background: 'rgba(255,255,255,0.04)',
+              background: '#F8FAFC',
               border: `1px solid ${BORDER}`,
-              color: '#fff',
+              color: '#0A0F2E',
               fontSize: 13,
               outline: 'none',
               marginBottom: 10,
@@ -102,7 +102,7 @@ export default function JobsExplorer() {
           {/* Filter pills */}
           <div style={{
             display: 'flex', gap: 4, padding: 4,
-            background: 'rgba(255,255,255,0.03)',
+            background: '#ffffff',
             borderRadius: 8, marginBottom: 12,
             flexWrap: 'wrap',
           }}>
@@ -162,7 +162,7 @@ export default function JobsExplorer() {
                       cursor: 'pointer',
                       transition: 'all 0.15s',
                     }}
-                    onMouseEnter={e => { if (!isSel) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)' }}
+                    onMouseEnter={e => { if (!isSel) (e.currentTarget as HTMLElement).style.background = '#ffffff' }}
                     onMouseLeave={e => { if (!isSel) (e.currentTarget as HTMLElement).style.background = 'transparent' }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
@@ -176,7 +176,7 @@ export default function JobsExplorer() {
                         {job.status}
                       </span>
                     </div>
-                    <div style={{ fontSize: 12, color: '#fff', marginTop: 4 }}>{job.owner}</div>
+                    <div style={{ fontSize: 12, color: '#0A0F2E', marginTop: 4 }}>{job.owner}</div>
                     <div style={{ fontSize: 11, color: MUTED, marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {job.description}
                     </div>
@@ -199,7 +199,7 @@ export default function JobsExplorer() {
               <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
                 Agent Coordinator
               </div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
                 {jobsRes.stats.activeCount} active · {jobsRes.stats.agentCount} agents · {jobsRes.stats.breachCount} breaches
               </div>
             </div>

@@ -84,7 +84,7 @@ function TierOrb({ tier }: { tier: StakingTier | string }) {
     None: { bg: '#F1F5F9', border: '#CBD5E1', glow: 'transparent', label: '—', emoji: '' },
     Bronze: { bg: 'rgba(249,115,22,0.12)', border: 'rgba(249,115,22,0.4)', glow: 'rgba(249,115,22,0.25)', label: 'Bronze', emoji: '🥉' },
     Silver: { bg: 'rgba(156,163,175,0.12)', border: 'rgba(156,163,175,0.4)', glow: 'rgba(156,163,175,0.2)', label: 'Silver', emoji: '🥈' },
-    Gold: { bg: 'rgba(245,197,24,0.12)', border: 'rgba(245,197,24,0.4)', glow: 'rgba(245,197,24,0.3)', label: 'Gold', emoji: '🥇' },
+    Gold: { bg: 'rgba(59,91,250,0.12)', border: 'rgba(59,91,250,0.4)', glow: 'rgba(59,91,250,0.3)', label: 'Gold', emoji: '🥇' },
   } as any)[normalizedTier] || { bg: '#F1F5F9', border: '#CBD5E1', glow: 'transparent', label: '—', emoji: '' }
 
   return (

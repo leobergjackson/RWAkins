@@ -14,7 +14,7 @@ export function EmptyState({
   return (
     <div style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-      padding: '48px 20px', textAlign: 'center', background: 'rgba(10, 15, 46, 0.02)',
+      padding: '48px 20px', textAlign: 'center', background: '#ffffff',
       border: '1px dashed rgba(10, 15, 46, 0.1)', borderRadius: '12px', margin: '20px 0'
     }} className="empty-state">
       <span style={{ fontSize: '40px', marginBottom: '16px', opacity: 0.8 }} role="img" aria-label="Empty">

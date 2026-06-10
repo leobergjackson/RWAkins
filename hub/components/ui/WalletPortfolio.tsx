@@ -206,7 +206,7 @@ function ChainCard({ chain, loading }: { chain: ChainHoldings; loading: boolean 
   return (
     <div style={{
       background: '#FFFFFF',
-      backgroundImage: `linear-gradient(135deg, ${chain.chainColor}10 0%, rgba(255,255,255,0.95) 70%)`,
+      backgroundImage: `linear-gradient(135deg, ${chain.chainColor}10 0%, #0A0F2E 70%)`,
       border: `1px solid ${BORDER}`,
       borderRadius: 18,
       padding: 18,
@@ -241,7 +241,7 @@ function ChainCard({ chain, loading }: { chain: ChainHoldings; loading: boolean 
       {loading ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {[0, 1, 2].map(i => (
-            <div key={i} style={{ height: 14, background: 'rgba(15,23,42,0.06)', borderRadius: 6, width: `${85 - i * 8}%`, animation: 'wp-pulse 1.4s ease-in-out infinite', animationDelay: `${i * 0.1}s` }} />
+            <div key={i} style={{ height: 14, background: '#ffffff', borderRadius: 6, width: `${85 - i * 8}%`, animation: 'wp-pulse 1.4s ease-in-out infinite', animationDelay: `${i * 0.1}s` }} />
           ))}
           <style>{`@keyframes wp-pulse { 0%,100% { opacity: 1 } 50% { opacity: 0.4 } }`}</style>
         </div>

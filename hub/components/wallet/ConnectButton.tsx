@@ -17,7 +17,7 @@ export function ConnectButton({
   type = 'auto',
   size = 'md',
   className = '',
-  toolColor = '#F5C518',
+  toolColor = '#3B5BFA',
 }: Props) {
   const { evm, solana, connectEVM, connectSolana, disconnectEVM, disconnectSolana } = useWallet()
   const [showModal, setShowModal] = useState(false)
@@ -59,7 +59,7 @@ export function ConnectButton({
   }
 
   if (!isConnected) {
-    const isDefaultColor = toolColor === '#F5C518'
+    const isDefaultColor = toolColor === '#3B5BFA'
     return (
       <>
         <div className="flex flex-col items-center gap-1">
@@ -69,10 +69,10 @@ export function ConnectButton({
             className={`
               flex items-center rounded-full font-medium transition-all duration-200
               active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed
-              ${isDefaultColor ? 'bg-[#F5C518] text-[#080808] hover:bg-[#e6b800]' : 'hover:opacity-90'}
+              ${isDefaultColor ? 'bg-[#3B5BFA] text-[#ffffff] hover:bg-[#e6b800]' : 'hover:opacity-90'}
               ${sizeMap[size]} ${className}
             `}
-            style={!isDefaultColor ? { backgroundColor: toolColor, color: '#ffffff' } : undefined}
+            style={!isDefaultColor ? { backgroundColor: toolColor, color: '#0A0F2E' } : undefined}
           >
             <Wallet size={13} />
             {isConnecting ? 'Connecting…' : error ? 'Retry Connect' : 'Connect Wallet'}
@@ -132,7 +132,7 @@ export function ConnectButton({
       {showDropdown && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setShowDropdown(false)} />
-          <div className="absolute right-0 top-full mt-2 w-72 z-50 bg-[#111111] border border-white/10 rounded-xl shadow-2xl overflow-hidden">
+          <div className="absolute right-0 top-full mt-2 w-72 z-50 bg-[#ffffff] border border-white/10 rounded-xl shadow-2xl overflow-hidden">
 
             {/* Address block */}
             <div className="p-4 border-b border-white/8">

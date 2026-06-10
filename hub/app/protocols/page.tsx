@@ -58,7 +58,7 @@ export default function ProtocolsPage() {
       utilization: activeScenario === 'chain_congestion' ? '88.6%' : '31.2%',
       health: activeScenario === 'chain_congestion' ? 'Mempool Backlog' : 'Nominal',
       sync: activeScenario === 'chain_congestion' ? 'Sync Lagging' : 'Synchronized',
-      syncColor: activeScenario === 'chain_congestion' ? '#F5C518' : '#10B981'
+      syncColor: activeScenario === 'chain_congestion' ? '#3B5BFA' : '#10B981'
     },
     {
       id: 'arbitrum-Protocol Borrow Engine-desk',
@@ -110,7 +110,7 @@ export default function ProtocolsPage() {
 
   return (
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Back to Dashboard</Link>
@@ -146,8 +146,8 @@ export default function ProtocolsPage() {
           return (
             <article key={chain.key} className="card" style={{ padding: 16 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                <strong style={{ fontSize: 13, color: '#fff' }}>{chain.name}</strong>
-                <span style={{ fontSize: 9, background: 'rgba(255,255,255,0.04)', padding: '2px 6px', borderRadius: 4, color: '#F5C518' }}>
+                <strong style={{ fontSize: 13, color: '#0A0F2E' }}>{chain.name}</strong>
+                <span style={{ fontSize: 9, background: '#F8FAFC', padding: '2px 6px', borderRadius: 4, color: '#3B5BFA' }}>
                   {chain.badge}
                 </span>
               </div>
@@ -155,18 +155,18 @@ export default function ProtocolsPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
                   <span style={{ color: '#888' }}>RPC SLA Quality:</span>
-                  <strong style={{ color: isDanger ? '#EF4444' : isWarning ? '#F5C518' : '#10B981' }}>
+                  <strong style={{ color: isDanger ? '#EF4444' : isWarning ? '#3B5BFA' : '#10B981' }}>
                     {stats.quality}%
                   </strong>
                 </div>
 
                 {/* Progress bar represent RPC quality */}
-                <div style={{ height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 2, overflow: 'hidden' }}>
+                <div style={{ height: 4, background: '#F1F5F9', borderRadius: 2, overflow: 'hidden' }}>
                   <div 
                     style={{ 
                       height: '100%', 
                       width: `${stats.quality}%`, 
-                      background: isDanger ? '#EF4444' : isWarning ? '#F5C518' : '#10B981',
+                      background: isDanger ? '#EF4444' : isWarning ? '#3B5BFA' : '#10B981',
                       transition: 'width 0.3s ease'
                     }} 
                   />
@@ -174,18 +174,18 @@ export default function ProtocolsPage() {
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginTop: 4 }}>
                   <span style={{ color: '#888' }}>Latency Ping:</span>
-                  <strong style={{ color: stats.latency > 350 ? '#EF4444' : '#fff' }}>
+                  <strong style={{ color: stats.latency > 350 ? '#EF4444' : '#0A0F2E' }}>
                     {stats.latency}ms
                   </strong>
                 </div>
 
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: 8, marginTop: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Status</span>
+                <div style={{ borderTop: '1px solid #F8FAFC', paddingTop: 8, marginTop: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: 9, color: '#64748B', textTransform: 'uppercase' }}>Status</span>
                   <span style={{ 
                     fontSize: 8, 
                     fontWeight: 800, 
-                    border: `1px solid ${isDanger ? '#EF4444' : isWarning ? '#F5C518' : '#10B981'}`,
-                    color: isDanger ? '#EF4444' : isWarning ? '#F5C518' : '#10B981',
+                    border: `1px solid ${isDanger ? '#EF4444' : isWarning ? '#3B5BFA' : '#10B981'}`,
+                    color: isDanger ? '#EF4444' : isWarning ? '#3B5BFA' : '#10B981',
                     padding: '1px 5px',
                     borderRadius: 4,
                     textTransform: 'uppercase'
@@ -206,22 +206,22 @@ export default function ProtocolsPage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', height: 420 }}>
           <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>⛓ Multi-Chain Coordination Topology</h3>
           <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-            Visualizes real-time autonomous routing pathways and epoch sync layers managed by Kubryx.
+            Visualizes real-time autonomous routing pathways and epoch sync layers managed by RWAkins.
           </p>
 
-          <div style={{ flex: 1, position: 'relative', background: '#040404', borderRadius: 8, border: '1px solid rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+          <div style={{ flex: 1, position: 'relative', background: 'var(--cloud-bg)', borderRadius: 8, border: '1px solid #F8FAFC', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
             
             {/* Background SVG Grid for infrastructure feel */}
             <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
               <defs>
                 <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.02)" strokeWidth="1"/>
+                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#F8FAFC" strokeWidth="1"/>
                 </pattern>
               </defs>
               <rect width="100%" height="100%" fill="url(#grid)" />
               
               {/* Animated Lines connecting central hub to chains */}
-              <line x1="50%" y1="50%" x2="20%" y2="20%" stroke="rgba(245,197,24,0.3)" strokeWidth="2" strokeDasharray="5,5" />
+              <line x1="50%" y1="50%" x2="20%" y2="20%" stroke="rgba(59,91,250,0.3)" strokeWidth="2" strokeDasharray="5,5" />
               <line x1="50%" y1="50%" x2="80%" y2="20%" stroke="rgba(168,85,247,0.3)" strokeWidth="2" strokeDasharray="5,5" />
               <line x1="50%" y1="50%" x2="20%" y2="80%" stroke="rgba(59,130,246,0.3)" strokeWidth="2" strokeDasharray="5,5" />
               <line x1="50%" y1="50%" x2="80%" y2="80%" stroke="rgba(236,72,153,0.3)" strokeWidth="2" strokeDasharray="5,5" />
@@ -235,9 +235,9 @@ export default function ProtocolsPage() {
                 width: 75,
                 height: 75,
                 borderRadius: '50%',
-                background: '#080808',
-                border: '2px solid #F5C518',
-                boxShadow: '0 0 20px rgba(245,197,24,0.25)',
+                background: '#ffffff',
+                border: '2px solid #3B5BFA',
+                boxShadow: '0 0 20px rgba(59,91,250,0.25)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -246,25 +246,25 @@ export default function ProtocolsPage() {
                 padding: 6
               }}
             >
-              <strong style={{ fontSize: 9, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Kubryx</strong>
-              <span style={{ fontSize: 8, color: '#F5C518', fontWeight: 800 }}>CORE v8.0</span>
+              <strong style={{ fontSize: 9, color: '#0A0F2E', textTransform: 'uppercase', letterSpacing: '0.05em' }}>RWAkins</strong>
+              <span style={{ fontSize: 8, color: '#3B5BFA', fontWeight: 800 }}>CORE v8.0</span>
             </div>
 
             {/* Node 1: Mantle (Top-Left) */}
             <div style={{ position: 'absolute', left: '12%', top: '15%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-              <div style={{ width: 44, height: 44, borderRadius: 8, background: '#0a0a0a', border: '1px solid rgba(245,197,24,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
+              <div style={{ width: 44, height: 44, borderRadius: 8, background: '#ffffff', border: '1px solid rgba(59,91,250,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
                 👑
               </div>
-              <span style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>Mantle EVM</span>
+              <span style={{ fontSize: 10, color: '#0A0F2E', fontWeight: 'bold' }}>Mantle EVM</span>
               <span style={{ fontSize: 8, color: '#10B981' }}>● SYNCHRONIZED</span>
             </div>
 
             {/* Node 2: Mantle Sepolia (Top-Right) */}
             <div style={{ position: 'absolute', right: '12%', top: '15%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-              <div style={{ width: 44, height: 44, borderRadius: 8, background: '#0a0a0a', border: `1px solid ${activeScenario === 'degraded_rpc' ? '#EF4444' : 'rgba(168,85,247,0.4)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
+              <div style={{ width: 44, height: 44, borderRadius: 8, background: '#ffffff', border: `1px solid ${activeScenario === 'degraded_rpc' ? '#EF4444' : 'rgba(168,85,247,0.4)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
                 👻
               </div>
-              <span style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>Mantle SVM</span>
+              <span style={{ fontSize: 10, color: '#0A0F2E', fontWeight: 'bold' }}>Mantle SVM</span>
               <span style={{ fontSize: 8, color: activeScenario === 'degraded_rpc' ? '#EF4444' : '#10B981' }}>
                 {activeScenario === 'degraded_rpc' ? '● DEGRADED' : '● SYNCHRONIZED'}
               </span>
@@ -272,27 +272,27 @@ export default function ProtocolsPage() {
 
             {/* Node 3: Mantle (Bottom-Left) */}
             <div style={{ position: 'absolute', left: '12%', bottom: '15%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-              <div style={{ width: 44, height: 44, borderRadius: 8, background: '#0a0a0a', border: `1px solid ${activeScenario === 'chain_congestion' ? '#F5C518' : 'rgba(59,130,246,0.4)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
+              <div style={{ width: 44, height: 44, borderRadius: 8, background: '#ffffff', border: `1px solid ${activeScenario === 'chain_congestion' ? '#3B5BFA' : 'rgba(59,130,246,0.4)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
                 🚀
               </div>
-              <span style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>Mantle</span>
-              <span style={{ fontSize: 8, color: activeScenario === 'chain_congestion' ? '#F5C518' : '#10B981' }}>
+              <span style={{ fontSize: 10, color: '#0A0F2E', fontWeight: 'bold' }}>Mantle</span>
+              <span style={{ fontSize: 8, color: activeScenario === 'chain_congestion' ? '#3B5BFA' : '#10B981' }}>
                 {activeScenario === 'chain_congestion' ? '● MEMPOOL LAG' : '● SYNCHRONIZED'}
               </span>
             </div>
 
             {/* Node 4: Mantle Network (Bottom-Right) */}
             <div style={{ position: 'absolute', right: '12%', bottom: '15%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-              <div style={{ width: 44, height: 44, borderRadius: 8, background: '#0a0a0a', border: '1px solid rgba(236,72,153,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
+              <div style={{ width: 44, height: 44, borderRadius: 8, background: '#ffffff', border: '1px solid rgba(236,72,153,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>
                 🍭
               </div>
-              <span style={{ fontSize: 10, color: '#fff', fontWeight: 'bold' }}>Mantle L2</span>
+              <span style={{ fontSize: 10, color: '#0A0F2E', fontWeight: 'bold' }}>Mantle L2</span>
               <span style={{ fontSize: 8, color: '#10B981' }}>● SYNCHRONIZED</span>
             </div>
 
             {/* Status Overlay ribbon */}
-            <div style={{ position: 'absolute', bottom: 10, left: 10, right: 10, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.04)', borderRadius: 4, padding: '4px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 9 }}>
-              <span style={{ color: '#888' }}>Epoch synchronization: <strong style={{ color: '#fff' }}>298,401</strong></span>
+            <div style={{ position: 'absolute', bottom: 10, left: 10, right: 10, background: 'rgba(255,255,255,0.01)', border: '1px solid #F8FAFC', borderRadius: 4, padding: '4px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 9 }}>
+              <span style={{ color: '#888' }}>Epoch synchronization: <strong style={{ color: '#0A0F2E' }}>298,401</strong></span>
               <span style={{ color: '#10B981' }}>SLA Confidence: {infrastructureConfidenceScore}%</span>
             </div>
 
@@ -303,7 +303,7 @@ export default function ProtocolsPage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', height: 420 }}>
           <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700 }}>📋 Verified Multi-Chain Contract Registry</h3>
           <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-            List of certified corporate protocol smart contracts managed directly via Kubryx secure key stores.
+            List of certified corporate protocol smart contracts managed directly via RWAkins secure key stores.
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1, overflowY: 'auto' }}>
@@ -313,7 +313,7 @@ export default function ProtocolsPage() {
                 style={{ 
                   padding: 12, 
                   background: 'rgba(255,255,255,0.01)', 
-                  border: '1px solid rgba(255,255,255,0.04)', 
+                  border: '1px solid #F8FAFC', 
                   borderRadius: 8,
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -323,22 +323,22 @@ export default function ProtocolsPage() {
               >
                 <div>
                   <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                    <strong style={{ fontSize: 12, color: '#fff' }}>{protocol.name}</strong>
-                    <span style={{ fontSize: 8, background: 'rgba(255,255,255,0.04)', color: '#aaa', padding: '1px 5px', borderRadius: 4 }}>
+                    <strong style={{ fontSize: 12, color: '#0A0F2E' }}>{protocol.name}</strong>
+                    <span style={{ fontSize: 8, background: '#F8FAFC', color: '#aaa', padding: '1px 5px', borderRadius: 4 }}>
                       {protocol.chain}
                     </span>
                   </div>
                   <div style={{ display: 'flex', gap: 10, fontSize: 10, color: '#888', marginTop: 4 }}>
                     <span>Address: <a className="gold-text" href={protocol.explorer} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', fontFamily: 'monospace' }}>{protocol.address} ↗</a></span>
-                    <span>TVL: <strong style={{ color: '#fff' }}>{protocol.tvl}</strong></span>
-                    <span>Utilization: <strong style={{ color: '#fff' }}>{protocol.utilization}</strong></span>
+                    <span>TVL: <strong style={{ color: '#0A0F2E' }}>{protocol.tvl}</strong></span>
+                    <span>Utilization: <strong style={{ color: '#0A0F2E' }}>{protocol.utilization}</strong></span>
                   </div>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
                   <span style={{ 
                     fontSize: 8, 
-                    background: 'rgba(255,255,255,0.02)', 
+                    background: '#F8FAFC', 
                     color: protocol.syncColor, 
                     border: `1px solid ${protocol.syncColor}`, 
                     padding: '2px 6px', 
@@ -377,12 +377,12 @@ export default function ProtocolsPage() {
                 justifyContent: 'space-between',
                 fontSize: 11,
                 padding: '6px 10px',
-                borderBottom: '1px solid rgba(255,255,255,0.03)'
+                borderBottom: '1px solid #ffffff'
               }}
             >
               <div style={{ display: 'flex', gap: 12 }}>
                 <span style={{ color: '#666' }}>{item.time}</span>
-                <span style={{ color: '#F5C518', fontWeight: 'bold', width: 100 }}>{item.chain}</span>
+                <span style={{ color: '#3B5BFA', fontWeight: 'bold', width: 100 }}>{item.chain}</span>
                 <span style={{ color: '#ccc' }}>{item.event}</span>
               </div>
               <a className="gold-text" href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', fontFamily: 'monospace' }}>

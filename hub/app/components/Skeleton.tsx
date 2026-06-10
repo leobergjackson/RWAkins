@@ -24,9 +24,9 @@ export function SkeletonCard() {
   useSkeletonStyle()
   return (
     <div className="card" style={{ opacity: 0.6 }}>
-      <div className="kbx-skeleton" style={{ height: '1rem', width: '60%', background: 'rgba(255,255,255,0.08)', borderRadius: 4, marginBottom: '0.75rem' }} />
-      <div className="kbx-skeleton" style={{ height: '2rem', width: '40%', background: 'rgba(245,197,24,0.15)', borderRadius: 4, marginBottom: '0.5rem' }} />
-      <div className="kbx-skeleton" style={{ height: '0.75rem', width: '80%', background: 'rgba(255,255,255,0.05)', borderRadius: 4 }} />
+      <div className="kbx-skeleton" style={{ height: '1rem', width: '60%', background: '#E2E8F0', borderRadius: 4, marginBottom: '0.75rem' }} />
+      <div className="kbx-skeleton" style={{ height: '2rem', width: '40%', background: '#ffffff', borderRadius: 4, marginBottom: '0.5rem' }} />
+      <div className="kbx-skeleton" style={{ height: '0.75rem', width: '80%', background: '#F8FAFC', borderRadius: 4 }} />
     </div>
   )
 }
@@ -34,6 +34,6 @@ export function SkeletonCard() {
 export function SkeletonRow() {
   useSkeletonStyle()
   return (
-    <div className="kbx-skeleton" style={{ height: '3rem', background: 'rgba(255,255,255,0.04)', borderRadius: 8, marginBottom: '0.5rem' }} />
+    <div className="kbx-skeleton" style={{ height: '3rem', background: '#F8FAFC', borderRadius: 8, marginBottom: '0.5rem' }} />
   )
 }

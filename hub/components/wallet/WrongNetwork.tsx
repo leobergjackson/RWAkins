@@ -34,7 +34,7 @@ export function WrongNetworkBanner() {
             </div>
             <button
               onClick={switchToCorrectNetwork}
-              className="flex-shrink-0 px-3 py-1.5 rounded-lg bg-[#f59e0b] text-[#080808] text-xs font-semibold hover:bg-[#e6a800] transition-colors whitespace-nowrap"
+              className="flex-shrink-0 px-3 py-1.5 rounded-lg bg-[#f59e0b] text-[#ffffff] text-xs font-semibold hover:bg-[#e6a800] transition-colors whitespace-nowrap"
             >
               Switch Network
             </button>

@@ -19,10 +19,10 @@ import { useKubrykPlatform } from '@/context/KubrykPlatformContext'
 import LiveCrossChainPulse from '@/components/ui/LiveCrossChainPulse'
 
 const ACCENT = TRUSTMESH_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const CARD   = '#111111'
-const MUTED  = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.4)'
+const BORDER = '#E2E8F0'
+const CARD   = '#ffffff'
+const MUTED  = '#475569'
+const MUTED2 = '#64748B'
 const MONO   = '"Fira Code","JetBrains Mono",monospace'
 
 const STATUS_COLOR: Record<string, string> = {
@@ -94,7 +94,7 @@ export default function AgentDashboard() {
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               On-Chain Job Accounts
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
               Mantle Sepolia · Program{' '}
               <span style={{ fontFamily: MONO, fontSize: 11, color: ACCENT }}>66DXeS…42quz</span>
             </div>
@@ -150,7 +150,7 @@ export default function AgentDashboard() {
               <div key={job.pda} style={{
                 display: 'flex', alignItems: 'center', gap: 12,
                 padding: '12px 14px', borderRadius: 10,
-                background: 'rgba(255,255,255,0.02)',
+                background: '#F8FAFC',
                 border: `1px solid ${BORDER}`,
                 flexWrap: 'wrap',
               }}>
@@ -159,7 +159,7 @@ export default function AgentDashboard() {
 
                 {/* Description + PDA */}
                 <div style={{ flex: 1, minWidth: 180 }}>
-                  <div style={{ fontSize: 13, color: '#fff', fontWeight: 600 }}>{job.description}</div>
+                  <div style={{ fontSize: 13, color: '#0A0F2E', fontWeight: 600 }}>{job.description}</div>
                   <div style={{ fontSize: 11, color: MUTED2, fontFamily: MONO, marginTop: 2 }}>
                     {job.pda.slice(0, 8)}…{job.pda.slice(-6)}
                     {live?.createdAt && (
@@ -179,18 +179,18 @@ export default function AgentDashboard() {
 
                   {/* Budget */}
                   {live ? (
-                    <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 6, background: 'rgba(255,255,255,0.05)', color: MUTED, fontWeight: 600 }}>
+                    <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 6, background: '#F8FAFC', color: MUTED, fontWeight: 600 }}>
                       ◎ {live.budgetSol} MNT
                     </span>
                   ) : (
-                    <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 6, background: 'rgba(255,255,255,0.05)', color: MUTED, fontWeight: 600 }}>
+                    <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 6, background: '#F8FAFC', color: MUTED, fontWeight: 600 }}>
                       ◎ {job.budgetSol ?? '—'} MNT
                     </span>
                   )}
 
                   {/* Agent count */}
                   {live && (
-                    <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 6, background: 'rgba(255,255,255,0.05)', color: MUTED, fontWeight: 600 }}>
+                    <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 6, background: '#F8FAFC', color: MUTED, fontWeight: 600 }}>
                       {live.agentCount} agents
                     </span>
                   )}
@@ -234,7 +234,7 @@ export default function AgentDashboard() {
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               {s.label}
             </div>
-            <div style={{ fontSize: 28, fontWeight: 700, color: '#fff', marginTop: 8, letterSpacing: '-0.02em', lineHeight: 1 }}>
+            <div style={{ fontSize: 28, fontWeight: 700, color: '#0A0F2E', marginTop: 8, letterSpacing: '-0.02em', lineHeight: 1 }}>
               {s.value}
             </div>
             <div style={{ fontSize: 11, fontWeight: 600, color: s.changeKind === 'up' ? '#10b981' : s.changeKind === 'down' ? '#10b981' : MUTED, marginTop: 8 }}>
@@ -263,7 +263,7 @@ export default function AgentDashboard() {
               <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
                 Live Mesh Topology
               </div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
                 {(analytics.stats.activeAgents ?? 0).toLocaleString()} nodes active
               </div>
             </div>
@@ -287,7 +287,7 @@ export default function AgentDashboard() {
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
               Recent Jobs
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
               Coordination feed
             </div>
           </div>
@@ -302,7 +302,7 @@ export default function AgentDashboard() {
                 textDecoration: 'none',
                 transition: 'background 0.15s',
               }}
-                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.03)')}
+                onMouseEnter={e => (e.currentTarget.style.background = '#ffffff')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
               >
                 <span style={{
@@ -311,7 +311,7 @@ export default function AgentDashboard() {
                   flexShrink: 0,
                 }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 12, color: '#fff', fontFamily: MONO }}>{j.id}</div>
+                  <div style={{ fontSize: 12, color: '#0A0F2E', fontFamily: MONO }}>{j.id}</div>
                   <div style={{ fontSize: 11, color: MUTED, marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {j.owner} · {j.description}
                   </div>
@@ -342,7 +342,7 @@ export default function AgentDashboard() {
           <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', color: MUTED2, textTransform: 'uppercase' }}>
             How Agent Coordinator works
           </div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: '#fff', marginTop: 2 }}>
+          <div style={{ fontSize: 15, fontWeight: 700, color: '#0A0F2E', marginTop: 2 }}>
             Deploy → Delegate → Verify → Revoke
           </div>
         </div>
@@ -354,7 +354,7 @@ export default function AgentDashboard() {
           {HOW_IT_WORKS.map((step, i) => (
             <div key={step.title} style={{
               padding: 16,
-              background: 'rgba(255,255,255,0.02)',
+              background: '#F8FAFC',
               border: `1px solid ${BORDER}`,
               borderRadius: 10,
             }}>
@@ -367,7 +367,7 @@ export default function AgentDashboard() {
               }}>
                 {i + 1}
               </div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>{step.title}</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#0A0F2E' }}>{step.title}</div>
               <div style={{ fontSize: 12, color: MUTED, marginTop: 4, lineHeight: 1.5 }}>{step.description}</div>
             </div>
           ))}

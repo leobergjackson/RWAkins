@@ -79,7 +79,7 @@ export default function DecisionTreeSVG({ root }: { root: AgentTreeNode }) {
             d={`M ${e.x1} ${e.y1} C ${e.x1} ${(e.y1 + e.y2) / 2}, ${e.x2} ${
               (e.y1 + e.y2) / 2
             }, ${e.x2} ${e.y2}`}
-            stroke="rgba(245,197,24,0.4)"
+            stroke="rgba(59,91,250,0.4)"
             strokeWidth={1.4}
             fill="none"
           />

@@ -8,10 +8,10 @@ import { useKubrykPlatform } from '@/context/KubrykPlatformContext'
 import { getCreditTier } from '@/lib/platform/scoring'
 
 const A = LENDORA_ACCENT
-const BORDER = 'rgba(255,255,255,0.08)'
-const CARD = '#111111'
-const MUTED = 'rgba(255,255,255,0.6)'
-const MUTED2 = 'rgba(255,255,255,0.4)'
+const BORDER = '#E2E8F0'
+const CARD = '#ffffff'
+const MUTED = '#475569'
+const MUTED2 = '#64748B'
 const MONO = '"Fira Code","JetBrains Mono",monospace'
 
 const apiBase = process.env.NEXT_PUBLIC_LENDORA_URL || process.env.NEXT_PUBLIC_LENDORA_API || ''
@@ -142,13 +142,13 @@ export default function BorrowForm({
       <div style={{ padding: 28, maxWidth: 620, margin: '40px auto' }}>
         <div style={{ background: CARD, border: '1px solid #10b98140', borderRadius: 12, padding: 32, textAlign: 'center' }}>
           <div style={{ width: 60, height: 60, borderRadius: 16, background: '#10b98125', color: '#10b981', fontSize: 28, display: 'grid', placeItems: 'center', margin: '0 auto 16px' }}>✓</div>
-          <h2 style={{ fontSize: 22, color: '#fff', margin: '0 0 8px', fontFamily: 'Georgia, "Playfair Display", serif' }}>Loan Created Successfully!</h2>
+          <h2 style={{ fontSize: 22, color: '#0A0F2E', margin: '0 0 8px', fontFamily: 'Georgia, "Playfair Display", serif' }}>Loan Created Successfully!</h2>
           <p style={{ color: MUTED, fontSize: 13, margin: '0 0 22px' }}>
             {success.id} · {borrowAmt} {borrowAsset} · {quote?.rate}% APR · {duration} days
           </p>
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 8, padding: 14, fontSize: 12, color: MUTED, marginBottom: 16, fontFamily: MONO, textAlign: 'left' }}>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>Mantle Tx</div>
-            <div style={{ wordBreak: 'break-all', color: '#fff' }}>{success.tx.hash}</div>
+          <div style={{ background: '#ffffff', borderRadius: 8, padding: 14, fontSize: 12, color: MUTED, marginBottom: 16, fontFamily: MONO, textAlign: 'left' }}>
+            <div style={{ fontSize: 10, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>Mantle Tx</div>
+            <div style={{ wordBreak: 'break-all', color: '#0A0F2E' }}>{success.tx.hash}</div>
             <a href={success.tx.explorerUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', marginTop: 8, color: '#10b981', textDecoration: 'none', fontFamily: 'inherit', fontWeight: 600 }}>
               View on Mantle Explorer ↗
             </a>
@@ -168,18 +168,18 @@ export default function BorrowForm({
             {(['ETH', 'BTC', 'MNT'] as Asset[]).map(a => (
               <button key={a} onClick={() => setCollat(a)} style={{ ...card(collat === a), display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, padding: '8px 12px' }}>
                 <span style={{ fontSize: 13, fontWeight: 700 }}>{a}</span>
-                <span style={{ fontSize: 10, color: collat === a ? LENDORA_ACCENT : 'rgba(255,255,255,0.4)', fontWeight: 500 }}>
+                <span style={{ fontSize: 10, color: collat === a ? LENDORA_ACCENT : '#64748B', fontWeight: 500 }}>
                   {loadingChainlink ? '...' : chainlinkPrices[a] ? `$${chainlinkPrices[a].toLocaleString(undefined, { maximumFractionDigits: 2 })}` : '—'}
                 </span>
               </button>
             ))}
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-            <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', gap: 4 }}>
+            <span style={{ fontSize: 10, color: '#94A3B8', display: 'flex', alignItems: 'center', gap: 4 }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#3B82F6' }} />
               Live Chainlink Price Feed
             </span>
-            <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>
+            <span style={{ fontSize: 10, color: '#94A3B8' }}>
               Powered by Chainlink 🔗
             </span>
           </div>
@@ -203,7 +203,7 @@ export default function BorrowForm({
             <input type="checkbox" checked={aiEnabled} onChange={e => setAiEnabled(e.target.checked)} />
             Enable AI rate negotiation (recommended)
           </label>
-          <div style={{ marginTop: 8, padding: 10, background: 'rgba(255,255,255,0.02)', border: `1px solid ${BORDER}`, borderRadius: 6, fontSize: 11, color: MUTED }}>
+          <div style={{ marginTop: 8, padding: 10, background: '#F8FAFC', border: `1px solid ${BORDER}`, borderRadius: 6, fontSize: 11, color: MUTED }}>
             ZK Credit Score: <span style={{ color: A, fontWeight: 700 }}>{userScore || '—'}</span> {userScore ? `✓ ${tier.name} tier` : <a href="/credit" style={{ color: A, textDecoration: 'underline' }}>Generate score</a>}
           </div>
         </Section>
@@ -224,7 +224,7 @@ export default function BorrowForm({
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingBottom: 12, borderBottom: `1px solid ${BORDER}` }}>
           <div style={{ width: 32, height: 32, borderRadius: 10, background: `${A}25`, color: A, display: 'grid', placeItems: 'center', fontSize: 16 }}>🤖</div>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>Protocol Borrow Engine AI</div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: '#0A0F2E' }}>Protocol Borrow Engine AI</div>
             <div style={{ fontSize: 11, color: MUTED2 }}>Your negotiation agent</div>
           </div>
           <span style={{ marginLeft: 'auto', fontSize: 10, color: '#10b981' }}>● Online</span>
@@ -235,13 +235,13 @@ export default function BorrowForm({
             <div key={i} style={{
               padding: '10px 12px', borderRadius: 8, maxWidth: '90%',
               alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
-              background: m.role === 'user' ? `${A}15` : 'rgba(255,255,255,0.03)',
+              background: m.role === 'user' ? `${A}15` : '#ffffff',
               border: `1px solid ${m.role === 'user' ? `${A}40` : BORDER}`,
-              fontSize: 12, color: '#fff', lineHeight: 1.5,
+              fontSize: 12, color: '#0A0F2E', lineHeight: 1.5,
             }}>{m.text}</div>
           ))}
           {thinking && (
-            <div style={{ padding: '10px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', alignSelf: 'flex-start', fontSize: 12, color: MUTED }}>
+            <div style={{ padding: '10px 12px', borderRadius: 8, background: '#ffffff', alignSelf: 'flex-start', fontSize: 12, color: MUTED }}>
               🤖 Analyzing<span style={{ animation: 'dots 1.2s steps(4, end) infinite' }}>...</span>
               <style>{`@keyframes dots { 0% { opacity: 0.3 } 50% { opacity: 1 } 100% { opacity: 0.3 } }`}</style>
             </div>
@@ -249,7 +249,7 @@ export default function BorrowForm({
           {quote && (
             <div style={{ padding: 14, borderRadius: 10, background: `${A}15`, border: `1px solid ${A}55` }}>
               <div style={{ fontSize: 10, fontWeight: 700, color: A, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 8 }}>AI Quote</div>
-              <div style={{ fontSize: 12, color: '#fff', lineHeight: 1.6 }}>
+              <div style={{ fontSize: 12, color: '#0A0F2E', lineHeight: 1.6 }}>
                 Borrow: <b>{borrowAmt} {borrowAsset}</b><br />
                 Rate: <b style={{ color: '#10b981' }}>{quote.rate}% APR</b> (market 6.8%)<br />
                 Term: <b>{quote.term} days</b><br />
@@ -270,7 +270,7 @@ export default function BorrowForm({
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 8 }}>
           {AI_SUGGESTIONS.map(s => (
             <button key={s} onClick={() => send(s)} style={{
-              padding: '4px 10px', borderRadius: 14, background: 'rgba(255,255,255,0.04)',
+              padding: '4px 10px', borderRadius: 14, background: '#F8FAFC',
               border: `1px solid ${BORDER}`, color: MUTED, fontSize: 11, cursor: 'pointer',
             }}>{s}</button>
           ))}
@@ -278,7 +278,7 @@ export default function BorrowForm({
 
         <form onSubmit={e => { e.preventDefault(); send(input) }} style={{ display: 'flex', gap: 6 }}>
           <input value={input} onChange={e => setInput(e.target.value)} placeholder="Ask the AI…" style={{ ...inputStyle, flex: 1 }} />
-          <button type="submit" style={{ padding: '10px 16px', borderRadius: 8, background: A, color: '#fff', border: 'none', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Send</button>
+          <button type="submit" style={{ padding: '10px 16px', borderRadius: 8, background: A, color: '#0A0F2E', border: 'none', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>Send</button>
         </form>
       </div>
     </div>
@@ -296,26 +296,26 @@ function Section({ label, children }: { label: string; children: React.ReactNode
 function card(active: boolean): React.CSSProperties {
   return {
     padding: '10px 12px', borderRadius: 8,
-    background: active ? `${A}15` : 'rgba(255,255,255,0.02)',
+    background: active ? `${A}15` : '#F8FAFC',
     border: `1px solid ${active ? A : BORDER}`,
-    color: active ? A : '#fff', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+    color: active ? A : '#0A0F2E', fontSize: 13, fontWeight: 600, cursor: 'pointer',
   }
 }
 function chip(active: boolean): React.CSSProperties {
   return {
     flex: 1, padding: '6px 10px', borderRadius: 6,
-    background: active ? `${A}20` : 'rgba(255,255,255,0.03)',
+    background: active ? `${A}20` : '#ffffff',
     border: `1px solid ${active ? A : BORDER}`,
     color: active ? A : MUTED, fontSize: 11, fontWeight: 600, cursor: 'pointer',
   }
 }
 const inputStyle: React.CSSProperties = {
   width: '100%', padding: '10px 12px', borderRadius: 8,
-  background: 'rgba(255,255,255,0.04)', border: `1px solid ${BORDER}`,
-  color: '#fff', fontSize: 13, outline: 'none', fontFamily: 'inherit',
+  background: '#F8FAFC', border: `1px solid ${BORDER}`,
+  color: '#0A0F2E', fontSize: 13, outline: 'none', fontFamily: 'inherit',
 }
 const primaryBtn: React.CSSProperties = {
-  padding: '10px 16px', borderRadius: 8, background: A, color: '#fff',
+  padding: '10px 16px', borderRadius: 8, background: A, color: '#0A0F2E',
   border: 'none', fontSize: 13, fontWeight: 600, cursor: 'pointer',
 }
 const secondaryBtn: React.CSSProperties = {

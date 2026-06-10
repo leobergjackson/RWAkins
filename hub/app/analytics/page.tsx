@@ -149,7 +149,7 @@ export default function AnalyticsPage() {
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
       
       {/* Header Panel */}
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Dashboard</Link>
@@ -161,9 +161,9 @@ export default function AnalyticsPage() {
           </h1>
         </div>
 
-        <div style={{ padding: '6px 14px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 6 }}>
+        <div style={{ padding: '6px 14px', background: '#F8FAFC', border: '1px solid #F1F5F9', borderRadius: 6 }}>
           <span style={{ fontSize: 10, color: '#888', display: 'block' }}>Operational Resiliency</span>
-          <strong style={{ fontSize: 16, color: '#F5C518' }}>{strategicConfidence}%</strong>
+          <strong style={{ fontSize: 16, color: '#3B5BFA' }}>{strategicConfidence}%</strong>
         </div>
       </header>
 
@@ -173,7 +173,7 @@ export default function AnalyticsPage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Consensus Trajectory</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#F5C518' }}>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#3B5BFA' }}>
               {consensusIndex}%
             </strong>
           </div>
@@ -183,7 +183,7 @@ export default function AnalyticsPage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Operational Drift Rate</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#fff' }}>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#0A0F2E' }}>
               ±{driftIndex}%
             </strong>
           </div>
@@ -203,7 +203,7 @@ export default function AnalyticsPage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Regional Resilience</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#F5C518' }}>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#3B5BFA' }}>
               {forecasts[0]?.regionalResilience || 99.2}%
             </strong>
           </div>
@@ -213,8 +213,8 @@ export default function AnalyticsPage() {
       </section>
 
       {/* PHASE 13 — COALITION STABILITY & DIPLOMATIC VOLATILITY ANALYTICS */}
-      <section className="card" style={{ padding: 18, marginBottom: 24, border: '1px solid rgba(245,197,24,0.3)', background: 'rgba(0,0,0,0.3)' }}>
-        <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700, color: '#F5C518' }}>🏛️ Coalition Stability & Diplomatic Volatility</h3>
+      <section className="card" style={{ padding: 18, marginBottom: 24, border: '1px solid rgba(59,91,250,0.3)', background: '#ffffff' }}>
+        <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700, color: '#3B5BFA' }}>🏛️ Coalition Stability & Diplomatic Volatility</h3>
         <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
           Visualizes real-time coalition metrics, multi-agent resilience scoring, conflict forecasting, and detailed institutional trust heatmaps.
         </p>
@@ -222,7 +222,7 @@ export default function AnalyticsPage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 16 }}>
           
           {/* Coalition Stability Trends */}
-          <div style={{ height: 260, background: '#020202', padding: 14, border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ height: 260, background: 'var(--cloud-bg)', padding: 14, border: '1px solid #ffffff', borderRadius: 6, display: 'flex', flexDirection: 'column' }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: 8 }}>Coalition Stability Trajectory</span>
             <div style={{ flex: 1, minHeight: 0 }}>
               {mounted && (
@@ -230,15 +230,15 @@ export default function AnalyticsPage() {
                 <AreaChart data={coalitionData}>
                   <defs>
                     <linearGradient id="coalitionGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#F5C518" stopOpacity={0.25}/>
-                      <stop offset="95%" stopColor="#F5C518" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#3B5BFA" stopOpacity={0.25}/>
+                      <stop offset="95%" stopColor="#3B5BFA" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#F8FAFC" />
                   <XAxis dataKey="name" stroke="#666" fontSize={9} />
                   <YAxis stroke="#666" fontSize={9} domain={[30, 100]} />
-                  <Tooltip contentStyle={{ background: '#0a0a0a', border: '1px solid rgba(245,197,24,0.3)', color: '#fff', fontSize: 10 }} />
-                  <Area type="monotone" dataKey="coalition" name="Stability" stroke="#F5C518" fillOpacity={1} fill="url(#coalitionGrad)" />
+                  <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid rgba(59,91,250,0.3)', color: '#0A0F2E', fontSize: 10 }} />
+                  <Area type="monotone" dataKey="coalition" name="Stability" stroke="#3B5BFA" fillOpacity={1} fill="url(#coalitionGrad)" />
                   <Area type="monotone" dataKey="alignment" name="Alignment" stroke="#10B981" fillOpacity={0} />
                 </AreaChart>
               </ResponsiveContainer>
@@ -247,7 +247,7 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Institutional Trust Heatmap */}
-          <div style={{ background: '#020202', padding: 14, border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6 }}>
+          <div style={{ background: 'var(--cloud-bg)', padding: 14, border: '1px solid #ffffff', borderRadius: 6 }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: 8 }}>Institutional Trust & Diplomacy Matrix</span>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
               {diplomaticRelations.slice(0, 9).map((rel, idx) => {
@@ -257,16 +257,16 @@ export default function AnalyticsPage() {
                     key={idx} 
                     style={{
                       padding: 8,
-                      background: isLow ? 'rgba(239,68,68,0.04)' : 'rgba(245,197,24,0.01)',
-                      border: isLow ? '1px solid rgba(239,68,68,0.2)' : '1px solid rgba(255,255,255,0.02)',
+                      background: isLow ? 'rgba(239,68,68,0.04)' : 'rgba(59,91,250,0.01)',
+                      border: isLow ? '1px solid rgba(239,68,68,0.2)' : '1px solid #F8FAFC',
                       borderRadius: 4,
                       textAlign: 'center'
                     }}
                   >
-                    <span style={{ display: 'block', fontSize: 9, color: '#fff', fontWeight: 'bold' }}>
+                    <span style={{ display: 'block', fontSize: 9, color: '#0A0F2E', fontWeight: 'bold' }}>
                       {rel.fromAgent.split(' ')[0]} ⇄ {rel.toAgent.split(' ')[0]}
                     </span>
-                    <strong style={{ display: 'block', fontSize: 12, color: isLow ? '#EF4444' : '#F5C518', margin: '4px 0' }}>
+                    <strong style={{ display: 'block', fontSize: 12, color: isLow ? '#EF4444' : '#3B5BFA', margin: '4px 0' }}>
                       {rel.trustScore}% Trust
                     </strong>
                     <span style={{ display: 'block', fontSize: 8, color: '#666' }}>Align: {rel.alignmentScore}%</span>
@@ -277,15 +277,15 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Conflict Forecasting & Multi-Agent Resilience Scoring */}
-          <div style={{ background: '#020202', padding: 14, border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div style={{ background: 'var(--cloud-bg)', padding: 14, border: '1px solid #ffffff', borderRadius: 6, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
               <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: 8 }}>Agent Conflict Forecasting</span>
-              <div style={{ padding: 10, background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 6, marginBottom: 10 }}>
+              <div style={{ padding: 10, background: 'rgba(255,255,255,0.01)', border: '1px solid #ffffff', borderRadius: 6, marginBottom: 10 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
                   <span>Veto Probability Risk:</span>
                   <strong style={{ color: activeConflict ? '#EF4444' : '#10B981' }}>{activeConflict ? '94.2% (HIGH)' : '4.5% (LOW)'}</strong>
                 </div>
-                <div style={{ height: 4, background: '#0a0a0a', borderRadius: 2, marginTop: 4 }}>
+                <div style={{ height: 4, background: '#ffffff', borderRadius: 2, marginTop: 4 }}>
                   <div style={{ width: activeConflict ? '94.2%' : '4.5%', background: activeConflict ? '#EF4444' : '#10B981', height: '100%' }} />
                 </div>
               </div>
@@ -294,13 +294,13 @@ export default function AnalyticsPage() {
             <div>
               <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: 4 }}>Multi-Agent Resilience Scoring</span>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-                <div style={{ padding: 8, background: '#050505', borderRadius: 4, border: '1px solid rgba(255,255,255,0.02)' }}>
+                <div style={{ padding: 8, background: 'var(--cloud-bg)', borderRadius: 4, border: '1px solid #F8FAFC' }}>
                   <span style={{ fontSize: 8, color: '#666', display: 'block' }}>Alignment Gating</span>
-                  <strong style={{ fontSize: 14, color: '#fff' }}>{stabilizationAlignment}%</strong>
+                  <strong style={{ fontSize: 14, color: '#0A0F2E' }}>{stabilizationAlignment}%</strong>
                 </div>
-                <div style={{ padding: 8, background: '#050505', borderRadius: 4, border: '1px solid rgba(255,255,255,0.02)' }}>
+                <div style={{ padding: 8, background: 'var(--cloud-bg)', borderRadius: 4, border: '1px solid #F8FAFC' }}>
                   <span style={{ fontSize: 8, color: '#666', display: 'block' }}>Quorum Negotiation</span>
-                  <strong style={{ fontSize: 14, color: '#F5C518' }}>{negotiationConfidence}%</strong>
+                  <strong style={{ fontSize: 14, color: '#3B5BFA' }}>{negotiationConfidence}%</strong>
                 </div>
               </div>
             </div>
@@ -324,17 +324,17 @@ export default function AnalyticsPage() {
               <AreaChart data={latencyData}>
                 <defs>
                   <linearGradient id="latencyGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#F5C518" stopOpacity={0.25}/>
-                    <stop offset="95%" stopColor="#F5C518" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#3B5BFA" stopOpacity={0.25}/>
+                    <stop offset="95%" stopColor="#3B5BFA" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#F8FAFC" />
                 <XAxis dataKey="name" stroke="#666" fontSize={10} />
                 <YAxis stroke="#666" fontSize={10} unit="ms" />
                 <Tooltip 
-                  contentStyle={{ background: '#0a0a0a', border: '1px solid rgba(245,197,24,0.3)', color: '#fff', fontSize: 11 }}
+                  contentStyle={{ background: '#ffffff', border: '1px solid rgba(59,91,250,0.3)', color: '#0A0F2E', fontSize: 11 }}
                 />
-                <Area type="monotone" dataKey="latency" name="Latency" stroke="#F5C518" strokeWidth={2} fillOpacity={1} fill="url(#latencyGrad)" />
+                <Area type="monotone" dataKey="latency" name="Latency" stroke="#3B5BFA" strokeWidth={2} fillOpacity={1} fill="url(#latencyGrad)" />
               </AreaChart>
             </ResponsiveContainer>
               )}
@@ -345,21 +345,21 @@ export default function AnalyticsPage() {
         <article className="card" style={{ height: 350, display: 'flex', flexDirection: 'column' }}>
           <h3 style={{ margin: '0 0 4px', fontSize: 15, fontWeight: 700 }}>🌐 On-Chain Activity Rates (Mantle)</h3>
           <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>
-            Rolling transactions per second across Kubryx modules settling on Mantle Network.
+            Rolling transactions per second across RWAkins modules settling on Mantle Network.
           </p>
           <div style={{ flex: 1, minHeight: 0 }}>
             {mounted && (
               <ResponsiveContainer width="100%" height="100%">
               <LineChart data={tpsData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#F8FAFC" />
                 <XAxis dataKey="name" stroke="#666" fontSize={10} />
                 <YAxis stroke="#666" fontSize={10} />
-                <Tooltip contentStyle={{ background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 11 }} />
+                <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #E2E8F0', color: '#0A0F2E', fontSize: 11 }} />
                 <Legend wrapperStyle={{ fontSize: 10, marginTop: 10 }} />
                 <Line type="monotone" dataKey="Vault" stroke="#A855F7" strokeWidth={2} dot={false} />
                 <Line type="monotone" dataKey="Lending" stroke="#3B82F6" strokeWidth={2} dot={false} />
                 <Line type="monotone" dataKey="Agents" stroke="#EC4899" strokeWidth={2} dot={false} />
-                <Line type="monotone" dataKey="Invoices" stroke="#F5C518" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="Invoices" stroke="#3B5BFA" strokeWidth={2} dot={false} />
               </LineChart>
             </ResponsiveContainer>
               )}
@@ -376,11 +376,11 @@ export default function AnalyticsPage() {
             {mounted && (
               <ResponsiveContainer width="100%" height="100%">
               <BarChart data={aiData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#F8FAFC" />
                 <XAxis dataKey="name" stroke="#666" fontSize={10} />
                 <YAxis stroke="#666" fontSize={10} />
-                <Tooltip contentStyle={{ background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 11 }} />
-                <Bar dataKey="requests" name="Queries" fill="#F5C518" radius={[4, 4, 0, 0]} barSize={35} />
+                <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #E2E8F0', color: '#0A0F2E', fontSize: 11 }} />
+                <Bar dataKey="requests" name="Queries" fill="#3B5BFA" radius={[4, 4, 0, 0]} barSize={35} />
               </BarChart>
             </ResponsiveContainer>
               )}
@@ -397,12 +397,12 @@ export default function AnalyticsPage() {
             {mounted && (
               <ResponsiveContainer width="100%" height="100%">
               <BarChart data={walletData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#F8FAFC" />
                 <XAxis dataKey="name" stroke="#666" fontSize={10} />
                 <YAxis stroke="#666" fontSize={10} />
-                <Tooltip contentStyle={{ background: '#0a0a0a', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', fontSize: 11 }} />
+                <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #E2E8F0', color: '#0A0F2E', fontSize: 11 }} />
                 <Legend wrapperStyle={{ fontSize: 10, marginTop: 10 }} />
-                <Bar dataKey="active" name="Active Extension" fill="#F5C518" />
+                <Bar dataKey="active" name="Active Extension" fill="#3B5BFA" />
                 <Bar dataKey="transactions" name="Verified Handshakes" fill="#4B5563" />
               </BarChart>
             </ResponsiveContainer>

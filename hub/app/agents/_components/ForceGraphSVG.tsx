@@ -154,7 +154,7 @@ export default function ForceGraphSVG({
         style={{
           display: 'block',
           background:
-            'radial-gradient(circle at 50% 50%, rgba(245,197,24,0.05), transparent 60%)',
+            'radial-gradient(circle at 50% 50%, rgba(59,91,250,0.05), transparent 60%)',
           borderRadius: 12,
           cursor: dragRef.current ? 'grabbing' : 'grab',
           userSelect: 'none',
@@ -179,7 +179,7 @@ export default function ForceGraphSVG({
                 y1={a.y}
                 x2={b.x}
                 y2={b.y}
-                stroke="rgba(245,197,24,0.25)"
+                stroke="rgba(59,91,250,0.25)"
                 strokeWidth={1.2}
               />
             )

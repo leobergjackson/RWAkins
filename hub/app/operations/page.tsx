@@ -73,7 +73,7 @@ export default function OperationsPage() {
 
   return (
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Back to Dashboard</Link>
@@ -109,7 +109,7 @@ export default function OperationsPage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Operational Risk</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: operationalRiskScore > 50 ? '#EF4444' : operationalRiskScore > 20 ? '#F5C518' : '#10B981' }}>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: operationalRiskScore > 50 ? '#EF4444' : operationalRiskScore > 20 ? '#3B5BFA' : '#10B981' }}>
               {operationalRiskScore}%
             </strong>
           </div>
@@ -121,7 +121,7 @@ export default function OperationsPage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Infrastructure SLA</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: infrastructureConfidenceScore < 98 ? '#EF4444' : '#fff' }}>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: infrastructureConfidenceScore < 98 ? '#EF4444' : '#0A0F2E' }}>
               {infrastructureConfidenceScore}%
             </strong>
           </div>
@@ -131,7 +131,7 @@ export default function OperationsPage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>AI Orchestration Health</span>
-            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#F5C518' }}>
+            <strong style={{ display: 'block', fontSize: 28, fontWeight: 800, marginTop: 4, color: '#3B5BFA' }}>
               {aiOrchestrationHealth}%
             </strong>
           </div>
@@ -141,7 +141,7 @@ export default function OperationsPage() {
         <article className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Resilience Status</span>
-            <strong style={{ display: 'block', fontSize: 22, fontWeight: 800, marginTop: 8, color: resilienceStatus === 'Nominal' ? '#10B981' : '#F5C518' }}>
+            <strong style={{ display: 'block', fontSize: 22, fontWeight: 800, marginTop: 8, color: resilienceStatus === 'Nominal' ? '#10B981' : '#3B5BFA' }}>
               {resilienceStatus}
             </strong>
           </div>
@@ -163,28 +163,28 @@ export default function OperationsPage() {
               Connected regional routing nodes managing decentralized Multi-Chain epoch sync states.
             </p>
 
-            <div style={{ height: 200, background: '#040404', border: '1px solid rgba(255,255,255,0.04)', borderRadius: 8, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+            <div style={{ height: 200, background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 8, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
               
               {/* Fake abstract visual grid represent map nodes */}
               <div style={{ display: 'flex', gap: 40, alignItems: 'center', zIndex: 5 }}>
                 {[
                   { name: 'London Gateway', ip: 'rpc-lon-1', lat: '12ms', status: 'online', dot: '#10B981' },
-                  { name: 'New York Relay', ip: 'rpc-nyc-4', lat: activeScenario === 'degraded_rpc' ? '920ms' : '42ms', status: activeScenario === 'degraded_rpc' ? 'lagging' : 'online', dot: activeScenario === 'degraded_rpc' ? '#F5C518' : '#10B981' },
-                  { name: 'Singapore Hub', ip: 'rpc-sg-9', lat: activeScenario === 'chain_congestion' ? '310ms' : '88ms', status: activeScenario === 'chain_congestion' ? 'backlogged' : 'online', dot: activeScenario === 'chain_congestion' ? '#F5C518' : '#10B981' }
+                  { name: 'New York Relay', ip: 'rpc-nyc-4', lat: activeScenario === 'degraded_rpc' ? '920ms' : '42ms', status: activeScenario === 'degraded_rpc' ? 'lagging' : 'online', dot: activeScenario === 'degraded_rpc' ? '#3B5BFA' : '#10B981' },
+                  { name: 'Singapore Hub', ip: 'rpc-sg-9', lat: activeScenario === 'chain_congestion' ? '310ms' : '88ms', status: activeScenario === 'chain_congestion' ? 'backlogged' : 'online', dot: activeScenario === 'chain_congestion' ? '#3B5BFA' : '#10B981' }
                 ].map((node) => (
                   <div key={node.ip} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
                     <div style={{ position: 'relative' }}>
                       <span style={{ display: 'block', width: 14, height: 14, borderRadius: '50%', background: node.dot, boxShadow: `0 0 10px ${node.dot}` }} />
                       <span style={{ position: 'absolute', inset: -4, border: `1px solid ${node.dot}`, borderRadius: '50%', animation: 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite', opacity: 0.4 }} />
                     </div>
-                    <span style={{ fontSize: 11, color: '#fff', fontWeight: 'bold' }}>{node.name}</span>
+                    <span style={{ fontSize: 11, color: '#0A0F2E', fontWeight: 'bold' }}>{node.name}</span>
                     <span style={{ fontSize: 9, color: '#888', fontFamily: 'monospace' }}>{node.ip} ({node.lat})</span>
                   </div>
                 ))}
               </div>
 
               {/* Status footer inside map container */}
-              <div style={{ position: 'absolute', bottom: 10, left: 10, right: 10, display: 'flex', justifyContent: 'space-between', fontSize: 9, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>
+              <div style={{ position: 'absolute', bottom: 10, left: 10, right: 10, display: 'flex', justifyContent: 'space-between', fontSize: 9, color: '#64748B', textTransform: 'uppercase' }}>
                 <span>Region coverage: 100%</span>
                 <span>Active Anomalies: {liveAnomalyDensity}</span>
               </div>
@@ -213,16 +213,16 @@ export default function OperationsPage() {
                       style={{
                         padding: 16,
                         background: 'rgba(255,255,255,0.01)',
-                        border: '1px solid rgba(255,255,255,0.04)',
-                        borderLeft: `4px solid ${rec.impact === 'high' ? '#EF4444' : '#F5C518'}`,
+                        border: '1px solid #F8FAFC',
+                        borderLeft: `4px solid ${rec.impact === 'high' ? '#EF4444' : '#3B5BFA'}`,
                         borderRadius: '0 8px 8px 0'
                       }}
                     >
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 8 }}>
                         <div>
                           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                            <strong style={{ fontSize: 13, color: '#fff' }}>{rec.title}</strong>
-                            <span style={{ fontSize: 9, background: 'rgba(245,197,24,0.06)', color: '#F5C518', padding: '1px 5px', borderRadius: 4 }}>
+                            <strong style={{ fontSize: 13, color: '#0A0F2E' }}>{rec.title}</strong>
+                            <span style={{ fontSize: 9, background: '#ffffff', color: '#3B5BFA', padding: '1px 5px', borderRadius: 4 }}>
                               Confidence: {rec.confidence}%
                             </span>
                           </div>
@@ -258,7 +258,7 @@ export default function OperationsPage() {
                         style={{
                           background: 'none',
                           border: 'none',
-                          color: '#F5C518',
+                          color: '#3B5BFA',
                           fontSize: 11,
                           padding: 0,
                           cursor: 'pointer',
@@ -275,27 +275,27 @@ export default function OperationsPage() {
                           style={{ 
                             marginTop: 12, 
                             padding: 12, 
-                            background: '#040404', 
-                            border: '1px solid rgba(255,255,255,0.04)', 
+                            background: 'var(--cloud-bg)', 
+                            border: '1px solid #F8FAFC', 
                             borderRadius: 6,
                             fontSize: 11
                           }}
                         >
                           <div style={{ marginBottom: 10 }}>
-                            <strong style={{ color: '#F5C518', display: 'block', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 2 }}>
+                            <strong style={{ color: '#3B5BFA', display: 'block', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 2 }}>
                               AI Reasoning Summary
                             </strong>
                             <p style={{ margin: 0, color: '#aaa', lineHeight: 1.4 }}>{rec.whyExplanation}</p>
                           </div>
 
                           <div>
-                            <strong style={{ color: '#F5C518', display: 'block', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 4 }}>
+                            <strong style={{ color: '#3B5BFA', display: 'block', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 4 }}>
                               Event Causality Chain
                             </strong>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 4, fontFamily: 'monospace', fontSize: 10, color: '#888' }}>
                               {rec.causalityChain.map((step, idx) => (
                                 <div key={idx} style={{ display: 'flex', gap: 8 }}>
-                                  <span style={{ color: '#F5C518' }}>[{idx + 1}]</span>
+                                  <span style={{ color: '#3B5BFA' }}>[{idx + 1}]</span>
                                   <span>{step}</span>
                                 </div>
                               ))}
@@ -315,12 +315,12 @@ export default function OperationsPage() {
 
         {/* Right Side: AI Assistant & Memory Continuity Thread */}
         <article className="card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-          <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: 12, marginBottom: 16 }}>
+          <div style={{ borderBottom: '1px solid #F1F5F9', paddingBottom: 12, marginBottom: 16 }}>
             <h3 style={{ margin: '0 0 4px', fontSize: 16, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
               <span>🧠</span> AI Operational Memory
             </h3>
             <span style={{ fontSize: 10, color: '#888', display: 'block' }}>
-              Persistent contextual thread • Session: <strong style={{ color: '#F5C518' }}>{aiMemory.continuitySessionId}</strong>
+              Persistent contextual thread • Session: <strong style={{ color: '#3B5BFA' }}>{aiMemory.continuitySessionId}</strong>
             </span>
           </div>
 
@@ -347,22 +347,22 @@ export default function OperationsPage() {
                     maxWidth: '85%',
                     padding: '8px 12px',
                     borderRadius: 8,
-                    background: isAssistant ? 'rgba(255,255,255,0.02)' : 'rgba(245,197,24,0.06)',
-                    border: `1px solid ${isAssistant ? 'rgba(255,255,255,0.04)' : 'rgba(245,197,24,0.2)'}`,
+                    background: isAssistant ? '#F8FAFC' : 'rgba(59,91,250,0.06)',
+                    border: `1px solid ${isAssistant ? '#F8FAFC' : 'rgba(59,91,250,0.2)'}`,
                     fontSize: 11
                   }}
                 >
                   <span style={{ display: 'block', fontSize: 8, color: '#888', marginBottom: 2 }}>
                     {isAssistant ? '🧠 RUPHEX AI' : '👤 USER'} • {new Date(thread.timestamp).toLocaleTimeString()}
                   </span>
-                  <p style={{ margin: 0, color: '#fff', lineHeight: 1.4 }}>{thread.text}</p>
+                  <p style={{ margin: 0, color: '#0A0F2E', lineHeight: 1.4 }}>{thread.text}</p>
                 </div>
               )
             })}
           </div>
 
           {/* Interactive Chat Form */}
-          <form onSubmit={handleSendChatMessage} style={{ display: 'flex', gap: 8, borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 12 }}>
+          <form onSubmit={handleSendChatMessage} style={{ display: 'flex', gap: 8, borderTop: '1px solid #F1F5F9', paddingTop: 12 }}>
             <input 
               type="text"
               value={userInput}
@@ -372,9 +372,9 @@ export default function OperationsPage() {
                 flex: 1,
                 padding: '8px 12px',
                 borderRadius: 6,
-                background: '#040404',
-                border: '1px solid rgba(255,255,255,0.15)',
-                color: '#fff',
+                background: 'var(--cloud-bg)',
+                border: '1px solid #CBD5E1',
+                color: '#0A0F2E',
                 fontSize: 11,
                 outline: 'none'
               }}
@@ -389,7 +389,7 @@ export default function OperationsPage() {
           </form>
 
           {/* Operational history stats */}
-          <div style={{ marginTop: 16, background: '#040404', border: '1px solid rgba(255,255,255,0.04)', borderRadius: 6, padding: 10, fontSize: 10 }}>
+          <div style={{ marginTop: 16, background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 6, padding: 10, fontSize: 10 }}>
             <strong style={{ color: '#888', textTransform: 'uppercase', fontSize: 9 }}>Applied History</strong>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginTop: 6 }}>
               {aiMemory.historicalRecommendations.length === 0 ? (
@@ -429,7 +429,7 @@ export default function OperationsPage() {
                   justifyContent: 'space-between',
                   fontSize: 11,
                   padding: '6px 10px',
-                  borderBottom: '1px solid rgba(255,255,255,0.03)'
+                  borderBottom: '1px solid #ffffff'
                 }}
               >
                 <div style={{ display: 'flex', gap: 12 }}>
@@ -437,7 +437,7 @@ export default function OperationsPage() {
                   <span style={{ color: '#EF4444', fontWeight: 'bold' }}>INCIDENT #{100 + idx}</span>
                   <span style={{ color: '#ccc' }}>{inc.details}</span>
                 </div>
-                <span style={{ color: '#F5C518', fontFamily: 'monospace' }}>
+                <span style={{ color: '#3B5BFA', fontFamily: 'monospace' }}>
                   Twin Replay
                 </span>
               </div>

@@ -59,7 +59,7 @@ export default function RebalancePipeline({ state, onComplete }: Props) {
       <div style={{ fontSize: 13, fontWeight: 700, color: '#0A0F2E', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
         <span>Rebalance Pipeline</span>
         {state.running && !allDone && (
-          <span style={{ fontSize: 10, color: '#3B5BFA', background: 'rgba(45,212,191,0.12)', border: '1px solid rgba(45,212,191,0.3)', borderRadius: 20, padding: '2px 8px', fontWeight: 700, letterSpacing: '0.06em' }}>
+          <span style={{ fontSize: 10, color: '#3B5BFA', background: '#ffffff', border: '1px solid rgba(59,91,250,0.3)', borderRadius: 20, padding: '2px 8px', fontWeight: 700, letterSpacing: '0.06em' }}>
             RUNNING
           </span>
         )}
@@ -77,8 +77,8 @@ export default function RebalancePipeline({ state, onComplete }: Props) {
           const pending = stageIndex < i
 
           const color = done ? '#10b981' : active ? '#3B5BFA' : '#CBD5E1'
-          const bg = done ? 'rgba(16,185,129,0.1)' : active ? 'rgba(45,212,191,0.1)' : '#F8FAFC'
-          const border = done ? 'rgba(16,185,129,0.3)' : active ? 'rgba(45,212,191,0.3)' : '#F1F5F9'
+          const bg = done ? 'rgba(16,185,129,0.1)' : active ? 'rgba(59,91,250,0.1)' : '#F8FAFC'
+          const border = done ? 'rgba(16,185,129,0.3)' : active ? 'rgba(59,91,250,0.3)' : '#F1F5F9'
 
           return (
             <div key={stage.id} style={{
@@ -91,7 +91,7 @@ export default function RebalancePipeline({ state, onComplete }: Props) {
               {/* Stage number */}
               <div style={{
                 width: 26, height: 26, borderRadius: 8, flexShrink: 0,
-                background: done ? 'rgba(16,185,129,0.2)' : active ? 'rgba(45,212,191,0.15)' : '#F8FAFC',
+                background: done ? 'rgba(16,185,129,0.2)' : active ? 'rgba(59,91,250,0.15)' : '#F8FAFC',
                 border: `1px solid ${color}40`,
                 display: 'grid', placeItems: 'center',
                 fontSize: done ? 12 : 14, color,

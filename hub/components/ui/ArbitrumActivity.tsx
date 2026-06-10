@@ -112,7 +112,7 @@ export default function ArbitrumActivity() {
         {loading && !data && (
           <div style={{ padding: 14 }}>
             {[0, 1, 2].map(i => (
-              <div key={i} style={{ height: 16, background: 'rgba(15,23,42,0.05)', borderRadius: 6, marginBottom: 10, width: `${90 - i * 5}%` }} />
+              <div key={i} style={{ height: 16, background: '#ffffff', borderRadius: 6, marginBottom: 10, width: `${90 - i * 5}%` }} />
             ))}
           </div>
         )}

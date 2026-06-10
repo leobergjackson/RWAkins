@@ -34,15 +34,15 @@ export default function SecurityPage() {
   if (activeScenario === 'degraded_rpc') {
     trustScore = 92.4
     envStatus = 'RPC DEGRADATION PROTOCOL ACTIVE'
-    envColor = '#F5C518'
+    envColor = '#3B5BFA'
     riskLevel = 'STABILIZED (FALLBACK RUNNING)'
-    riskColor = '#F5C518'
+    riskColor = '#3B5BFA'
   } else if (activeScenario === 'chain_congestion') {
     trustScore = 94.6
     envStatus = 'CONGESTED NETWORK FLOWS'
-    envColor = '#F5C518'
+    envColor = '#3B5BFA'
     riskLevel = 'MODERATE MEMPOOL LOAD'
-    riskColor = '#F5C518'
+    riskColor = '#3B5BFA'
   } else if (activeScenario === 'suspicious_activity') {
     trustScore = 72.8
     envStatus = 'WALLET THREAT SIMULATOR'
@@ -57,7 +57,7 @@ export default function SecurityPage() {
     riskColor = '#EF4444'
   } else if (activeScenario !== 'none') {
     envStatus = 'SIMULATION ENVIRONMENT PROTOCOL'
-    envColor = '#F5C518'
+    envColor = '#3B5BFA'
   }
 
   // Populate security feed events based on scenario selection
@@ -103,7 +103,7 @@ export default function SecurityPage() {
 
   return (
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Back to Dashboard</Link>
@@ -119,7 +119,7 @@ export default function SecurityPage() {
           <span style={{ fontSize: 10, background: 'rgba(239, 68, 68, 0.1)', color: '#EF4444', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '4px 10px', borderRadius: 20 }}>
             AI Guard: Uptime Nominal
           </span>
-          <span style={{ fontSize: 10, background: 'rgba(255, 255, 255, 0.04)', color: '#fff', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '4px 10px', borderRadius: 20 }}>
+          <span style={{ fontSize: 10, background: 'rgba(255, 255, 255, 0.04)', color: '#0A0F2E', border: '1px solid rgba(255, 255, 255, 0.08)', padding: '4px 10px', borderRadius: 20 }}>
             Post: {walletTrustState}
           </span>
         </div>
@@ -129,7 +129,7 @@ export default function SecurityPage() {
       <div 
         style={{ 
           width: '100%', 
-          background: 'rgba(0,0,0,0.4)', 
+          background: '#ffffff', 
           border: `1px solid ${envColor}`, 
           borderRadius: 10, 
           padding: '16px 20px', 
@@ -153,7 +153,7 @@ export default function SecurityPage() {
         <div style={{ display: 'flex', gap: 20 }}>
           <div style={{ textAlign: 'right' }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>System Integrity</span>
-            <h4 style={{ margin: 0, fontSize: 22, color: '#fff', fontWeight: 800 }}>{trustScore}%</h4>
+            <h4 style={{ margin: 0, fontSize: 22, color: '#0A0F2E', fontWeight: 800 }}>{trustScore}%</h4>
           </div>
           <div style={{ textAlign: 'right' }}>
             <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>Threat Mitigation</span>
@@ -183,8 +183,8 @@ export default function SecurityPage() {
                   style={{
                     padding: '12px 14px',
                     textAlign: 'left',
-                    borderColor: isActive ? '#F5C518' : 'rgba(255,255,255,0.08)',
-                    background: isActive ? 'rgba(245,197,24,0.04)' : '#070707',
+                    borderColor: isActive ? '#3B5BFA' : '#E2E8F0',
+                    background: isActive ? 'rgba(59,91,250,0.04)' : 'var(--cloud-bg)',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
@@ -192,12 +192,12 @@ export default function SecurityPage() {
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
-                    <strong style={{ fontSize: 13, color: isActive ? '#F5C518' : '#fff' }}>{sc.name}</strong>
+                    <strong style={{ fontSize: 13, color: isActive ? '#3B5BFA' : '#0A0F2E' }}>{sc.name}</strong>
                     <span 
                       style={{ 
                         fontSize: 9, 
                         fontWeight: 800, 
-                        color: sc.severity === 'critical' || sc.severity === 'high' ? '#EF4444' : sc.severity === 'medium' ? '#F5C518' : '#10B981',
+                        color: sc.severity === 'critical' || sc.severity === 'high' ? '#EF4444' : sc.severity === 'medium' ? '#3B5BFA' : '#10B981',
                         textTransform: 'uppercase'
                       }}
                     >
@@ -220,41 +220,41 @@ export default function SecurityPage() {
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 11 }}>
               
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.03)', paddingBottom: 6 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #ffffff', paddingBottom: 6 }}>
                 <span style={{ color: '#888' }}>Signing Consistency:</span>
                 <strong style={{ color: '#10B981' }}>100% freighter / Phantom ed25519</strong>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.03)', paddingBottom: 6 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #ffffff', paddingBottom: 6 }}>
                 <span style={{ color: '#888' }}>Chain Integrity Confidence:</span>
                 <strong style={{ color: '#10B981' }}>Mantle 99.9% • Mantle 99.8% • Mantle 100%</strong>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.03)', paddingBottom: 6 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #ffffff', paddingBottom: 6 }}>
                 <span style={{ color: '#888' }}>AI Safety Confidence:</span>
                 <strong style={{ color: '#10B981' }}>99.9% (Zero-Metadata routing)</strong>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.03)', paddingBottom: 6 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #ffffff', paddingBottom: 6 }}>
                 <span style={{ color: '#888' }}>Operational Threat Score:</span>
-                <strong style={{ color: operationalRiskScore > 50 ? '#EF4444' : '#fff' }}>{operationalRiskScore} / 100</strong>
+                <strong style={{ color: operationalRiskScore > 50 ? '#EF4444' : '#0A0F2E' }}>{operationalRiskScore} / 100</strong>
               </div>
 
               {/* Anomaly Clusters */}
               <div style={{ marginTop: 10 }}>
-                <strong style={{ color: '#F5C518', fontSize: 10, display: 'block', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 6 }}>
+                <strong style={{ color: '#3B5BFA', fontSize: 10, display: 'block', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 6 }}>
                   Active Anomaly Clustering Matrices
                 </strong>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, fontSize: 9 }}>
-                  <div style={{ padding: 8, background: '#040404', border: '1px solid rgba(255,255,255,0.04)', borderRadius: 4 }}>
+                  <div style={{ padding: 8, background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 4 }}>
                     <span style={{ color: '#888' }}>Cluster #1 (RPC Errors)</span>
-                    <strong style={{ display: 'block', fontSize: 12, color: activeScenario === 'degraded_rpc' ? '#EF4444' : '#fff', marginTop: 2 }}>
+                    <strong style={{ display: 'block', fontSize: 12, color: activeScenario === 'degraded_rpc' ? '#EF4444' : '#0A0F2E', marginTop: 2 }}>
                       {activeScenario === 'degraded_rpc' ? '6 Active' : '0 Anomalies'}
                     </strong>
                   </div>
-                  <div style={{ padding: 8, background: '#040404', border: '1px solid rgba(255,255,255,0.04)', borderRadius: 4 }}>
+                  <div style={{ padding: 8, background: 'var(--cloud-bg)', border: '1px solid #F8FAFC', borderRadius: 4 }}>
                     <span style={{ color: '#888' }}>Cluster #2 (Keys Signatures)</span>
-                    <strong style={{ display: 'block', fontSize: 12, color: activeScenario === 'suspicious_activity' ? '#EF4444' : '#fff', marginTop: 2 }}>
+                    <strong style={{ display: 'block', fontSize: 12, color: activeScenario === 'suspicious_activity' ? '#EF4444' : '#0A0F2E', marginTop: 2 }}>
                       {activeScenario === 'suspicious_activity' ? '1 Threat Locked' : '0 Anomalies'}
                     </strong>
                   </div>
@@ -274,12 +274,12 @@ export default function SecurityPage() {
                   style={{ 
                     padding: '10px 12px', 
                     background: log.status === 'alert' ? 'rgba(239,68,68,0.02)' : 'rgba(255,255,255,0.01)', 
-                    border: `1px solid ${log.status === 'alert' ? 'rgba(239,68,68,0.15)' : log.status === 'warning' ? 'rgba(245,197,24,0.15)' : 'rgba(255,255,255,0.04)'}`,
+                    border: `1px solid ${log.status === 'alert' ? 'rgba(239,68,68,0.15)' : log.status === 'warning' ? 'rgba(59,91,250,0.15)' : '#F8FAFC'}`,
                     borderRadius: 6 
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 10, marginBottom: 4 }}>
-                    <strong style={{ color: log.status === 'alert' ? '#EF4444' : log.status === 'warning' ? '#F5C518' : '#888' }}>{log.source}</strong>
+                    <strong style={{ color: log.status === 'alert' ? '#EF4444' : log.status === 'warning' ? '#3B5BFA' : '#888' }}>{log.source}</strong>
                     <span style={{ color: '#666' }}>{new Date(log.timestamp).toLocaleTimeString()}</span>
                   </div>
                   <p style={{ margin: 0, fontSize: 12, color: '#ccc' }}>{log.action}</p>
@@ -311,7 +311,7 @@ export default function SecurityPage() {
                 justifyContent: 'space-between',
                 fontSize: 11,
                 padding: '6px 10px',
-                borderBottom: '1px solid rgba(255,255,255,0.03)'
+                borderBottom: '1px solid #ffffff'
               }}
             >
               <div style={{ display: 'flex', gap: 12 }}>

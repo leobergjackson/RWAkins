@@ -75,12 +75,12 @@ type CellProps = {
 
 function Cell({ chain, chainColor, label, value, sub, href, pulse, theme, live }: CellProps) {
   const isLight = theme === 'light'
-  const baseBg = isLight ? '#FFFFFF' : 'rgba(255,255,255,0.04)'
-  const hoverBg = isLight ? '#FFFFFF' : 'rgba(255,255,255,0.07)'
-  const borderCol = isLight ? 'rgba(15,23,42,0.08)' : 'rgba(255,255,255,0.08)'
-  const labelCol = isLight ? 'rgba(15,23,42,0.45)' : 'rgba(255,255,255,0.45)'
+  const baseBg = isLight ? '#FFFFFF' : '#F8FAFC'
+  const hoverBg = isLight ? '#FFFFFF' : '#E2E8F0'
+  const borderCol = isLight ? 'rgba(15,23,42,0.08)' : '#E2E8F0'
+  const labelCol = isLight ? 'rgba(15,23,42,0.45)' : '#64748B'
   const valueCol = isLight ? '#0A0F2E' : '#fff'
-  const subCol = isLight ? 'rgba(15,23,42,0.6)' : 'rgba(255,255,255,0.55)'
+  const subCol = isLight ? 'rgba(15,23,42,0.6)' : '#475569'
   const shadow = isLight ? '0 4px 14px rgba(15,23,42,0.05)' : 'none'
   const hoverShadow = isLight ? `0 12px 32px ${chainColor}25, 0 4px 12px rgba(15,23,42,0.06)` : 'none'
 
@@ -197,14 +197,14 @@ export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }:
       {!compact && (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14, flexWrap: 'wrap', gap: 8 }}>
           <div>
-            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.18em', color: theme === 'light' ? 'rgba(15,23,42,0.5)' : 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}>
+            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.18em', color: theme === 'light' ? 'rgba(15,23,42,0.5)' : '#64748B', textTransform: 'uppercase' }}>
               Live Cross-Chain State
             </div>
-            <div style={{ fontSize: 15, fontWeight: 700, color: theme === 'light' ? '#0A0F2E' : '#fff', marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: theme === 'light' ? '#0A0F2E' : '#0A0F2E', marginTop: 2 }}>
               One credit score. Four chains. Continuously reconciled.
             </div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11, color: theme === 'light' ? 'rgba(15,23,42,0.6)' : 'rgba(255,255,255,0.55)', fontFamily: '"Fira Code","JetBrains Mono",monospace' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 11, color: theme === 'light' ? 'rgba(15,23,42,0.6)' : '#475569', fontFamily: '"Fira Code","JetBrains Mono",monospace' }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
               <span style={{
                 width: 6, height: 6, borderRadius: '50%',
@@ -280,7 +280,7 @@ export default function LiveCrossChainPulse({ compact = false, theme = 'dark' }:
 
 function Arrow({ theme }: { theme: Theme }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', color: theme === 'light' ? 'rgba(15,23,42,0.25)' : 'rgba(255,255,255,0.25)', fontSize: 18, flexShrink: 0 }}>
+    <div style={{ display: 'flex', alignItems: 'center', color: theme === 'light' ? 'rgba(15,23,42,0.25)' : '#CBD5E1', fontSize: 18, flexShrink: 0 }}>
       →
     </div>
   )

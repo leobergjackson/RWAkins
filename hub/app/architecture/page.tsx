@@ -112,7 +112,7 @@ export default function ArchitecturePage() {
 
   return (
     <main className="dashboard-layout" style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 24px' }}>
-      <header style={{ width: '100%', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+      <header style={{ width: '100%', borderBottom: '1px solid #E2E8F0', paddingBottom: 16, marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <Link className="gold-text" href="/dashboard" style={{ fontSize: 13, textDecoration: 'none' }}>← Back to Dashboard</Link>
@@ -124,7 +124,7 @@ export default function ArchitecturePage() {
           </h1>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <span style={{ fontSize: 10, background: 'rgba(245, 197, 24, 0.1)', color: '#F5C518', border: '1px solid rgba(245, 197, 24, 0.3)', padding: '4px 10px', borderRadius: 20 }}>
+          <span style={{ fontSize: 10, background: '#ffffff', color: '#3B5BFA', border: '1px solid rgba(59, 91, 250, 0.3)', padding: '4px 10px', borderRadius: 20 }}>
             Topology Model V2.5
           </span>
           {activeScenario !== 'none' && (
@@ -144,7 +144,7 @@ export default function ArchitecturePage() {
             <span style={{ fontSize: 11, color: '#888' }}>Hover nodes to trace pathways</span>
           </div>
           
-          <div style={{ position: 'relative', width: '100%', background: '#030303', border: '1px solid rgba(255,255,255,0.03)', borderRadius: 8, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+          <div style={{ position: 'relative', width: '100%', background: 'var(--cloud-bg)', border: '1px solid #ffffff', borderRadius: 8, flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
             <svg 
               viewBox="0 0 500 450" 
               style={{ width: '100%', height: '100%', maxHeight: 440 }}
@@ -168,13 +168,13 @@ export default function ArchitecturePage() {
                       y1={fNode.y}
                       x2={tNode.x}
                       y2={tNode.y}
-                      stroke={isHighlighted ? '#F5C518' : 'rgba(255,255,255,0.08)'}
+                      stroke={isHighlighted ? '#3B5BFA' : '#E2E8F0'}
                       strokeWidth={isHighlighted ? 2 : 1}
                       strokeDasharray={c.type === 'secure' ? '4 2' : undefined}
                       style={{ transition: 'all 0.3s ease' }}
                     />
                     {isHighlighted && (
-                      <circle r="3" fill="#F5C518">
+                      <circle r="3" fill="#3B5BFA">
                         <animateMotion
                           dur="3s"
                           repeatCount="indefinite"
@@ -191,12 +191,12 @@ export default function ArchitecturePage() {
                 const isSelected = selectedLayer === n.layer
                 const isHovered = hoveredNode === n.id
                 
-                let fill = '#0a0a0a'
-                let stroke = 'rgba(255,255,255,0.15)'
+                let fill = '#ffffff'
+                let stroke = '#CBD5E1'
                 
                 if (isSelected || isHovered) {
-                  fill = 'rgba(245, 197, 24, 0.1)'
-                  stroke = '#F5C518'
+                  fill = 'rgba(59, 91, 250, 0.1)'
+                  stroke = '#3B5BFA'
                 } else if (n.layer === 'security') {
                   stroke = 'rgba(239, 68, 68, 0.4)'
                 } else if (n.layer === 'telemetry') {
@@ -209,7 +209,7 @@ export default function ArchitecturePage() {
                 } else if (activeScenario === 'suspicious_activity' && n.layer === 'security') {
                   stroke = '#EF4444' // Threat red pulse
                 } else if (activeScenario === 'treasury_imbalance' && n.id === 'Yield Operations Hub') {
-                  stroke = '#F5C518' // Asset gold alert pulse
+                  stroke = '#3B5BFA' // Asset gold alert pulse
                 } else if (activeScenario === 'chain_congestion' && n.id === 'split') {
                   stroke = '#3B82F6' // Congestion blue pulse
                 }
@@ -247,7 +247,7 @@ export default function ArchitecturePage() {
                       x={n.x}
                       y={n.y + (n.id === 'ai-os' || n.id === 'wallet' ? 36 : 30)}
                       textAnchor="middle"
-                      fill={isSelected || isHovered ? '#F5C518' : '#aaa'}
+                      fill={isSelected || isHovered ? '#3B5BFA' : '#aaa'}
                       fontSize="9"
                       fontWeight={isSelected || isHovered ? 700 : 400}
                       fontFamily="monospace"
@@ -281,9 +281,9 @@ export default function ArchitecturePage() {
                       gap: 12,
                       padding: '10px 14px',
                       textAlign: 'left',
-                      borderColor: isActive ? '#F5C518' : 'rgba(255,255,255,0.08)',
-                      background: isActive ? 'rgba(245,197,24,0.05)' : '#070707',
-                      color: isActive ? '#F5C518' : '#ccc',
+                      borderColor: isActive ? '#3B5BFA' : '#E2E8F0',
+                      background: isActive ? 'rgba(59,91,250,0.05)' : 'var(--cloud-bg)',
+                      color: isActive ? '#3B5BFA' : '#ccc',
                       transition: 'all 0.15s ease'
                     }}
                   >
@@ -296,21 +296,21 @@ export default function ArchitecturePage() {
             </div>
           </div>
 
-          <div className="card" style={{ borderLeft: '3px solid #F5C518' }}>
-            <h3 style={{ margin: '0 0 6px', fontSize: 15, color: '#fff' }}>{currentLayer.name}</h3>
+          <div className="card" style={{ borderLeft: '3px solid #3B5BFA' }}>
+            <h3 style={{ margin: '0 0 6px', fontSize: 15, color: '#0A0F2E' }}>{currentLayer.name}</h3>
             <p style={{ margin: 0, fontSize: 12, color: '#ccc', lineHeight: 1.4 }}>{currentLayer.description}</p>
             
-            <h4 style={{ margin: '14px 0 6px', fontSize: 11, color: '#F5C518', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Key Stack Techs</h4>
+            <h4 style={{ margin: '14px 0 6px', fontSize: 11, color: '#3B5BFA', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Key Stack Techs</h4>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {currentLayer.technologies.map((t, idx) => (
-                <span key={idx} style={{ fontSize: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', padding: '2px 8px', borderRadius: 4, color: '#aaa' }}>{t}</span>
+                <span key={idx} style={{ fontSize: 10, background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '2px 8px', borderRadius: 4, color: '#aaa' }}>{t}</span>
               ))}
             </div>
 
-            <h4 style={{ margin: '14px 0 6px', fontSize: 11, color: '#F5C518', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Layer Components</h4>
+            <h4 style={{ margin: '14px 0 6px', fontSize: 11, color: '#3B5BFA', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Layer Components</h4>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {currentLayer.components.map((c, idx) => (
-                <span key={idx} style={{ fontSize: 10, background: 'rgba(245,197,24,0.05)', border: '1px solid rgba(245,197,24,0.15)', padding: '2px 8px', borderRadius: 4, color: '#fff' }}>{c}</span>
+                <span key={idx} style={{ fontSize: 10, background: '#ffffff', border: '1px solid rgba(59,91,250,0.15)', padding: '2px 8px', borderRadius: 4, color: '#0A0F2E' }}>{c}</span>
               ))}
             </div>
           </div>
