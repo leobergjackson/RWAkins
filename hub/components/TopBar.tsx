@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { ConnectButton } from './wallet/ConnectButton'
 import { NetworkBadge } from './wallet/NetworkBadge'
 import ChainSwitcher from './chain/ChainSwitcher'
+import ThemeToggle from './ThemeToggle'
 
 const GOLD = '#3B5BFA'
 const BG = '#ffffff'
@@ -97,6 +98,9 @@ export default function TopBar({ onMobileToggle, isMobile }: Props) {
 
       {/* Right side */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+
+        {/* Light / Dark theme switch */}
+        <ThemeToggle variant="inline" />
 
         {/* Global chain preference — sets the default chain every tool follows
             unless it has its own per-tool override. */}

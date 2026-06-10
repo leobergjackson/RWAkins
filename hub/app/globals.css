@@ -1,4 +1,4 @@
-/* Built by vsrupeshkumar */
+﻿/* Built by vsrupeshkumar */
 @import "tailwindcss";
 
 :root {
@@ -8,17 +8,32 @@
   --pink: #EC4899;
   --background: #ffffff;
   --foreground: #0A0F2E;
+  /* Turing Test Hackathon palette — soft cloudy sky-blue/white + forest green */
+  --green: #163b2c;        /* deep forest (the banner title colour) */
+  --green-2: #2f6b54;      /* lighter pine */
+  --sky: #cfe0ee;          /* pale sky-blue cloud */
+  --sky-2: #e7eef6;        /* near-white blue */
+}
+
+/* Soft, cloudy sky-blue → white background, matching the hackathon banner.
+   Reused as a CSS variable so every surface (body, shell, tool pages) shares it. */
+:root {
+  --cloud-bg:
+    radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 55%),
+    radial-gradient(70% 55% at 78% 8%, rgba(189,214,236,0.55) 0%, rgba(189,214,236,0) 60%),
+    radial-gradient(60% 50% at 18% 0%, rgba(213,228,243,0.5) 0%, rgba(213,228,243,0) 60%),
+    linear-gradient(180deg, #eef4fa 0%, #f6fafd 45%, #ffffff 100%);
 }
 
 html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
 
-body { background: #ffffff; color: #0A0F2E; }
+body { background: var(--cloud-bg); background-attachment: fixed; color: #0A0F2E; }
 
-::selection { background: #ddd6fe; color: #0A0F2E; }
+::selection { background: #c7e3d6; color: var(--green); }
 
-/* ── Gradient text ── */
+/* ── Gradient text — retuned from purple to the banner's forest-green/teal ── */
 .gradient-text {
-  background: linear-gradient(135deg, #3B5BFA 0%, #8B5CF6 45%, #EC4899 100%);
+  background: linear-gradient(135deg, #163b2c 0%, #2f6b54 50%, #3f9a73 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -41,13 +56,14 @@ body { background: #ffffff; color: #0A0F2E; }
 }
 .btn-ghost:hover { transform: scale(1.03); border-color: #0A0F2E; }
 
-/* ── Hero gradient bg ── */
+/* ── Hero gradient bg — cloudy sky-blue/white with faint vertical light rays ── */
 .hero-bg {
   background:
-    radial-gradient(60% 55% at 70% 40%, rgba(252,231,243,0.95) 0%, rgba(252,231,243,0) 60%),
-    radial-gradient(50% 50% at 25% 60%, rgba(237,233,254,0.95) 0%, rgba(237,233,254,0) 60%),
-    radial-gradient(65% 65% at 50% 100%, rgba(224,242,254,0.9) 0%, rgba(224,242,254,0) 65%),
-    linear-gradient(180deg, #F8FAFC 0%, #F1F5FF 100%);
+    repeating-linear-gradient(95deg, rgba(255,255,255,0) 0px, rgba(255,255,255,0) 60px, rgba(255,255,255,0.5) 78px, rgba(255,255,255,0) 96px),
+    radial-gradient(70% 60% at 72% 6%, rgba(189,214,236,0.6) 0%, rgba(189,214,236,0) 60%),
+    radial-gradient(55% 50% at 20% 0%, rgba(213,228,243,0.55) 0%, rgba(213,228,243,0) 60%),
+    radial-gradient(80% 70% at 50% 110%, rgba(224,238,250,0.7) 0%, rgba(224,238,250,0) 65%),
+    linear-gradient(180deg, #eef4fa 0%, #f6fafd 50%, #ffffff 100%);
 }
 
 /* ── Grain overlay ── */
@@ -109,29 +125,22 @@ body { background: #ffffff; color: #0A0F2E; }
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.3); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: rgba(47,107,84,0.35); border-radius: 2px; }
 
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { scrollbar-width: none; }
 
-/* ── Kubryx Unified Tool Theme ─────────────────────────────── */
-/* Applies Kubryx homepage gradient to ALL tool page containers */
+/* ── RWAkins Unified Tool Theme ─────────────────────────────── */
+/* Applies RWAkins homepage gradient to ALL tool page containers */
 .kbx-tool-page {
-  background:
-    radial-gradient(60% 55% at 70% 40%, rgba(252,231,243,0.7) 0%, rgba(252,231,243,0) 60%),
-    radial-gradient(50% 50% at 25% 60%, rgba(237,233,254,0.7) 0%, rgba(237,233,254,0) 60%),
-    radial-gradient(65% 65% at 50% 100%, rgba(224,242,254,0.6) 0%, rgba(224,242,254,0) 65%),
-    linear-gradient(180deg, #F8FAFC 0%, #F1F5FF 100%);
+  background: var(--cloud-bg);
   color: #0A0F2E;
   min-height: 100%;
 }
 
 /* Override dark tool containers */
 .yield-hub-container {
-  background:
-    radial-gradient(60% 55% at 70% 40%, rgba(219,234,254,0.5) 0%, transparent 60%),
-    radial-gradient(50% 50% at 25% 60%, rgba(237,233,254,0.6) 0%, transparent 60%),
-    linear-gradient(180deg, #F8FAFC 0%, #EEF2FF 100%) !important;
+  background: var(--cloud-bg) !important;
   color: #0A0F2E !important;
 }
 .yield-hub-container .page-title { color: #0A0F2E !important; text-shadow: none !important; }
@@ -142,10 +151,7 @@ body { background: #ffffff; color: #0A0F2E; }
 .yield-hub-container .dot-grid-overlay { opacity: 0.04 !important; }
 
 .shadow-container {
-  background:
-    radial-gradient(60% 55% at 70% 40%, rgba(252,231,243,0.7) 0%, transparent 60%),
-    radial-gradient(50% 50% at 25% 60%, rgba(237,233,254,0.7) 0%, transparent 60%),
-    linear-gradient(180deg, #F8FAFC 0%, #F1F5FF 100%) !important;
+  background: var(--cloud-bg) !important;
   color: #0A0F2E !important;
 }
 .shadow-container .floating-container { opacity: 0.06 !important; }
@@ -153,22 +159,19 @@ body { background: #ffffff; color: #0A0F2E; }
 
 /* Agent page */
 .stripe-bg {
-  background:
-    radial-gradient(60% 55% at 70% 30%, rgba(192,132,252,0.2) 0%, transparent 60%),
-    radial-gradient(50% 50% at 20% 60%, rgba(237,233,254,0.5) 0%, transparent 60%),
-    linear-gradient(180deg, #FAF5FF 0%, #F3E8FF 60%, #EEF2FF 100%) !important;
+  background: var(--cloud-bg) !important;
 }
 
 /* Vault page */
 .vault-page, .cipher-vault-page {
-  background: linear-gradient(180deg, #ECFEFF 0%, #E0F2FE 100%) !important;
+  background: var(--cloud-bg) !important;
 }
 
 /* ── Global Typography & Layout (Unified UI) ── */
 .page-eyebrow {
   font-family: 'Dancing Script', cursive;
   font-size: 18px;
-  color: var(--violet);
+  color: var(--green-2);
   letter-spacing: 0.05em;
   display: flex;
   align-items: center;
@@ -258,4 +261,22 @@ body { background: #ffffff; color: #0A0F2E; }
     font-size: 11px;
     padding: 4px 10px;
   }
+}
+
+/* ── Dark mode ──────────────────────────────────────────────────────────────
+   The app is authored in the light "hero" palette with hardcoded inline styles,
+   so dark mode is applied as a single root-level filter (toggled via the
+   sun/moon ThemeToggle, which adds `.dark-mode` to <html>). Media + the toggle
+   itself are counter-inverted so they keep their true colours. */
+html.dark-mode {
+  filter: invert(1) hue-rotate(180deg);
+  background: #ffffff; /* inverts to near-black → solid dark backdrop */
+}
+html.dark-mode img,
+html.dark-mode video,
+html.dark-mode canvas,
+html.dark-mode svg image,
+html.dark-mode [data-no-invert],
+html.dark-mode .no-invert {
+  filter: invert(1) hue-rotate(180deg);
 }

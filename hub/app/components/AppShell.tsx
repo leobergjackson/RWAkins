@@ -5,12 +5,16 @@ import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import KubrykSidebar from '../../components/KubrykSidebar'
 import TopBar from '../../components/TopBar'
+import TabBar from '../../components/TabBar'
+import { getCategoryForPath } from '../../lib/navCategories'
 import { WalletProvider } from '../../context/WalletContext'
 import { KubrykPlatformProvider } from '../../context/KubrykPlatformContext'
 import { ChainPreferenceProvider } from '../../context/ChainPreferenceContext'
 import { WrongNetworkBanner } from '../../components/wallet/WrongNetwork'
 import { WalletPlatformSync } from '../../components/wallet/WalletPlatformSync'
 import { useBackendWarmup } from '../../hooks/useBackendWarmup'
+import { ThemeProvider } from '../../context/ThemeContext'
+import ThemeToggle from '../../components/ThemeToggle'
 
 /* Paths that render inside the hub shell (sidebar + topbar).
    /dashboard now uses the shared sidebar too — clicking a sidebar link from
@@ -22,7 +26,9 @@ const HUB_PREFIXES: string[] = [
   '/credit', '/legacy', '/agents', '/vault', '/split', '/lend', '/treasury', '/shadow',
   '/performance', '/architecture', '/developers', '/governance', '/operations', '/executive',
   '/security', '/coordination', '/policies', '/integrations', '/ecosystem', '/analytics',
-  '/story', '/protocols'
+  '/story', '/protocols',
+  // Turing Test Hackathon 2026 — new AI × RWA dashboards
+  '/agent-council', '/insurance-risk-system', '/compliance', '/rwa-analytics', '/compare', '/contracts',
 ]
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
@@ -31,6 +37,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [activeCategory, setActiveCategory] = useState(() => getCategoryForPath(pathname))
 
   // Silently keep all Render backends warm to prevent cold-start during demo
   useBackendWarmup()
@@ -44,23 +51,26 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   }, [])
 
   useEffect(() => { setMobileOpen(false) }, [pathname])
+  // Auto-select the correct tab whenever the URL changes
+  useEffect(() => { setActiveCategory(getCategoryForPath(pathname)) }, [pathname])
 
   const showShell = HUB_PREFIXES.some(p => pathname === p || pathname.startsWith(p + '/'))
 
   /* WalletProvider wraps every hub route (shell + the self-contained
      /dashboard) so useWallet works platform-wide. The landing page renders
      inside it too — harmless, the provider has no effect until used. */
-  if (!showShell) return <WalletProvider><KubrykPlatformProvider><ChainPreferenceProvider><WalletPlatformSync />{children}</ChainPreferenceProvider></KubrykPlatformProvider></WalletProvider>
+  if (!showShell) return <ThemeProvider><WalletProvider><KubrykPlatformProvider><ChainPreferenceProvider><WalletPlatformSync />{children}<ThemeToggle variant="floating" /></ChainPreferenceProvider></KubrykPlatformProvider></WalletProvider></ThemeProvider>
 
   /* sidebar occupies fixed space; main content shifts right */
   const sidebarWidth = isMobile ? 0 : (collapsed ? 80 : 280)
 
   return (
+    <ThemeProvider>
     <WalletProvider>
     <KubrykPlatformProvider>
     <ChainPreferenceProvider>
     <WalletPlatformSync />
-    <div style={{ background: '#FAFBFF', minHeight: '100vh', display: 'flex' }}>
+    <div style={{ background: 'var(--cloud-bg)', minHeight: '100vh', display: 'flex' }}>
       {mounted && (
         <KubrykSidebar
           collapsed={isMobile ? false : collapsed}
@@ -68,6 +78,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           mobileOpen={mobileOpen}
           onMobileClose={() => setMobileOpen(false)}
           isMobile={isMobile}
+          activeCategory={activeCategory}
         />
       )}
 
@@ -86,6 +97,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             isMobile={isMobile}
           />
         )}
+        {mounted && (
+          <TabBar
+            activeCategory={activeCategory}
+            onCategoryChange={setActiveCategory}
+            isMobile={isMobile}
+          />
+        )}
         <main style={{ flex: 1 }}>
           {/* Route-aware wrong-network warning — shows for any tool whose
               required chain differs from the connected EVM wallet's chain. */}
@@ -97,5 +115,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     </ChainPreferenceProvider>
     </KubrykPlatformProvider>
     </WalletProvider>
+    </ThemeProvider>
   )
 }
