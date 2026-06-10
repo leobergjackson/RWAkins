@@ -251,9 +251,9 @@ export default function CoordinationPage() {
             </p>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
-              {chainOutlooks.map((out) => (
-                <div 
-                  key={out.chainName}
+              {chainOutlooks.map((out, i) => (
+                <div
+                  key={`${out.chainName}-${i}`}
                   style={{
                     padding: 12,
                     background: 'rgba(255,255,255,0.01)',
