@@ -1,18 +1,20 @@
-﻿// Built by vsrupeshkumar
-// Server-side proxy for the Groq AI chat used by Protocol Borrow Engine.
-// Keeps GROQ_API_KEY off the client. Falls back to NEXT_PUBLIC_GROQ_API_KEY
-// only for migration — remove that var from Vercel once GROQ_API_KEY is set.
+// Built by vsrupeshkumar
+// Server-side OpenAI proxy for the RWAkins AI CFO. Keeps OPENAI_API_KEY off the
+// client. Used by the onboarding IntentChat to confirm a parsed wealth policy
+// back to the user in natural language. Returns { error: 'AI_DISABLED' } when no
+// key is configured so the client can fall back to its deterministic message.
 import { NextResponse } from 'next/server'
-
-const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions'
-const MODEL = 'llama-3.3-70b-versatile'
+import { chat, hasOpenAIKey } from '@/lib/openai'
 
 const SYSTEM_PROMPT =
-  'You are a DeFi loan negotiation AI for the RWAkins Protocol Borrow Engine on Mantle Network. Be concise and specific about rates, ZK credit, and RWA collateral (USDY, mETH).'
+  'You are the RWAkins AI CFO, an autonomous treasury agent on Mantle Network. ' +
+  'You manage a two-asset real-world-asset portfolio: USDY (Ondo tokenized US ' +
+  'treasuries, the stable yield leg) and mETH (Mantle liquid-staked ETH, the ' +
+  'higher-risk growth leg). Be concise, warm, and specific. Never promise returns. ' +
+  'Always respect the on-chain hard cap: mETH can never exceed 70% of the portfolio.'
 
 export async function POST(req: Request) {
-  const key = process.env.GROQ_API_KEY || process.env.NEXT_PUBLIC_GROQ_API_KEY
-  if (!key) {
+  if (!hasOpenAIKey()) {
     return NextResponse.json({ error: 'AI_DISABLED' }, { status: 503 })
   }
 
@@ -27,30 +29,17 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'BAD_REQUEST' }, { status: 400 })
   }
 
-  const ctrl = new AbortController()
-  const timeout = setTimeout(() => ctrl.abort(), 15_000)
-  try {
-    const res = await fetch(GROQ_URL, {
-      method: 'POST',
-      signal: ctrl.signal,
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: message },
-        ],
-      }),
-    })
-    if (!res.ok) {
-      return NextResponse.json({ error: 'UPSTREAM_FAILED' }, { status: 502 })
-    }
-    const json = await res.json()
-    const text = json?.choices?.[0]?.message?.content ?? ''
-    return NextResponse.json({ text })
-  } catch {
-    return NextResponse.json({ error: 'NETWORK_ERROR' }, { status: 504 })
-  } finally {
-    clearTimeout(timeout)
+  const text = await chat({
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content: message },
+    ],
+    temperature: 0.5,
+    maxTokens: 200,
+  })
+
+  if (text == null) {
+    return NextResponse.json({ error: 'UPSTREAM_FAILED' }, { status: 502 })
   }
+  return NextResponse.json({ text })
 }

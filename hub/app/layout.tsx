@@ -1,9 +1,9 @@
-﻿// Built by vsrupeshkumar
+// Built by vsrupeshkumar
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'sonner'
-import AppShell from './components/AppShell'
+import { WalletProvider } from '@/context/WalletContext'
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -20,22 +20,26 @@ const mono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'RWAkins — The Financial OS for Web3 & Beyond',
-  description: 'One platform. Eight powerful tools. Credit scoring, inheritance vaults, private trading, DeFi lending, Yield Operations Hub automation, and AI agents — all on-chain on Mantle Network.',
+  title: 'RWAkins — An AI CFO for Real-World Asset Portfolios',
+  description:
+    'Autonomous, multi-agent rebalancing of tokenized RWAs (USDY + mETH) on Mantle. Describe your goals in plain English; a transparent AI council debates, votes, and executes every rebalance on-chain.',
 }
 
+// Minimal root shell for the RWAkins agent app. Each screen renders its own
+// AgentNav / navbar, so the layout only needs the wallet context + toaster.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${jakarta.variable} ${mono.variable}`} suppressHydrationWarning>
-      <body style={{ fontFamily: 'var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif' }}>
-        <AppShell>{children}</AppShell>
+      <body style={{ fontFamily: 'var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif', background: '#080808' }}>
+        <WalletProvider>{children}</WalletProvider>
         <Toaster
           position="bottom-right"
+          theme="dark"
           toastOptions={{
             style: {
-              background: '#fff',
-              border: '1px solid #E5E7EB',
-              color: '#0A0F2E',
+              background: '#111',
+              border: '1px solid rgba(255,255,255,0.1)',
+              color: '#fff',
               fontFamily: 'var(--font-jakarta), sans-serif',
             },
           }}

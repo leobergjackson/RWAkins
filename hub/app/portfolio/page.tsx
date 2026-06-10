@@ -13,7 +13,7 @@ import { formatEther } from 'viem'
 import { Wallet, TrendingUp, PieChart as PieIcon, Coins, Sparkles, ArrowRight, Zap, CheckCircle, AlertCircle } from 'lucide-react'
 import { useWallet } from '@/context/WalletContext'
 import { usePrices } from '@/hooks/usePrices'
-import { isVaultDeployed, readWalletBalances, readYields } from '@/lib/rwa/vaultClient'
+import { isVaultDeployed, readPortfolio, readWalletBalances, readYields, executeRebalance, approveAndDeposit, faucetMint, RWA } from '@/lib/rwa/vaultClient'
 import { loadIntent, summarizeRules, type WealthRules } from '@/lib/intent'
 import { StandaloneNavbar } from '@/components/shell/StandaloneNavbar'
 import { AgentNav } from '@/components/shell/AgentNav'
@@ -49,6 +49,7 @@ export default function PortfolioPage() {
   const [series, setSeries] = useState<ActivityPoint[]>([])
   const [triggering, setTriggering] = useState(false)
   const [triggerResult, setTriggerResult] = useState<{ ok: boolean; narrative?: string; txHash?: string; err?: string } | null>(null)
+  const [funding, setFunding] = useState<{ busy: boolean; step?: string; err?: string }>({ busy: false })
   const router = useRouter()
 
   // Load saved wealth rules for this wallet.
@@ -63,13 +64,16 @@ export default function PortfolioPage() {
       setLoading(true)
       if (isVaultDeployed && connected && evm.address) {
         try {
-          const [bal, yields] = await Promise.all([
-            readWalletBalances(evm.address as `0x${string}`),
+          // Source of truth for the dashboard + rebalance is the VAULT position
+          // (getPortfolio), not raw wallet balances — rebalance acts on what the
+          // vault custodies for this user.
+          const [pos, yields] = await Promise.all([
+            readPortfolio(evm.address as `0x${string}`),
             readYields(),
           ])
           if (!active) return
-          setUsdyTokens(toNum(bal.usdy))
-          setMethTokens(toNum(bal.meth))
+          setUsdyTokens(toNum(pos.usdyBal))
+          setMethTokens(toNum(pos.methBal))
           setApy(yields)
           setIsDemo(false)
         } catch {
@@ -117,33 +121,107 @@ export default function PortfolioPage() {
   const fmtUsd = (n: number) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
   const fmtPct = (n: number) => `${n.toFixed(1)}%`
 
+  // Establish a vault position so the AI CFO has something to rebalance.
+  // Mints mock USDY to the wallet if needed (testnet faucet), then approves +
+  // deposits it into the vault. After this, getPortfolio(user) is non-zero and
+  // rebalance() no longer reverts with "EMPTY".
+  const fundVault = useCallback(async () => {
+    if (!evm.address || funding.busy) return
+    const acct = evm.address as `0x${string}`
+    const SEED = '5000' // USDY
+    setFunding({ busy: true, step: 'Checking balance…' })
+    try {
+      const bal = await readWalletBalances(acct)
+      if (toNum(bal.usdy) < Number(SEED)) {
+        setFunding({ busy: true, step: 'Minting test USDY…' })
+        await faucetMint(acct, RWA.usdy, SEED)
+      }
+      await approveAndDeposit(acct, RWA.usdy, SEED, (s) =>
+        setFunding({ busy: true, step: s === 'approving' ? 'Approving USDY…' : 'Depositing into vault…' }),
+      )
+      // Refresh the vault position.
+      await new Promise(r => setTimeout(r, 1500)) // wait 1.5s for chain
+      const pos = await readPortfolio(acct)
+      setUsdyTokens(toNum(pos.usdyBal))
+      setMethTokens(toNum(pos.methBal))
+      setIsDemo(false)
+      setFunding({ busy: false })
+    } catch (e) {
+      setFunding({ busy: false, err: e instanceof Error ? e.message : 'Funding failed — try again.' })
+    }
+  }, [evm.address, funding.busy])
+
   const triggerRebalance = useCallback(async () => {
     if (!evm.address || triggering) return
     setTriggering(true)
     setTriggerResult(null)
     try {
+      // Steps 2-4: ask the agent brain (rules + live market + LLM + council) for a decision.
       const res = await fetch('/api/rebalance/trigger', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           wallet: evm.address,
           currentMethPct: Math.round(m.methFrac * 100),
+           targetUsdyBps: rules?.targetUsdyBps ?? 8000,
+          targetMethBps: rules?.targetMethBps ?? 2000,
+          usdyApyBps: apy.usdyApyBps,
+          methApyBps: apy.methApyBps,
         }),
       })
       const json = await res.json()
       if (!res.ok || !json.ok) {
         setTriggerResult({ ok: false, err: json.error ?? 'Trigger failed' })
-      } else {
-        setTriggerResult({ ok: true, narrative: json.narrative, txHash: json.txHash })
-        // Navigate to activity feed after brief pause so user sees the success state.
-        setTimeout(() => router.push('/activity'), 2200)
+        return
       }
-    } catch {
-      setTriggerResult({ ok: false, err: 'Network error — try again.' })
+
+      // Council held / no action needed — show the reasoning, nothing to execute.
+      if (!json.shouldRebalance) {
+        setTriggerResult({ ok: true, narrative: json.narrative })
+        return
+      }
+
+      // Step 5: execute on-chain when the vault is live → REAL Mantle tx hash.
+      if (isVaultDeployed && !isDemo) {
+        const { usdyBps, methBps, direction } = json.decision
+        const hash = await executeRebalance(evm.address as `0x${string}`, usdyBps, methBps)
+        // Log the confirmed activity with the genuine hash + LLM narrative.
+        await fetch('/api/activity', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            wallet: evm.address,
+            activity: {
+              actionType: 'rebalance',
+              narrative: json.narrative,
+              assetFrom: direction === 'de-risk' ? 'mETH' : direction === 'rotate-in' ? 'USDY' : null,
+              assetTo: direction === 'de-risk' ? 'USDY' : direction === 'rotate-in' ? 'mETH' : null,
+              txHash: hash,
+              allocationBefore: json.allocationBefore,
+              allocationAfter: json.allocationAfter,
+            },
+          }),
+        }).catch(() => {})
+        setTriggerResult({ ok: true, narrative: json.narrative, txHash: hash })
+        // Refresh the vault position from chain so the dashboard reflects the new split.
+        try {
+          await new Promise(r => setTimeout(r, 1500)) // wait 1.5s for chain
+          const pos = await readPortfolio(evm.address as `0x${string}`)
+          setUsdyTokens(toNum(pos.usdyBal))
+          setMethTokens(toNum(pos.methBal))
+          setIsDemo(false)
+        } catch { /* keep prior values */ }
+        setTimeout(() => router.push('/activity'), 2600)
+      } else {
+        // Vault not deployed — surface the decision; never fabricate a tx hash.
+        setTriggerResult({ ok: true, narrative: `${json.narrative} (Deploy the vault to Mantle Sepolia to execute this on-chain.)` })
+      }
+    } catch (e) {
+      setTriggerResult({ ok: false, err: e instanceof Error ? e.message : 'Execution failed — try again.' })
     } finally {
       setTriggering(false)
     }
-  }, [evm.address, m.methFrac, triggering, router])
+  }, [evm.address, m.methFrac, apy, isDemo, triggering, router, rules])
 
   return (
     <div className="agent-shell" style={{ minHeight: '100vh', background: '#080808', color: '#fff' }}>
@@ -176,13 +254,18 @@ export default function PortfolioPage() {
               </div>
             )}
 
-            {/* AI CFO Action Panel */}
-            <RebalanceTrigger
-              loading={loading}
-              triggering={triggering}
-              result={triggerResult}
-              onTrigger={triggerRebalance}
-            />
+            {/* AI CFO Action Panel — fund the vault first if the position is
+                empty (rebalance acts on the vault position, not wallet tokens). */}
+            {!isDemo && !loading && m.total <= 0 ? (
+              <FundPanel funding={funding} onFund={fundVault} />
+            ) : (
+              <RebalanceTrigger
+                loading={loading}
+                triggering={triggering}
+                result={triggerResult}
+                onTrigger={triggerRebalance}
+              />
+            )}
 
             {/* Metric cards */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, marginBottom: 24 }}>
@@ -335,6 +418,39 @@ function Legend({ color, label }: { color: string; label: string }) {
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.6)' }}>
       <span style={{ width: 9, height: 9, borderRadius: 3, background: color }} /> {label}
     </span>
+  )
+}
+
+function FundPanel({ funding, onFund }: { funding: { busy: boolean; step?: string; err?: string }; onFund: () => void }) {
+  return (
+    <div
+      style={{
+        marginBottom: 20, padding: '16px 20px', borderRadius: 14,
+        background: 'rgba(45,212,191,0.05)', border: '1px solid rgba(45,212,191,0.25)',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap',
+      }}
+    >
+      <div>
+        <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 2 }}>Fund your vault to activate the AI CFO</div>
+        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', maxWidth: 460 }}>
+          The agent rebalances what the vault custodies. Deposit test USDY once (we’ll mint it for you on Mantle Sepolia), then the AI CFO can rebalance on-chain.
+        </div>
+        {funding.err && <div style={{ fontSize: 12, color: '#fbbf24', marginTop: 6 }}>{funding.err}</div>}
+      </div>
+      <button
+        onClick={onFund}
+        disabled={funding.busy}
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: 8,
+          padding: '10px 20px', borderRadius: 10, border: 'none', cursor: funding.busy ? 'not-allowed' : 'pointer',
+          background: funding.busy ? 'rgba(45,212,191,0.3)' : '#2dd4bf', color: '#080808',
+          fontWeight: 800, fontSize: 13, whiteSpace: 'nowrap', opacity: funding.busy ? 0.8 : 1,
+        }}
+      >
+        <Zap size={14} />
+        {funding.busy ? (funding.step || 'Funding…') : 'Deposit 5,000 USDY'}
+      </button>
+    </div>
   )
 }
 

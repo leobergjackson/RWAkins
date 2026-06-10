@@ -14,7 +14,7 @@ import { NextResponse } from 'next/server'
 import { createPublicClient, http, defineChain } from 'viem'
 import { VAULT_ABI } from '@/lib/rwa/abi'
 import deployed from '@/lib/rwa-deployed.json'
-import { getStoredActivities } from '@/lib/activityStore'
+import { getStoredActivities, logActivity, type StoredActivity } from '@/lib/activityStore'
 
 // ── Types (shape matches the SCREEN 3 spec) ──────────────────────────────────
 
@@ -219,9 +219,12 @@ export async function GET(req: Request) {
     const live = await readLiveActivities(wallet as `0x${string}`)
 
     if (triggered.length > 0 || (live && live.length > 0)) {
-      const combined = [...triggered, ...(live ?? [])]
+      // Dedupe stored vs on-chain by tx hash — a confirmed rebalance appears in
+      // both (the store has the richer LLM narrative, so it wins).
+      const seen = new Set(triggered.map((a) => a.txHash).filter(Boolean) as string[])
+      const merged = [...triggered, ...(live ?? []).filter((a) => !a.txHash || !seen.has(a.txHash))]
         .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-      return NextResponse.json({ activities: combined, live: live !== null && live.length > 0 })
+      return NextResponse.json({ activities: merged, live: live !== null && live.length > 0 })
     }
     return NextResponse.json({ activities: demoActivities(wallet), live: false })
   }
@@ -231,4 +234,38 @@ export async function GET(req: Request) {
   const address = url.searchParams.get('address') || 'anon'
   const days = Math.min(120, Math.max(7, Number(url.searchParams.get('days')) || 30))
   return NextResponse.json({ series: buildSeries(base, address, days) })
+}
+
+// POST /api/activity — log a REAL agent activity after on-chain execution.
+// Called by the portfolio page once vault.rebalance() confirms, so the feed
+// card carries the genuine Mantle tx hash plus the LLM narrative/reasoning.
+export async function POST(req: Request) {
+  let body: { wallet?: string; activity?: Partial<StoredActivity> }
+  try { body = await req.json() } catch { return NextResponse.json({ error: 'BAD_REQUEST' }, { status: 400 }) }
+
+  const wallet = (body.wallet ?? '').trim()
+  const a = body.activity
+  if (!/^0x[a-fA-F0-9]{40}$/.test(wallet) || !a) {
+    return NextResponse.json({ error: 'INVALID_PARAMS' }, { status: 400 })
+  }
+  // A logged activity must reference a real tx hash (no fabricated proof).
+  if (a.txHash && !/^0x[a-fA-F0-9]{64}$/.test(a.txHash)) {
+    return NextResponse.json({ error: 'INVALID_TX_HASH' }, { status: 400 })
+  }
+
+  const entry: StoredActivity = {
+    id: a.id || `exec-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+    timestamp: a.timestamp || new Date().toISOString(),
+    actionType: a.actionType === 'monitor' || a.actionType === 'alert' ? a.actionType : 'rebalance',
+    narrative: (a.narrative || 'Rebalance executed.').slice(0, 400),
+    assetFrom: a.assetFrom ?? null,
+    assetTo: a.assetTo ?? null,
+    amountFrom: a.amountFrom ?? null,
+    amountTo: a.amountTo ?? null,
+    txHash: a.txHash ?? null,
+    allocationBefore: a.allocationBefore ?? { usdy: 0, meth: 0 },
+    allocationAfter: a.allocationAfter ?? { usdy: 0, meth: 0 },
+  }
+  logActivity(wallet, entry)
+  return NextResponse.json({ ok: true, activity: entry })
 }

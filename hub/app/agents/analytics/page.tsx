@@ -1,6 +1,0 @@
-// Built by vsrupeshkumar
-import { redirect } from 'next/navigation'
-
-export default function AnalyticsRedirect() {
-  redirect('/agents?tab=analytics')
-}

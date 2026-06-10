@@ -31,9 +31,10 @@ function truncHash(h: string) {
   return `${h.slice(0, 6)}…${h.slice(-4)}`
 }
 
-/** Two stacked mini bars showing the USDY/mETH split before vs after (percent). */
-function MiniBars({ before, after }: { before: Allocation; after: Allocation }) {
-  const Bar = ({ label, a }: { label: string; a: Allocation }) => (
+/** One labelled before/after split bar (declared at module scope so it isn't
+ *  recreated on every render). */
+function Bar({ label, a }: { label: string; a: Allocation }) {
+  return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
       <span style={{ width: 42, fontSize: 10, color: 'rgba(255,255,255,0.35)' }}>{label}</span>
       <div style={{ flex: 1, display: 'flex', height: 7, borderRadius: 999, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)' }}>
@@ -45,6 +46,10 @@ function MiniBars({ before, after }: { before: Allocation; after: Allocation }) 
       </span>
     </div>
   )
+}
+
+/** Two stacked mini bars showing the USDY/mETH split before vs after (percent). */
+function MiniBars({ before, after }: { before: Allocation; after: Allocation }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 12 }}>
       <Bar label="Before" a={before} />
