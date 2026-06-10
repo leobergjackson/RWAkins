@@ -8,10 +8,10 @@ import { ConnectButton } from './wallet/ConnectButton'
 import { NetworkBadge } from './wallet/NetworkBadge'
 import ChainSwitcher from './chain/ChainSwitcher'
 
-const GOLD = '#F5C518'
-const BG = '#080808'
-const BORDER = 'rgba(255,255,255,0.08)'
-const MONO = '"Fira Code","JetBrains Mono",monospace'
+const GOLD = '#3B5BFA'
+const BG = '#ffffff'
+const BORDER = '#E2E8F0'
+const MONO = 'var(--font-mono), "JetBrains Mono", "Fira Code", monospace'
 
 const BREADCRUMB_NAMES: Record<string, string> = {
   dashboard: 'Dashboard',
@@ -66,7 +66,7 @@ export default function TopBar({ onMobileToggle, isMobile }: Props) {
         <button onClick={onMobileToggle} style={{
           background: 'none',
           border: `1px solid ${BORDER}`,
-          color: 'rgba(255,255,255,0.5)',
+          color: '#475569',
           borderRadius: 8,
           width: 36, height: 36,
           display: 'grid', placeItems: 'center',
@@ -78,16 +78,16 @@ export default function TopBar({ onMobileToggle, isMobile }: Props) {
 
       {/* Breadcrumbs */}
       <nav style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1, minWidth: 0, overflow: 'hidden' }}>
-        <Link href="/dashboard" style={{ textDecoration: 'none', fontSize: 12, color: 'rgba(255,255,255,0.3)', flexShrink: 0 }}>
+        <Link href="/dashboard" style={{ textDecoration: 'none', fontSize: 12, color: '#94A3B8', flexShrink: 0 }}>
           Hub
         </Link>
         {crumbs.map((c, i) => (
           <span key={c.href} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.2)' }}>/</span>
+            <span style={{ fontSize: 12, color: '#CBD5E1' }}>/</span>
             {i === crumbs.length - 1 ? (
               <span style={{ fontSize: 12, fontWeight: 600, color: GOLD, whiteSpace: 'nowrap' }}>{c.label}</span>
             ) : (
-              <Link href={c.href} style={{ textDecoration: 'none', fontSize: 12, color: 'rgba(255,255,255,0.4)', whiteSpace: 'nowrap' }}>
+              <Link href={c.href} style={{ textDecoration: 'none', fontSize: 12, color: '#64748B', whiteSpace: 'nowrap' }}>
                 {c.label}
               </Link>
             )}
@@ -114,7 +114,7 @@ export default function TopBar({ onMobileToggle, isMobile }: Props) {
             background: 'rgba(34,197,94,0.08)',
           }}>
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#22C55E' }} />
-            <span style={{ fontSize: 11, color: '#86EFAC', fontWeight: 600 }}>All Live</span>
+            <span style={{ fontSize: 11, color: '#059669', fontWeight: 600 }}>All Live</span>
           </div>
         )}
 
@@ -124,8 +124,8 @@ export default function TopBar({ onMobileToggle, isMobile }: Props) {
             width: 36, height: 36,
             borderRadius: 8,
             border: `1px solid ${BORDER}`,
-            background: 'rgba(255,255,255,0.04)',
-            color: 'rgba(255,255,255,0.5)',
+            background: '#F8FAFC',
+            color: '#475569',
             cursor: 'pointer',
             display: 'grid', placeItems: 'center',
             fontSize: 15,
@@ -135,17 +135,17 @@ export default function TopBar({ onMobileToggle, isMobile }: Props) {
             <span style={{
               position: 'absolute', top: 6, right: 6,
               width: 7, height: 7, borderRadius: '50%',
-              background: GOLD, border: '1.5px solid #080808',
+              background: GOLD, border: '1.5px solid #ffffff',
             }} />
           </button>
           {notifOpen && (
             <div style={{
               position: 'absolute', top: 44, right: 0, width: 280,
-              background: '#0C0C0C', border: `1px solid ${BORDER}`,
+              background: '#ffffff', border: `1px solid ${BORDER}`,
               borderRadius: 12, overflow: 'hidden', zIndex: 100,
-              boxShadow: '0 20px 40px rgba(0,0,0,0.6)',
+              boxShadow: '0 20px 50px -10px rgba(15,23,42,0.25)',
             }}>
-              <div style={{ padding: '12px 16px', borderBottom: `1px solid ${BORDER}`, fontSize: 12, fontWeight: 700, color: '#fff' }}>
+              <div style={{ padding: '12px 16px', borderBottom: `1px solid ${BORDER}`, fontSize: 12, fontWeight: 700, color: '#0A0F2E' }}>
                 Notifications
               </div>
               {[
@@ -155,16 +155,16 @@ export default function TopBar({ onMobileToggle, isMobile }: Props) {
               ].map((n, i) => (
                 <div key={i} style={{
                   display: 'flex', alignItems: 'flex-start', gap: 10,
-                  padding: '12px 16px', borderBottom: i < 2 ? `1px solid rgba(255,255,255,0.04)` : 'none',
+                  padding: '12px 16px', borderBottom: i < 2 ? `1px solid #F1F5F9` : 'none',
                   cursor: 'pointer',
                 }}
-                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)'}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = '#F8FAFC'}
                   onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
                 >
                   <span style={{ fontSize: 16, color: n.color, flexShrink: 0 }}>{n.icon}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)', lineHeight: 1.4 }}>{n.msg}</div>
-                    <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginTop: 2, fontFamily: MONO }}>{n.time}</div>
+                    <div style={{ fontSize: 12, color: '#334155', lineHeight: 1.4 }}>{n.msg}</div>
+                    <div style={{ fontSize: 10, color: '#94A3B8', marginTop: 2, fontFamily: MONO }}>{n.time}</div>
                   </div>
                 </div>
               ))}
