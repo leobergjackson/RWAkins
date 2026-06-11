@@ -1,9 +1,0 @@
-# Built by vsrupeshkumar
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: creditblocks
-  labels:
-    name: creditblocks
-    app: creditblocks
-

@@ -2,8 +2,27 @@
 
 RWAkins is a Personal CFO agent that removes the complexity of real-world asset investing. Instead of manually configuring sliders and monitoring markets, users simply describe their financial goals in a chat interface. The AI agent continuously evaluates live market data against the user's stated wealth rules and autonomously executes on-chain rebalances between two yield-bearing assets:
 
-- **USDY** — Ondo's tokenized US Treasury bonds (~4.8% APY). The stable, low-risk leg.
-- **mETH** — Mantle Staked ETH (~3.6% staking APY). The growth, higher-yield leg.
+- **USDY** — Ondo's tokenized US Treasury bonds. The stable, low-risk leg.
+- **mETH** — Mantle Staked ETH. The growth, higher-yield leg.
+
+Yields and prices are **not hardcoded** — they are pulled live and synced on-chain (see *Live & Dynamic* below).
+
+---
+
+## Live & Dynamic — nothing hardcoded
+
+Every number the agent reasons over and shows is sourced live; the on-chain state is kept in sync with the real market by the agent itself.
+
+| System | How it's live |
+|---|---|
+| **Wealth-rule parsing** | An LLM (Groq, OpenAI-compatible) extracts *signals* from your plain-English goal; a deterministic priority-chain turns them into the allocation. No-key fallback is a regex parser. |
+| **mETH price** | Fetched live from CoinGecko and pushed **on-chain** via `vault.setMethPrice()` by the agent owner key ([lib/rwa/oracleSync.ts](lib/rwa/oracleSync.ts)). The vault values the mETH leg at this live price — the dashboard reads it back, so `$` and `%` always reconcile. |
+| **USDY & mETH yields** | Real reference APYs from DefiLlama, written on-chain via `token.setYield()` each sync; the dashboard reads `currentYield()`. |
+| **Volatility** | Annualized **realized volatility** computed from CoinGecko's 7-day hourly ETH series ([lib/api/coingecko.ts](lib/api/coingecko.ts)) — not a formula. |
+| **Risk council** | 4 agents (Market Analyst, Risk Guardian, Yield Optimizer, Execution Planner) are **real LLM personas** debating the live numbers ([lib/aiCouncil/council.ts](lib/aiCouncil/council.ts)). The mETH ≤ 70% cap veto is enforced in code, never delegated to the model. Deterministic per-agent fallback when the LLM is unavailable. |
+| **Execution** | Real `vault.rebalance()` / `rebalanceFor()` on Mantle Sepolia → real tx hashes. Gas-gated oracle writes only fire when the live value actually drifted. |
+
+> **On the assets:** USDY/mETH are deployed as testnet `MockRWAToken` contracts (real Ondo USDY / Mantle mETH aren't available on testnet). Their **price and yield are driven live from real-world market data**, so the economics the agent reasons over are real even though the tokens are stand-ins.
 
 ---
 
@@ -58,7 +77,8 @@ RWAkins is a Personal CFO agent that removes the complexity of real-world asset 
 | Frontend | Next.js 14, Tailwind CSS |
 | Wallet | RainbowKit, Wagmi, viem |
 | AI Chat | Vercel AI SDK |
-| LLM | GPT-4o-mini (OpenAI) |
+| LLM | Groq (OpenAI-compatible) — provider-agnostic via `OPENAI_BASE_URL` |
+| Market data | CoinGecko (price + realized vol), DefiLlama (reference yields) |
 | Agent Framework | OpenClaw / RealClaw |
 | Charts | Recharts |
 | Smart Contracts | Solidity 0.8.24, Foundry |

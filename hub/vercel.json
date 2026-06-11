@@ -18,5 +18,8 @@
   ],
   "rewrites": [
     { "source": "/health", "destination": "/api/health" }
+  ],
+  "crons": [
+    { "path": "/api/agent/heartbeat", "schedule": "*/5 * * * *" }
   ]
 }

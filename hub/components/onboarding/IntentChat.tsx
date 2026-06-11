@@ -51,7 +51,14 @@ export function IntentChat() {
     // Parse locally first so the policy + confirmation work even with no AI key.
     const parsed = parseIntent(goal)
     setRules(parsed)
-    const deterministic = `Got it. I've set your AI CFO to ${summarizeRules(parsed)}. Every rebalance is enforced on-chain by the vault, so the mETH share can never exceed 70%.`
+    const methPct = Math.round(parsed.targetMethBps / 100)
+    // Quote the user's OWN mETH target as the cap; only call out the vault's 70%
+    // hard ceiling when their target actually reaches it.
+    const capNote =
+      methPct >= 70
+        ? 'so the mETH share stays at the vault\'s 70% hard cap'
+        : `so the mETH share stays at your ${methPct}% target`
+    const deterministic = `Got it. I've set your AI CFO to ${summarizeRules(parsed)}. Every rebalance is enforced on-chain by the vault, ${capNote}.`
 
     try {
       const res = await fetch('/api/ai', {
@@ -61,7 +68,9 @@ export function IntentChat() {
           message:
             `A user described their treasury goals: "${goal}". ` +
             `I parsed this to ${summarizeRules(parsed)}. ` +
-            `In 1-2 sentences, confirm this allocation policy back to them warmly and mention the on-chain 70% mETH risk cap.`,
+            `In 1-2 sentences, confirm this allocation policy back to them warmly. ` +
+            `Reference their own ${methPct}% mETH target as the limit you'll respect` +
+            `${methPct >= 70 ? ', which is also the vault\'s 70% hard cap' : ' (do not mention a 70% cap — their target is lower)'}.`,
         }),
       })
       if (res.ok) {

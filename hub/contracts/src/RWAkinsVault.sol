@@ -104,24 +104,38 @@ contract RWAkinsVault {
     /// @notice Execute the AI CFO's target allocation for the caller. Converts
     ///         value between USDY and mETH legs at `methPriceE18`.
     function rebalance(uint256 usdyBps, uint256 methBps) external {
+        _rebalance(msg.sender, usdyBps, methBps);
+    }
+
+    /// @notice Autonomous rebalance — lets the AI CFO agent backend (the owner
+    ///         key) execute a user's target allocation on a schedule WITHOUT the
+    ///         user signing. This is what the /api/agent/heartbeat cron calls so
+    ///         the agent can monitor → decide → execute fully unattended. The
+    ///         same on-chain invariants apply; the user remains the position
+    ///         owner and the `Rebalanced` event is still indexed to them.
+    function rebalanceFor(address user, uint256 usdyBps, uint256 methBps) external onlyOwner {
+        _rebalance(user, usdyBps, methBps);
+    }
+
+    function _rebalance(address user, uint256 usdyBps, uint256 methBps) internal {
         require(usdyBps + methBps == TOTAL_BPS, "BPS_SUM");
         require(methBps <= MAX_RISK_BPS, "RISK_CAP");
 
-        uint256 total = _totalValue(msg.sender); // in USDY units
+        uint256 total = _totalValue(user); // in USDY units
         require(total > 0, "EMPTY");
 
         uint256 newUsdy = (total * usdyBps) / TOTAL_BPS; // USDY tokens
         uint256 newMethValue = total - newUsdy; // remaining value in USDY units
         uint256 newMeth = (newMethValue * ONE) / methPriceE18; // mETH tokens
 
-        usdyBalanceOf[msg.sender] = newUsdy;
-        methBalanceOf[msg.sender] = newMeth;
+        usdyBalanceOf[user] = newUsdy;
+        methBalanceOf[user] = newMeth;
 
         // Back the new position with real reserves (mint shortfall — testnet mocks).
         _ensureReserve(usdyToken, newUsdy);
         _ensureReserve(methToken, newMeth);
 
-        emit Rebalanced(msg.sender, usdyBps, methBps, block.timestamp);
+        emit Rebalanced(user, usdyBps, methBps, block.timestamp);
     }
 
     // ─── Views expected by the frontend ────────────────────────────────────

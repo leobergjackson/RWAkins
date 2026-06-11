@@ -10,10 +10,11 @@ import { useEffect, useMemo, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { formatEther } from 'viem'
-import { Wallet, TrendingUp, PieChart as PieIcon, Coins, Sparkles, ArrowRight, Zap, CheckCircle, AlertCircle } from 'lucide-react'
+import { Wallet, TrendingUp, PieChart as PieIcon, Coins, Sparkles, ArrowRight, Zap, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
 import { useWallet } from '@/context/WalletContext'
 import { usePrices } from '@/hooks/usePrices'
-import { isVaultDeployed, readPortfolio, readWalletBalances, readYields, executeRebalance, approveAndDeposit, faucetMint, RWA } from '@/lib/rwa/vaultClient'
+import { isVaultDeployed, fetchVaultSnapshot, readWalletBalances, approveAndDeposit, faucetMint, RWA } from '@/lib/rwa/vaultClient'
+import { rwaRebalanceSkill } from '@/lib/skills/rwaRebalanceSkill'
 import { loadIntent, summarizeRules, type WealthRules } from '@/lib/intent'
 import { StandaloneNavbar } from '@/components/shell/StandaloneNavbar'
 import { AgentNav } from '@/components/shell/AgentNav'
@@ -29,6 +30,16 @@ const PURPLE = '#a78bfa'
 const USDY_PRICE = 1.0 // USDY is a ~$1 stable yield token (testnet mock pegged for the demo)
 const ETH_FALLBACK = 3200
 
+interface MarketSnapshot {
+  ethPrice: number
+  eth24hChange: number
+  usdyApy: number
+  methApy: number
+  volatility: number
+  yieldsLive: boolean
+  marketLive: boolean
+}
+
 // Demo position shown before the vault is deployed (token units, 18-dec).
 const DEMO = { usdyTokens: 6800, methTokens: 1.15, usdyApyBps: 480, methApyBps: 360 }
 
@@ -42,9 +53,25 @@ export default function PortfolioPage() {
 
   const [usdyTokens, setUsdyTokens] = useState(0)
   const [methTokens, setMethTokens] = useState(0)
+  // On-chain allocation (basis points) straight from the vault's getPortfolio.
+  // This is the SAME accounting the vault uses when it rebalances, so the
+  // dashboard split matches the target the agent executes. null = demo / no
+  // live position → fall back to live-price valuation below.
+  const [chainMethBps, setChainMethBps] = useState<number | null>(null)
+  // Live mETH price the vault values the leg at — read on-chain (the agent oracle
+  // keeps it synced to the real market). null until first read → ETH proxy below.
+  const [methPriceUsd, setMethPriceUsd] = useState<number | null>(null)
+  // Live market snapshot (APYs, ETH 24h, realized volatility) for the data badge.
+  const [market, setMarket] = useState<MarketSnapshot | null>(null)
   const [apy, setApy] = useState({ usdyApyBps: DEMO.usdyApyBps, methApyBps: DEMO.methApyBps })
   const [loading, setLoading] = useState(true)
   const [isDemo, setIsDemo] = useState(!isVaultDeployed)
+  // True when the live read failed after retries — we show a "reconnecting"
+  // notice and KEEP the last data, rather than fabricating a demo position.
+  const [loadError, setLoadError] = useState(false)
+  // Flips true after the first successful live read, so the "fund your vault"
+  // panel only appears for a genuinely-empty position (never during an outage).
+  const [hasLoaded, setHasLoaded] = useState(false)
   const [rules, setRules] = useState<WealthRules | null>(null)
   const [series, setSeries] = useState<ActivityPoint[]>([])
   const [triggering, setTriggering] = useState(false)
@@ -52,59 +79,86 @@ export default function PortfolioPage() {
   const [funding, setFunding] = useState<{ busy: boolean; step?: string; err?: string }>({ busy: false })
   const router = useRouter()
 
-  // Load saved wealth rules for this wallet.
+  // Load saved wealth rules for this wallet — and re-read whenever the tab regains
+  // focus, so a policy just set on /onboarding is reflected the moment you return.
   useEffect(() => {
-    setRules(loadIntent(evm.address))
+    const refresh = () => setRules(loadIntent(evm.address))
+    refresh()
+    const onVisible = () => { if (document.visibilityState === 'visible') refresh() }
+    window.addEventListener('focus', refresh)
+    document.addEventListener('visibilitychange', onVisible)
+    return () => {
+      window.removeEventListener('focus', refresh)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
   }, [evm.address])
 
-  // Load on-chain (or demo) position.
+  // Load the live vault position. ONE reliable call to /api/portfolio (resilient
+  // multi-endpoint RPC) with a few client retries. On a genuine outage we never
+  // fabricate a demo position — we keep the last data and flag loadError. The
+  // labelled DEMO is shown ONLY when not connected / vault not deployed.
   useEffect(() => {
     let active = true
     async function load() {
-      setLoading(true)
-      if (isVaultDeployed && connected && evm.address) {
-        try {
-          // Source of truth for the dashboard + rebalance is the VAULT position
-          // (getPortfolio), not raw wallet balances — rebalance acts on what the
-          // vault custodies for this user.
-          const [pos, yields] = await Promise.all([
-            readPortfolio(evm.address as `0x${string}`),
-            readYields(),
-          ])
-          if (!active) return
-          setUsdyTokens(toNum(pos.usdyBal))
-          setMethTokens(toNum(pos.methBal))
-          setApy(yields)
-          setIsDemo(false)
-        } catch {
-          if (!active) return
-          setUsdyTokens(DEMO.usdyTokens)
-          setMethTokens(DEMO.methTokens)
-          setApy({ usdyApyBps: DEMO.usdyApyBps, methApyBps: DEMO.methApyBps })
-          setIsDemo(true)
-        }
-      } else {
+      if (!isVaultDeployed || !connected || !evm.address) {
+        // Genuine "no live position to read" → labelled demo.
         setUsdyTokens(DEMO.usdyTokens)
         setMethTokens(DEMO.methTokens)
+        setChainMethBps(null)
+        setMethPriceUsd(null)
         setApy({ usdyApyBps: DEMO.usdyApyBps, methApyBps: DEMO.methApyBps })
         setIsDemo(true)
+        setLoadError(false)
+        setLoading(false)
+        return
       }
-      if (active) setLoading(false)
+      setLoading(true)
+      for (let attempt = 0; attempt < 3 && active; attempt++) {
+        try {
+          const s = await fetchVaultSnapshot(evm.address)
+          if (!active) return
+          setUsdyTokens(s.usdyTokens)
+          setMethTokens(s.methTokens)
+          setChainMethBps(s.methBps)
+          setMethPriceUsd(s.methPriceUsd > 0 ? s.methPriceUsd : null)
+          setApy({ usdyApyBps: s.usdyApyBps, methApyBps: s.methApyBps })
+          setIsDemo(false)
+          setLoadError(false)
+          setHasLoaded(true)
+          setLoading(false)
+          return
+        } catch {
+          if (attempt < 2) await new Promise((r) => setTimeout(r, 500 * (attempt + 1)))
+        }
+      }
+      // Every endpoint failed: surface a reconnecting state, keep prior values,
+      // and DO NOT show fake demo numbers.
+      if (!active) return
+      setLoadError(true)
+      setLoading(false)
     }
     load()
     return () => { active = false }
   }, [connected, evm.address])
 
-  // Derived USD metrics.
+  // The price we value the mETH leg at: the LIVE on-chain vault price (kept synced
+  // to the real market by the agent oracle), falling back to the ETH spot proxy
+  // until that first read lands. USDY ≈ $1.
+  const methPrice = methPriceUsd ?? ethPrice
+
+  // Derived USD metrics. Everything is valued at the same live mETH price, so the
+  // dollar figures and the allocation split always reconcile. When we have the
+  // on-chain bps we use them for the split (exact, = the target a rebalance hits);
+  // otherwise (demo) we derive the split from the dollar values.
   const m = useMemo(() => {
     const usdyUsd = usdyTokens * USDY_PRICE
-    const methUsd = methTokens * ethPrice
+    const methUsd = methTokens * methPrice
     const total = usdyUsd + methUsd
-    const usdyFrac = total > 0 ? usdyUsd / total : 0
-    const methFrac = total > 0 ? methUsd / total : 0
+    const usdyFrac = chainMethBps != null ? 1 - chainMethBps / 10_000 : total > 0 ? usdyUsd / total : 0
+    const methFrac = chainMethBps != null ? chainMethBps / 10_000 : total > 0 ? methUsd / total : 0
     const weightedYield = usdyFrac * (apy.usdyApyBps / 100) + methFrac * (apy.methApyBps / 100)
     return { usdyUsd, methUsd, total, usdyFrac, methFrac, weightedYield }
-  }, [usdyTokens, methTokens, ethPrice, apy])
+  }, [usdyTokens, methTokens, methPrice, apy, chainMethBps])
 
   // Performance series anchored to the live total value.
   useEffect(() => {
@@ -117,6 +171,19 @@ export default function PortfolioPage() {
       .catch(() => { if (active) setSeries([]) })
     return () => { active = false }
   }, [loading, m.total, evm.address])
+
+  // Live market snapshot for the data badge — refreshed every 60s while mounted.
+  useEffect(() => {
+    let active = true
+    const load = () =>
+      fetch('/api/market')
+        .then((r) => r.json())
+        .then((j: MarketSnapshot & { ok?: boolean }) => { if (active && j?.ok !== false) setMarket(j) })
+        .catch(() => {})
+    load()
+    const id = setInterval(load, 60_000)
+    return () => { active = false; clearInterval(id) }
+  }, [])
 
   const fmtUsd = (n: number) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
   const fmtPct = (n: number) => `${n.toFixed(1)}%`
@@ -141,10 +208,13 @@ export default function PortfolioPage() {
       )
       // Refresh the vault position.
       await new Promise(r => setTimeout(r, 1500)) // wait 1.5s for chain
-      const pos = await readPortfolio(acct)
-      setUsdyTokens(toNum(pos.usdyBal))
-      setMethTokens(toNum(pos.methBal))
+      const s = await fetchVaultSnapshot(acct)
+      setUsdyTokens(s.usdyTokens)
+      setMethTokens(s.methTokens)
+      setChainMethBps(s.methBps)
+      setMethPriceUsd(s.methPriceUsd > 0 ? s.methPriceUsd : null)
       setIsDemo(false)
+      setHasLoaded(true)
       setFunding({ busy: false })
     } catch (e) {
       setFunding({ busy: false, err: e instanceof Error ? e.message : 'Funding failed — try again.' })
@@ -182,9 +252,17 @@ export default function PortfolioPage() {
       }
 
       // Step 5: execute on-chain when the vault is live → REAL Mantle tx hash.
+      // Execution goes through the named rwa-rebalance agent skill (the Byreal
+      // Agent Skills layer) rather than calling the vault directly, so the
+      // decision → skill → on-chain hop is explicit in the architecture.
       if (isVaultDeployed && !isDemo) {
         const { usdyBps, methBps, direction } = json.decision
-        const hash = await executeRebalance(evm.address as `0x${string}`, usdyBps, methBps)
+        const { txHash: hash } = await rwaRebalanceSkill.execute({
+          wallet: evm.address,
+          targetUsdyBps: usdyBps,
+          targetMethBps: methBps,
+          reason: json.aiRationale ?? json.narrative ?? 'AI CFO rebalance',
+        })
         // Log the confirmed activity with the genuine hash + LLM narrative.
         await fetch('/api/activity', {
           method: 'POST',
@@ -205,11 +283,14 @@ export default function PortfolioPage() {
         setTriggerResult({ ok: true, narrative: json.narrative, txHash: hash })
         // Refresh the vault position from chain so the dashboard reflects the new split.
         try {
-          await new Promise(r => setTimeout(r, 1500)) // wait 1.5s for chain
-          const pos = await readPortfolio(evm.address as `0x${string}`)
-          setUsdyTokens(toNum(pos.usdyBal))
-          setMethTokens(toNum(pos.methBal))
+          await new Promise(r => setTimeout(r, 2000)) // wait 2s for the Mantle node to settle before re-reading
+          const s = await fetchVaultSnapshot(evm.address)
+          setUsdyTokens(s.usdyTokens)
+          setMethTokens(s.methTokens)
+          setChainMethBps(s.methBps)
+          setMethPriceUsd(s.methPriceUsd > 0 ? s.methPriceUsd : null)
           setIsDemo(false)
+          setHasLoaded(true)
         } catch { /* keep prior values */ }
         setTimeout(() => router.push('/activity'), 2600)
       } else {
@@ -254,9 +335,42 @@ export default function PortfolioPage() {
               </div>
             )}
 
+            {/* Transient RPC outage: keep the last data, never fake a position. */}
+            {loadError && !isDemo && (
+              <div
+                style={{
+                  marginBottom: 20, padding: '10px 16px', borderRadius: 12, fontSize: 13,
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  color: '#fbbf24', background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.2)',
+                }}
+              >
+                <Loader2 size={14} className="animate-spin" />
+                Reconnecting to Mantle… showing your last known balances.
+              </div>
+            )}
+
+            {/* Policy-vs-position: your saved target differs from your live split. */}
+            {!isDemo && !loadError && hasLoaded && rules && chainMethBps != null && m.total > 0 &&
+              Math.abs(rules.targetMethBps / 100 - chainMethBps / 100) >= rules.rebalanceThresholdPct && (
+              <div
+                style={{
+                  marginBottom: 20, padding: '12px 16px', borderRadius: 12, fontSize: 13.5,
+                  display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap',
+                  color: PURPLE, background: 'rgba(167,139,250,0.08)', border: '1px solid rgba(167,139,250,0.25)',
+                }}
+              >
+                <Sparkles size={15} />
+                <span style={{ color: 'rgba(255,255,255,0.85)' }}>
+                  Your saved target is <strong>{(rules.targetUsdyBps / 100).toFixed(0)}% USDY / {(rules.targetMethBps / 100).toFixed(0)}% mETH</strong>,
+                  but you&apos;re currently at <strong>{(100 - chainMethBps / 100).toFixed(0)}% / {(chainMethBps / 100).toFixed(0)}%</strong>.
+                  Hit <strong>Run Rebalance</strong> to apply your policy on-chain.
+                </span>
+              </div>
+            )}
+
             {/* AI CFO Action Panel — fund the vault first if the position is
                 empty (rebalance acts on the vault position, not wallet tokens). */}
-            {!isDemo && !loading && m.total <= 0 ? (
+            {!isDemo && !loading && !loadError && hasLoaded && m.total <= 0 ? (
               <FundPanel funding={funding} onFund={fundVault} />
             ) : (
               <RebalanceTrigger
@@ -267,12 +381,16 @@ export default function PortfolioPage() {
               />
             )}
 
+            {/* Live data badge — proves nothing is hardcoded: price synced
+                on-chain, yields + realized volatility pulled live. */}
+            <LiveDataBadge market={market} methPrice={methPriceUsd} />
+
             {/* Metric cards */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, marginBottom: 24 }}>
               <MetricCard
                 label="Total Portfolio Value"
                 value={fmtUsd(m.total)}
-                sub={`USDY $1.00 · mETH ${fmtUsd(ethPrice)}`}
+                sub={`USDY $1.00 · mETH ${fmtUsd(methPrice)}`}
                 accent="green"
                 icon={<Wallet size={16} />}
                 loading={loading}
@@ -366,6 +484,35 @@ function WealthRulesPanel({ rules }: { rules: WealthRules | null }) {
         </div>
       )}
     </Panel>
+  )
+}
+
+function LiveDataBadge({ market, methPrice }: { market: MarketSnapshot | null; methPrice: number | null }) {
+  const fmtUsd0 = (n: number) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
+  const pill = (label: string, value: string, accent?: string) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 2, padding: '6px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}>
+      <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: 0.4 }}>{label}</span>
+      <span style={{ fontSize: 13, fontWeight: 700, color: accent ?? '#fff' }}>{value}</span>
+    </div>
+  )
+  const up = market ? market.eth24hChange >= 0 : true
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 20, padding: '10px 14px', borderRadius: 14, background: 'rgba(45,212,191,0.04)', border: '1px solid rgba(45,212,191,0.18)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 7, paddingRight: 6 }}>
+        <span style={{ width: 8, height: 8, borderRadius: '50%', background: TEAL, boxShadow: `0 0 8px ${TEAL}`, animation: 'pulse 1.8s ease-in-out infinite' }} />
+        <span style={{ fontSize: 11, fontWeight: 800, color: TEAL, letterSpacing: 0.6 }}>LIVE</span>
+      </div>
+      {pill('mETH price', methPrice != null ? fmtUsd0(methPrice) : market ? fmtUsd0(market.ethPrice) : '—', TEAL)}
+      <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', alignSelf: 'flex-end', paddingBottom: 3 }}>synced on-chain</span>
+      {pill('USDY APY', market ? `${market.usdyApy.toFixed(2)}%` : '—')}
+      {pill('mETH APY', market ? `${market.methApy.toFixed(2)}%` : '—')}
+      {pill('ETH 24h', market ? `${up ? '+' : ''}${market.eth24hChange.toFixed(1)}%` : '—', up ? '#34d399' : '#f87171')}
+      {pill('Volatility', market ? `${market.volatility.toFixed(0)}%` : '—', PURPLE)}
+      <span style={{ marginLeft: 'auto', fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>
+        CoinGecko · DefiLlama · Mantle
+      </span>
+      <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}`}</style>
+    </div>
   )
 }
 

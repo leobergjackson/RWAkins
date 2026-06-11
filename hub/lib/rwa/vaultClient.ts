@@ -5,21 +5,15 @@
 'use client'
 
 import {
-  createPublicClient, createWalletClient, custom, http,
-  defineChain, parseEther, formatEther, type Address,
+  createPublicClient, createWalletClient, custom,
+  parseEther, formatEther, type Address,
 } from 'viem'
 import { getEvmProvider } from '@/lib/wallet-providers'
 import { VAULT_ABI, RWA_TOKEN_ABI } from './abi'
 import deployed from '@/lib/rwa-deployed.json'
+import { mantleSepolia, mantleTransport } from './rpc'
 
-export const mantleSepolia = defineChain({
-  id: 5003,
-  name: 'Mantle Sepolia',
-  nativeCurrency: { name: 'Mantle', symbol: 'MNT', decimals: 18 },
-  rpcUrls: { default: { http: ['https://rpc.sepolia.mantle.xyz'] } },
-  blockExplorers: { default: { name: 'Mantlescan', url: 'https://sepolia.mantlescan.xyz' } },
-  testnet: true,
-})
+export { mantleSepolia }
 
 export const MANTLE_SEPOLIA_CHAIN_ID = 5003
 export const MAX_RISK_BPS = 7000
@@ -37,7 +31,7 @@ export const isVaultDeployed =
 export const explorerTx = (hash: string) => `https://sepolia.mantlescan.xyz/tx/${hash}`
 export const explorerAddr = (addr: string) => `https://sepolia.mantlescan.xyz/address/${addr}`
 
-const publicClient = createPublicClient({ chain: mantleSepolia, transport: http() })
+const publicClient = createPublicClient({ chain: mantleSepolia, transport: mantleTransport() })
 
 function getWalletClient() {
   const eth = getEvmProvider('MetaMask')
@@ -68,6 +62,35 @@ export interface Portfolio {
   methBps: bigint
 }
 
+export interface VaultSnapshot {
+  usdyTokens: number
+  methTokens: number
+  methBps: number
+  usdyApyBps: number
+  methApyBps: number
+  methPriceUsd: number
+}
+
+/**
+ * The dashboard's single reliable read: position + yields + mETH price in one
+ * call to the server route (GET /api/portfolio), which runs over the resilient
+ * multi-endpoint RPC. Throws on a genuine outage so the caller can show a
+ * "reconnecting" state instead of fabricating a position.
+ */
+export async function fetchVaultSnapshot(wallet: string): Promise<VaultSnapshot> {
+  const res = await fetch(`/api/portfolio?wallet=${wallet}`, { cache: 'no-store' })
+  const j = (await res.json()) as Record<string, unknown>
+  if (!res.ok || j.ok !== true) throw new Error(String(j.error ?? 'read failed'))
+  return {
+    usdyTokens: Number(formatEther(BigInt(String(j.usdyBal)))),
+    methTokens: Number(formatEther(BigInt(String(j.methBal)))),
+    methBps: Number(j.methBps),
+    usdyApyBps: Number(j.usdyApyBps),
+    methApyBps: Number(j.methApyBps),
+    methPriceUsd: Number(j.methPriceUsd),
+  }
+}
+
 export async function readPortfolio(user: Address): Promise<Portfolio> {
   const res = (await publicClient.readContract({
     address: RWA.vault,
@@ -76,6 +99,16 @@ export async function readPortfolio(user: Address): Promise<Portfolio> {
     args: [user],
   })) as readonly [bigint, bigint, bigint, bigint]
   return { usdyBal: res[0], methBal: res[1], usdyBps: res[2], methBps: res[3] }
+}
+
+/** Live mETH price (USD) the vault values the mETH leg at — kept in sync with the
+ *  real market by the agent oracle (lib/rwa/oracleSync). USDY ≈ $1, so the on-chain
+ *  methPriceE18 (mETH priced in USDY units) is the USD price. */
+export async function readMethPrice(): Promise<number> {
+  const e18 = (await publicClient.readContract({
+    address: RWA.vault, abi: VAULT_ABI, functionName: 'methPriceE18',
+  })) as bigint
+  return Number(e18) / 1e18
 }
 
 /** Mock RWA yields, in basis points (480 = 4.80% APY). */

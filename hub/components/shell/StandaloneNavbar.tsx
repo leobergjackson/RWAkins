@@ -5,8 +5,8 @@
 'use client'
 
 import Link from 'next/link'
-import { Bell } from 'lucide-react'
 import { WalletButton } from '@/components/onboarding/WalletButton'
+import { NotificationBell } from '@/components/shell/NotificationBell'
 
 const TEAL = '#2dd4bf'
 const PURPLE = '#a78bfa'
@@ -54,12 +54,7 @@ export function StandaloneNavbar({ subtitle, showBell = false }: { subtitle?: st
         {subtitle && <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginLeft: 4 }}>{subtitle}</span>}
       </Link>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-        {showBell && (
-          <button aria-label="Notifications" style={{ position: 'relative', color: 'rgba(255,255,255,0.6)' }}>
-            <Bell size={18} />
-            <span style={{ position: 'absolute', top: -1, right: -1, width: 7, height: 7, borderRadius: 999, background: TEAL }} />
-          </button>
-        )}
+        {showBell && <NotificationBell />}
         <WalletButton />
       </div>
     </header>

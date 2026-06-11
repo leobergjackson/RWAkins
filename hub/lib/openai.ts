@@ -1,11 +1,16 @@
 // Built by vsrupeshkumar
-// Thin server-side wrapper around the OpenAI Chat Completions API.
-// RWAkins uses GPT-4o-mini for two things: (1) confirming a parsed wealth
-// policy back to the user in natural language, and (2) the risk-evaluation
-// decision step. Both run server-side so OPENAI_API_KEY never reaches the
-// client. Every helper returns null on any failure so callers can fall back to
-// the deterministic logic in lib/intent / the rebalance evaluator.
-const OPENAI_URL = 'https://api.openai.com/v1/chat/completions'
+// Thin server-side wrapper around an OpenAI-compatible Chat Completions API.
+// RWAkins uses an LLM for two things: (1) confirming a parsed wealth policy back
+// to the user in natural language, and (2) the risk-evaluation decision step.
+// Both run server-side so OPENAI_API_KEY never reaches the client. Every helper
+// returns null on any failure so callers can fall back to the deterministic
+// logic in lib/intent / the rebalance evaluator.
+//
+// Provider-agnostic: set OPENAI_BASE_URL to any OpenAI-compatible endpoint
+// (e.g. Groq https://api.groq.com/openai/v1, Gemini, OpenRouter, local Ollama)
+// and OPENAI_MODEL to that provider's model. Defaults to OpenAI itself.
+const BASE_URL = (process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1').replace(/\/+$/, '')
+const OPENAI_URL = `${BASE_URL}/chat/completions`
 
 export const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini'
 

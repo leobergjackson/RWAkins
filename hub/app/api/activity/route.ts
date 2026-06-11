@@ -11,10 +11,11 @@
 // default so judges never hit a 404 — set DEMO_TX_HASH to a real Mantle Sepolia
 // hash to make them clickable.
 import { NextResponse } from 'next/server'
-import { createPublicClient, http, defineChain } from 'viem'
+import { createPublicClient } from 'viem'
 import { VAULT_ABI } from '@/lib/rwa/abi'
 import deployed from '@/lib/rwa-deployed.json'
 import { getStoredActivities, logActivity, type StoredActivity } from '@/lib/activityStore'
+import { mantleSepolia, mantleTransport } from '@/lib/rwa/rpc'
 
 // ── Types (shape matches the SCREEN 3 spec) ──────────────────────────────────
 
@@ -51,14 +52,6 @@ export interface AgentActivity {
 // here (e.g. from your deploy) to make the demo cards clickable for the video.
 const DEMO_TX_HASH = ''
 // ─────────────────────────────────────────────────────────────────────────────
-
-const mantleSepolia = defineChain({
-  id: 5003,
-  name: 'Mantle Sepolia',
-  nativeCurrency: { name: 'Mantle', symbol: 'MNT', decimals: 18 },
-  rpcUrls: { default: { http: ['https://rpc.sepolia.mantle.xyz'] } },
-  testnet: true,
-})
 
 const vaultDeployed = typeof deployed.vault === 'string' && deployed.vault.length === 42
 
@@ -99,7 +92,7 @@ function describe(before: Allocation, after: Allocation): string {
 async function readLiveActivities(wallet: `0x${string}`): Promise<AgentActivity[] | null> {
   if (!vaultDeployed) return null
   try {
-    const client = createPublicClient({ chain: mantleSepolia, transport: http() })
+    const client = createPublicClient({ chain: mantleSepolia, transport: mantleTransport() })
     const logs = await client.getContractEvents({
       address: deployed.vault as `0x${string}`,
       abi: VAULT_ABI,
@@ -215,7 +208,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ activities: [], live: false }, { status: 200 })
     }
     // Manually triggered activities are shown first (most recent at top).
-    const triggered = getStoredActivities(wallet) as AgentActivity[]
+    const triggered = (await getStoredActivities(wallet)) as unknown as AgentActivity[]
     const live = await readLiveActivities(wallet as `0x${string}`)
 
     if (triggered.length > 0 || (live && live.length > 0)) {
@@ -224,7 +217,13 @@ export async function GET(req: Request) {
       const seen = new Set(triggered.map((a) => a.txHash).filter(Boolean) as string[])
       const merged = [...triggered, ...(live ?? []).filter((a) => !a.txHash || !seen.has(a.txHash))]
         .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-      return NextResponse.json({ activities: merged, live: live !== null && live.length > 0 })
+      // The feed is "live" if it carries any verifiable on-chain proof: either the
+      // event read returned real Rebalanced logs, OR a stored activity references a
+      // genuine Mantle tx hash. Don't gate the banner on the event read alone — on
+      // Mantle the `fromBlock: 'earliest'` range read often fails, which would
+      // wrongly flag real, tx-hash-bearing rebalances as a demo feed.
+      const hasRealTx = merged.some((a) => a.txHash && /^0x[a-fA-F0-9]{64}$/.test(a.txHash))
+      return NextResponse.json({ activities: merged, live: (live !== null && live.length > 0) || hasRealTx })
     }
     return NextResponse.json({ activities: demoActivities(wallet), live: false })
   }
@@ -266,6 +265,6 @@ export async function POST(req: Request) {
     allocationBefore: a.allocationBefore ?? { usdy: 0, meth: 0 },
     allocationAfter: a.allocationAfter ?? { usdy: 0, meth: 0 },
   }
-  logActivity(wallet, entry)
+  await logActivity(wallet, entry)
   return NextResponse.json({ ok: true, activity: entry })
 }
